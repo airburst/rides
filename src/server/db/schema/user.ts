@@ -10,6 +10,7 @@ import {
 
 import accounts from "./account";
 import sessions from "./session";
+import userOnRides from "./usersOnRide";
 
 export const roleEnum = pgEnum("role", ["USER", "LEADER", "ADMIN"]);
 
@@ -35,7 +36,7 @@ const users = pgTable("users", {
 export const userRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
   sessions: many(sessions),
-  // rides: many(rides),
+  rides: many(userOnRides),
 }));
 
 export default users;
