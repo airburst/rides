@@ -2,6 +2,8 @@ export type Preferences = {
   units: "km" | "miles";
 };
 
+export type Role = "USER" | "LEADER" | "ADMIN";
+
 export type User = {
   id: string;
   name: string;
@@ -9,7 +11,7 @@ export type User = {
   mobile?: string | null;
   emergency?: string | null;
   image?: string | null; // url
-  role: string;
+  role: Role;
   preferences?: Preferences;
   rideNotes?: string;
 };
