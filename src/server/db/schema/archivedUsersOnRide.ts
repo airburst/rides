@@ -7,18 +7,18 @@ import {
 } from "drizzle-orm/pg-core";
 
 import { relations } from "drizzle-orm";
-import rides from "./ride";
+import archivedRides from "./archivedRide";
 import users from "./user";
 
-const userOnRides = pgTable(
-  "users_on_rides",
+const archivedUserOnRides = pgTable(
+  "archived_users_on_rides",
   {
     userId: varchar("user_id", { length: 255 })
       .notNull()
       .references(() => users.id),
     rideId: varchar("ride_id", { length: 255 })
       .notNull()
-      .references(() => rides.id),
+      .references(() => archivedRides.id),
     notes: text("notes"),
     createdAt: timestamp("created_at", { mode: "string" })
       .notNull()
@@ -27,15 +27,18 @@ const userOnRides = pgTable(
   (pk) => ({ pk: primaryKey({ columns: [pk.userId, pk.rideId] }) }),
 );
 
-export const userOnRidesRelations = relations(userOnRides, ({ one }) => ({
-  user: one(users, {
-    fields: [userOnRides.userId],
-    references: [users.id],
+export const archivedUserOnRidesRelations = relations(
+  archivedUserOnRides,
+  ({ one }) => ({
+    user: one(users, {
+      fields: [archivedUserOnRides.userId],
+      references: [users.id],
+    }),
+    ride: one(archivedRides, {
+      fields: [archivedUserOnRides.rideId],
+      references: [archivedRides.id],
+    }),
   }),
-  ride: one(rides, {
-    fields: [userOnRides.rideId],
-    references: [rides.id],
-  }),
-}));
+);
 
-export default userOnRides;
+export default archivedUserOnRides;

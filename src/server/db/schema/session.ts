@@ -3,7 +3,7 @@ import { index, pgTable, timestamp, varchar } from "drizzle-orm/pg-core";
 import users from "./user";
 
 const sessions = pgTable(
-  "session",
+  "sessions",
   {
     sessionToken: varchar("session_token", { length: 255 })
       .notNull()

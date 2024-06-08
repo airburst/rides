@@ -8,7 +8,7 @@ import {
 } from "drizzle-orm/pg-core";
 
 const repeatingRides = pgTable(
-  "repeating-ride",
+  "repeating_rides",
   {
     id: text("id")
       .primaryKey()

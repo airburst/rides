@@ -1,4 +1,13 @@
 export { accountRelations, default as accounts } from "./account";
+export {
+  archivedRideRelations,
+  default as archivedRides,
+} from "./archivedRide";
+export {
+  default as archivedUserOnRides,
+  archivedUserOnRidesRelations,
+} from "./archivedUsersOnRide";
+export { default as membership } from "./membership";
 export { default as repeatingRides } from "./repeatingRide";
 export { rideRelations, default as rides } from "./ride";
 export { sessionRelations, default as sessions } from "./session";

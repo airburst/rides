@@ -11,7 +11,7 @@ import { type AdapterAccount } from "next-auth/adapters";
 import users from "./user";
 
 const accounts = pgTable(
-  "account",
+  "accounts",
   {
     userId: varchar("user_id", { length: 255 })
       .notNull()
