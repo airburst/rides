@@ -28,7 +28,7 @@ const users = pgTable("users", {
   mobile: varchar("mobile", { length: 255 }),
   emergency: varchar("emergency", { length: 255 }),
   role: roleEnum("role").default("USER"),
-  preferences: json("preferences"),
+  preferences: json("preferences").default({ units: "km" }),
   createdAt: timestamp("created_at", { mode: "string" }).notNull().defaultNow(),
   updatedAt: timestamp("updated_at", { mode: "string" }).notNull().defaultNow(),
 });

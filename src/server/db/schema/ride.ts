@@ -9,6 +9,7 @@ import {
   varchar,
 } from "drizzle-orm/pg-core";
 
+import repeatingRides from "./repeatingRide";
 import userOnRides from "./usersOnRide";
 
 const rides = pgTable(
@@ -43,8 +44,12 @@ const rides = pgTable(
   }),
 );
 
-export const rideRelations = relations(rides, ({ many }) => ({
+export const rideRelations = relations(rides, ({ one, many }) => ({
   users: many(userOnRides),
+  repeatingRide: one(repeatingRides, {
+    fields: [rides.scheduleId],
+    references: [repeatingRides.id],
+  }),
 }));
 
 export default rides;

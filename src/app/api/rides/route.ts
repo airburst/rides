@@ -11,6 +11,14 @@ export async function GET() {
 const getRides = async () => {
   try {
     const result = await db.query.rides.findMany({
+      columns: {
+        id: true,
+        name: true,
+        rideGroup: true,
+        rideDate: true,
+        destination: true,
+        distance: true,
+      },
       with: {
         users: {
           columns: {

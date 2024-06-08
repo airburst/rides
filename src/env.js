@@ -33,6 +33,7 @@ export const env = createEnv({
     RIDERHQ_URL: z.string(),
     RIDERHQ_ACCOUNT_ID: z.string(),
     RIDERHQ_PRIVATE_KEY: z.string(),
+    DB_SEEDING: z.boolean().default(false),
   },
 
   /**
@@ -63,6 +64,7 @@ export const env = createEnv({
     RIDERHQ_URL: process.env.RIDERHQ_URL,
     RIDERHQ_ACCOUNT_ID: process.env.RIDERHQ_ACCOUNT_ID,
     RIDERHQ_PRIVATE_KEY: process.env.RIDERHQ_PRIVATE_KEY,
+    DB_SEEDING: process.env.DB_SEEDING,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

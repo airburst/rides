@@ -1,4 +1,5 @@
 export { accountRelations, default as accounts } from "./account";
+export { default as repeatingRides } from "./repeatingRide";
 export { rideRelations, default as rides } from "./ride";
 export { sessionRelations, default as sessions } from "./session";
 export { roleEnum, userRelations, default as users } from "./user";
