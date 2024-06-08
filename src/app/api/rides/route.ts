@@ -18,6 +18,7 @@ const getRides = async () => {
         rideDate: true,
         destination: true,
         distance: true,
+        cancelled: true,
       },
       with: {
         users: {

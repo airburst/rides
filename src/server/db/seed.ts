@@ -38,6 +38,8 @@ const main = async () => {
   await seeds.users(db);
   await seeds.sessions(db);
   await seeds.accounts(db);
+  await seeds.rides(db);
+  await seeds.usersOnRides(db);
 
   console.log("Seeding done");
   process.exit(0);
