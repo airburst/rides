@@ -11,10 +11,7 @@ const sessions = pgTable(
     userId: varchar("user_id", { length: 255 })
       .notNull()
       .references(() => users.id),
-    expires: timestamp("expires", {
-      mode: "date",
-      withTimezone: true,
-    }).notNull(),
+    expires: timestamp("expires", { mode: "string" }).notNull(),
   },
   (session) => ({
     userIdIdx: index("session_userId_idx").on(session.userId),

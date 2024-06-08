@@ -25,7 +25,7 @@ const repeatingRides = pgTable(
     notes: text("notes"), // TODO: Deprecate
     speed: integer("speed"),
     limit: integer("limit").default(-1).notNull(),
-    createdAt: timestamp("createdAt", { precision: 3, mode: "string" })
+    createdAt: timestamp("created_at", { precision: 3, mode: "string" })
       .defaultNow()
       .notNull(),
     updatedAt: timestamp("updated_at", { mode: "string" })
