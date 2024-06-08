@@ -32,12 +32,8 @@ const rides = pgTable(
     deleted: boolean("deleted").notNull().default(false),
     cancelled: boolean("cancelled").notNull().default(false),
     scheduleId: varchar("schedule_id", { length: 255 }),
-    createdAt: timestamp("created_at", { mode: "string" })
-      .notNull()
-      .defaultNow(),
-    updatedAt: timestamp("updated_at", { mode: "string" })
-      .notNull()
-      .defaultNow(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
   (ride) => ({
     rideIndex: index().on(ride.name),

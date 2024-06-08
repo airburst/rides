@@ -51,10 +51,10 @@ export type RepeatingRide = {
   name: string;
   freq: number;
   interval?: number;
-  byweekday?: number | number[];
-  bysetpos?: number | number[];
-  bymonth?: number | number[];
-  bymonthday?: number | number[];
+  byweekday?: number | number[] | null;
+  bysetpos?: number | number[] | null;
+  bymonth?: number | number[] | null;
+  bymonthday?: number | number[] | null;
   textRule?: string;
   startDate: string;
   winterStartTime?: string | null;

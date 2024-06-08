@@ -11,9 +11,11 @@
     "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
     "dev": "next dev --turbo",
+    "test": "jest",
     "lint": "next lint",
     "start": "next start",
-    "startdb": "./start-database.sh"
+    "startdb": "./start-database.sh",
+    "check-types": "tsc --noEmit --incremental --emitDeclarationOnly false --pretty"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.2.0",

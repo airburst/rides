@@ -19,7 +19,7 @@ const archivedRides = pgTable(
       .$defaultFn(() => crypto.randomUUID()),
     name: varchar("name", { length: 255 }).notNull(),
     rideGroup: varchar("ride_group", { length: 255 }),
-    rideDate: timestamp("ride_date", { mode: "string" }).notNull(),
+    rideDate: timestamp("ride_date").notNull(),
     destination: varchar("destination", { length: 255 }),
     distance: integer("distance"),
     meetPoint: varchar("meet_point", { length: 255 }),
@@ -31,12 +31,8 @@ const archivedRides = pgTable(
     deleted: boolean("deleted").notNull().default(false),
     cancelled: boolean("cancelled").notNull().default(false),
     scheduleId: varchar("schedule_id", { length: 255 }),
-    createdAt: timestamp("created_at", { mode: "string" })
-      .notNull()
-      .defaultNow(),
-    updatedAt: timestamp("updated_at", { mode: "string" })
-      .notNull()
-      .defaultNow(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
   (ride) => ({
     rideIndex: index().on(ride.name),

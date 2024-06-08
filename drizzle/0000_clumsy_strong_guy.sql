@@ -101,7 +101,7 @@ CREATE TABLE IF NOT EXISTS "rides" (
 CREATE TABLE IF NOT EXISTS "sessions" (
 	"session_token" varchar(255) PRIMARY KEY NOT NULL,
 	"user_id" varchar(255) NOT NULL,
-	"expires" timestamp NOT NULL
+	"expires" timestamp with time zone NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "users_on_rides" (
@@ -116,7 +116,7 @@ CREATE TABLE IF NOT EXISTS "users" (
 	"id" text PRIMARY KEY NOT NULL,
 	"name" varchar(255),
 	"email" varchar(255) NOT NULL,
-	"email_verified" timestamp with time zone DEFAULT now(),
+	"email_verified" timestamp (3) with time zone DEFAULT now(),
 	"image" varchar(255),
 	"mobile" varchar(255),
 	"emergency" varchar(255),
@@ -129,7 +129,7 @@ CREATE TABLE IF NOT EXISTS "users" (
 CREATE TABLE IF NOT EXISTS "verification_tokens" (
 	"identifier" varchar(255) NOT NULL,
 	"token" varchar(255) NOT NULL,
-	"expires" timestamp with time zone NOT NULL,
+	"expires" timestamp (3) with time zone NOT NULL,
 	CONSTRAINT "verification_tokens_identifier_token_pk" PRIMARY KEY("identifier","token")
 );
 --> statement-breakpoint

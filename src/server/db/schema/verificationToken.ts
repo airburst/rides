@@ -6,7 +6,7 @@ const verificationTokens = pgTable(
     identifier: varchar("identifier", { length: 255 }).notNull(),
     token: varchar("token", { length: 255 }).notNull(),
     expires: timestamp("expires", {
-      mode: "date",
+      precision: 3,
       withTimezone: true,
     }).notNull(),
   },

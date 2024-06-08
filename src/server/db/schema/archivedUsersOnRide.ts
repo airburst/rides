@@ -20,9 +20,7 @@ const archivedUserOnRides = pgTable(
       .notNull()
       .references(() => archivedRides.id),
     notes: text("notes"),
-    createdAt: timestamp("created_at", { mode: "string" })
-      .notNull()
-      .defaultNow(),
+    createdAt: timestamp("created_at").notNull().defaultNow(),
   },
   (pk) => ({ pk: primaryKey({ columns: [pk.userId, pk.rideId] }) }),
 );

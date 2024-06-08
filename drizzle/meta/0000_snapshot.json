@@ -1,5 +1,5 @@
 {
-  "id": "286fdcd1-40c1-4d4d-8c96-fad57bad11a1",
+  "id": "50373e57-9afa-456e-ab54-0fa459d53f33",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -661,7 +661,7 @@
         },
         "expires": {
           "name": "expires",
-          "type": "timestamp",
+          "type": "timestamp with time zone",
           "primaryKey": false,
           "notNull": true
         }
@@ -795,7 +795,7 @@
         },
         "email_verified": {
           "name": "email_verified",
-          "type": "timestamp with time zone",
+          "type": "timestamp (3) with time zone",
           "primaryKey": false,
           "notNull": false,
           "default": "now()"
@@ -871,7 +871,7 @@
         },
         "expires": {
           "name": "expires",
-          "type": "timestamp with time zone",
+          "type": "timestamp (3) with time zone",
           "primaryKey": false,
           "notNull": true
         }

@@ -21,7 +21,7 @@ const users = pgTable("users", {
   name: varchar("name", { length: 255 }),
   email: varchar("email", { length: 255 }).notNull(),
   emailVerified: timestamp("email_verified", {
-    mode: "date",
+    precision: 3,
     withTimezone: true,
   }).defaultNow(),
   image: varchar("image", { length: 255 }),
@@ -29,8 +29,8 @@ const users = pgTable("users", {
   emergency: varchar("emergency", { length: 255 }),
   role: roleEnum("role").default("USER"),
   preferences: json("preferences").default({ units: "km" }),
-  createdAt: timestamp("created_at", { mode: "string" }).notNull().defaultNow(),
-  updatedAt: timestamp("updated_at", { mode: "string" }).notNull().defaultNow(),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+  updatedAt: timestamp("updated_at").notNull().defaultNow(),
 });
 
 export const userRelations = relations(users, ({ many }) => ({

@@ -1,3 +1,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply flex;
+    @apply min-h-screen;
+    @apply m-0;
+    @apply bg-base-200;
+  }
+
+  #__next {
+    @apply w-screen;
+  }
+}
+
+/* Prevent copy popup after long press on iphone */
+body {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* SVG Icon overrides */
+svg {
+  @apply h-4;
+  @apply w-4;
+}
+
+/* DaisyUI overrides */
+.btn {
+  @apply rounded;
+  @apply text-base;
+}
+
+.alert {
+  @apply rounded;
+}
+
+.chat-bubble {
+  @apply bg-neutral-100;
+}

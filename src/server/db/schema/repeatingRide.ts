@@ -28,9 +28,7 @@ const repeatingRides = pgTable(
     createdAt: timestamp("created_at", { precision: 3, mode: "string" })
       .defaultNow()
       .notNull(),
-    updatedAt: timestamp("updated_at", { mode: "string" })
-      .notNull()
-      .defaultNow(),
+    updatedAt: timestamp("updated_at").notNull().defaultNow(),
   },
   (ride) => ({
     repeatingRideIndex: index().on(ride.name),
