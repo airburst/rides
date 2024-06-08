@@ -7,9 +7,6 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
-    CLUB_LONG_NAME: z.string(),
-    CLUB_SHORT_NAME: z.string(),
-    REPO: z.string().url(),
     HOST_URL: z.string().url(),
     DATABASE_URL: z.string().url(),
     // DIRECT_URL: z.string().url(),
@@ -41,7 +38,9 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    // NEXT_PUBLIC_CLIENTVAR: z.string(),
+    NEXT_PUBLIC_CLUB_LONG_NAME: z.string(),
+    NEXT_PUBLIC_CLUB_SHORT_NAME: z.string(),
+    NEXT_PUBLIC_REPO: z.string().url(),
   },
 
   /**
@@ -49,9 +48,9 @@ export const env = createEnv({
    * middlewares) or client-side so we need to destruct manually.
    */
   runtimeEnv: {
-    CLUB_LONG_NAME: process.env.CLUB_LONG_NAME,
-    CLUB_SHORT_NAME: process.env.CLUB_SHORT_NAME,
-    REPO: process.env.REPO,
+    NEXT_PUBLIC_CLUB_LONG_NAME: process.env.NEXT_PUBLIC_CLUB_LONG_NAME,
+    NEXT_PUBLIC_CLUB_SHORT_NAME: process.env.NEXT_PUBLIC_CLUB_SHORT_NAME,
+    NEXT_PUBLIC_REPO: process.env.NEXT_PUBLIC_REPO,
     HOST_URL: process.env.HOST_URL,
     DATABASE_URL: process.env.DATABASE_URL,
     NODE_ENV: process.env.NODE_ENV,

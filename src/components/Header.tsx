@@ -1,15 +1,16 @@
+"use client";
 import { env } from "@/env";
 import { useAtom } from "jotai";
 import Image from "next/image";
-import Router, { useRouter } from "next/router";
+import { useParams, useRouter } from "next/navigation";
 import Logo from "../../public/static/images/bath-cc-logo.svg";
 import { filterQueryAtom, showFilterAtom } from "../store";
 import { FilterIcon, FilterSelectedIcon } from "./Icon";
 import { UserMenu } from "./UserMenu";
 
-const { CLUB_SHORT_NAME } = env;
+const { NEXT_PUBLIC_CLUB_SHORT_NAME } = env;
 
-const goHome = () => Router.push("/");
+
 
 type Props = {
   isAuthenticated: boolean;
@@ -20,8 +21,11 @@ export const Header = ({ isAuthenticated, role }: Props) => {
   const [, setShowFilterMenu] = useAtom(showFilterAtom);
   const [filterQuery] = useAtom(filterQueryAtom);
   const router = useRouter();
-  const rideId = router.query.id;
-  const isRidesPage = router.pathname === "/";
+  const params = useParams();
+  const rideId = params.id;
+  const isRidesPage = params.pathname === "/";
+
+  const goHome = () => router.push("/");
 
   const showFilters = () => setShowFilterMenu(true);
 
@@ -43,7 +47,7 @@ export const Header = ({ isAuthenticated, role }: Props) => {
               src={Logo as string}
               alt="Bath Cycling Club Logo"
             />
-            {CLUB_SHORT_NAME} Rides
+            {NEXT_PUBLIC_CLUB_SHORT_NAME} Rides
           </button>
         </div>
 

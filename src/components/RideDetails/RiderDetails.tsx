@@ -1,8 +1,9 @@
-import { useState } from "react";
+"use client";
 import { Switch } from "@headlessui/react";
 import clsx from "clsx";
+import { useState } from "react";
+import { type User } from "../../types";
 import { PhoneIcon } from "../Icon";
-import { User } from "../../types";
 
 type Props = {
   user: User;

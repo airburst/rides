@@ -1,20 +1,22 @@
+"use client";
+
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { Switch } from "@headlessui/react";
 import clsx from "clsx";
-import { FormEventHandler, useState } from "react";
+import { useState, type FormEventHandler } from "react";
 import {
-  FieldErrorsImpl,
-  UseFormRegister,
-  UseFormReturn,
+  type FieldErrorsImpl,
+  type UseFormRegister,
+  type UseFormReturn,
 } from "react-hook-form";
 import { getNow } from "../../../shared/utils";
 import { RIDER_LIMIT_OPTIONS } from "../../constants";
-import { Preferences, RideFormValues } from "../../types";
+import { type Preferences, type RideFormValues } from "../../types";
 import { Button } from "../Button";
 import { CancelButton } from "../Button/CancelButton";
 import { RepeatingRideForm } from "./RepeatingRideForm";
 
-const today = getNow().split("T")[0] || "";
+const today = getNow().split("T")[0] ?? "";
 
 type RideFormProps = {
   defaultValues: RideFormValues;

@@ -1,6 +1,7 @@
+"use client";
 import { useRouter } from "next/router";
-import { Button } from "./Button";
 import { ChevronLeftIcon } from "../Icon";
+import { Button } from "./Button";
 
 type ButtonProps = {
   url?: string;
@@ -9,9 +10,9 @@ type ButtonProps = {
 export const BackButton = ({ url, ...props }: ButtonProps) => {
   const router = useRouter();
 
-  const goBack = () => {
+  const goBack = async () => {
     if (url) {
-      router.push(url);
+      await router.push(url);
     } else {
       router.back();
     }

@@ -1,3 +1,4 @@
+"use client";
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { Combobox, Switch, Transition } from "@headlessui/react";
 import clsx from "clsx";

@@ -1,12 +1,13 @@
+"use client";
 import { useState } from "react";
-import { Button, BackButton, JoinButton } from "../Button";
-import { MessageIcon } from "../Icon";
+import { hasSpace, isJoinable } from "../../../shared/utils";
+import { type Ride, type User } from "../../types";
 import { Badge } from "../Badge";
-import { User, Ride } from "../../types";
-import { isJoinable, hasSpace } from "../../../shared/utils";
+import { BackButton, Button, JoinButton } from "../Button";
+import { MessageIcon } from "../Icon";
 import { RideInfo } from "./RideInfo";
-import { RidersGoing } from "./RidersGoing";
 import { RideNotes } from "./RideNotes";
+import { RidersGoing } from "./RidersGoing";
 
 type RowProps = {
   children: JSX.Element | JSX.Element[] | null | undefined;
@@ -32,12 +33,12 @@ export const RideDetails = ({ ride, user, role, embedded }: Props) => {
   const hasRiders = users && users?.length > 0;
   const isGoing =
     users && user ? users?.map((u: User) => u.id).includes(user?.id) : false;
-  const isLeader = ["ADMIN", "LEADER"].includes(role || "");
+  const isLeader = ["ADMIN", "LEADER"].includes(role ?? "");
   const isSpace = hasSpace(ride);
   const canJoin = isJoinable(date) && isSpace;
   const rideNotes =
     users && user && users?.find((u: User) => u.id === user.id)?.rideNotes;
-  const riderCount = users?.length || 0;
+  const riderCount = users?.length ?? 0;
   const hasLimit = limit && limit > -1;
   const ridersLabel = hasLimit ? `${riderCount}/${limit}` : riderCount;
 

@@ -1,3 +1,4 @@
+"use client";
 // import autoAnimate from "@formkit/auto-animate";
 import { useRef } from "react";
 import { ungroupRides } from "../../shared/utils";

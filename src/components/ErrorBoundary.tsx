@@ -1,5 +1,6 @@
+"use client";
 /* eslint-disable no-console */
-import React, { Component, ErrorInfo, ReactNode } from "react";
+import { Component, type ErrorInfo, type ReactNode } from "react";
 import { CircleExclamationIcon } from "./Icon";
 
 interface Props {

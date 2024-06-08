@@ -3983,7 +3983,6 @@ __metadata:
     eslint-plugin-prettier: "npm:^5.1.3"
     eslint-plugin-react: "npm:^7.34.2"
     eslint-plugin-react-hooks: "npm:^4.6.2"
-    geist: "npm:^1.3.0"
     jest: "npm:^29.7.0"
     jest-environment-jsdom: "npm:^29.7.0"
     jotai: "npm:^2.8.3"
@@ -6131,15 +6130,6 @@ __metadata:
   version: 1.2.3
   resolution: "functions-have-names@npm:1.2.3"
   checksum: 10/0ddfd3ed1066a55984aaecebf5419fbd9344a5c38dd120ffb0739fac4496758dcf371297440528b115e4367fc46e3abc86a2cc0ff44612181b175ae967a11a05
-  languageName: node
-  linkType: hard
-
-"geist@npm:^1.3.0":
-  version: 1.3.0
-  resolution: "geist@npm:1.3.0"
-  peerDependencies:
-    next: ">=13.2.0 <15.0.0-0"
-  checksum: 10/7a893e770cfa6d89a9659314056776575d6113941a00c1597eb44712f8c9d1e0a1ebba202829a1649224fab4fe9345e3dca34a543985f8a30be3cdc1c9e953b5
   languageName: node
   linkType: hard
 

@@ -1,6 +1,6 @@
-import club from "@/themes/bath";
 import { type Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
+import club from "./src/themes/bath";
 
 export default {
   content: ["./src/**/*.tsx"],

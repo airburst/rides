@@ -1,3 +1,5 @@
+"use client";
+/* eslint-disable @typescript-eslint/no-floating-promises */
 import clsx from "clsx";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -5,7 +7,7 @@ import { useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { isReady } from "../../shared/utils";
-import { Ride, User } from "../types";
+import { type Ride, type User } from "../types";
 import { Cancelled } from "./Cancelled";
 
 type Props = {
@@ -21,8 +23,8 @@ export const Card: React.FC<Props> = ({ ride, user }: Props) => {
   const isNotReady = !isReady(ride);
 
   const details = destination
-    ? `${destination} - ${distance || ""}`
-    : `${distance || ""}`;
+    ? `${destination} - ${distance ?? ""}`
+    : `${distance ?? ""}`;
 
   const targetUrl =
     router.pathname === "/embed"
@@ -102,7 +104,7 @@ export const Card: React.FC<Props> = ({ ride, user }: Props) => {
         </div>
       </div>
 
-      <Cancelled cancelled={ride.cancelled || false} position="bottom" />
+      <Cancelled cancelled={ride.cancelled ?? false} position="bottom" />
     </div>
   );
 };
