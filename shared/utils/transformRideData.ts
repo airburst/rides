@@ -1,5 +1,10 @@
 /* eslint-disable no-restricted-syntax */
-import { FilterQuery, Group, Ride, User } from "../../src/types";
+import {
+  type FilterQuery,
+  type Group,
+  type Ride,
+  type User,
+} from "../../src/types";
 import { formatDate } from "./dates";
 
 const isGoing = (userId: string, users: User[] = []) =>
@@ -12,19 +17,19 @@ const filterOnlyJoined = (rides: Ride[], userId: string) =>
 // that holds them in rides.makeFilterData
 const filterSearchText = (rides: Ride[], searchText: string) =>
   rides.filter((ride) => {
-    const { name, group, destination } = ride;
+    const { name, rideGroup, destination } = ride;
 
     return (
       name?.indexOf(searchText) > -1 ||
-      (group || "")?.indexOf(searchText) > -1 ||
-      (destination || "")?.indexOf(searchText) > -1
+      (rideGroup ?? "")?.indexOf(searchText) > -1 ||
+      (destination ?? "")?.indexOf(searchText) > -1
     );
   });
 
 const filterRides = (
   data: Ride[],
   filterQuery: FilterQuery,
-  user?: User
+  user?: User,
 ): Ride[] => {
   const { onlyJoined, q } = filterQuery;
 
@@ -50,7 +55,7 @@ const groupByType = (data: Ride[]) => {
 
   for (const ride of data) {
     const d = ride.name;
-    const rideList = groupedByName.get(d) || [];
+    const rideList = groupedByName.get(d) ?? [];
     rideList.push(ride);
     groupedByName.set(d, rideList);
   }
@@ -61,7 +66,7 @@ const groupByType = (data: Ride[]) => {
 export const groupRides = (
   data: Ride[],
   filterQuery?: FilterQuery,
-  user?: User
+  user?: User,
 ): Group[] => {
   // data can be an empty object when db connection is unavailable
   if (!Array.isArray(data)) {
@@ -77,8 +82,8 @@ export const groupRides = (
     : data;
 
   for (const ride of filteredRides) {
-    const d = formatDate(ride.date);
-    const rideList = groupedByDate.get(d) || [];
+    const d = formatDate(ride.rideDate);
+    const rideList = groupedByDate.get(d) ?? [];
 
     rideList.push(ride);
     groupedByDate.set(d, rideList);
@@ -94,8 +99,8 @@ export const groupRides = (
 
 export const ungroupRides = (group: Group) =>
   Object.entries(group).flatMap(([date, types]) =>
-    Object.entries(types).map(([type, rides]) => ({ date, type, rides }))
+    Object.entries(types).map(([type, rides]) => ({ date, type, rides })),
   );
 
 export const mapRidesToDate = (rides: Ride[], date: string): Ride[] =>
-  rides.filter((r) => r?.date?.startsWith(date));
+  rides.filter((r) => r?.rideDate?.startsWith(date));

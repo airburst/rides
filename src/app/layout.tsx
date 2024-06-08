@@ -43,7 +43,7 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <Header isAuthenticated={false} role="ADMIN" />
+        <Header />
         {children}
       </body>
     </html>

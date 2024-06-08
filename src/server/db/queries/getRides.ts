@@ -1,14 +1,10 @@
 import { db } from "@/server/db";
 import { rides } from "@/server/db/schema";
+import { type Ride, type RideData } from "@/types";
+import { formatRideData } from "@utils/rides";
 import { asc, desc } from "drizzle-orm";
 
-export const dynamic = "force-dynamic"; // defaults to auto
-
-export async function GET() {
-  return await getRides();
-}
-
-export const getRides = async () => {
+export const getRides = async (): Promise<{ rides: Ride[]; error?: Error }> => {
   try {
     const result = await db.query.rides.findMany({
       columns: {
@@ -19,6 +15,7 @@ export const getRides = async () => {
         destination: true,
         distance: true,
         cancelled: true,
+        createdAt: true,
       },
       with: {
         users: {
@@ -43,8 +40,13 @@ export const getRides = async () => {
       orderBy: [asc(rides.rideDate), asc(rides.name), desc(rides.distance)],
     });
 
-    return Response.json(result);
+    return {
+      rides: result.map((ride) => formatRideData(ride as unknown as RideData)),
+    };
   } catch (error) {
-    return new Error("Unable to fetch rides");
+    return {
+      rides: [],
+      error: new Error("Unable to fetch rides"),
+    };
   }
 };

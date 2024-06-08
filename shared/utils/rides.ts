@@ -1,12 +1,12 @@
 import { DEFAULT_PREFERENCES } from "../../src/constants";
-import { type Preferences, type Ride, type User } from "../../src/types";
+import {
+  type Preferences,
+  type Ride,
+  type RideData,
+  type User,
+} from "../../src/types";
 import { getRideDateAndTime } from "./dates";
 import { getPreferences } from "./preferences";
-
-type RideData = Ride & {
-  users: User[];
-  createdAt: Date;
-};
 
 export const formatUserName = (name: string | null | undefined): string => {
   if (!name) {
@@ -74,9 +74,9 @@ export const convertToKms = (miles: number): number =>
 export const convertDistance = (
   distance: number | null,
   units: string | undefined,
-) => {
+): string => {
   if (!distance) {
-    return null;
+    return "Not set";
   }
   if (units !== DEFAULT_PREFERENCES.units) {
     return `${convertToMiles(distance || 0)} ${units}`;
@@ -86,21 +86,21 @@ export const convertDistance = (
 
 export const formatRideData = (
   ride: RideData,
-  preferences: Preferences | undefined,
+  preferences?: Preferences,
   // isAuth = false,
-) => {
+): Ride => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { date, createdAt, users, distance, speed, ...rest } = ride;
-  const { day, time } = getRideDateAndTime(new Date(date).toISOString());
-  const units = preferences?.units;
+  const { rideDate, createdAt, users, distance, speed, ...rest } = ride;
+  const { day, time } = getRideDateAndTime(new Date(rideDate).toISOString());
+  const units = (preferences ?? DEFAULT_PREFERENCES)?.units;
 
   return {
     ...rest,
-    date: new Date(date).toISOString(),
+    rideDate: new Date(rideDate).toISOString(),
     day,
     time,
     distance: convertDistance(distance ?? 0, units),
-    speed: convertDistance(speed ?? 0, units),
+    // speed: convertDistance(speed ?? 0, units),
     // users: users.map(({ user: u, notes }) => ({
     //   ...formatUser(u, notes, isAuth),
     // })),
@@ -118,13 +118,13 @@ export const formatInitials = (words: string): string => {
 
 export const formatRideBadge = (ride: Ride): string => {
   if (ride.name === "Paceline" || ride.name === "Sunday Ride") {
-    return ride.group
-      ? ride.group.substring(0, 3) + ride.group.replace(/\D/g, "")
+    return ride.rideGroup
+      ? ride.rideGroup.substring(0, 3) + ride.rideGroup.replace(/\D/g, "")
       : ride.name.substring(0, 3);
   }
 
   const name = formatInitials(ride.name);
-  const group = ride.group ? ` ${formatInitials(ride.group)}` : "";
+  const group = ride.rideGroup ? ` ${formatInitials(ride.rideGroup)}` : "";
   return `${name}${group}`;
 };
 
@@ -143,7 +143,11 @@ export const makeFilterData = (
   rides: Ride[],
 ): (string | null | undefined)[] => {
   const data = new Set(
-    rides.flatMap(({ name, group, destination }) => [name, group, destination]),
+    rides.flatMap(({ name, rideGroup, destination }) => [
+      name,
+      rideGroup,
+      destination,
+    ]),
   );
 
   data.delete("");

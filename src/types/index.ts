@@ -22,14 +22,12 @@ export type DbResponse<T> = {
   loading?: boolean;
 };
 
-export type Ride = {
+export type RideData = {
   id?: string;
   name: string;
-  date: string;
-  day: string;
-  time: string;
+  rideDate: string;
   destination?: string | null;
-  group?: string | null;
+  rideGroup?: string | null;
   distance?: number | null;
   meetPoint?: string | null;
   route?: string | null;
@@ -39,7 +37,15 @@ export type Ride = {
   cancelled?: boolean;
   limit?: number;
   scheduleId?: string;
+  createdAt: string;
   users?: User[];
+};
+
+export type Ride = RideData & {
+  day: string;
+  time: string;
+  distance: string;
+  speed?: string;
 };
 
 export type RideNote = {
