@@ -1,5 +1,5 @@
 import { makeClickableUrl } from "../../../shared/utils";
-import { Ride, User } from "../../types";
+import { type Ride, type User } from "../../types";
 import { Cancelled } from "../Cancelled";
 import { Messages } from "./Messages";
 import { Row } from "./Row";
@@ -11,7 +11,7 @@ type Props = {
 export const RideInfo = ({ ride }: Props) => {
   const {
     name,
-    group,
+    rideGroup,
     time,
     meetPoint,
     destination,
@@ -43,10 +43,10 @@ export const RideInfo = ({ ride }: Props) => {
             {name}
           </div>
         </Row>
-        {group && (
+        {rideGroup && (
           <Row>
             <div>Group</div>
-            <div className="min-w-0">{group}</div>
+            <div className="min-w-0">{rideGroup}</div>
           </Row>
         )}
         {meetPoint && (
@@ -91,7 +91,7 @@ export const RideInfo = ({ ride }: Props) => {
             </a>
           </Row>
         )}
-        <Cancelled cancelled={cancelled || false} position="bottom" />
+        <Cancelled cancelled={cancelled ?? false} position="bottom" />
       </div>
 
       {notes && (

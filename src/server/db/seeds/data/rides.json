@@ -1,7 +1,7 @@
 [
   {
     "id": "clvn65kcp001yatn9re1yypxx",
-    "name": "Paceline",
+    "name": "paceline",
     "rideGroup": "1 - (1 hr 49)",
     "destination": null,
     "limit": 7,
@@ -14,7 +14,7 @@
   },
   {
     "id": "clvn65kau0006atn9227j9y2k",
-    "name": "Paceline",
+    "name": "paceline",
     "rideGroup": "2 - (1 hr 53)",
     "destination": "",
     "limit": 8,
@@ -27,7 +27,7 @@
   },
   {
     "id": "clvn65kba000catn9m19uak72",
-    "name": "Paceline",
+    "name": "paceline",
     "rideGroup": "3 - (1 hr 57)",
     "destination": null,
     "limit": 7,
@@ -40,7 +40,7 @@
   },
   {
     "id": "clvn65k8l0001atn9b87oi2dp",
-    "name": "Paceline",
+    "name": "paceline",
     "rideGroup": "4 - (2 hr)",
     "destination": "",
     "limit": 8,
@@ -53,7 +53,7 @@
   },
   {
     "id": "clvn65kbe000hatn97uyn7s0b",
-    "name": "Paceline",
+    "name": "paceline",
     "rideGroup": "5 - (2 hr 5min)",
     "destination": null,
     "limit": 7,
@@ -66,7 +66,7 @@
   },
   {
     "id": "clvn65kch001latn9jl7sivnl",
-    "name": "PACELINE",
+    "name": "paceline",
     "rideGroup": "Rockers",
     "destination": "Chelsea Road",
     "limit": -1,
@@ -274,7 +274,7 @@
   },
   {
     "id": "clvn65kcp001zatn9cbmesg3a",
-    "name": "Paceline",
+    "name": "paceline",
     "rideGroup": "1 - (1 hr 49)",
     "destination": null,
     "limit": 7,
@@ -287,7 +287,7 @@
   },
   {
     "id": "clvn65kau0007atn9x6j7ej7r",
-    "name": "Paceline",
+    "name": "paceline",
     "rideGroup": "2 - (1 hr 53)",
     "destination": null,
     "limit": 7,
@@ -300,7 +300,7 @@
   },
   {
     "id": "clvn65kba000datn9k0h5j051",
-    "name": "Paceline",
+    "name": "paceline",
     "rideGroup": "3 - (1 hr 57)",
     "destination": null,
     "limit": 7,
@@ -313,7 +313,7 @@
   },
   {
     "id": "clvn65k8l0002atn95jchklze",
-    "name": "Paceline",
+    "name": "paceline",
     "rideGroup": "4 - (2 hr)",
     "destination": null,
     "limit": 7,
@@ -326,7 +326,7 @@
   },
   {
     "id": "clvn65kbe000iatn9i7j2l64u",
-    "name": "Paceline",
+    "name": "paceline",
     "rideGroup": "5 - (2 hr 5min)",
     "destination": null,
     "limit": 7,
@@ -339,7 +339,7 @@
   },
   {
     "id": "clvn65kch001matn9ac65y9bu",
-    "name": "PACELINE",
+    "name": "paceline",
     "rideGroup": "Rockers",
     "destination": "Chelsea Road",
     "limit": -1,
@@ -495,7 +495,7 @@
   },
   {
     "id": "clvn65kcp0020atn9yo2vhuon",
-    "name": "Paceline",
+    "name": "paceline",
     "rideGroup": "1 - (1 hr 49)",
     "destination": null,
     "limit": 7,
@@ -508,7 +508,7 @@
   },
   {
     "id": "clvn65kau0008atn9gp3krgta",
-    "name": "Paceline",
+    "name": "paceline",
     "rideGroup": "2 - (1 hr 53)",
     "destination": null,
     "limit": 7,
@@ -521,7 +521,7 @@
   },
   {
     "id": "clvn65kba000eatn9b317e7d1",
-    "name": "Paceline",
+    "name": "paceline",
     "rideGroup": "3 - (1 hr 57)",
     "destination": null,
     "limit": 7,
@@ -534,7 +534,7 @@
   },
   {
     "id": "clvn65k8l0003atn9r0y5opor",
-    "name": "Paceline",
+    "name": "paceline",
     "rideGroup": "4 - (2 hr)",
     "destination": null,
     "limit": 7,
@@ -547,7 +547,7 @@
   },
   {
     "id": "clvn65kbe000jatn97udjvf02",
-    "name": "Paceline",
+    "name": "paceline",
     "rideGroup": "5 - (2 hr 5min)",
     "destination": null,
     "limit": 7,
@@ -560,7 +560,7 @@
   },
   {
     "id": "clvn65kch001natn95gup9aks",
-    "name": "PACELINE",
+    "name": "paceline",
     "rideGroup": "Rockers",
     "destination": "Chelsea Road",
     "limit": -1,

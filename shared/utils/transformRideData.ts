@@ -3,19 +3,20 @@ import {
   type FilterQuery,
   type Group,
   type Ride,
+  type RideList,
   type User,
 } from "../../src/types";
 import { formatDate } from "./dates";
 
-const isGoing = (userId: string, users: User[] = []) =>
-  users.map((u: User) => u.id).includes(userId);
+const isGoing = (userId: string, users?: { userId: string | undefined }[]) =>
+  users?.map((u) => u.userId).includes(userId);
 
-const filterOnlyJoined = (rides: Ride[], userId: string) =>
+const filterOnlyJoined = (rides: RideList[], userId: string) =>
   rides.filter((ride) => isGoing(userId, ride.users));
 
 // NOTE: If you change the filters here, also change the Set
 // that holds them in rides.makeFilterData
-const filterSearchText = (rides: Ride[], searchText: string) =>
+const filterSearchText = (rides: RideList[], searchText: string) =>
   rides.filter((ride) => {
     const { name, rideGroup, destination } = ride;
 
@@ -27,17 +28,17 @@ const filterSearchText = (rides: Ride[], searchText: string) =>
   });
 
 const filterRides = (
-  data: Ride[],
+  data: RideList[],
   filterQuery: FilterQuery,
   user?: User,
-): Ride[] => {
+): RideList[] => {
   const { onlyJoined, q } = filterQuery;
 
   if (!q && !onlyJoined) {
     return data;
   }
 
-  let filteredData: Ride[] = data;
+  let filteredData: RideList[] = data;
 
   if (onlyJoined && user?.id) {
     filteredData = filterOnlyJoined(data, user.id);
@@ -49,9 +50,9 @@ const filterRides = (
   return filteredData;
 };
 
-const groupByType = (data: Ride[]) => {
+const groupByType = (data: RideList[]) => {
   // Group rides by date, then type
-  const groupedByName = new Map<string, Ride[]>();
+  const groupedByName = new Map<string, RideList[]>();
 
   for (const ride of data) {
     const d = ride.name;
@@ -64,7 +65,7 @@ const groupByType = (data: Ride[]) => {
 };
 
 export const groupRides = (
-  data: Ride[],
+  data: RideList[],
   filterQuery?: FilterQuery,
   user?: User,
 ): Group[] => {
@@ -74,7 +75,7 @@ export const groupRides = (
     console.log("Database error");
   }
   // Group rides by date
-  const groupedByDate = new Map<string, Ride[]>();
+  const groupedByDate = new Map<string, RideList[]>();
 
   // Filter ride list
   const filteredRides = filterQuery

@@ -28,14 +28,14 @@ type Props = {
 
 export const RideDetails = ({ ride, user, role, embedded }: Props) => {
   const [showNotesForm, setShowNotesForm] = useState<boolean>(false);
-  const { id, name, date, day, cancelled, limit, users } = ride;
+  const { id, name, rideDate, day, cancelled, limit, users } = ride;
 
   const hasRiders = users && users?.length > 0;
   const isGoing =
     users && user ? users?.map((u: User) => u.id).includes(user?.id) : false;
   const isLeader = ["ADMIN", "LEADER"].includes(role ?? "");
   const isSpace = hasSpace(ride);
-  const canJoin = isJoinable(date) && isSpace;
+  const canJoin = isJoinable(rideDate) && isSpace;
   const rideNotes =
     users && user && users?.find((u: User) => u.id === user.id)?.rideNotes;
   const riderCount = users?.length ?? 0;

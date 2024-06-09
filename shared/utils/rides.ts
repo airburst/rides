@@ -2,7 +2,7 @@ import { DEFAULT_PREFERENCES } from "../../src/constants";
 import {
   type Preferences,
   type Ride,
-  type RideData,
+  type RideList,
   type User,
 } from "../../src/types";
 import { getRideDateAndTime } from "./dates";
@@ -72,11 +72,14 @@ export const convertToKms = (miles: number): number =>
   Math.ceil(miles * 1.6142);
 
 export const convertDistance = (
-  distance: number | null,
+  distance: number | null | string,
   units: string | undefined,
 ): string => {
   if (!distance) {
     return "Not set";
+  }
+  if (typeof distance === "string") {
+    distance = parseFloat(distance);
   }
   if (units !== DEFAULT_PREFERENCES.units) {
     return `${convertToMiles(distance || 0)} ${units}`;
@@ -85,12 +88,12 @@ export const convertDistance = (
 };
 
 export const formatRideData = (
-  ride: RideData,
+  ride: RideList,
   preferences?: Preferences,
   // isAuth = false,
-): Ride => {
+): RideList => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { rideDate, createdAt, users, distance, speed, ...rest } = ride;
+  const { rideDate, users, distance, speed, ...rest } = ride;
   const { day, time } = getRideDateAndTime(new Date(rideDate).toISOString());
   const units = (preferences ?? DEFAULT_PREFERENCES)?.units;
 
@@ -101,9 +104,7 @@ export const formatRideData = (
     time,
     distance: convertDistance(distance ?? 0, units),
     // speed: convertDistance(speed ?? 0, units),
-    // users: users.map(({ user: u, notes }) => ({
-    //   ...formatUser(u, notes, isAuth),
-    // })),
+    users,
   };
 };
 
@@ -130,7 +131,7 @@ export const formatRideBadge = (ride: Ride): string => {
 
 // Rides are generated with TBA as route and leader
 // Return true if these have not been changed
-export const isReady = (ride: Ride): boolean => {
+export const isReady = (ride: Ride | RideList): boolean => {
   const { leader, route } = ride;
   if (!leader && !route) {
     return false;

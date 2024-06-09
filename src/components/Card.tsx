@@ -2,23 +2,21 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 import clsx from "clsx";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import { useState } from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { isReady } from "../../shared/utils";
-import { type Ride, type User } from "../types";
+import { type RideList, type User } from "../types";
 import { Cancelled } from "./Cancelled";
 
 type Props = {
-  ride: Ride;
+  ride: RideList;
   user?: User;
 };
 
 export const Card: React.FC<Props> = ({ ride, user }: Props) => {
   const [isSwiping, setSwiping] = useState(false);
-  const router = useRouter();
-  const { id, name, date, time, group, destination, distance, limit, users } =
+  const { id, name, time, rideGroup, destination, distance, limit, users } =
     ride;
   const isNotReady = !isReady(ride);
 
@@ -26,19 +24,19 @@ export const Card: React.FC<Props> = ({ ride, user }: Props) => {
     ? `${destination} - ${distance ?? ""}`
     : `${distance ?? ""}`;
 
-  const targetUrl =
-    router.pathname === "/embed"
-      ? `/embed/${id}`
-      : `/ride/${id}/${date.split("T")[0]}`;
+  // const targetUrl =
+  //   router.pathname === "/embed"
+  //     ? `/embed/${id}`
+  //     : `/ride/${id}/${rideDate.split("T")[0]}`;
 
-  const onPress = () => router.push(targetUrl);
+  const onPress = () => console.log("TODO: Navigate to ride details");
 
   if (!id) {
     return null;
   }
 
-  const isGoing = user ? users?.map((u) => u.id).includes(user.id) : false;
-  const riderCount = users?.length;
+  const isGoing = user ? users?.map((u) => u.userId).includes(user.id) : false;
+  const riderCount = users?.length ?? 0;
   const hasLimit = limit && limit > -1;
   const ridersLabel = hasLimit ? `${riderCount}/${limit}` : riderCount;
 
@@ -79,7 +77,7 @@ export const Card: React.FC<Props> = ({ ride, user }: Props) => {
       <div className={cardClass}>
         <div className={titleClass}>
           {name}
-          {group ? `: ${group}` : ""}{" "}
+          {rideGroup ? `: ${rideGroup}` : ""}{" "}
         </div>
 
         {isGoing && (

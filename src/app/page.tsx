@@ -1,6 +1,7 @@
-import { MainContent } from "@/components";
+import { MainContent, RideGroup } from "@/components";
 import { getRides } from "@/server/db/queries/getRides";
 import { type Preferences, type Role } from "@/types";
+import { formatDate, getNextWeek } from "@utils/dates";
 import { groupRides } from "@utils/transformRideData";
 
 export const dynamic = "force-dynamic"; // Always revalidate
@@ -15,6 +16,8 @@ const MOCK_USER = {
   "role": "ADMIN" as Role,
   "preferences": { "units": "km" } as Preferences
 }
+
+const nextDate = getNextWeek();
 
 export default async function HomePage() {
   const { rides, error } = await getRides();
@@ -32,34 +35,10 @@ export default async function HomePage() {
   }
 
   const groupedRides = groupRides(rides, undefined, MOCK_USER);
-  console.log("🚀 ~ HomePage ~ groupedRides:", groupedRides)
   const ridesFound = groupedRides.length > 0;
 
   return (
     <MainContent>
-      <div className="grid w-full grid-cols-1 gap-4 md:gap-8">
-        <div className="flex h-full items-center p-8 pt-32 text-2xl">
-          {JSON.stringify(groupedRides, null, 2)}
-        </div>
-      </div>
-    </MainContent>
-  );
-}
-
-/*
-const groupedRides = groupRides(data, filterQuery, user);
-  const ridesFound = groupedRides.length > 0;
-
-  return (
-    <>
-      <Head>
-        <title>{`${NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`}</title>
-        <meta
-          name="description"
-          content={`${NEXT_PUBLIC_CLUB_LONG_NAME} Ride Planner`}
-        />
-      </Head>
-
       <div className="grid w-full grid-cols-1 gap-4 md:gap-8">
         {ridesFound ? (
           <>
@@ -67,7 +46,7 @@ const groupedRides = groupRides(data, filterQuery, user);
               <RideGroup
                 key={Object.keys(group)[0]}
                 group={group}
-                user={user}
+                user={MOCK_USER}
               />
             ))}
           </>
@@ -77,6 +56,18 @@ const groupedRides = groupRides(data, filterQuery, user);
           </div>
         )}
       </div>
+    </MainContent>
+  );
+}
+
+/*
+      <Head>
+        <title>{`${NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`}</title>
+        <meta
+          name="description"
+          content={`${NEXT_PUBLIC_CLUB_LONG_NAME} Ride Planner`}
+        />
+      </Head>
 
       <Filters
         data={makeFilterData(data)}

@@ -1,6 +1,5 @@
 "use client";
 // import autoAnimate from "@formkit/auto-animate";
-import { useRef } from "react";
 import { ungroupRides } from "../../shared/utils";
 import { type Group, type User } from "../types";
 import { Card, CardSkeleton } from "./Card";
@@ -15,7 +14,7 @@ export const RideGroup = ({ group, user }: Props) => {
   const rideDate = rideData.map(({ date }) => date)[0];
   const types = rideData.map(({ rides }) => ({ rides }));
 
-  const parent = useRef(null);
+  // const parent = useRef(null);
 
   // useEffect(() => {
   //   if (parent.current) {
@@ -24,7 +23,7 @@ export const RideGroup = ({ group, user }: Props) => {
   // }, [parent]);
 
   return (
-    <div className="flex w-full flex-col items-start gap-2" ref={parent}>
+    <div className="flex w-full flex-col items-start gap-2">
       <div className="flex w-full justify-center bg-primary p-2 font-bold uppercase tracking-widest text-white sm:rounded">
         <div>{rideDate}</div>
       </div>
