@@ -1,6 +1,8 @@
 import { Header } from "@/components";
+import { RideGroupSkeleton } from "@/components/RideGroupSkeleton";
 import "@/styles/globals.css";
 import { Outfit } from "next/font/google";
+import { Suspense } from "react";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -45,7 +47,9 @@ export default function RootLayout({
       </head>
       <body>
         <Header />
-        {children}
+        <Suspense fallback={<RideGroupSkeleton />}>
+          {children}
+        </Suspense>
       </body>
     </html>
   );

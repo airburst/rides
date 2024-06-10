@@ -14,6 +14,7 @@ export * from "./RideDetails";
 export * from "./RideDetails/RideDetailsSkeleton";
 export * from "./RideDetails/RiderDetails";
 export * from "./RideGroup";
+export * from "./RideGroupSkeleton";
 export * from "./forms/ManagedUserForm";
 export * from "./forms/RideForm";
 export * from "./forms/UserProfileForm";
