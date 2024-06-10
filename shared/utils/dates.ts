@@ -1,6 +1,6 @@
 import { FOREVER } from "@/constants";
 import dayjs from "dayjs";
-import utc from "dayjs/plugin/utc";
+import utc from "dayjs/plugin/utc.js";
 
 dayjs.extend(utc);
 
@@ -139,7 +139,7 @@ export const isWinter = (date: string): boolean => {
   return month > 10 || month < 2;
 };
 
-const getDateStub = (date: string) => {
+export const getDateStub = (date: string) => {
   const parts = date.split("-");
   return `${parts[0]}-${parts[1]}`;
 };

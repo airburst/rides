@@ -5,12 +5,8 @@
     "rideGroup": "1 - (1 hr 49)",
     "destination": null,
     "limit": 7,
-    "cancelled": false,
     "rideDate": "2024-06-08T08:40:00.000Z",
-    "day": "Saturday 08 June",
-    "time": "08:40",
-    "distance": 70,
-    "users": []
+    "distance": 70
   },
   {
     "id": "clvn65kau0006atn9227j9y2k",
@@ -18,12 +14,8 @@
     "rideGroup": "2 - (1 hr 53)",
     "destination": "",
     "limit": 8,
-    "cancelled": false,
     "rideDate": "2024-06-08T08:41:00.000Z",
-    "day": "Saturday 08 June",
-    "time": "08:41",
-    "distance": 70,
-    "users": []
+    "distance": 70
   },
   {
     "id": "clvn65kba000catn9m19uak72",
@@ -31,12 +23,8 @@
     "rideGroup": "3 - (1 hr 57)",
     "destination": null,
     "limit": 7,
-    "cancelled": false,
     "rideDate": "2024-06-08T08:42:00.000Z",
-    "day": "Saturday 08 June",
-    "time": "08:42",
-    "distance": 70,
-    "users": []
+    "distance": 70
   },
   {
     "id": "clvn65k8l0001atn9b87oi2dp",
@@ -44,12 +32,8 @@
     "rideGroup": "4 - (2 hr)",
     "destination": "",
     "limit": 8,
-    "cancelled": false,
     "rideDate": "2024-06-08T08:43:00.000Z",
-    "day": "Saturday 08 June",
-    "time": "08:43",
-    "distance": 70,
-    "users": []
+    "distance": 70
   },
   {
     "id": "clvn65kbe000hatn97uyn7s0b",
@@ -57,12 +41,8 @@
     "rideGroup": "5 - (2 hr 5min)",
     "destination": null,
     "limit": 7,
-    "cancelled": false,
     "rideDate": "2024-06-08T08:44:00.000Z",
-    "day": "Saturday 08 June",
-    "time": "08:44",
-    "distance": 70,
-    "users": []
+    "distance": 70
   },
   {
     "id": "clvn65kch001latn9jl7sivnl",
@@ -70,12 +50,8 @@
     "rideGroup": "Rockers",
     "destination": "Chelsea Road",
     "limit": -1,
-    "cancelled": false,
     "rideDate": "2024-06-08T08:45:00.000Z",
-    "day": "Saturday 08 June",
-    "time": "08:45",
-    "distance": 70,
-    "users": []
+    "distance": 70
   },
   {
     "id": "clvn65kbu000satn96t1thr4o",
@@ -83,12 +59,8 @@
     "rideGroup": "Longer",
     "destination": "Blagdon Coffee Station",
     "limit": -1,
-    "cancelled": false,
     "rideDate": "2024-06-08T09:00:00.000Z",
-    "day": "Saturday 08 June",
-    "time": "09:00",
-    "distance": 70,
-    "users": []
+    "distance": 70
   },
   {
     "id": "clvn65kbt000natn92wrcfixi",
@@ -96,12 +68,8 @@
     "rideGroup": "Shorter",
     "destination": null,
     "limit": -1,
-    "cancelled": false,
     "rideDate": "2024-06-08T09:00:00.000Z",
-    "day": "Saturday 08 June",
-    "time": "09:00",
-    "distance": 40,
-    "users": []
+    "distance": 40
   },
   {
     "id": "clvn65kc30012atn9mc320btl",
@@ -109,12 +77,8 @@
     "rideGroup": "Espresso",
     "destination": "Water Parks 118km CW",
     "limit": -1,
-    "cancelled": false,
     "rideDate": "2024-06-09T08:30:00.000Z",
-    "day": "Sunday 09 June",
-    "time": "08:30",
-    "distance": 118,
-    "users": []
+    "distance": 118
   },
   {
     "id": "clvn65kcf001datn9cfj983ci",
@@ -122,25 +86,8 @@
     "rideGroup": "Double Espresso",
     "destination": "Maiden Bradley",
     "limit": -1,
-    "cancelled": false,
     "rideDate": "2024-06-09T08:30:00.000Z",
-    "day": "Sunday 09 June",
-    "time": "08:30",
-    "distance": 105,
-    "users": []
-  },
-  {
-    "id": "clvn65kcj001qatn90th5u90u",
-    "name": "Sunday Ride",
-    "rideGroup": "Fast >28kph",
-    "destination": "",
-    "limit": -1,
-    "cancelled": false,
-    "rideDate": "2024-06-09T08:30:00.000Z",
-    "day": "Sunday 09 June",
-    "time": "08:30",
-    "distance": 100,
-    "users": []
+    "distance": 105
   },
   {
     "id": "clvn65kc50017atn91rclqe5a",
@@ -148,25 +95,8 @@
     "rideGroup": "Americano",
     "destination": "Maiden Bradley (Race HQ)",
     "limit": -1,
-    "cancelled": false,
     "rideDate": "2024-06-09T08:30:00.000Z",
-    "day": "Sunday 09 June",
-    "time": "08:30",
-    "distance": 95,
-    "users": []
-  },
-  {
-    "id": "clvn65kbw000xatn9dztuq6ru",
-    "name": "Sunday Ride",
-    "rideGroup": "Espresso #2",
-    "destination": null,
-    "limit": -1,
-    "cancelled": false,
-    "rideDate": "2024-06-09T08:30:00.000Z",
-    "day": "Sunday 09 June",
-    "time": "08:30",
-    "distance": 95,
-    "users": []
+    "distance": 95
   },
   {
     "id": "clvn65kcg001hatn91a74lcqd",
@@ -174,25 +104,8 @@
     "rideGroup": "Double Shot Latte",
     "destination": "Maiden Bradley Race HQ (cash only)",
     "limit": -1,
-    "cancelled": false,
     "rideDate": "2024-06-09T08:30:00.000Z",
-    "day": "Sunday 09 June",
-    "time": "08:30",
-    "distance": 81,
-    "users": []
-  },
-  {
-    "id": "clr92gmyf0000jn08n4w1hm5l",
-    "name": "Bath CC 25mile Time Trial (inc. road bike category)",
-    "rideGroup": "25mi Time Trial",
-    "destination": "BathCC 25mi Time Trial ",
-    "limit": -1,
-    "cancelled": false,
-    "rideDate": "2024-06-09T09:00:00.000Z",
-    "day": "Sunday 09 June",
-    "time": "09:00",
-    "distance": 40,
-    "users": []
+    "distance": 81
   },
   {
     "id": "clvn65kcs0023atn9zk9e4nwi",
@@ -200,12 +113,8 @@
     "rideGroup": null,
     "destination": null,
     "limit": -1,
-    "cancelled": false,
     "rideDate": "2024-06-11T09:00:00.000Z",
-    "day": "Tuesday 11 June",
-    "time": "09:00",
-    "distance": 99,
-    "users": []
+    "distance": 99
   },
   {
     "id": "clvn65kct0027atn95q781d8l",
@@ -213,12 +122,8 @@
     "rideGroup": "",
     "destination": "Leaf and Ground",
     "limit": -1,
-    "cancelled": false,
     "rideDate": "2024-06-12T09:15:00.000Z",
-    "day": "Wednesday 12 June",
-    "time": "09:15",
-    "distance": 100,
-    "users": []
+    "distance": 100
   },
   {
     "id": "clvtrhuqf000614l64xp7j2dw",
@@ -226,12 +131,8 @@
     "rideGroup": "All",
     "destination": "Locksbrook",
     "limit": -1,
-    "cancelled": false,
     "rideDate": "2024-06-13T18:15:00.000Z",
-    "day": "Thursday 13 June",
-    "time": "18:15",
-    "distance": 45,
-    "users": []
+    "distance": 45
   },
   {
     "id": "clvn65kc9001batn9xjzzcm2o",
@@ -239,12 +140,8 @@
     "rideGroup": "Medium",
     "destination": null,
     "limit": -1,
-    "cancelled": false,
     "rideDate": "2024-06-14T09:00:00.000Z",
-    "day": "Friday 14 June",
-    "time": "09:00",
-    "distance": 35,
-    "users": []
+    "distance": 35
   },
   {
     "id": "clvn65kc7001aatn9r77vx4ig",
@@ -252,12 +149,8 @@
     "rideGroup": "Steady",
     "destination": null,
     "limit": -1,
-    "cancelled": false,
     "rideDate": "2024-06-14T09:00:00.000Z",
-    "day": "Friday 14 June",
-    "time": "09:00",
-    "distance": 35,
-    "users": []
+    "distance": 35
   },
   {
     "id": "clvn65kc50015atn9s2ube44d",
@@ -265,12 +158,8 @@
     "rideGroup": "Quicker",
     "destination": null,
     "limit": -1,
-    "cancelled": false,
     "rideDate": "2024-06-14T09:00:00.000Z",
-    "day": "Friday 14 June",
-    "time": "09:00",
-    "distance": 35,
-    "users": []
+    "distance": 35
   },
   {
     "id": "clvn65kcp001zatn9cbmesg3a",
@@ -278,12 +167,8 @@
     "rideGroup": "1 - (1 hr 49)",
     "destination": null,
     "limit": 7,
-    "cancelled": false,
     "rideDate": "2024-06-15T08:40:00.000Z",
-    "day": "Saturday 15 June",
-    "time": "08:40",
-    "distance": 70,
-    "users": []
+    "distance": 70
   },
   {
     "id": "clvn65kau0007atn9x6j7ej7r",
@@ -291,12 +176,8 @@
     "rideGroup": "2 - (1 hr 53)",
     "destination": null,
     "limit": 7,
-    "cancelled": false,
     "rideDate": "2024-06-15T08:41:00.000Z",
-    "day": "Saturday 15 June",
-    "time": "08:41",
-    "distance": 70,
-    "users": []
+    "distance": 70
   },
   {
     "id": "clvn65kba000datn9k0h5j051",
@@ -304,12 +185,8 @@
     "rideGroup": "3 - (1 hr 57)",
     "destination": null,
     "limit": 7,
-    "cancelled": false,
     "rideDate": "2024-06-15T08:42:00.000Z",
-    "day": "Saturday 15 June",
-    "time": "08:42",
-    "distance": 70,
-    "users": []
+    "distance": 70
   },
   {
     "id": "clvn65k8l0002atn95jchklze",
@@ -317,12 +194,8 @@
     "rideGroup": "4 - (2 hr)",
     "destination": null,
     "limit": 7,
-    "cancelled": false,
     "rideDate": "2024-06-15T08:43:00.000Z",
-    "day": "Saturday 15 June",
-    "time": "08:43",
-    "distance": 70,
-    "users": []
+    "distance": 70
   },
   {
     "id": "clvn65kbe000iatn9i7j2l64u",
@@ -330,12 +203,8 @@
     "rideGroup": "5 - (2 hr 5min)",
     "destination": null,
     "limit": 7,
-    "cancelled": false,
     "rideDate": "2024-06-15T08:44:00.000Z",
-    "day": "Saturday 15 June",
-    "time": "08:44",
-    "distance": 70,
-    "users": []
+    "distance": 70
   },
   {
     "id": "clvn65kch001matn9ac65y9bu",
@@ -343,12 +212,8 @@
     "rideGroup": "Rockers",
     "destination": "Chelsea Road",
     "limit": -1,
-    "cancelled": false,
     "rideDate": "2024-06-15T08:45:00.000Z",
-    "day": "Saturday 15 June",
-    "time": "08:45",
-    "distance": 70,
-    "users": []
+    "distance": 70
   },
   {
     "id": "clvn65kbu000tatn9kmi9henl",
@@ -356,12 +221,8 @@
     "rideGroup": "Longer",
     "destination": null,
     "limit": -1,
-    "cancelled": false,
     "rideDate": "2024-06-15T09:00:00.000Z",
-    "day": "Saturday 15 June",
-    "time": "09:00",
-    "distance": 70,
-    "users": []
+    "distance": 70
   },
   {
     "id": "clvn65kbt000oatn9zs3gtlz3",
@@ -369,12 +230,8 @@
     "rideGroup": "Shorter",
     "destination": null,
     "limit": -1,
-    "cancelled": false,
     "rideDate": "2024-06-15T09:00:00.000Z",
-    "day": "Saturday 15 June",
-    "time": "09:00",
-    "distance": 40,
-    "users": []
+    "distance": 40
   },
   {
     "id": "clvn65kcf001eatn9hypdwii2",
@@ -382,12 +239,8 @@
     "rideGroup": "Double Espresso",
     "destination": null,
     "limit": -1,
-    "cancelled": false,
     "rideDate": "2024-06-16T08:30:00.000Z",
-    "day": "Sunday 16 June",
-    "time": "08:30",
-    "distance": 110,
-    "users": []
+    "distance": 110
   },
   {
     "id": "clvn65kcj001ratn9uo07ob2a",
@@ -395,38 +248,8 @@
     "rideGroup": "Fast >28kph",
     "destination": "",
     "limit": -1,
-    "cancelled": false,
     "rideDate": "2024-06-16T08:30:00.000Z",
-    "day": "Sunday 16 June",
-    "time": "08:30",
-    "distance": 100,
-    "users": []
-  },
-  {
-    "id": "clvn65kc30013atn9ot5u0l3n",
-    "name": "Sunday Ride",
-    "rideGroup": "Espresso",
-    "destination": null,
-    "limit": -1,
-    "cancelled": false,
-    "rideDate": "2024-06-16T08:30:00.000Z",
-    "day": "Sunday 16 June",
-    "time": "08:30",
-    "distance": 96,
-    "users": []
-  },
-  {
-    "id": "clvn65kbw000zatn9rggx2uyv",
-    "name": "Sunday Ride",
-    "rideGroup": "Espresso #2",
-    "destination": null,
-    "limit": -1,
-    "cancelled": false,
-    "rideDate": "2024-06-16T08:30:00.000Z",
-    "day": "Sunday 16 June",
-    "time": "08:30",
-    "distance": 95,
-    "users": []
+    "distance": 100
   },
   {
     "id": "clvn65kc50018atn9jnndl28x",
@@ -434,12 +257,8 @@
     "rideGroup": "Americano",
     "destination": null,
     "limit": -1,
-    "cancelled": false,
     "rideDate": "2024-06-16T08:30:00.000Z",
-    "day": "Sunday 16 June",
-    "time": "08:30",
-    "distance": 90,
-    "users": []
+    "distance": 90
   },
   {
     "id": "clvn65kcg001iatn9i93o5p19",
@@ -447,12 +266,8 @@
     "rideGroup": "Double Shot Latte",
     "destination": null,
     "limit": -1,
-    "cancelled": false,
     "rideDate": "2024-06-16T08:30:00.000Z",
-    "day": "Sunday 16 June",
-    "time": "08:30",
-    "distance": 82,
-    "users": []
+    "distance": 82
   },
   {
     "id": "clvn65kcs0024atn9kdfzmq9h",
@@ -460,12 +275,8 @@
     "rideGroup": null,
     "destination": null,
     "limit": -1,
-    "cancelled": false,
     "rideDate": "2024-06-18T09:00:00.000Z",
-    "day": "Tuesday 18 June",
-    "time": "09:00",
-    "distance": 99,
-    "users": []
+    "distance": 99
   },
   {
     "id": "clvn65kct0028atn961oql1l6",
@@ -473,12 +284,8 @@
     "rideGroup": null,
     "destination": null,
     "limit": -1,
-    "cancelled": false,
     "rideDate": "2024-06-19T09:15:00.000Z",
-    "day": "Wednesday 19 June",
-    "time": "09:15",
-    "distance": 100,
-    "users": []
+    "distance": 100
   },
   {
     "id": "clvtrhuqf000714l6lyg93vo5",
@@ -486,12 +293,8 @@
     "rideGroup": "All",
     "destination": "Locksbrook",
     "limit": -1,
-    "cancelled": false,
     "rideDate": "2024-06-20T18:15:00.000Z",
-    "day": "Thursday 20 June",
-    "time": "18:15",
-    "distance": 45,
-    "users": []
+    "distance": 45
   },
   {
     "id": "clvn65kcp0020atn9yo2vhuon",
@@ -499,12 +302,8 @@
     "rideGroup": "1 - (1 hr 49)",
     "destination": null,
     "limit": 7,
-    "cancelled": false,
     "rideDate": "2024-06-22T08:40:00.000Z",
-    "day": "Saturday 22 June",
-    "time": "08:40",
-    "distance": 70,
-    "users": []
+    "distance": 70
   },
   {
     "id": "clvn65kau0008atn9gp3krgta",
@@ -512,12 +311,8 @@
     "rideGroup": "2 - (1 hr 53)",
     "destination": null,
     "limit": 7,
-    "cancelled": false,
     "rideDate": "2024-06-22T08:41:00.000Z",
-    "day": "Saturday 22 June",
-    "time": "08:41",
-    "distance": 70,
-    "users": []
+    "distance": 70
   },
   {
     "id": "clvn65kba000eatn9b317e7d1",
@@ -525,12 +320,8 @@
     "rideGroup": "3 - (1 hr 57)",
     "destination": null,
     "limit": 7,
-    "cancelled": false,
     "rideDate": "2024-06-22T08:42:00.000Z",
-    "day": "Saturday 22 June",
-    "time": "08:42",
-    "distance": 70,
-    "users": []
+    "distance": 70
   },
   {
     "id": "clvn65k8l0003atn9r0y5opor",
@@ -538,12 +329,8 @@
     "rideGroup": "4 - (2 hr)",
     "destination": null,
     "limit": 7,
-    "cancelled": false,
     "rideDate": "2024-06-22T08:43:00.000Z",
-    "day": "Saturday 22 June",
-    "time": "08:43",
-    "distance": 70,
-    "users": []
+    "distance": 70
   },
   {
     "id": "clvn65kbe000jatn97udjvf02",
@@ -551,12 +338,8 @@
     "rideGroup": "5 - (2 hr 5min)",
     "destination": null,
     "limit": 7,
-    "cancelled": false,
     "rideDate": "2024-06-22T08:44:00.000Z",
-    "day": "Saturday 22 June",
-    "time": "08:44",
-    "distance": 70,
-    "users": []
+    "distance": 70
   },
   {
     "id": "clvn65kch001natn95gup9aks",
@@ -564,12 +347,8 @@
     "rideGroup": "Rockers",
     "destination": "Chelsea Road",
     "limit": -1,
-    "cancelled": false,
     "rideDate": "2024-06-22T08:45:00.000Z",
-    "day": "Saturday 22 June",
-    "time": "08:45",
-    "distance": 70,
-    "users": []
+    "distance": 70
   },
   {
     "id": "clvn65kbu000uatn95njbsesc",
@@ -577,12 +356,8 @@
     "rideGroup": "Longer",
     "destination": null,
     "limit": -1,
-    "cancelled": false,
     "rideDate": "2024-06-22T09:00:00.000Z",
-    "day": "Saturday 22 June",
-    "time": "09:00",
-    "distance": 70,
-    "users": []
+    "distance": 70
   },
   {
     "id": "clvn65kbt000patn9vzwxj01n",
@@ -590,11 +365,7 @@
     "rideGroup": "Shorter",
     "destination": null,
     "limit": -1,
-    "cancelled": false,
     "rideDate": "2024-06-22T09:00:00.000Z",
-    "day": "Saturday 22 June",
-    "time": "09:00",
-    "distance": 40,
-    "users": []
+    "distance": 40
   }
 ]
