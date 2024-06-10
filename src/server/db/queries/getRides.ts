@@ -1,10 +1,15 @@
+import { FOREVER } from "@/constants";
 import { db } from "@/server/db";
 import { rides } from "@/server/db/schema";
 import { type RideList } from "@/types";
+import { getNow } from "@utils/dates";
 import { formatRideData } from "@utils/rides";
-import { asc, desc } from "drizzle-orm";
+import { and, asc, desc, eq, gt, lt } from "drizzle-orm";
 
-export const getRides = async (): Promise<{
+export const getRides = async (
+  start: string = getNow(),
+  end: string = FOREVER,
+): Promise<{
   rides: RideList[];
   error?: Error;
 }> => {
@@ -36,11 +41,11 @@ export const getRides = async (): Promise<{
           // },
         },
       },
-      // where: and(
-      //   lt(rides.date, end),
-      //   gt(rides.date, start),
-      //   eq(rides.deleted, false)
-      // ),
+      where: and(
+        lt(rides.rideDate, end),
+        gt(rides.rideDate, start),
+        eq(rides.deleted, false),
+      ),
       orderBy: [asc(rides.rideDate), asc(rides.name), desc(rides.distance)],
     });
 

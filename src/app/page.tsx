@@ -1,7 +1,7 @@
 import { MainContent, RideGroup } from "@/components";
 import { getRides } from "@/server/db/queries/getRides";
 import { type Preferences, type Role } from "@/types";
-import { formatDate, getNextWeek } from "@utils/dates";
+import { formatDate, getQueryDateRange } from "@utils/dates";
 import { groupRides } from "@utils/transformRideData";
 
 export const dynamic = "force-dynamic"; // Always revalidate
@@ -17,10 +17,10 @@ const MOCK_USER = {
   "preferences": { "units": "km" } as Preferences
 }
 
-const nextDate = getNextWeek();
+const { start, end } = getQueryDateRange({});
 
 export default async function HomePage() {
-  const { rides, error } = await getRides();
+  const { rides, error } = await getRides(start, end);
 
   if (error) {
     return (
@@ -52,7 +52,7 @@ export default async function HomePage() {
           </>
         ) : (
           <div className="flex h-full items-center p-8 pt-32 text-2xl">
-            No planned rides before {formatDate(nextDate)}
+            No planned rides before {formatDate(end)}
           </div>
         )}
       </div>

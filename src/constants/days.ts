@@ -7,3 +7,5 @@ export const DAYS = {
   FRIDAY: 5,
   SATURDAY: 6,
 };
+
+export const FOREVER = "3000-12-31";

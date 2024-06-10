@@ -1,3 +1,4 @@
+import { FOREVER } from "@/constants";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 
@@ -65,7 +66,7 @@ export const getQueryDateRange = ({
 }: {
   start?: string;
   end?: string;
-}) => {
+}): { start: string; end: string } => {
   // Show all rides until end of day
   const delta = dayjs().utcOffset();
   const now = dayjs()
@@ -176,17 +177,17 @@ export const getMonthDateRange = (date: string) => {
   return { start, end };
 };
 
-export const getDateInWeeks = (weeks: string) => {
+export const getDateInWeeks = (weeks: string): string => {
   const weeksNumber = parseInt(weeks, 10);
 
   // Check for 'forever' code (-1) and return long future date
   if (weeksNumber === -1) {
-    return "3000-12-31";
+    return FOREVER;
   }
 
   const nextWeek = dayjs().add(weeksNumber, "week").toISOString();
 
-  return nextWeek.split("T")[0];
+  return nextWeek.split("T")[0]!;
 };
 
 export const sqlDate = (date: string) => date.replace("T", " ").slice(0, 16);
