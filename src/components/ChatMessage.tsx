@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { makeClickableUrl } from "@utils/makeClickableUrl";
-import { RideNote } from "src/types";
+import { type RideNote } from "src/types";
 
 export const ChatMessage: React.FC<RideNote> = ({
   name,

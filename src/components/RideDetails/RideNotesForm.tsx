@@ -1,8 +1,8 @@
-import { FormEventHandler } from "react";
+import { type FormEventHandler } from "react";
 import {
-  UseFormRegister,
-  FieldErrorsImpl,
-  UseFormSetValue,
+  type UseFormRegister,
+  type FieldErrorsImpl,
+  type UseFormSetValue,
 } from "react-hook-form";
 import { Button } from "../Button";
 

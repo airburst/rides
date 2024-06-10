@@ -1,5 +1,5 @@
 /* eslint-disable react/button-has-type */
-import { forwardRef, ReactNode } from "react";
+import { forwardRef, type ReactNode } from "react";
 import clsx from "clsx";
 
 export interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {

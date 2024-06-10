@@ -1,5 +1,5 @@
 import { signIn } from "next-auth/react";
-import { User } from "../../types";
+import { type User } from "../../types";
 import { RiderDetails } from "./RiderDetails";
 
 type Props = {

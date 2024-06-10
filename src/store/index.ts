@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import { FilterQuery } from "../types";
+import { type FilterQuery } from "../types";
 
 export const showFilterAtom = atom(false);
 

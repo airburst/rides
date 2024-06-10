@@ -1,11 +1,11 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useEffect, useState } from "react";
 import {
-  FieldErrorsImpl,
-  UseFormRegister,
-  UseFormReturn,
+  type FieldErrorsImpl,
+  type UseFormRegister,
+  type UseFormReturn,
 } from "react-hook-form";
-import { RideFormValues } from "src/types";
+import { type RideFormValues } from "src/types";
 import {
   getDay,
   getNow,

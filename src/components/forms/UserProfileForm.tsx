@@ -1,6 +1,6 @@
-import { FormEventHandler } from "react";
-import { UseFormRegister, FieldErrorsImpl } from "react-hook-form";
-import { Preferences } from "../../types";
+import { type FormEventHandler } from "react";
+import { type UseFormRegister, type FieldErrorsImpl } from "react-hook-form";
+import { type Preferences } from "../../types";
 import { Button } from "../Button";
 import { CancelButton } from "../Button/CancelButton";
 

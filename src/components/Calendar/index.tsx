@@ -8,7 +8,7 @@ import {
   mapRidesToDate,
   getNow,
 } from "../../../shared/utils";
-import { Ride } from "../../types";
+import { type Ride } from "../../types";
 
 type Props = {
   date: string;

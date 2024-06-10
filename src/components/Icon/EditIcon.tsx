@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { IconProps } from "./types";
+import { type IconProps } from "./types";
 
 export const EditIcon = ({ className }: IconProps) => {
   const classes = clsx(className);
