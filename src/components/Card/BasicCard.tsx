@@ -1,16 +1,19 @@
 "use client";
-import { useState, type ReactNode } from "react";
+import { useId, useState, type ReactNode } from "react";
 
 type Props = {
+  id?: string;
   onPress?: () => void;
   children: ReactNode;
 };
 
-export const BasicCard: React.FC<Props> = ({ onPress, children }: Props) => {
+export const BasicCard: React.FC<Props> = ({ id, onPress, children }: Props) => {
   const [isSwiping, setSwiping] = useState(false);
+  const ssrId = useId();
 
   return (
     <div
+      id={id ?? ssrId}
       role="presentation"
       className="relative md:mx-autotext-neutral-500 box-border flex w-full cursor-pointer gap-2 rounded bg-white shadow-md hover:text-neutral-700 hover:shadow-lg md:gap-2"
       onMouseDown={() => setSwiping(false)}
