@@ -20,7 +20,7 @@ export const ChatMessage: React.FC<RideNote> = ({
       <div
         className="chat-bubble"
         // eslint-disable-next-line react/no-danger
-        dangerouslySetInnerHTML={{ __html: makeClickableUrl(rideNotes || "") }}
+        dangerouslySetInnerHTML={{ __html: makeClickableUrl(rideNotes ?? "") }}
       />
     </div>
   </div>

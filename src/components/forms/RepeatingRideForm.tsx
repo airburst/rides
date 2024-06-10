@@ -13,7 +13,7 @@ import {
   rruleDaysInMonth,
 } from "../../../shared/utils";
 
-const today = getNow().split("T")[0] || "";
+const today = getNow().split("T")[0] ?? "";
 
 type RepeatingRideFormProps = {
   defaultValues: RideFormValues;
@@ -41,18 +41,18 @@ export const RepeatingRideForm = ({
   // Get watched values
   const watchDate = watch("date");
   const watchStartDate = watch("startDate");
-  const date = watchDate || defaultValues.date;
-  const monthDay = defaultValues.bymonthday || getDay(date);
-  const dayOfWeek = defaultValues.byweekday || rruleDay(date);
+  const date = watchDate ?? defaultValues.date;
+  const monthDay = defaultValues.bymonthday ?? getDay(date);
+  const dayOfWeek = defaultValues.byweekday ?? rruleDay(date);
   const watchTime = watch("time");
-  const time = defaultValues.winterStartTime || watchTime || defaultValues.time;
+  const time = defaultValues.winterStartTime ?? watchTime ?? defaultValues.time;
   const watchFreq = watch("freq");
   const freq = watchFreq ? +watchFreq : defaultValues.freq;
   const watchMonth = watch("freq");
   const month = watchMonth ? +watchMonth : defaultValues.bymonth;
   const minEndDate =
-    (watchDate || "") > (watchStartDate || "") ? watchDate : watchStartDate;
-  const defaultEndDate = (defaultValues.endDate || "").split("T")[0];
+    (watchDate ?? "") > (watchStartDate ?? "") ? watchDate : watchStartDate;
+  const defaultEndDate = (defaultValues.endDate ?? "").split("T")[0];
 
   // Change startDate when form changes
   useEffect(() => {
@@ -87,11 +87,11 @@ export const RepeatingRideForm = ({
   const isYearly = freq === 0;
   const isMonthly = freq === 1;
   const isWeekly = freq === 2;
-  const daysArray = Array.from(Array(rruleDaysInMonth(month || 1)).keys()).map(
+  const daysArray = Array.from(Array(rruleDaysInMonth(month ?? 1)).keys()).map(
     (n) => n + 1
   );
 
-  if (isEditMode || !repeats) {
+  if (isEditMode ?? !repeats) {
     return <div />;
   }
 
@@ -217,7 +217,7 @@ export const RepeatingRideForm = ({
                 <select
                   id="bysetpos"
                   className="select text-lg font-normal"
-                  defaultValue={defaultValues.bysetpos || 1}
+                  defaultValue={defaultValues.bysetpos ?? 1}
                   {...register("bysetpos")}
                 >
                   <option value="1">1st</option>

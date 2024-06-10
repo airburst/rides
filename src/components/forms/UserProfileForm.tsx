@@ -1,5 +1,5 @@
 import { type FormEventHandler } from "react";
-import { type UseFormRegister, type FieldErrorsImpl } from "react-hook-form";
+import { type FieldErrorsImpl, type UseFormRegister } from "react-hook-form";
 import { type Preferences } from "../../types";
 import { Button } from "../Button";
 import { CancelButton } from "../Button/CancelButton";
@@ -59,7 +59,7 @@ export const UserProfileForm = ({
           id="mobile"
           type="text"
           className="input"
-          defaultValue={defaultValues.mobile || ""}
+          defaultValue={defaultValues.mobile ?? ""}
           {...register("mobile", {
             required: true,
             minLength: {
@@ -85,7 +85,7 @@ export const UserProfileForm = ({
           type="text"
           placeholder="Name and contact number"
           className="input"
-          defaultValue={defaultValues.emergency || ""}
+          defaultValue={defaultValues.emergency ?? ""}
           {...register("emergency", {
             required: true,
             minLength: {
@@ -127,7 +127,7 @@ export const UserProfileForm = ({
         <select
           id="units"
           className="select"
-          defaultValue={defaultValues?.preferences?.units || ""}
+          defaultValue={defaultValues?.preferences?.units ?? ""}
           {...register("preferences.units")}
         >
           <option value="km">Km</option>

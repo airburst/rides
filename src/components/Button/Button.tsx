@@ -1,6 +1,6 @@
 /* eslint-disable react/button-has-type */
-import { forwardRef, type ReactNode } from "react";
 import clsx from "clsx";
+import { forwardRef, type ReactNode } from "react";
 
 export interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   type?: "button" | "submit" | "reset";
@@ -64,8 +64,10 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         onClick={onClick}
         disabled={disabled}
       >
-        {text || children}
+        {text ?? children}
       </button>
     );
   }
 );
+
+Button.displayName = "Button";

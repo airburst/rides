@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { formatRideBadge, getNow, isReady } from "../../../shared/utils";
 import { type Ride } from "../../types";
-import { RoundBadge, Badge } from "../Badge";
+import { Badge, RoundBadge } from "../Badge";
 
 type Props = {
   day: number;
@@ -32,7 +32,7 @@ export const Day = ({ day, date, rides = [], classes, past }: Props) => {
     : "hover:bg-base-300 cursor-pointer";
 
   const wrapperClasses =
-    classes ||
+    classes ??
     `lg:text-md h-28 sm:h-32 w-full mb-0 justify-self-center border-b-[1px] border-r-[1px] border-neutral-100 p-1 text-sm last:border-b-0 last:border-r-0 cursor-pointer overflow-hidden ${cellStyle}`;
 
   const Content = (
@@ -49,24 +49,23 @@ export const Day = ({ day, date, rides = [], classes, past }: Props) => {
       </div>
 
       <div className="invisible sm:visible flex flex-wrap gap-1">
-        {rides &&
-          rides.map((ride) => (
-            <div key={ride.id} className="truncate">
-              {isReady(ride) ? (
-                <Badge
-                  text={formatRideBadge(ride)}
-                  style={getBadgeStyle(past, false)}
-                  small
-                />
-              ) : (
-                <Badge
-                  text={formatRideBadge(ride)}
-                  style={getBadgeStyle(past, true)}
-                  small
-                />
-              )}
-            </div>
-          ))}
+        {rides?.map((ride) => (
+          <div key={ride.id} className="truncate">
+            {isReady(ride) ? (
+              <Badge
+                text={formatRideBadge(ride)}
+                style={getBadgeStyle(past, false)}
+                small
+              />
+            ) : (
+              <Badge
+                text={formatRideBadge(ride)}
+                style={getBadgeStyle(past, true)}
+                small
+              />
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );

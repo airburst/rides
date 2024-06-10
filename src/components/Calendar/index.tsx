@@ -1,14 +1,14 @@
-import { HeadingGroup } from "./Heading";
-import { Day, OutsideDay } from "./Day";
 import {
-  firstDayOfMonth,
   daysInMonth,
+  firstDayOfMonth,
   getLastMonth,
   getNextMonth,
-  mapRidesToDate,
   getNow,
+  mapRidesToDate,
 } from "../../../shared/utils";
 import { type Ride } from "../../types";
+import { Day, OutsideDay } from "./Day";
+import { HeadingGroup } from "./Heading";
 
 type Props = {
   date: string;
@@ -23,7 +23,7 @@ const getDateStub = (date: string) => {
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const Calendar: React.FC<Props> = ({ rides, loading, date }: Props) => {
-  const today = getNow().split("T")[0] || "";
+  const today = getNow().split("T")[0] ?? "";
   const startDay = firstDayOfMonth(date);
   const lastDay = daysInMonth(date);
 
@@ -81,7 +81,7 @@ export const Calendar: React.FC<Props> = ({ rides, loading, date }: Props) => {
   // Match rides to dates
   const daysWithRides = calGrid.map((dt) => ({
     ...dt,
-    rides: mapRidesToDate(rides || [], dt.date),
+    rides: mapRidesToDate(rides ?? [], dt.date),
   }));
 
   return loading ? (
