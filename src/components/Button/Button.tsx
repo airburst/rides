@@ -55,6 +55,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       "gap-2"
     );
 
+    const upperText = text?.toUpperCase();
+
     return (
       <button
         className={classes}
@@ -64,7 +66,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         onClick={onClick}
         disabled={disabled}
       >
-        {text ?? children}
+        {upperText ?? children}
       </button>
     );
   }

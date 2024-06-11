@@ -38,12 +38,12 @@ export const JoinButton: React.FC<Props> = ({
   return going ? (
     <Button {...props} success loading={loading} onClick={handleLeave}>
       <CloseIcon className="fill-white" />
-      Leave
+      LEAVE
     </Button>
   ) : (
     <Button {...props} error loading={loading} onClick={handleJoin}>
       <PlusIcon className="fill-white" />
-      Join
+      JOIN
     </Button>
   );
 };

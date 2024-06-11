@@ -1,19 +1,22 @@
-import { BackButton, MainContent } from "@/components";
+import { BackButton, MainContent, UserProfileForm } from "@/components";
 import { env } from "@/env";
+import { getUser } from "@/server/actions/getUser";
 import { getServerAuthSession } from "@/server/auth";
 import { type Metadata } from "next";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: `${env.NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`,
   description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} User Profile Page`,
 }
 
-// TODO: Add auth guard
-
 export default async function ProfilePage({ params }: { params: { id: string } }) {
   const { id } = params;
+  const session = await getServerAuthSession();
+  const userId = id ?? session?.user!.id;
 
-  if (!id) {
+  if (!userId) {
     return (
       <MainContent>
         <>
@@ -28,20 +31,17 @@ export default async function ProfilePage({ params }: { params: { id: string } }
     );
   }
 
-  const session = await getServerAuthSession()
-  console.log("🚀 ~ session:", session)
+  const { user, error } = await getUser(userId);
 
-  // const { user, error } = await getUser(id);
-
-  // if (error) {
-  //   return <MainContent>
-  //     <div>{error.message}</div>
-  //   </MainContent>
-  // }
+  if (error ?? !user) {
+    return <MainContent>
+      <div>{error?.message}</div>
+    </MainContent>
+  }
 
   return (
     <MainContent>
-      <div>TODO: Fetch user profile</div>
+      <UserProfileForm user={user} />
     </MainContent>
   )
 };

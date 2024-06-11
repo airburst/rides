@@ -21,7 +21,7 @@ export const BackButton = ({ url, ...props }: ButtonProps) => {
   return (
     <Button primary {...props} onClick={goBack}>
       <ChevronLeftIcon className="fill-white" />
-      Back
+      BACK
     </Button>
   );
 };

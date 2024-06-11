@@ -1,7 +1,7 @@
 import { type FormEventHandler } from "react";
 import {
-  type UseFormRegister,
   type FieldErrorsImpl,
+  type UseFormRegister,
   type UseFormSetValue,
 } from "react-hook-form";
 import { Button } from "../Button";
@@ -55,13 +55,13 @@ export const RideNotesForm = ({
 
       <div className="grid w-full grid-cols-3 grid-rows-[48px] gap-4 md:gap-8">
         <Button primary loading={waiting} disabled={!isDirty} type="submit">
-          <div>Add</div>
+          <div>ADD</div>
         </Button>
         <Button accent onClick={clearForm} type="submit">
-          <div>Clear</div>
+          <div>CLEAR</div>
         </Button>
         <Button disabled={waiting} onClick={closeHandler}>
-          <span>Cancel</span>
+          <span>CANCEL</span>
         </Button>
       </div>
     </form>

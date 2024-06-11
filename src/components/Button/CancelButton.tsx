@@ -1,5 +1,6 @@
 "use client";
-import { useRouter } from "next/router";
+
+import { useRouter } from "next/navigation";
 
 export const CancelButton = ({ ...props }) => {
   const router = useRouter();
@@ -11,7 +12,7 @@ export const CancelButton = ({ ...props }) => {
       onClick={() => router.back()}
       {...props}
     >
-      Cancel
+      CANCEL
     </button>
   );
 };
