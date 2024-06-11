@@ -1,6 +1,6 @@
 import { MainContent, RideGroup } from "@/components";
 import { env } from "@/env";
-import { getRides } from "@/server/db/queries/getRides";
+import { getRides } from "@/server/actions/getRides";
 import { type Preferences, type Role } from "@/types";
 import { formatDate, getQueryDateRange } from "@utils/dates";
 import { groupRides } from "@utils/transformRideData";

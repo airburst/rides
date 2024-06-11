@@ -4,25 +4,25 @@ import Image from "next/image";
 // import { useParams, useRouter } from "next/navigation";
 import Logo from "../../public/static/images/bath-cc-logo.svg";
 // import { filterQueryAtom, showFilterAtom } from "../store";
+import { type Session } from "@/types";
 import Link from "next/link";
-// import { UserMenu } from "./UserMenu";
+import { UserMenu } from "./UserMenu";
 
 const { NEXT_PUBLIC_CLUB_SHORT_NAME } = env;
 
-// type Props = {
-//   isAuthenticated: boolean;
-//   role: string;
-// };
+type Props = {
+  user?: Session["user"];
+};
 
-export const Header = () => {
+export const Header = ({ user }: Props) => {
   // const [, setShowFilterMenu] = useAtom(showFilterAtom);
   // const [filterQuery] = useAtom(filterQueryAtom);
-  // const router = useRouter();
   // const params = useParams();
   // const rideId = params.id;
   // const isRidesPage = params.pathname === "/";
 
-  // const goHome = () => router.push("/");
+  const isAuthenticated = !!user;
+  const role = user?.role;
 
   // const showFilters = () => setShowFilterMenu(true);
 
@@ -65,11 +65,11 @@ export const Header = () => {
             </button>
           )} */}
 
-          {/* <UserMenu
+          <UserMenu
             isAuthenticated={isAuthenticated}
             role={role}
-            rideId={rideId}
-          /> */}
+          // rideId={rideId}
+          />
         </div>
       </div>
     </div>

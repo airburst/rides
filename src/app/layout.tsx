@@ -1,6 +1,7 @@
 import { Header } from "@/components";
 import { RideGroupSkeleton } from "@/components/RideGroupSkeleton";
 import { env } from "@/env";
+import { getServerAuthSession } from "@/server/auth";
 import "@/styles/globals.css";
 import { type Metadata } from "next";
 import { Outfit } from "next/font/google";
@@ -21,11 +22,13 @@ export const metadata: Metadata = {
   ],
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerAuthSession()
+
   return (
     <html lang="en" className={`${outfit.variable}`} data-theme="club">
       <head>
@@ -40,7 +43,7 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <Header />
+        <Header user={session?.user} />
         <Suspense fallback={<RideGroupSkeleton />}>
           {children}
         </Suspense>

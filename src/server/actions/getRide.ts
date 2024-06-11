@@ -1,3 +1,5 @@
+"use server";
+
 import { db } from "@/server/db";
 import { rides } from "@/server/db/schema";
 import { type Ride } from "@/types";

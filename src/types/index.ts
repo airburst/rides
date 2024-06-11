@@ -16,6 +16,18 @@ export type User = {
   rideNotes?: string;
 };
 
+export type Session = {
+  user?: {
+    id: string;
+    role: Role;
+    preferences?: Preferences;
+    name?: string | null;
+    email?: string | null;
+    image?: string | null;
+  };
+  expires: string;
+};
+
 export type DbResponse<T> = {
   data?: T[];
   error?: string;

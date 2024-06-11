@@ -15,7 +15,7 @@ import {
   users,
   verificationTokens,
 } from "@/server/db/schema/index";
-import { type Preferences } from "@/types";
+import { type Preferences, type Role } from "@/types";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -24,18 +24,13 @@ import { type Preferences } from "@/types";
  * @see https://next-auth.js.org/getting-started/typescript#module-augmentation
  */
 declare module "next-auth" {
-  interface Session extends DefaultSession {
+  export interface Session extends DefaultSession {
     user: {
       id: string;
-      role: string;
+      role: Role;
       preferences?: Preferences;
     } & DefaultSession["user"];
   }
-
-  // interface User {
-  //   // ...other properties
-  //   // role: UserRole;
-  // }
 }
 
 /**
@@ -50,6 +45,8 @@ export const authOptions: NextAuthOptions = {
       user: {
         ...session.user,
         id: user.id,
+        // @ts-expect-error `role is not a property of AdapterUser`
+        role: user.role as Role,
       },
     }),
   },

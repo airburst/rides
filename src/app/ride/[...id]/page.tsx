@@ -1,6 +1,6 @@
 import { BackButton, MainContent, RideDetails } from "@/components";
 import { env } from "@/env";
-import { getRide } from "@/server/db/queries/getRide";
+import { getRide } from "@/server/actions/getRide";
 import { type Preferences, type Role } from "@/types";
 import { type Metadata } from "next";
 

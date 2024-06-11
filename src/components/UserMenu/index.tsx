@@ -1,5 +1,7 @@
 "use client";
+
 import { env } from "@/env";
+import { type Role } from "@/types";
 import copy from "copy-to-clipboard";
 import { signIn, signOut } from "next-auth/react";
 import { useRef, useState } from "react";
@@ -27,7 +29,7 @@ import { MenuEntry } from "./MenuEntry";
 const { NEXT_PUBLIC_REPO } = env;
 
 type MenuProps = {
-  role: string | null;
+  role?: Role;
   rideId?: string | string[];
   isAuthenticated: boolean;
 };
@@ -40,8 +42,6 @@ export const UserMenu = ({ role, rideId, isAuthenticated }: MenuProps) => {
   const isLeader = role && ["ADMIN", "LEADER"].includes(role);
   const isAdmin = role === "ADMIN";
   const showEditAndDelete = isLeader && rideId;
-  // const router = useRouter();
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
   // const { mutate } = useSWRConfig();
 
   const toggleMenu = () => {
@@ -58,7 +58,7 @@ export const UserMenu = ({ role, rideId, isAuthenticated }: MenuProps) => {
     setShowConfirmDelete(false);
   };
 
-  const copyLink = () => copy(window.location.href);
+  const copyLink = () => copy(window.location.href); // next usePathname?
 
   const handleSignout = async () => {
     await signOut({ callbackUrl: "http://localhost:3000" });
@@ -72,11 +72,12 @@ export const UserMenu = ({ role, rideId, isAuthenticated }: MenuProps) => {
 
   const handleCancel = async (cb: (flag: boolean) => void) => {
     if (rideId) {
+      console.log("TODO: Cancel rideId: ", rideId);
       // mutate("/api/ride", async () => {
       //   const results = await cancelRide(rideId);
       //   if (results.id) {
       //     closeMenu();
-      //     router.back();
+      //     router.push("/"); // Back to homepage
       //     cb(true);
       //   } else {
       //     cb(false);
@@ -89,11 +90,13 @@ export const UserMenu = ({ role, rideId, isAuthenticated }: MenuProps) => {
 
   const handleDelete = async (cb: (flag: boolean) => void) => {
     if (rideId) {
+      console.log("TODO: Delete rideId: ", rideId);
+
       // mutate("/api/ride", async () => {
       //   const results = await deleteRide(rideId);
       //   if (results.id) {
       //     closeMenu();
-      //     router.back();
+      //     router.push("/"); // Back to homepage
       //     cb(true);
       //   } else {
       //     cb(false);
@@ -184,6 +187,7 @@ export const UserMenu = ({ role, rideId, isAuthenticated }: MenuProps) => {
               </MenuEntry>
             </>
           )}
+
           {isAuthenticated && (
             <>
               <MenuEntry label="Settings" href="/profile" onClick={closeMenu}>

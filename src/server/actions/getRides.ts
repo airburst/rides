@@ -1,3 +1,5 @@
+"use server";
+
 import { FOREVER } from "@/constants";
 import { db } from "@/server/db";
 import { rides } from "@/server/db/schema";
