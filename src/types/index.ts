@@ -38,7 +38,7 @@ export type Ride = {
   limit?: number;
   scheduleId?: string;
   createdAt: string;
-  users?: User[];
+  users?: { user: User }[];
   day?: string;
   time?: string;
 };
@@ -46,13 +46,6 @@ export type Ride = {
 export type RideList = Omit<Ride, "users"> & {
   users?: { userId: string }[];
 };
-
-// export type Ride = RideData & {
-//   day: string;
-//   time: string;
-//   distance: string;
-//   speed?: string;
-// };
 
 export type RideNote = {
   name: string;

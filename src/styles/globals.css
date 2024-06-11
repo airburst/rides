@@ -40,7 +40,3 @@ svg {
 .alert {
   @apply rounded;
 }
-
-/* .chat-bubble {
-  @apply bg-neutral-100;
-} */

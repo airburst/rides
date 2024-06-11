@@ -88,10 +88,10 @@ export const convertDistance = (
 };
 
 export const formatRideData = (
-  ride: RideList,
+  ride: Ride | RideList,
   preferences?: Preferences,
   // isAuth = false,
-): RideList => {
+): Ride | RideList => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { rideDate, users, distance, speed, ...rest } = ride;
   const { day, time } = getRideDateAndTime(new Date(rideDate).toISOString());
@@ -105,7 +105,7 @@ export const formatRideData = (
     distance: convertDistance(distance ?? 0, units),
     // speed: convertDistance(speed ?? 0, units),
     users,
-  };
+  } as Ride | RideList;
 };
 
 export const formatInitials = (words: string): string => {

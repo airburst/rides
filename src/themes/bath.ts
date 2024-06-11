@@ -16,6 +16,7 @@ const theme = {
   warning: "#FBBD23",
   error: "#b91c1c",
   "error-content": "#ffffff",
+  "chat-bubble-primary": "#3f60c0",
 };
 
 export default theme;

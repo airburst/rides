@@ -25,7 +25,8 @@ export const RideInfo = ({ ride }: Props) => {
   } = ride;
 
   const riderNotes = users
-    ?.filter((u: User) => u.rideNotes)
+    ?.map((u: { user: User }) => u.user)
+    ?.filter((user) => user.rideNotes)
     .map(({ name: riderName, rideNotes, image }) => ({
       name: riderName,
       rideNotes,

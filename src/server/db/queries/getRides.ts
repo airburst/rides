@@ -31,14 +31,6 @@ export const getRides = async (
           columns: {
             userId: true,
           },
-          // with: {
-          //   user: {
-          //     columns: {
-          //       id: true,
-          //       name: true,
-          //     },
-          //   },
-          // },
         },
       },
       where: and(
@@ -50,7 +42,9 @@ export const getRides = async (
     });
 
     return {
-      rides: result.map((ride) => formatRideData(ride as unknown as RideList)),
+      rides: result.map((ride) =>
+        formatRideData(ride as unknown as RideList),
+      ) as RideList[],
     };
   } catch (error) {
     return {

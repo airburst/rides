@@ -26,18 +26,19 @@ type Props = {
   embedded?: boolean;
 };
 
-export const RideDetails = ({ ride, user, role, embedded }: Props) => {
+export const RideDetails = ({ ride, user, role }: Props) => {
   const [showNotesForm, setShowNotesForm] = useState<boolean>(false);
   const { id, name, rideDate, day, cancelled, limit, users } = ride;
+  const userList = users?.map((u: { user: User }) => u.user);
 
   const hasRiders = users && users?.length > 0;
   const isGoing =
-    users && user ? users?.map((u: User) => u.id).includes(user?.id) : false;
+    userList && user ? userList?.map((u: User) => u.id).includes(user?.id) : false;
   const isLeader = ["ADMIN", "LEADER"].includes(role ?? "");
   const isSpace = hasSpace(ride);
   const canJoin = isJoinable(rideDate) && isSpace;
   const rideNotes =
-    users && user && users?.find((u: User) => u.id === user.id)?.rideNotes;
+    userList && user && userList?.find((u: User) => u.id === user.id)?.rideNotes;
   const riderCount = users?.length ?? 0;
   const hasLimit = limit && limit > -1;
   const ridersLabel = hasLimit ? `${riderCount}/${limit}` : riderCount;
@@ -60,47 +61,42 @@ export const RideDetails = ({ ride, user, role, embedded }: Props) => {
         </div>
       </Heading>
 
-      {embedded ? (
-        <div className="flex h-4 flex-row justify-between px-2 pt-2 sm:px-0">
-          <BackButton url="/embed" />
-        </div>
-      ) : (
-        <>
-          {!isSpace && (
-            <div className="mx-2 sm:mx-0">
-              <div className="alert alert-warning">
-                This ride is full. Please contact the leader if you want to
-                join.
-              </div>
+
+      <>
+        {!isSpace && (
+          <div className="mx-2 sm:mx-0">
+            <div className="alert alert-warning">
+              This ride is full. Please contact the leader if you want to
+              join.
             </div>
-          )}
-          <RidersGoing
-            user={user}
-            users={users}
-            hasRiders={hasRiders}
-            isLeader={isLeader}
-          />
-          <div className="flex h-4 flex-row justify-between px-2 pt-2 sm:px-0">
-            <BackButton url={`/#${id}`} />
-
-            {isGoing && !cancelled && (
-              <Button accent onClick={openNotes}>
-                <MessageIcon className="fill-white" />
-                Message
-              </Button>
-            )}
-
-            {user && (canJoin || isGoing) && !cancelled && (
-              <JoinButton
-                going={isGoing}
-                ariaLabel={`Join ${name} ride`}
-                rideId={id}
-                userId={user?.id}
-              />
-            )}
           </div>
-        </>
-      )}
+        )}
+        <RidersGoing
+          user={user}
+          users={userList}
+          hasRiders={hasRiders}
+          isLeader={isLeader}
+        />
+        <div className="flex h-4 flex-row justify-between px-2 pt-2 sm:px-0">
+          <BackButton url={`/#${id}`} />
+
+          {isGoing && !cancelled && (
+            <Button accent onClick={openNotes}>
+              <MessageIcon className="fill-white" />
+              Message
+            </Button>
+          )}
+
+          {user && (canJoin || isGoing) && !cancelled && (
+            <JoinButton
+              going={isGoing}
+              ariaLabel={`Join ${name} ride`}
+              rideId={id}
+              userId={user?.id}
+            />
+          )}
+        </div>
+      </>
 
       <RideNotes
         userId={user?.id}
