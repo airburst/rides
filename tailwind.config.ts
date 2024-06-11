@@ -17,5 +17,5 @@ export default {
   daisyui: {
     themes: [{ club }, "dark"],
   },
-  plugins: [require("@tailwindcss/forms"), require("daisyui")],
+  plugins: [require("daisyui"), require("@tailwindcss/forms")],
 } satisfies Config;
