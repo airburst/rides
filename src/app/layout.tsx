@@ -1,6 +1,8 @@
 import { Header } from "@/components";
 import { RideGroupSkeleton } from "@/components/RideGroupSkeleton";
+import { env } from "@/env";
 import "@/styles/globals.css";
+import { type Metadata } from "next";
 import { Outfit } from "next/font/google";
 import { Suspense } from "react";
 
@@ -10,20 +12,12 @@ const outfit = Outfit({
   display: "swap",
 });
 
-export const metadata = {
-  title: "BCC Ride Planner",
-  description: "Bath Cycling Club Ride Planner",
+export const metadata: Metadata = {
+  title: `${env.NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`,
+  description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} Ride Planner`,
   icons: [
-    { rel: "icon", url: "/static/favicon.ico" },
+    { rel: "favicon", url: "/static/favicon.ico" },
     { rel: "icon", type: "image/png", sizes: "32x32", url: "/static/favicon-32x32.png" },
-    { rel: "icon", type: "image/png", sizes: "16x16", url: "/static/favicon-16x16.png" },
-    // {
-    //   rel: "apple-touch-icon",
-    //   sizes: "180x180",
-    //   href: "/static/apple-touch-icon.png"
-    // },
-    // { rel: "mask-icon", href: "/static/safari-pinned-tab.svg", color: "#5bbad5" },
-    // { rel: "manifest", href: "/static/site.webmanifest" },
   ],
 };
 

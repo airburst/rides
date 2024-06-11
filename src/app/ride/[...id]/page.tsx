@@ -1,8 +1,15 @@
 import { BackButton, MainContent, RideDetails } from "@/components";
+import { env } from "@/env";
 import { getRide } from "@/server/db/queries/getRide";
 import { type Preferences, type Role } from "@/types";
+import { type Metadata } from "next";
 
-export const dynamic = "force-dynamic"; // Always revalidate
+export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: `${env.NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`,
+  description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} Ride Details`,
+}
 
 const MOCK_USER = {
   "id": "e0f7a8ce-8f75-44f8-9bec-8864c8fe42b2",
@@ -51,11 +58,3 @@ export default async function RideDetailsPage({ params }: { params: { id: string
     </MainContent>
   )
 };
-
-// <Head>
-//   <title>{NEXT_PUBLIC_CLUB_SHORT_NAME} Ride Details</title>
-//   <meta
-//     name="description"
-//     content={`${NEXT_PUBLIC_CLUB_LONG_NAME} Ride Details`}
-//   />
-// </Head>

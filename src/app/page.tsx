@@ -1,10 +1,17 @@
 import { MainContent, RideGroup } from "@/components";
+import { env } from "@/env";
 import { getRides } from "@/server/db/queries/getRides";
 import { type Preferences, type Role } from "@/types";
 import { formatDate, getQueryDateRange } from "@utils/dates";
 import { groupRides } from "@utils/transformRideData";
+import type { Metadata } from 'next';
 
-export const dynamic = "force-dynamic"; // Always revalidate
+export const dynamic = "force-dynamic";
+
+export const metadata: Metadata = {
+  title: `${env.NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`,
+  description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} Ride Planner`,
+}
 
 const MOCK_USER = {
   "id": "e0f7a8ce-8f75-44f8-9bec-8864c8fe42b2",
@@ -61,19 +68,9 @@ export default async function HomePage() {
 }
 
 /*
-      <Head>
-        <title>{`${NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`}</title>
-        <meta
-          name="description"
-          content={`${NEXT_PUBLIC_CLUB_LONG_NAME} Ride Planner`}
-        />
-      </Head>
-
-      <Filters
-        data={makeFilterData(data)}
-        isShowing={showFilterMenu}
-        closeHandler={closeFilters}
-      />
-    </>
-  );
-  */
+  <Filters
+    data={makeFilterData(data)}
+    isShowing={showFilterMenu}
+    closeHandler={closeFilters}
+  />
+*/
