@@ -14,6 +14,7 @@ export const TextInput = ({ id, label, placeholder, defaultValue, error, mandato
       {label} {mandatory && "*"}
       <input
         id={id}
+        name={id}
         type="text"
         className="input"
         defaultValue={defaultValue ?? ""}
