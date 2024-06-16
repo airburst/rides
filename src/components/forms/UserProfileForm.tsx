@@ -2,7 +2,9 @@
 
 import { updateProfile } from "@/server/actions/updateProfile";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from 'next/navigation';
 import { useForm } from "react-hook-form";
+import { toast } from 'sonner';
 import { type User } from "../../types";
 import { Button } from "../Button";
 import { CancelButton } from "../Button/CancelButton";
@@ -31,9 +33,9 @@ export const UserProfileForm = ({
       },
     },
   })
+  const router = useRouter()
 
   const onSubmit = async (data: UserProfileFormSchema) => {
-    console.log("🚀 ~ onSubmit ~ data:", data)
     // Convert form data to FormData
     const formData = new FormData();
     formData.append("id", data.id);
@@ -47,7 +49,12 @@ export const UserProfileForm = ({
     // });
     const result = await updateProfile(formData);
 
-    console.log("🚀 ~ onSubmit ~ result", result);
+    if (result.success) {
+      toast.success(result.message);
+      router.push("/");
+    } else {
+      toast.error(result.message);
+    }
   }
 
   return (
@@ -69,7 +76,7 @@ export const UserProfileForm = ({
             <input
               id="name"
               type="text"
-              className="input"
+              className="input input-bordered"
               {...register("name")}
             />
             {errors.name && (
@@ -85,7 +92,7 @@ export const UserProfileForm = ({
             <input
               id="mobile"
               type="text"
-              className="input"
+              className="input input-bordered"
               {...register("mobile")}
             />
             {errors.mobile && (
@@ -101,7 +108,7 @@ export const UserProfileForm = ({
             <input
               id="emergency"
               type="text"
-              className="input"
+              className="input input-bordered"
               {...register("emergency")}
             />
             {errors.emergency && (
@@ -117,7 +124,7 @@ export const UserProfileForm = ({
             <input
               id="email"
               type="text"
-              className="input"
+              className="input input-bordered"
               {...register("email")}
               disabled
             />
@@ -129,7 +136,7 @@ export const UserProfileForm = ({
         Preferences
       </div>
       <div className="grid grid-cols-1 gap-4 p-2">
-        <div className="grid w-full grid-cols-1 gap-4 md:gap-8">
+        <div className="grid grid-cols-1 gap-4 md:gap-8">
           <label className="form-control w-full">
             <div className="label">Units</div>
             <select
@@ -144,7 +151,7 @@ export const UserProfileForm = ({
           </label>
         </div>
 
-        <div className="grid w-full grid-cols-2 gap-4 md:gap-8">
+        <div className="grid grid-cols-2 gap-4 md:gap-8 md:flex">
           <Button
             primary
             type="submit"

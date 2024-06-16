@@ -6,6 +6,7 @@ import "@/styles/globals.css";
 import { type Metadata } from "next";
 import { Outfit } from "next/font/google";
 import { Suspense } from "react";
+import { Toaster } from "sonner";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -46,6 +47,7 @@ export default async function RootLayout({
         <Header user={session?.user} />
         <Suspense fallback={<RideGroupSkeleton />}>
           {children}
+          <Toaster position="bottom-center" />
         </Suspense>
       </body>
     </html>

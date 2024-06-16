@@ -1,10 +1,12 @@
 "use server";
 
 import { userProfileFormSchema } from "@/components/forms/formSchemas";
+import { revalidatePath } from "next/cache";
 import { updateUser } from "./updateUser";
 
 export type FormState = {
   message: string;
+  success: boolean;
 };
 
 export async function updateProfile(data: FormData): Promise<FormState> {
@@ -18,16 +20,18 @@ export async function updateProfile(data: FormData): Promise<FormState> {
   const parsed = userProfileFormSchema.safeParse(formData);
 
   if (!parsed.success) {
-    return { message: "Invalid form data" };
+    return { message: "Invalid form data", success: false };
   }
 
   try {
     // @ts-expect-error preferences.units is a string
     await updateUser(parsed.data);
+    // Revalidate the profile page so that updated info is displayed
+    revalidatePath("/profile");
 
-    return { message: "Profile updated" };
+    return { message: "Profile updated", success: true };
   } catch (error) {
     console.error("Unable to update profile", error);
-    return { message: "Unable to update profile" };
+    return { message: "Unable to update profile", success: false };
   }
 }

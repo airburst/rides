@@ -2816,6 +2816,7 @@ __metadata:
     react-hook-form: "npm:^7.51.5"
     react-loading-skeleton: "npm:^3.4.0"
     rrule: "npm:^2.8.1"
+    sonner: "npm:^1.5.0"
     swr: "npm:^2.2.5"
     tailwindcss: "npm:^3.4.4"
     tsx: "npm:^4.14.0"
@@ -8195,6 +8196,16 @@ __metadata:
     ip-address: "npm:^9.0.5"
     smart-buffer: "npm:^4.2.0"
   checksum: 10/ffcb622c22481dfcd7589aae71fbfd71ca34334064d181df64bf8b7feaeee19706aba4cffd1de35cc7bbaeeaa0af96be2d7f40fcbc7bc0ab69533a7ae9ffc4fb
+  languageName: node
+  linkType: hard
+
+"sonner@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "sonner@npm:1.5.0"
+  peerDependencies:
+    react: ^18.0.0
+    react-dom: ^18.0.0
+  checksum: 10/f189ec3cacf294b875eeb349faefa4be90d2ff4dcde6dc73b3b77a4a8ed6ff393a1d6a1b1b90ef86de861a4c84d988aec09558cabd39fcb1befddd384c4010b0
   languageName: node
   linkType: hard
 
