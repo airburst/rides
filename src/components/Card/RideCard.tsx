@@ -1,6 +1,7 @@
 "use client";
 import clsx from "clsx";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import "react-loading-skeleton/dist/skeleton.css";
 import { isReady } from "../../../shared/utils";
 import { type RideList, type User } from "../../types";
@@ -16,17 +17,12 @@ export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
   const { id, name, time, rideGroup, destination, distance, limit, users } =
     ride;
   const isNotReady = !isReady(ride);
-
   const details = destination
     ? `${destination} - ${distance ?? ""}`
     : `${distance ?? ""}`;
+  const router = useRouter();
 
-  // const targetUrl =
-  //   router.pathname === "/embed"
-  //     ? `/embed/${id}`
-  //     : `/ride/${id}/${rideDate.split("T")[0]}`;
-
-  const onPress = () => console.log("TODO: Navigate to ride details");
+  const onPress = () => router.push(`/ride/${id}`);
 
   if (!id) {
     return null;

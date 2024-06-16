@@ -1,7 +1,7 @@
 import { MainContent, RideGroup } from "@/components";
 import { env } from "@/env";
 import { getRides } from "@/server/actions/getRides";
-import { type Preferences, type Role } from "@/types";
+import { getServerAuthSession } from "@/server/auth";
 import { formatDate, getQueryDateRange } from "@utils/dates";
 import { groupRides } from "@utils/transformRideData";
 import type { Metadata } from 'next';
@@ -13,20 +13,11 @@ export const metadata: Metadata = {
   description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} Ride Planner`,
 }
 
-const MOCK_USER = {
-  "id": "e0f7a8ce-8f75-44f8-9bec-8864c8fe42b2",
-  "name": "Mark Fairhurst",
-  "email": "mark1@gmail.com",
-  "image": "https://gravatar.com/avatar/c8776163654aa56a6819781cad028020?size=40",
-  "mobile": "07770 123456",
-  "emergency": "Partner 07770 987654",
-  "role": "ADMIN" as Role,
-  "preferences": { "units": "km" } as Preferences
-}
-
 const { start, end } = getQueryDateRange({});
 
 export default async function HomePage() {
+  const session = await getServerAuthSession();
+  const user = session?.user;
   const { rides, error } = await getRides(start, end);
 
   if (error) {
@@ -41,7 +32,7 @@ export default async function HomePage() {
     );
   }
 
-  const groupedRides = groupRides(rides, undefined, MOCK_USER);
+  const groupedRides = groupRides(rides, undefined, user);
   const ridesFound = groupedRides.length > 0;
 
   return (
@@ -53,7 +44,7 @@ export default async function HomePage() {
               <RideGroup
                 key={Object.keys(group)[0]}
                 group={group}
-                user={MOCK_USER}
+                user={user}
               />
             ))}
           </>
