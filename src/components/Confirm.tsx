@@ -1,7 +1,7 @@
 "use client";
 
-import { Dialog, Transition } from "@headlessui/react";
-import { Fragment, useState } from "react";
+import { Description, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import { useCallback, useState } from "react";
 import { Button } from "./Button";
 
 type Props = {
@@ -18,69 +18,46 @@ export const Confirm = ({
   open,
   heading = "Are you sure?",
   children,
-  okLabel = "Yes",
-  cancelLabel = "No",
+  okLabel = "YES",
+  cancelLabel = "NO",
   closeHandler,
   onYes,
 }: Props) => {
   const [waiting, setWaiting] = useState<boolean>(false);
 
-  const confirmHandler = () => {
+  const confirmHandler = useCallback(() => {
     if (onYes) {
       setWaiting(true);
       onYes(() => setWaiting(false));
     }
-  };
+  }, [onYes]);
 
   return (
-    <Transition appear show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-10" onClose={closeHandler}>
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
-        >
-          <div className="fixed inset-0 bg-black bg-opacity-25" />
-        </Transition.Child>
-
-        <div className="fixed inset-0 overflow-y-auto">
-          <div className="flex min-h-full items-center justify-center p-4 text-center">
-            <Transition.Child
-              as={Fragment}
-              enter="ease-out duration-300"
-              enterFrom="opacity-0 scale-95"
-              enterTo="opacity-100 scale-100"
-              leave="ease-in duration-200"
-              leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
+    <Dialog open={open} onClose={closeHandler} className="relative z-10">
+      <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+        <DialogPanel className="max-w-lg space-y-4 border bg-white p-12">
+          <DialogTitle>{heading}</DialogTitle>
+          <Description>{children}</Description>
+          <div className="mt-4 flex h-10 flex-row gap-4">
+            <Button
+              data-autofocus
+              className="min-w-24"
+              primary
+              onClick={confirmHandler}
+              loading={waiting}
             >
-              <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded bg-white p-6 text-left align-middle shadow-xl transition-all">
-                <Dialog.Title
-                  as="h3"
-                  className="text-lg font-medium leading-6 text-gray-900"
-                >
-                  {heading}
-                </Dialog.Title>
-
-                <div className="mt-2">{children}</div>
-
-                <div className="mt-4 flex h-10 flex-row gap-4">
-                  <Button primary onClick={confirmHandler} loading={waiting}>
-                    <span>{okLabel}</span>
-                  </Button>
-                  <Button onClick={closeHandler} disabled={waiting}>
-                    <span>{cancelLabel}</span>
-                  </Button>
-                </div>
-              </Dialog.Panel>
-            </Transition.Child>
+              <span>{okLabel}</span>
+            </Button>
+            <Button
+              className="min-w-24"
+              onClick={closeHandler}
+              disabled={waiting}
+            >
+              <span>{cancelLabel}</span>
+            </Button>
           </div>
-        </div>
-      </Dialog>
-    </Transition>
+        </DialogPanel>
+      </div>
+    </Dialog>
   );
 };

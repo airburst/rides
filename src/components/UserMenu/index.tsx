@@ -1,12 +1,15 @@
 "use client";
 
 import { env } from "@/env";
+import { cancelRide } from "@/server/actions/cancelRide";
+import { deleteRide } from "@/server/actions/deleteRide";
 import { type Role } from "@/types";
 import copy from "copy-to-clipboard";
 import { signIn, signOut } from "next-auth/react";
+import { useParams, useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { flattenQuery } from "shared/utils";
-import useOnClickOutside from "use-onclickoutside";
+import { toast } from "sonner";
 import pkg from "../../../package.json";
 import { Confirm } from "../Confirm";
 import {
@@ -30,19 +33,20 @@ const { NEXT_PUBLIC_REPO } = env;
 
 type MenuProps = {
   role?: Role;
-  rideId?: string | string[];
   isAuthenticated: boolean;
 };
 
-export const UserMenu = ({ role, rideId, isAuthenticated }: MenuProps) => {
+export const UserMenu = ({ role, isAuthenticated }: MenuProps) => {
   const ref = useRef(null);
+  const router = useRouter();
+  const params = useParams();
+  const rideId = flattenQuery(params.id);
   const [show, setShow] = useState<boolean>(false);
   const [showConfirmCancel, setShowConfirmCancel] = useState<boolean>(false);
   const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
   const isLeader = role && ["ADMIN", "LEADER"].includes(role);
   const isAdmin = role === "ADMIN";
   const showEditAndDelete = isLeader && rideId;
-  // const { mutate } = useSWRConfig();
 
   const toggleMenu = () => {
     setShow(!show);
@@ -71,45 +75,32 @@ export const UserMenu = ({ role, rideId, isAuthenticated }: MenuProps) => {
   };
 
   const handleCancel = async (cb: (flag: boolean) => void) => {
-    if (rideId) {
-      console.log("TODO: Cancel rideId: ", rideId);
-      // mutate("/api/ride", async () => {
-      //   const results = await cancelRide(rideId);
-      //   if (results.id) {
-      //     closeMenu();
-      //     router.push("/"); // Back to homepage
-      //     cb(true);
-      //   } else {
-      //     cb(false);
-      //   }
-      // });
+    const results = await cancelRide(rideId);
+
+    if (results.success) {
+      closeMenu();
+      router.push("/"); // Back to homepage
+      toast.success("Ride has been cancelled.")
+      cb(true);
     } else {
       cb(false);
     }
   };
 
   const handleDelete = async (cb: (flag: boolean) => void) => {
-    if (rideId) {
-      console.log("TODO: Delete rideId: ", rideId);
+    const results = await deleteRide(rideId);
 
-      // mutate("/api/ride", async () => {
-      //   const results = await deleteRide(rideId);
-      //   if (results.id) {
-      //     closeMenu();
-      //     router.push("/"); // Back to homepage
-      //     cb(true);
-      //   } else {
-      //     cb(false);
-      //   }
-      // });
+    if (results.success) {
+      closeMenu();
+      router.push("/"); // Back to homepage
+      toast.success("Ride has been deleted.")
+      cb(true);
     } else {
       cb(false);
     }
   };
   const confirmCancel = () => setShowConfirmCancel(true);
   const confirmDelete = () => setShowConfirmDelete(true);
-
-  useOnClickOutside(ref, closeMenu);
 
   return (
     <div ref={ref} className="relative">

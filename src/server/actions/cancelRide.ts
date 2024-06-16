@@ -1,13 +1,13 @@
 "use server";
 
 import { db } from "@/server/db";
-import { userOnRides } from "@/server/db/schema";
+import { rides } from "@/server/db/schema";
+import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { getServerAuthSession } from "../auth";
 
-export const joinRide = async (
+export const cancelRide = async (
   rideId: string,
-  userId: string,
 ): Promise<{
   success: boolean;
   error?: Error;
@@ -21,13 +21,14 @@ export const joinRide = async (
       error: new Error("Not authorised to use this API"),
     };
   }
-  // A user can only add themselves; a leader or admin can add other riders
-  const isMyRecord = session?.user.id === userId;
   const hasLeaderRole = role === "LEADER" || role === "ADMIN";
 
   try {
-    if (isMyRecord || hasLeaderRole) {
-      await db.insert(userOnRides).values({ rideId, userId });
+    if (hasLeaderRole) {
+      await db
+        .update(rides)
+        .set({ cancelled: true })
+        .where(eq(rides.id, rideId));
       revalidatePath("/ride/[...id]", "page");
 
       return {
@@ -41,7 +42,7 @@ export const joinRide = async (
   } catch (error) {
     return {
       success: false,
-      error: new Error(`Unable to add rider to ride id ${rideId}`),
+      error: new Error(`Unable to cancel ride id ${rideId}`),
     };
   }
 };

@@ -1,6 +1,6 @@
 import { makeClickableUrl } from "../../../shared/utils";
 import { type Ride } from "../../types";
-import { Cancelled } from "../Cancelled";
+import { CancelledBanner } from "../Cancelled";
 import { Messages } from "./Messages";
 import { Row } from "./Row";
 
@@ -90,8 +90,9 @@ export const RideInfo = ({ ride }: Props) => {
             </a>
           </Row>
         )}
-        <Cancelled cancelled={cancelled ?? false} position="bottom" />
       </div>
+
+      {cancelled && (<CancelledBanner />)}
 
       {notes && (
         <div className="flex w-full flex-col gap-2 rounded bg-white py-2 shadow-md">

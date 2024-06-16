@@ -35,7 +35,7 @@ export const updateRideNotes = async (
         .where(
           and(eq(userOnRides.rideId, rideId), eq(userOnRides.userId, userId)),
         );
-      revalidatePath("/ride/[...id]");
+      revalidatePath("/ride/[...id]", "page");
 
       return {
         success: true,

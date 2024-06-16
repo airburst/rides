@@ -27,7 +27,7 @@ export async function updateProfile(data: FormData): Promise<FormState> {
     // @ts-expect-error preferences.units is a string
     await updateUser(parsed.data);
     // Revalidate the profile page so that updated info is displayed
-    revalidatePath("/profile");
+    revalidatePath("/profile", "page");
 
     return { message: "Profile updated", success: true };
   } catch (error) {

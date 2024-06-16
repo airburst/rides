@@ -4,7 +4,7 @@ import { updateRideNotes } from "@/server/actions/updateRideNote";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { RideNotesForm, type FormValues } from "../forms/RideNotesForm";
+import { RideNotesForm, type FormValues } from "./RideNotesForm";
 
 type Props = {
   rideId?: string;

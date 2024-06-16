@@ -61,7 +61,6 @@ export const RideDetails = ({ ride, user, role }: Props) => {
         </div>
       </Heading>
 
-
       <>
         {!isSpace && (
           <div className="mx-2 sm:mx-0">
@@ -77,7 +76,7 @@ export const RideDetails = ({ ride, user, role }: Props) => {
           hasRiders={hasRiders}
           isLeader={isLeader}
         />
-        <div className="flex h-4 flex-row justify-between px-2 pt-2 sm:px-0">
+        <div className="flex h-4 flex-row justify-between md:justify-start md:gap-4 px-2 pt-2 sm:px-0">
           <BackButton className="md:min-w-32 min-w-28" url={`/#${id}`} />
 
           {isGoing && !cancelled && (

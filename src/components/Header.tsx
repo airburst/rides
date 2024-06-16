@@ -1,7 +1,6 @@
 import { env } from "@/env";
 // import { useAtom } from "jotai";
 import Image from "next/image";
-// import { useParams, useRouter } from "next/navigation";
 import Logo from "../../public/static/images/bath-cc-logo.svg";
 // import { filterQueryAtom, showFilterAtom } from "../store";
 import { type Session } from "@/types";
@@ -17,8 +16,6 @@ type Props = {
 export const Header = ({ user }: Props) => {
   // const [, setShowFilterMenu] = useAtom(showFilterAtom);
   // const [filterQuery] = useAtom(filterQueryAtom);
-  // const params = useParams();
-  // const rideId = params.id;
   // const isRidesPage = params.pathname === "/";
 
   const isAuthenticated = !!user;
@@ -68,7 +65,6 @@ export const Header = ({ user }: Props) => {
           <UserMenu
             isAuthenticated={isAuthenticated}
             role={role}
-          // rideId={rideId}
           />
         </div>
       </div>

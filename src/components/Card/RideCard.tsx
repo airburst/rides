@@ -28,6 +28,7 @@ export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
     return null;
   }
 
+  const isCancelled = ride.cancelled ?? false;
   const isGoing = user ? users?.map((u) => u.userId).includes(user.id) : false;
   const riderCount = users?.length ?? 0;
   const hasLimit = limit && limit > -1;
@@ -59,23 +60,25 @@ export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
           </div>
         )}
 
-        <div className="p-1 font-bold tracking-wide text-neutral-600">
-          {time}
-        </div>
-        <div className="truncate p-1">{details}</div>
-        {/* Rider count icon */}
-        <div className="flex flex-row items-center justify-end gap-2 pr-2">
-          <Image
-            src="/static/images/biking-neutral-500-64.png"
-            width={16}
-            height={16}
-            alt="Number of riders"
-          />
-          <span className="text-xl font-bold">{ridersLabel}</span>
-        </div>
+        {isCancelled ? (<Cancelled />)
+          : (<>
+            <div className="p-1 font-bold tracking-wide text-neutral-600">
+              {time}
+            </div>
+            <div className="truncate p-1">{details}</div>
+            {/* Rider count icon */}
+            <div className="flex flex-row items-center justify-end gap-2 pr-2">
+              <Image
+                src="/static/images/biking-neutral-500-64.png"
+                width={16}
+                height={16}
+                alt="Number of riders"
+              />
+              <span className="text-xl font-bold">{ridersLabel}</span>
+            </div>
+          </>)}
       </div>
 
-      <Cancelled cancelled={ride.cancelled ?? false} position="bottom" />
     </BasicCard>
   );
 };
