@@ -1117,6 +1117,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@hookform/resolvers@npm:^3.6.0":
+  version: 3.6.0
+  resolution: "@hookform/resolvers@npm:3.6.0"
+  peerDependencies:
+    react-hook-form: ^7.0.0
+  checksum: 10/6dd1b7ad21ed2b171470740884e0b83982c79a0d4ceddabe60b616e53eeed2b5569cdba5e91ad844e379aeda5ffa835b0c2d2525d702fcd8b263c2194895f9b7
+  languageName: node
+  linkType: hard
+
 "@humanwhocodes/config-array@npm:^0.11.14":
   version: 0.11.14
   resolution: "@humanwhocodes/config-array@npm:0.11.14"
@@ -2758,6 +2767,7 @@ __metadata:
     "@auth0/nextjs-auth0": "npm:^3.5.0"
     "@formkit/auto-animate": "npm:1.0.0-beta.6"
     "@headlessui/react": "npm:^2.0.4"
+    "@hookform/resolvers": "npm:^3.6.0"
     "@t3-oss/env-nextjs": "npm:^0.10.1"
     "@tailwindcss/forms": "npm:^0.5.7"
     "@testing-library/jest-dom": "npm:^6.4.5"

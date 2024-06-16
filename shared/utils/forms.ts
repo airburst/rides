@@ -87,3 +87,23 @@ export const makeRepeatingRide = (formData: RideFormValues): RepeatingRide => {
   // Convert to RRule
   return payload;
 };
+
+// export const convertToFormData = (
+//   data: unknown,
+//   formData = new FormData(),
+//   parentKey?: string,
+// ) => {
+//   if (data && typeof data === "object") {
+//     Object.keys(data as Record<string, unknown>).forEach((key) =>
+//       convertToFormData(
+//         (data as Record<string, unknown>)[key],
+//         formData,
+//         parentKey ? `${parentKey}[${key}]` : key,
+//       ),
+//     );
+//   } else {
+//     const value = data == null ?? data;
+
+//     formData.append(parentKey, value.toString());
+//   }
+// };

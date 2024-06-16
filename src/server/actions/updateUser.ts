@@ -16,7 +16,6 @@ export const updateUser = async (
   id: string | null;
   error?: Error;
 }> => {
-  console.log("🚀 ~ updateUser > user:", user);
   const { id, name, mobile, emergency, preferences } = user;
 
   try {

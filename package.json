@@ -23,6 +23,7 @@
     "@auth0/nextjs-auth0": "^3.5.0",
     "@formkit/auto-animate": "1.0.0-beta.6",
     "@headlessui/react": "^2.0.4",
+    "@hookform/resolvers": "^3.6.0",
     "@t3-oss/env-nextjs": "^0.10.1",
     "clsx": "^2.1.1",
     "copy-to-clipboard": "^3.3.3",
