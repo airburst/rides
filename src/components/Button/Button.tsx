@@ -41,7 +41,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const classes = clsx(
-      "btn",
+      "btn md:min-w-32 min-w-28",
       { "btn-primary": primary },
       { "btn-secondary": secondary },
       { "btn-accent": accent },
@@ -51,11 +51,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       { "btn-error": error },
       { "btn-link": link },
       { "btn-disabled": disabled },
-      { loading },
       "gap-2"
     );
 
     const upperText = text?.toUpperCase();
+    const buttonContent = children ?? upperText;
 
     return (
       <button
@@ -66,7 +66,11 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         onClick={onClick}
         disabled={disabled}
       >
-        {upperText ?? children}
+        {loading ? (
+          <span className="loading loading-spinner"></span>
+        )
+          : buttonContent
+        }
       </button>
     );
   }

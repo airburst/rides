@@ -1,37 +1,33 @@
 "use client";
+import { joinRide } from "@/server/actions/joinRide";
+import { leaveRide } from "@/server/actions/leaveRide";
 import { useState } from "react";
-// import { useSWRConfig } from "swr";
-// import { join, leave } from "../../hooks";
 import { CloseIcon, PlusIcon } from "../Icon";
 import { Button, type ButtonProps } from "./Button";
 
 type Props = ButtonProps & {
-  userId?: string;
-  rideId?: string;
+  userId: string;
+  rideId: string;
   going?: boolean;
 };
 
 export const JoinButton: React.FC<Props> = ({
   going,
-  // rideId,
-  // userId,
+  rideId,
+  userId,
   ...props
 }: Props) => {
   const [loading, setLoading] = useState<boolean>(false);
-  // const ride = { rideId, userId };
-  // const { mutate } = useSWRConfig();
 
   const handleJoin = async () => {
-    // const options = { optimisticData: user, rollbackOnError: true }
     setLoading(true);
-    // await mutate(`/api/ride/${rideId}`, () => join(ride)); // FIXME:
+    await joinRide(rideId, userId);
     setLoading(false);
   };
 
   const handleLeave = async () => {
-    // const options = { optimisticData: user, rollbackOnError: true }
     setLoading(true);
-    // await mutate(`/api/ride/${rideId}`, () => leave(ride)); // FIXME:
+    await leaveRide(rideId, userId);
     setLoading(false);
   };
 

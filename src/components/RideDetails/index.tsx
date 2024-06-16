@@ -91,7 +91,7 @@ export const RideDetails = ({ ride, user, role }: Props) => {
             <JoinButton
               going={isGoing}
               ariaLabel={`Join ${name} ride`}
-              rideId={id}
+              rideId={id!}
               userId={user?.id}
             />
           )}

@@ -15,7 +15,7 @@ import {
   users,
   verificationTokens,
 } from "@/server/db/schema/index";
-import { type Preferences, type Role } from "@/types";
+import { type User, type Role } from "@/types";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -25,11 +25,7 @@ import { type Preferences, type Role } from "@/types";
  */
 declare module "next-auth" {
   export interface Session extends DefaultSession {
-    user: {
-      id: string;
-      role: Role;
-      preferences?: Preferences;
-    } & DefaultSession["user"];
+    user: DefaultSession["user"] & User;
   }
 }
 
