@@ -1,11 +1,10 @@
 "use client";
 
+import { updateRideNotes } from "@/server/actions/updateRideNote";
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { useSWRConfig } from "swr";
-// import { updateRideNotes } from "../../hooks";
-import { RideNotesForm, type FormValues } from "./RideNotesForm";
+import { RideNotesForm, type FormValues } from "../forms/RideNotesForm";
 
 type Props = {
   rideId?: string;
@@ -22,7 +21,6 @@ export const RideNotes = ({
   showNotesForm,
   closeHandler,
 }: Props) => {
-  const { mutate } = useSWRConfig();
   const [waiting, setWaiting] = useState(false);
 
   const {
@@ -37,14 +35,11 @@ export const RideNotes = ({
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onSubmit: SubmitHandler<FormValues> = async ({ notes }) => {
-    setWaiting(true);
     if (rideId && userId) {
-      await mutate(`/api/ride/${rideId}`, async () => {
-        // Await update and subsequent requery, to refresh notes in page
-        // await updateRideNotes(rideId, userId, notes || "");
-      });
-    }
-    setWaiting(false);
+      setWaiting(true);
+      await updateRideNotes(rideId, userId, notes ?? "");
+      setWaiting(false);
+    };
     closeHandler();
   };
 

@@ -50,7 +50,7 @@ export type Ride = {
   limit?: number;
   scheduleId?: string;
   createdAt: string;
-  users?: { user: User }[];
+  users?: { user: User; notes?: string }[];
   day?: string;
   time?: string;
 };

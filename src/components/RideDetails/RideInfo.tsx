@@ -1,5 +1,5 @@
 import { makeClickableUrl } from "../../../shared/utils";
-import { type Ride, type User } from "../../types";
+import { type Ride } from "../../types";
 import { Cancelled } from "../Cancelled";
 import { Messages } from "./Messages";
 import { Row } from "./Row";
@@ -24,13 +24,11 @@ export const RideInfo = ({ ride }: Props) => {
     users,
   } = ride;
 
-  const riderNotes = users
-    ?.map((u: { user: User }) => u.user)
-    ?.filter((user) => user.rideNotes)
-    .map(({ name: riderName, rideNotes, image }) => ({
-      name: riderName,
-      rideNotes,
-      image,
+  const riderNotes = users?.filter(({ notes }) => notes)
+    .map(({ user, notes }) => ({
+      name: user.name,
+      image: user.image,
+      rideNotes: notes,
     }));
 
   return (

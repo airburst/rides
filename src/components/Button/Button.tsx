@@ -22,6 +22,7 @@ export interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   (
     {
+      className,
       type = "button",
       text,
       children,
@@ -41,7 +42,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const classes = clsx(
-      "btn md:min-w-32 min-w-28",
+      "btn",
       { "btn-primary": primary },
       { "btn-secondary": secondary },
       { "btn-accent": accent },
@@ -51,7 +52,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       { "btn-error": error },
       { "btn-link": link },
       { "btn-disabled": disabled },
-      "gap-2"
+      "gap-2",
+      className
     );
 
     const upperText = text?.toUpperCase();

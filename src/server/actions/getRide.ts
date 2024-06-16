@@ -16,7 +16,7 @@ export const getRide = async (
     const result = await db.query.rides.findFirst({
       with: {
         users: {
-          columns: {},
+          columns: { notes: true },
           with: {
             user: true,
           },

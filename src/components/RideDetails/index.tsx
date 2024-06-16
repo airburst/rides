@@ -78,17 +78,18 @@ export const RideDetails = ({ ride, user, role }: Props) => {
           isLeader={isLeader}
         />
         <div className="flex h-4 flex-row justify-between px-2 pt-2 sm:px-0">
-          <BackButton url={`/#${id}`} />
+          <BackButton className="md:min-w-32 min-w-28" url={`/#${id}`} />
 
           {isGoing && !cancelled && (
             <Button accent onClick={openNotes}>
               <MessageIcon className="fill-white" />
-              Message
+              MESSAGE
             </Button>
           )}
 
           {user && (canJoin || isGoing) && !cancelled && (
             <JoinButton
+              className="md:min-w-32 min-w-28"
               going={isGoing}
               ariaLabel={`Join ${name} ride`}
               rideId={id!}
