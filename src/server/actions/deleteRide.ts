@@ -4,7 +4,7 @@ import { db } from "@/server/db";
 import { rides } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-import { getServerAuthSession } from "../auth";
+import { canUseAction } from "../auth";
 
 export const deleteRide = async (
   rideId: string,
@@ -12,29 +12,21 @@ export const deleteRide = async (
   success: boolean;
   error?: Error;
 }> => {
-  const session = await getServerAuthSession();
-  const role = session?.user!.role;
+  const isAuthorised = await canUseAction("LEADER");
 
-  if (!role) {
+  if (!isAuthorised) {
     return {
       success: false,
       error: new Error("Not authorised to use this API"),
     };
   }
-  const hasLeaderRole = role === "LEADER" || role === "ADMIN";
 
   try {
-    if (hasLeaderRole) {
-      await db.update(rides).set({ deleted: true }).where(eq(rides.id, rideId));
-      revalidatePath("/ride/[...id]", "page");
+    await db.update(rides).set({ deleted: true }).where(eq(rides.id, rideId));
+    revalidatePath("/ride/[...id]", "page");
 
-      return {
-        success: true,
-      };
-    }
     return {
-      success: false,
-      error: new Error("Not authorised to use this API"),
+      success: true,
     };
   } catch (error) {
     return {

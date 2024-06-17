@@ -15,7 +15,7 @@ import {
   users,
   verificationTokens,
 } from "@/server/db/schema/index";
-import { type User, type Role } from "@/types";
+import { type Role, type User } from "@/types";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -71,3 +71,28 @@ export const authOptions: NextAuthOptions = {
  * @see https://next-auth.js.org/configuration/nextjs
  */
 export const getServerAuthSession = () => getServerSession(authOptions);
+
+// Helper for server actions
+export const canUseAction = async (
+  allowedRole = "USER",
+  allowedUserId?: string,
+) => {
+  const session = await getServerAuthSession();
+  const id = session?.user!.id;
+  const role = session?.user!.role;
+  const isMyRecord = allowedUserId && id === allowedUserId;
+
+  if (!role) {
+    return false;
+  }
+
+  // ADMIN and LEADER can do everything
+  if (allowedRole === "ADMIN") {
+    return role === "ADMIN" || isMyRecord;
+  }
+  if (allowedRole === "LEADER") {
+    return role === "LEADER" || role === "ADMIN" || isMyRecord;
+  }
+  // USER
+  return allowedUserId ? id === allowedUserId : true;
+};

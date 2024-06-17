@@ -3,6 +3,7 @@
 import { db } from "@/server/db";
 import { type User } from "@/types";
 import { eq } from "drizzle-orm";
+import { canUseAction } from "../auth";
 import { users } from "../db/schema";
 
 type UserUpdate = Pick<
@@ -16,6 +17,16 @@ export const updateUser = async (
   id: string | null;
   error?: Error;
 }> => {
+  // A user can only change their own record; an admin can change other riders
+  const isAuthorised = await canUseAction("ADMIN", user.id);
+
+  if (!isAuthorised) {
+    return {
+      id: null,
+      error: new Error("Not authorised to use this API"),
+    };
+  }
+
   const { id, name, mobile, emergency, preferences } = user;
 
   try {
