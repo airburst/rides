@@ -2,7 +2,6 @@
 import {
   type FilterQuery,
   type Group,
-  type Ride,
   type RideList,
   type User,
 } from "../../src/types";
@@ -103,5 +102,5 @@ export const ungroupRides = (group: Group) =>
     Object.entries(types).map(([type, rides]) => ({ date, type, rides })),
   );
 
-export const mapRidesToDate = (rides: Ride[], date: string): Ride[] =>
+export const mapRidesToDate = (rides: RideList[], date: string): RideList[] =>
   rides.filter((r) => r?.rideDate?.startsWith(date));

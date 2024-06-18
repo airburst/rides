@@ -130,7 +130,7 @@ export const UserMenu = ({ role, isAuthenticated }: MenuProps) => {
             </MenuEntry>
           )}
 
-          <MenuEntry label="Calendar" href="/ride/planner" onClick={closeMenu}>
+          <MenuEntry label="Calendar" href="/calendar" onClick={closeMenu}>
             <CalendarIcon className="fill-neutral-700" />
           </MenuEntry>
 

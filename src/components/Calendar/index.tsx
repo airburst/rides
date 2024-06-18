@@ -6,14 +6,13 @@ import {
   getNow,
   mapRidesToDate,
 } from "../../../shared/utils";
-import { type Ride } from "../../types";
+import { type RideList } from "../../types";
 import { Day, OutsideDay } from "./Day";
 import { HeadingGroup } from "./Heading";
 
 type Props = {
   date: string;
-  rides?: Ride[];
-  loading: boolean;
+  rides?: RideList[];
 };
 
 const getDateStub = (date: string) => {
@@ -22,7 +21,7 @@ const getDateStub = (date: string) => {
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const Calendar: React.FC<Props> = ({ rides, loading, date }: Props) => {
+export const Calendar: React.FC<Props> = ({ rides, date }: Props) => {
   const today = getNow().split("T")[0] ?? "";
   const startDay = firstDayOfMonth(date);
   const lastDay = daysInMonth(date);
@@ -83,6 +82,8 @@ export const Calendar: React.FC<Props> = ({ rides, loading, date }: Props) => {
     ...dt,
     rides: mapRidesToDate(rides ?? [], dt.date),
   }));
+
+  const loading = false; // FIXME: Add suspense
 
   return loading ? (
     <div className="grid grid-cols-7 gap-0 bg-white shadow-md sm:m-2 lg:m-0">

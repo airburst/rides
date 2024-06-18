@@ -117,7 +117,7 @@ export const formatInitials = (words: string): string => {
     .toUpperCase();
 };
 
-export const formatRideBadge = (ride: Ride): string => {
+export const formatRideBadge = (ride: RideList): string => {
   if (ride.name === "Paceline" || ride.name === "Sunday Ride") {
     return ride.rideGroup
       ? ride.rideGroup.substring(0, 3) + ride.rideGroup.replace(/\D/g, "")

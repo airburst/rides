@@ -14,7 +14,7 @@ const theme = {
   success: "#15803d",
   "success-content": "#ffffff",
   warning: "#FBBD23",
-  error: "#b91c1c",
+  error: "#F05252",
   "error-content": "#ffffff",
   "chat-bubble-primary": "#3f60c0",
 };
