@@ -50,7 +50,6 @@ export const Calendar: React.FC<Props> = ({ rides, date }: Props) => {
   // Add all of the days in month
   for (let d = 1; d < lastDay + 1; d += 1) {
     const calDate = `${getDateStub(date)}-${d.toString().padStart(2, "0")}`;
-
     calGrid.push({
       type: calDate >= today ? "future" : "historic",
       day: d,
@@ -85,25 +84,13 @@ export const Calendar: React.FC<Props> = ({ rides, date }: Props) => {
     rides: mapRidesToDate(rides ?? [], dt.date),
   }));
 
-  const loading = false; // FIXME: Add suspense
-
-  return loading ? (
-    <div className={`grid grid-cols-7 grid-rows-${rowCount} gap-0 bg-white shadow-md sm:m-2 lg:m-0`}>
-      <HeadingGroup />
-      {calGrid.map(({ type, day, date: calDate }) =>
-        type === "historic" ? (
-          <OutsideDay key={`historic-${calDate}`} day={day} date={calDate} />
-        ) : (
-          <Day key={`cal-${calDate}`} day={day} date={calDate} />
-        )
-      )}
-    </div>
-  ) : (
+  return (
     <>
-      <div className={`grid grid-cols-7 gap-0 bg-white shadow-md lg:m-0`}>
+      <div className={`grid grid-cols-7 gap-0`}>
         <HeadingGroup />
       </div>
-      <div className={`grid grid-cols-7 grid-rows-${rowCount} gap-0 bg-white shadow-md lg:m-0`} >
+
+      <div className={`h-full grid grid-cols-7 grid-rows-${rowCount} gap-[1px] bg-base-300`} >
         {daysWithRides.map(({ type, day, rides: mappedRides, date: calDate }) =>
           type === "historic" ? (
             <OutsideDay

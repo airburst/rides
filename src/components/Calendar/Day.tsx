@@ -1,7 +1,7 @@
 import Link from "next/link";
-import { formatRideBadge, getNow, isReady } from "../../../shared/utils";
+import { getNow } from "../../../shared/utils";
 import { type RideList } from "../../types";
-import { Badge, RoundBadge } from "../Badge";
+import { RoundBadge } from "../Badge";
 
 type Props = {
   day: number;
@@ -13,60 +13,52 @@ type Props = {
 
 const getBadgeStyle = (
   past: boolean | undefined,
-  hasUnreadyRides: boolean | undefined
 ): string => {
   if (past) {
     return "past";
   }
-  return hasUnreadyRides ? "unready" : "ready";
+  return "ready";
 };
 
 // TODO: fix last-child borders
 export const Day = ({ day, date, rides = [], classes, past }: Props) => {
   const today = getNow();
   const isToday = today.startsWith(date);
-  const hasUnreadyRides = rides.filter((r) => !isReady(r)).length > 0;
 
   const cellStyle = isToday
     ? "bg-base-300 text-black"
-    : "hover:bg-base-300 cursor-pointer";
+    : "bg-white hover:bg-base-300 cursor-pointer";
 
   const wrapperClasses =
     classes ??
-    `lg:text-md sm:h-32 w-full mb-0 justify-self-center border-b-[1px] border-r-[1px] border-neutral-100 p-1 text-sm last:border-b-0 last:border-r-0 cursor-pointer overflow-hidden ${cellStyle}`;
+    `flex flex-col lg:text-md h-full mb-0 p-1 text-sm overflow-hidden min-h-0 min-w-0 ${cellStyle}`;
 
   const Content = (
     <div className={wrapperClasses}>
       {day}
 
-      <div className="flex justify-center py-2 sm:hidden lg:grid-cols-3 lg:gap-2">
+      {/* Mobile layout */}
+      <div className="flex grow justify-center items-center pb-4">
         {rides && rides.length > 0 && (
           <RoundBadge
             text={rides.length}
-            style={getBadgeStyle(past, hasUnreadyRides)}
+            style={getBadgeStyle(past)}
           />
         )}
       </div>
 
-      <div className="invisible sm:visible flex flex-wrap gap-1">
+      {/* Larger viewports */}
+      {/* <div className="hidden sm:flex-1 sm:visible sm:grid sm:grid-cols-3 sm:gap-1">
         {rides?.map((ride) => (
           <div key={ride.id} className="truncate">
-            {isReady(ride) ? (
-              <Badge
-                text={formatRideBadge(ride)}
-                style={getBadgeStyle(past, false)}
-                small
-              />
-            ) : (
-              <Badge
-                text={formatRideBadge(ride)}
-                style={getBadgeStyle(past, true)}
-                small
-              />
-            )}
+            <Badge
+              text={formatRideBadge(ride)}
+              style={getBadgeStyle(past)}
+              small
+            />
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 
@@ -77,7 +69,7 @@ export const Day = ({ day, date, rides = [], classes, past }: Props) => {
 export const OutsideDay = (props: Props) => (
   <Day
     {...props}
-    classes="lg:text-md w-full justify-self-center bg-base-200 p-1 text-sm text-neutral-400 cursor-pointer"
+    classes="lg:text-md h-full w-full justify-self-center bg-base-200 p-1 text-sm text-neutral-400 cursor-pointer"
     past
   />
 );

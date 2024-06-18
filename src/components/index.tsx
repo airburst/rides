@@ -7,7 +7,6 @@ export * from "./ErrorBoundary";
 export * from "./Filters";
 export * from "./Header";
 export * from "./Icon";
-export * from "./LayoutEmbedded";
 export * from "./MainContent";
 export * from "./NoMatch";
 export * from "./RideDetails";

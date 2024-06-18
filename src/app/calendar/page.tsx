@@ -1,4 +1,5 @@
 import { Button, Calendar, ChevronLeftIcon, ChevronRightIcon, MainContent } from "@/components";
+import { FullPageContent } from "@/components/FullPageContent";
 import { env } from "@/env";
 import { getRides } from "@/server/actions/getRides";
 import { formatCalendarDate, getMonthDateRange, getNow } from "@utils/dates";
@@ -28,10 +29,10 @@ export default async function RideCalendar() {
   }
 
   return (
-    <MainContent>
-      <div className="flex flex-col md:gap-8">
-        <div className="flex w-full flex-col gap-2">
-          <div className="flex w-full flex-row items-center justify-between bg-primary p-2 font-bold uppercase tracking-wider text-white sm:rounded">
+    <FullPageContent>
+      <div className="flex flex-col h-[100vh] w-full">
+        <div className="flex w-full flex-col gap-2 bg-primary">
+          <div className="flex w-full flex-row items-center justify-between p-2 font-bold uppercase tracking-wider text-white">
             <Button accent>
               <ChevronLeftIcon className="fill-accent-content" />
             </Button>
@@ -44,6 +45,6 @@ export default async function RideCalendar() {
 
         <Calendar date={date} rides={rides} />
       </div>
-    </MainContent>
+    </FullPageContent>
   )
 };

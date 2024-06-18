@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 
+- Calendar is now full-screen layout
 - Changed appearance of Cancelled ride banner and no longer show riders section of cancelled rides in details view
 - Upgraded to NextJS v15 App Router (from Pages router)
 - Upgraded to React v19 and implemented React Server Components for all server-based data fetches
