@@ -3,17 +3,15 @@ import { env } from "@/env";
 import Image from "next/image";
 import Logo from "../../public/static/images/bath-cc-logo.svg";
 // import { filterQueryAtom, showFilterAtom } from "../store";
-import { type Session } from "@/types";
+import { getServerAuthSession } from "@/server/auth";
 import Link from "next/link";
 import { UserMenu } from "./UserMenu";
 
 const { NEXT_PUBLIC_CLUB_SHORT_NAME } = env;
 
-type Props = {
-  user?: Session["user"];
-};
-
-export const Header = ({ user }: Props) => {
+export const Header = async () => {
+  const session = await getServerAuthSession()
+  const user = session?.user;
   // const [, setShowFilterMenu] = useAtom(showFilterAtom);
   // const [filterQuery] = useAtom(filterQueryAtom);
   // const isRidesPage = params.pathname === "/";

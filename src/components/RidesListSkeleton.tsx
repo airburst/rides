@@ -7,7 +7,7 @@ type SkeletonProps = {
   numberOfCards?: number;
 };
 
-export const RideGroupSkeleton = ({
+export const RidesListSkeleton = ({
   dateText = "SUNDAY 11 NOWONDER",
   numberOfCards = 5,
 }: SkeletonProps) => (
