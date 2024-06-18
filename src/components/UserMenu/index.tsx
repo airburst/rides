@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 "use client";
 
 import { env } from "@/env";
@@ -7,7 +8,7 @@ import { type Role } from "@/types";
 import copy from "copy-to-clipboard";
 import { signIn, signOut } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { flattenQuery } from "shared/utils";
 import { toast } from "sonner";
 import pkg from "../../../package.json";
@@ -37,7 +38,6 @@ type MenuProps = {
 };
 
 export const UserMenu = ({ role, isAuthenticated }: MenuProps) => {
-  const ref = useRef(null);
   const router = useRouter();
   const params = useParams();
   const rideId = flattenQuery(params.id);
@@ -78,9 +78,9 @@ export const UserMenu = ({ role, isAuthenticated }: MenuProps) => {
     const results = await cancelRide(rideId);
 
     if (results.success) {
-      closeMenu();
-      router.push("/"); // Back to homepage
       toast.success("Ride has been cancelled.")
+      closeMenu();
+      router.back();
       cb(true);
     } else {
       cb(false);
@@ -91,19 +91,26 @@ export const UserMenu = ({ role, isAuthenticated }: MenuProps) => {
     const results = await deleteRide(rideId);
 
     if (results.success) {
-      closeMenu();
-      router.push("/"); // Back to homepage
       toast.success("Ride has been deleted.")
+      closeMenu();
+      router.back();
       cb(true);
     } else {
       cb(false);
     }
   };
-  const confirmCancel = () => setShowConfirmCancel(true);
-  const confirmDelete = () => setShowConfirmDelete(true);
+
+  const confirmCancel = () => {
+    setShowConfirmCancel(true);
+    setShow(false)
+  }
+  const confirmDelete = () => {
+    setShowConfirmDelete(true);
+    setShow(false)
+  }
 
   return (
-    <div ref={ref} className="relative">
+    <div className="relative">
       <div className="h-10 cursor-pointer rounded p-1 text-3xl">
         <button
           type="button"

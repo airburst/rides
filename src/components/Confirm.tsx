@@ -1,7 +1,7 @@
 "use client";
 
 import { Description, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { Button } from "./Button";
 
 type Props = {
@@ -25,15 +25,22 @@ export const Confirm = ({
 }: Props) => {
   const [waiting, setWaiting] = useState<boolean>(false);
 
-  const confirmHandler = useCallback(() => {
+  const confirmHandler = () => {
     if (onYes) {
       setWaiting(true);
       onYes(() => setWaiting(false));
     }
-  }, [onYes]);
+  };
+
+  // Only close the dialog if the value is truthy
+  const doClose = (value?: unknown) => {
+    if (value) {
+      closeHandler();
+    }
+  };
 
   return (
-    <Dialog open={open} onClose={closeHandler} className="relative z-10">
+    <Dialog open={open} onClose={doClose} className="relative z-10">
       <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
         <DialogPanel className="max-w-lg space-y-4 border bg-white p-12">
           <DialogTitle>{heading}</DialogTitle>
