@@ -1,6 +1,6 @@
 import { makeClickableUrl } from "../../../shared/utils";
 import { type Ride } from "../../types";
-import { CancelledBanner } from "../Cancelled";
+import { CancelledBanner } from "./Cancelled";
 import { Messages } from "./Messages";
 import { Row } from "./Row";
 

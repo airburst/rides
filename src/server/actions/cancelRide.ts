@@ -23,6 +23,7 @@ export const cancelRide = async (
 
   try {
     await db.update(rides).set({ cancelled: true }).where(eq(rides.id, rideId));
+    // TODO: Causes layout shift, need to fix
     revalidatePath("/ride/[...id]", "page");
 
     return {

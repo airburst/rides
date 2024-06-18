@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import "react-loading-skeleton/dist/skeleton.css";
 import { isReady } from "../../../shared/utils";
 import { type RideList, type User } from "../../types";
-import { Cancelled } from "../Cancelled";
+import { Cancelled } from "../RideDetails/Cancelled";
 import { BasicCard } from "./BasicCard";
 
 type Props = {
@@ -35,8 +35,7 @@ export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
   const ridersLabel = hasLimit ? `${riderCount}/${limit}` : riderCount;
 
   const cardClass = clsx(
-    "grid w-full grid-cols-[auto_1fr_80px] pl-1 pb-1 border-l-4",
-    isNotReady ? "border-red-500 rounded-l" : "border-transparent"
+    "grid w-full grid-cols-[auto_1fr_80px] p-1"
   );
 
   // If a rider is going, span the title across 2 columns to make space
@@ -67,7 +66,7 @@ export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
             </div>
             <div className="truncate p-1">{details}</div>
             {/* Rider count icon */}
-            <div className="flex flex-row items-center justify-end gap-2 pr-2">
+            <div className="flex flex-row items-center justify-end gap-2 pr-1">
               <Image
                 src="/static/images/biking-neutral-500-64.png"
                 width={16}
