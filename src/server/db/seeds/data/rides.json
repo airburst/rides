@@ -87,7 +87,9 @@
     "destination": "Maiden Bradley",
     "limit": -1,
     "rideDate": "2024-06-09T08:30:00.000Z",
-    "distance": 105
+    "distance": 105,
+    "meetingPoint": "Bath Sports Centre",
+    "notes": "This is a longer form note for the ride, so the UX can be better tested. This is a longer form note for the ride, so the UX can be better tested. This is a longer form note for the ride, so the UX can be better tested. This is a longer form note for the ride, so the UX can be better tested. This is a longer form note for the ride, so the UX can be better tested."
   },
   {
     "id": "clvn65kc50017atn91rclqe5a",

@@ -44,7 +44,7 @@ export const Confirm = ({
       {/* Background */}
       <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
       <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-        <DialogPanel className="max-w-lg space-y-4 rounded-md bg-white p-12">
+        <DialogPanel className="max-w-lg space-y-4 rounded-md bg-white p-8">
           <DialogTitle>{heading}</DialogTitle>
           <Description>{children}</Description>
           <div className="mt-4 flex h-10 flex-row gap-4">

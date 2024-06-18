@@ -1,23 +1,23 @@
 "use client";
 
-import { updateRideNotes } from "@/server/actions/updateRideNote";
+import { updateMessage } from "@/server/actions/updateMessage";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { RideNotesForm, type FormValues } from "../forms/RideNotesForm";
+import { type FormValues, RideMessagesForm } from "../forms/RideMessagesForm";
 
 type Props = {
   rideId?: string;
   userId?: string;
-  rideNotes?: string;
+  messages?: string;
   showNotesForm: boolean;
   closeHandler: () => void;
 };
 
-export const RideNotes = ({
+export const RideMessages = ({
   rideId,
   userId,
-  rideNotes,
+  messages,
   showNotesForm,
   closeHandler,
 }: Props) => {
@@ -31,13 +31,13 @@ export const RideNotes = ({
   } = useForm<FormValues>();
 
   // Initial state for form: set name, leader and time
-  const defaultValues = { notes: rideNotes };
+  const defaultValues = { notes: messages };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onSubmit: SubmitHandler<FormValues> = async ({ notes }) => {
     if (rideId && userId) {
       setWaiting(true);
-      await updateRideNotes(rideId, userId, notes ?? "");
+      await updateMessage(rideId, userId, notes ?? "");
       setWaiting(false);
     };
     closeHandler();
@@ -45,10 +45,12 @@ export const RideNotes = ({
 
   return (
     <Dialog open={showNotesForm} onClose={closeHandler} className="relative z-10">
+      {/* Background */}
+      <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
       <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-        <DialogPanel className="max-w-lg space-y-4 border bg-white p-12">
-          <DialogTitle className="font-bold">Add Message</DialogTitle>
-          <RideNotesForm
+        <DialogPanel className="max-w-lg space-y-4 rounded-md bg-white p-8">
+          <DialogTitle className="text-lg">Message</DialogTitle>
+          <RideMessagesForm
             defaultValues={defaultValues}
             errors={errors}
             isDirty={isDirty}

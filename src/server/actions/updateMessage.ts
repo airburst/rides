@@ -6,7 +6,7 @@ import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { canUseAction } from "../auth";
 
-export const updateRideNotes = async (
+export const updateMessage = async (
   rideId: string,
   userId: string,
   notes: string,

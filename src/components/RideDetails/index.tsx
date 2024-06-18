@@ -6,7 +6,7 @@ import { Badge } from "../Badge";
 import { BackButton, Button, JoinButton } from "../Button";
 import { MessageIcon } from "../Icon";
 import { RideInfo } from "./RideInfo";
-import { RideNotes } from "./RideNotes";
+import { RideMessages } from "./RideMessages";
 import { RidersGoing } from "./RidersGoing";
 
 type RowProps = {
@@ -47,7 +47,7 @@ export const RideDetails = ({ ride, user, role }: Props) => {
   const closeNotes = () => setShowNotesForm(false);
 
   return (
-    <div className="flex w-full flex-col gap-2">
+    <div className="flex w-full flex-col gap-2 md:gap-4">
       <Heading>
         <div>{day}</div>
       </Heading>
@@ -104,10 +104,10 @@ export const RideDetails = ({ ride, user, role }: Props) => {
           </>
         )}
 
-      <RideNotes
+      <RideMessages
         userId={user?.id}
         rideId={id}
-        rideNotes={rideNotes}
+        messages={rideNotes}
         showNotesForm={showNotesForm}
         closeHandler={closeNotes}
       />
