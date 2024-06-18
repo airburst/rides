@@ -29,7 +29,7 @@ export default async function RideCalendar() {
 
   return (
     <MainContent>
-      <div className="grid w-full grid-cols-1 gap-0 md:gap-8">
+      <div className="flex flex-col md:gap-8">
         <div className="flex w-full flex-col gap-2">
           <div className="flex w-full flex-row items-center justify-between bg-primary p-2 font-bold uppercase tracking-wider text-white sm:rounded">
             <Button accent>

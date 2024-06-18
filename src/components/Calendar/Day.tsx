@@ -33,7 +33,7 @@ export const Day = ({ day, date, rides = [], classes, past }: Props) => {
 
   const wrapperClasses =
     classes ??
-    `lg:text-md h-28 sm:h-32 w-full mb-0 justify-self-center border-b-[1px] border-r-[1px] border-neutral-100 p-1 text-sm last:border-b-0 last:border-r-0 cursor-pointer overflow-hidden ${cellStyle}`;
+    `lg:text-md sm:h-32 w-full mb-0 justify-self-center border-b-[1px] border-r-[1px] border-neutral-100 p-1 text-sm last:border-b-0 last:border-r-0 cursor-pointer overflow-hidden ${cellStyle}`;
 
   const Content = (
     <div className={wrapperClasses}>
@@ -77,7 +77,7 @@ export const Day = ({ day, date, rides = [], classes, past }: Props) => {
 export const OutsideDay = (props: Props) => (
   <Day
     {...props}
-    classes="lg:text-md h-28 sm:h-32 w-full justify-self-center bg-base-200 p-1 text-sm text-neutral-400 cursor-pointer"
+    classes="lg:text-md w-full justify-self-center bg-base-200 p-1 text-sm text-neutral-400 cursor-pointer"
     past
   />
 );

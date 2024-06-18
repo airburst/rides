@@ -77,6 +77,8 @@ export const Calendar: React.FC<Props> = ({ rides, date }: Props) => {
     }
   }
 
+  const rowCount = calGrid.length / 7;
+
   // Match rides to dates
   const daysWithRides = calGrid.map((dt) => ({
     ...dt,
@@ -86,7 +88,7 @@ export const Calendar: React.FC<Props> = ({ rides, date }: Props) => {
   const loading = false; // FIXME: Add suspense
 
   return loading ? (
-    <div className="grid grid-cols-7 gap-0 bg-white shadow-md sm:m-2 lg:m-0">
+    <div className={`grid grid-cols-7 grid-rows-${rowCount} gap-0 bg-white shadow-md sm:m-2 lg:m-0`}>
       <HeadingGroup />
       {calGrid.map(({ type, day, date: calDate }) =>
         type === "historic" ? (
@@ -97,25 +99,29 @@ export const Calendar: React.FC<Props> = ({ rides, date }: Props) => {
       )}
     </div>
   ) : (
-    <div className="grid grid-cols-7 gap-0 bg-white shadow-md lg:m-0">
-      <HeadingGroup />
-      {daysWithRides.map(({ type, day, rides: mappedRides, date: calDate }) =>
-        type === "historic" ? (
-          <OutsideDay
-            key={`historic-${calDate}`}
-            day={day}
-            date={calDate}
-            rides={mappedRides}
-          />
-        ) : (
-          <Day
-            key={`cal-${calDate}`}
-            day={day}
-            date={calDate}
-            rides={mappedRides}
-          />
-        )
-      )}
-    </div>
+    <>
+      <div className={`grid grid-cols-7 gap-0 bg-white shadow-md lg:m-0`}>
+        <HeadingGroup />
+      </div>
+      <div className={`grid grid-cols-7 grid-rows-${rowCount} gap-0 bg-white shadow-md lg:m-0`} >
+        {daysWithRides.map(({ type, day, rides: mappedRides, date: calDate }) =>
+          type === "historic" ? (
+            <OutsideDay
+              key={`historic-${calDate}`}
+              day={day}
+              date={calDate}
+              rides={mappedRides}
+            />
+          ) : (
+            <Day
+              key={`cal-${calDate}`}
+              day={day}
+              date={calDate}
+              rides={mappedRides}
+            />
+          )
+        )}
+      </div >
+    </>
   );
 };
