@@ -47,7 +47,7 @@ export const Day = ({ day, date, rides = [], classes, past }: Props) => {
     </div>
   );
 
-  return <Link href={`/ride/planner/${date}`}>{Content}</Link>;
+  return <Link href={`/rides/${date}`}>{Content}</Link>;
 };
 
 export const OutsideDay = (props: Props) => (

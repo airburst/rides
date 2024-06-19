@@ -9,9 +9,11 @@ export const metadata: Metadata = {
   description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} Ride Calendar`,
 }
 
-export default async function RideCalendar() {
+export default async function RideCalendar({ params }: { params: { date: string } }) {
+  const { date } = params;
+
   // TODO: add Suspense
   return (
-    <CalendarPage />
+    <CalendarPage date={date} />
   )
 };

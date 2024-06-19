@@ -4,11 +4,14 @@ import { formatDate, getQueryDateRange } from "@utils/dates";
 import { groupRides } from "@utils/transformRideData";
 import { RideGroup } from "./RideGroup";
 
-const { start, end } = getQueryDateRange({});
+type Props = {
+  date?: string;
+}
 
-export const RidesList = async () => {
+export const RidesList = async ({ date }: Props) => {
   const session = await getServerAuthSession();
   const user = session?.user;
+  const { start, end } = getQueryDateRange({ start: date, end: date });
   const { rides, error } = await getRides(start, end);
 
   if (error) {
