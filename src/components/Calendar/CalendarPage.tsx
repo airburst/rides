@@ -29,7 +29,7 @@ export const CalendarPage = async ({ date }: Props) => {
 
   return (
     <FullPageContent>
-      <div className="flex flex-col h-[100vh] w-full">
+      <div className="flex flex-col h-[100svh] w-full">
         <div className="flex w-full flex-col gap-2 bg-primary">
           <div className="flex w-full flex-row items-center justify-between p-2 font-bold uppercase tracking-wider text-white">
             <Link href={`/calendar/${lastMonth}`}><Button accent>
