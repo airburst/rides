@@ -1,5 +1,4 @@
-import { Button, Calendar, ChevronLeftIcon, ChevronRightIcon, MainContent } from "@/components";
-import { FullPageContent } from "@/components/FullPageContent";
+import { Button, Calendar, ChevronLeftIcon, ChevronRightIcon, FullPageContent, MainContent } from "@/components";
 import { env } from "@/env";
 import { getRides } from "@/server/actions/getRides";
 import { formatCalendarDate, getMonthDateRange, getNow } from "@utils/dates";

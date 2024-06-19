@@ -8,11 +8,9 @@ export default async function Layout({
 }) {
 
   return (
-
-    <body className="h-[100vh]">
+    <div className="w-full">
       {children}
       <Toaster position="bottom-center" />
-    </body>
-
+    </div>
   );
 }

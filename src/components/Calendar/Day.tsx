@@ -20,7 +20,6 @@ const getBadgeStyle = (
   return "ready";
 };
 
-// TODO: fix last-child borders
 export const Day = ({ day, date, rides = [], classes, past }: Props) => {
   const today = getNow();
   const isToday = today.startsWith(date);
@@ -31,12 +30,11 @@ export const Day = ({ day, date, rides = [], classes, past }: Props) => {
 
   const wrapperClasses =
     classes ??
-    `flex flex-col lg:text-md h-full mb-0 p-1 text-sm overflow-hidden min-h-0 min-w-0 ${cellStyle}`;
+    `flex flex-col lg:text-md h-full mb-0 p-1 md:p-2 text-sm overflow-hidden min-h-0 min-w-0 ${cellStyle}`;
 
   const Content = (
     <div className={wrapperClasses}>
-      {day}
-
+      <span className="text-md md:text-lg">{day}</span>
       {/* Mobile layout */}
       <div className="flex grow justify-center items-center pb-4">
         {rides && rides.length > 0 && (
@@ -46,23 +44,9 @@ export const Day = ({ day, date, rides = [], classes, past }: Props) => {
           />
         )}
       </div>
-
-      {/* Larger viewports */}
-      {/* <div className="hidden sm:flex-1 sm:visible sm:grid sm:grid-cols-3 sm:gap-1">
-        {rides?.map((ride) => (
-          <div key={ride.id} className="truncate">
-            <Badge
-              text={formatRideBadge(ride)}
-              style={getBadgeStyle(past)}
-              small
-            />
-          </div>
-        ))}
-      </div> */}
     </div>
   );
 
-  // Disable link for 'outside' days
   return <Link href={`/ride/planner/${date}`}>{Content}</Link>;
 };
 
