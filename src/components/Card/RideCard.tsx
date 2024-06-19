@@ -3,7 +3,6 @@ import clsx from "clsx";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import "react-loading-skeleton/dist/skeleton.css";
-import { isReady } from "../../../shared/utils";
 import { type RideList, type User } from "../../types";
 import { Cancelled } from "../RideDetails/Cancelled";
 import { BasicCard } from "./BasicCard";
@@ -16,7 +15,6 @@ type Props = {
 export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
   const { id, name, time, rideGroup, destination, distance, limit, users } =
     ride;
-  const isNotReady = !isReady(ride);
   const details = destination
     ? `${destination} - ${distance ?? ""}`
     : `${distance ?? ""}`;

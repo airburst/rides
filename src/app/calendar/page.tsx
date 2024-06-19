@@ -23,11 +23,11 @@ export default async function RideCalendar() {
       <div className="flex flex-col h-[100svh] w-full">
         <div className="flex w-full flex-col gap-2 bg-white">
           <div className="flex w-full flex-row items-center justify-between p-2 font-bold uppercase tracking-wider text-neutral-700">
-            <Link href={`/calendar/${lastMonth}`}><Button accent>
+            <Link href={`/calendar/${lastMonth}`} title="go to previous month"><Button accent ariaLabel="go to previous month">
               <ChevronLeftIcon className="fill-accent-content" />
             </Button></Link>
             <span>{formatCalendarDate(monthDate)}</span>
-            <Link href={`/calendar/${nextMonth}`}><Button accent>
+            <Link href={`/calendar/${nextMonth}`} title="go to next month"><Button accent ariaLabel="go to next month">
               <ChevronRightIcon className="fill-accent-content" />
             </Button></Link>
           </div>
