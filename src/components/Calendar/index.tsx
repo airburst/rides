@@ -44,7 +44,7 @@ export const Calendar: React.FC<Props> = async ({ date }: Props) => {
         <HeadingGroup />
       </div>
 
-      <div className={`h-full grid grid-cols-7 grid-rows-${rowCount} gap-[1px] bg-base-300`} >
+      <div className={`h-full grid grid-cols-7 grid-rows-${rowCount} auto-rows-fr gap-[1px] bg-base-300`} >
         {daysWithRides.map(({ type, day, rides: mappedRides, date: calDate }) =>
           type === "historic" ? (
             <OutsideDay
