@@ -3,7 +3,10 @@ import { env } from "@/env";
 import "@/styles/globals.css";
 import { type Metadata } from "next";
 import { Outfit } from "next/font/google";
+import Script from 'next/script';
 import { Toaster } from "sonner";
+
+const isProduction = env.NODE_ENV === "production";
 
 const outfit = Outfit({
   subsets: ["latin"],
@@ -42,6 +45,9 @@ export default async function RootLayout({
         <Header />
         {children}
         <Toaster position="bottom-center" />
+        {isProduction && (
+          <Script src="/register-sw.js" type="module" defer crossOrigin="anonymous" />)
+        }
       </body>
     </html>
   );
