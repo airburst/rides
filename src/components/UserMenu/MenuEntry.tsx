@@ -1,8 +1,10 @@
+import clsx from "clsx";
 import Link from "next/link";
 import { type ReactNode } from "react";
 
 type MenuEntryProps = {
   label: string;
+  className?: string;
   onClick: () => void;
   children: ReactNode;
   href?: string;
@@ -12,10 +14,12 @@ export const MenuEntry = ({
   label,
   onClick,
   href,
+  className,
   children,
-}: MenuEntryProps) =>
-  href ? (
-    <li className="hover:bg-neutral-800 hover:text-white rounded">
+}: MenuEntryProps) => {
+  const classes = clsx("hover:bg-neutral-800 hover:text-white rounded", className)
+  return href ? (
+    <li className={classes}>
       <Link href={href}>
         <button
           type="button"
@@ -28,7 +32,7 @@ export const MenuEntry = ({
       </Link>
     </li>
   ) : (
-    <li className="hover:bg-neutral-800 hover:text-white rounded">
+    <li className={classes}>
       <button
         type="button"
         className="grid w-full grid-cols-[20px_1fr] items-center gap-2"
@@ -39,3 +43,5 @@ export const MenuEntry = ({
       </button>
     </li>
   );
+
+}

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 "use client";
 
-import { env } from "@/env";
 import { type Role } from "@/types";
 import copy from "copy-to-clipboard";
 import { flattenQuery } from "shared/utils";
@@ -23,8 +22,6 @@ import {
 } from "../Icon";
 import { MenuEntry } from "./MenuEntry";
 
-const { NEXT_PUBLIC_REPO } = env;
-
 type MenuContentProps = {
   role?: Role;
   isAuthenticated: boolean;
@@ -44,8 +41,8 @@ export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout
   const copyLink = () => copy(window.location.href); // next usePathname?
 
   return (
-    <div className="w-80 min-h-full bg-dark-100">
-      <div className="h-16 sm:h-24 flex flex-col items-end sm:items-start justify-center cursor-pointer rounded p-4 text-3xl">
+    <div className="w-80 sm:w-96 min-h-full bg-dark-100 px-2">
+      <div className="h-16 sm:h-24 sm:pl-2 flex flex-col items-end sm:items-start justify-center cursor-pointer rounded text-3xl">
         <button
           type="button"
           onClick={closeMenu}
@@ -54,6 +51,7 @@ export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout
           <CloseIcon className="fill-white w-8 h-8" />
         </button>
       </div>
+
       <ul className="menu text-base-300 text-lg p-0">
         {!isAuthenticated && (
           <MenuEntry label="Log in" onClick={handleSignin}>
@@ -122,24 +120,15 @@ export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout
             <MenuEntry label="Settings" href="/profile" onClick={closeMenu}>
               <SettingsIcon className="fill-neutral-700" />
             </MenuEntry>
-            <MenuEntry label="Log out" onClick={handleSignout}>
+            <MenuEntry className="text-error" label="Log out" onClick={handleSignout}>
               <LogoutIcon className="fill-neutral-700" />
             </MenuEntry>
           </>
         )}
       </ul>
 
-      <div className="flex h-6 items-center justify-between px-2 pl-2 text-xs text-neutral-400">
+      <div className="flex h-6 items-center justify-center text-xs text-neutral-400 mt-4">
         Version {pkg.version}
-        <a
-          href={`${NEXT_PUBLIC_REPO}/blob/main/CHANGELOG.md`}
-          title="Release notes"
-          target="_blank"
-          rel="noreferrer"
-          className="text-xs text-primary underline"
-        >
-          Notes
-        </a>
       </div>
     </div>
   );

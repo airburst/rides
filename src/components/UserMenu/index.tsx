@@ -88,7 +88,7 @@ export const UserMenu = ({ role, isAuthenticated }: MenuProps) => {
 
   return (
     <>
-      <div className="drawer drawer-end">
+      <div className="drawer drawer-end drawer-auto-gutter">
         <input id="my-drawer" type="checkbox" className="drawer-toggle" checked={show} readOnly />
         <div className="drawer-content">
           <div className="h-10 cursor-pointer rounded p-1 text-3xl">

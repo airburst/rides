@@ -21,7 +21,7 @@ export const Badge = ({ text, style = "unready", small }: Props) => {
 
 export const RoundBadge = ({ text, style = "unready" }: Props) => {
   const classes = clsx(
-    "badge badge-lg text-white w-10 h-10 lg:w-16 lg:h-16 lg:text-xl rounded-full",
+    "badge badge-lg text-white w-10 h-10 lg:text-xl rounded-full",
     { "bg-red-500": style === "unready" },
     { "bg-primary": style === "ready" },
     { "bg-slate-500": style === "past" }

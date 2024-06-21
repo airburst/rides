@@ -15,6 +15,12 @@
   }
 }
 
+@layer components {
+  html:has(.drawer-auto-gutter .drawer-toggle:checked) {
+    scrollbar-gutter: auto;
+  }
+}
+
 /* Prevent copy popup after long press on iphone */
 body {
   -webkit-touch-callout: none;
