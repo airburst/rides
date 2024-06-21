@@ -47,12 +47,3 @@ export const RidesList = async ({ date }: Props) => {
     </div>
   );
 }
-
-
-/*
-  <Filters
-    data={makeFilterData(data)}
-    isShowing={showFilterMenu}
-    closeHandler={closeFilters}
-  />
-*/
