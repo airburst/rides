@@ -15,27 +15,27 @@ export const MenuEntry = ({
   children,
 }: MenuEntryProps) =>
   href ? (
-    <Link href={href}>
-      <div className="cursor-pointer border-b-[1px] border-b-neutral-100 p-2 hover:bg-neutral-200 hover:text-neutral-900">
+    <li className="hover:bg-neutral-800 hover:text-white rounded">
+      <Link href={href}>
         <button
           type="button"
-          className="items-centert grid w-full grid-cols-[20px_1fr] items-center gap-2"
+          className="grid w-full grid-cols-[20px_1fr] items-center gap-2"
           onClick={onClick}
         >
           {children}
           <span className="justify-self-start">{label}</span>
         </button>
-      </div>
-    </Link>
+      </Link>
+    </li>
   ) : (
-    <div className="cursor-pointer border-b-[1px] border-b-neutral-100 p-2 hover:bg-neutral-200 hover:text-neutral-900">
+    <li className="hover:bg-neutral-800 hover:text-white rounded">
       <button
         type="button"
-        className="items-centert grid w-full grid-cols-[20px_1fr] items-center gap-2"
+        className="grid w-full grid-cols-[20px_1fr] items-center gap-2"
         onClick={onClick}
       >
         {children}
         <span className="justify-self-start">{label}</span>
       </button>
-    </div>
+    </li>
   );

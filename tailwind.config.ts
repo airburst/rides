@@ -9,6 +9,9 @@ export default {
       fontFamily: {
         sans: ["var(--font-outfit)", ...fontFamily.sans],
       },
+      colors: {
+        "dark-100": "#171717",
+      },
     },
   },
   variants: {
