@@ -9,3 +9,5 @@ export const DAYS = {
 };
 
 export const FOREVER = "3000-12-31";
+
+export const DEFAULT_WEEKS_TO_SHOW = "2";

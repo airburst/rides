@@ -1,15 +1,15 @@
 "use client";
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-import { Combobox, Switch, Transition } from "@headlessui/react";
+import { DEFAULT_WEEKS_TO_SHOW } from "@/constants";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { filterQueryAtom } from "@/store";
+import { type FilterQuery } from "@/types";
+import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions, Switch, Transition } from "@headlessui/react";
 import clsx from "clsx";
 import { useAtom } from "jotai";
-import { Fragment, useRef, useState, type ChangeEvent, type FormEvent } from "react";
+import { Fragment, useRef, useState, type ChangeEvent } from "react";
 import useOnClickOutside from "use-onclickoutside";
-import { useLocalStorage } from "../hooks/useLocalStorage";
-import { filterQueryAtom } from "../store";
-import { type FilterQuery } from "../types";
-import { Button } from "./Button";
-import { ChevronDownIcon, CloseIcon, TickIcon } from "./Icon";
+import { Button } from "../Button";
+import { ChevronDownIcon, CloseIcon, TickIcon } from "../Icon";
 
 type Props = {
   isShowing: boolean;
@@ -17,9 +17,7 @@ type Props = {
   data: (string | null | undefined)[];
 };
 
-const DEFAULT_WEEKS = "2";
-
-export const Filters = ({ isShowing, closeHandler, data }: Props) => {
+export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
   const ref = useRef(null);
   const [filters] = useLocalStorage<FilterQuery>("bcc-filters", {});
   const [onlyJoined, setOnlyJoined] = useState<boolean>(
@@ -27,7 +25,7 @@ export const Filters = ({ isShowing, closeHandler, data }: Props) => {
   );
   const [search, setSearch] = useState<string>(filters?.q ?? "");
   const [weeksAhead, setWeeksAhead] = useState<string>(
-    filters?.weeksAhead ?? DEFAULT_WEEKS
+    filters?.weeksAhead ?? DEFAULT_WEEKS_TO_SHOW
   );
   const [filterQuery, setFilterQuery] = useAtom(filterQueryAtom);
   const [, setFilters] = useLocalStorage<FilterQuery>("bcc-filters", {});
@@ -57,9 +55,8 @@ export const Filters = ({ isShowing, closeHandler, data }: Props) => {
     setSearch(e.target.value);
   };
 
-  const handleWeeksChange = (e: FormEvent<HTMLSelectElement>) => {
-    // @ts-ignore
-    const val = e.target.value as string;
+  const handleWeeksChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const val = e.target.value;
     setWeeksAhead(val);
     setFilterAtomAndStorage({ ...filterQuery, weeksAhead: val });
   };
@@ -72,8 +69,8 @@ export const Filters = ({ isShowing, closeHandler, data }: Props) => {
   const reset = () => {
     setOnlyJoined(false);
     setSearch("");
-    setWeeksAhead(DEFAULT_WEEKS);
-    setFilterAtomAndStorage({ onlyJoined: false, weeksAhead: DEFAULT_WEEKS });
+    setWeeksAhead(DEFAULT_WEEKS_TO_SHOW);
+    setFilterAtomAndStorage({ onlyJoined: false, weeksAhead: DEFAULT_WEEKS_TO_SHOW });
   };
 
   const filteredData =
@@ -100,7 +97,7 @@ export const Filters = ({ isShowing, closeHandler, data }: Props) => {
       leaveTo="-translate-y-full"
 
     >
-      <div className="fixed z-10 h-82 w-full bg-neutral-800 text-white shadow-xl top-0">
+      <div className="fixed z-10 h-82 w-full bg-neutral-800 text-white shadow-xl top-0 left-0">
         <div className="container mx-auto flex w-full flex-col p-4 md:px-4 lg:max-w-[1024px]">
           <div className="flex flex-row justify-between">
             <div className="text-3xl">Filters</div>
@@ -119,16 +116,16 @@ export const Filters = ({ isShowing, closeHandler, data }: Props) => {
             <Combobox value={search} onChange={handleSelected}>
               <div className="relative mt-1 z-20">
                 <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
-                  <Combobox.Input
+                  <ComboboxInput
                     className="w-full border-none py-2 pl-3 pr-10 leading-5 text-gray-700 focus:ring-0"
                     placeholder="Search ride details"
-                    // @ts-ignore
+                    // @ts-expect-error - ComboboxInput expects a string
                     displayValue={(item) => item}
                     onChange={handleSearchChange}
                   />
-                  <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2 text-gray-700">
+                  <ComboboxButton className="absolute inset-y-0 right-0 flex items-center pr-2 text-gray-700">
                     <ChevronDownIcon className="fill-neutral-700" />
-                  </Combobox.Button>
+                  </ComboboxButton>
                 </div>
                 <Transition
                   as={Fragment}
@@ -136,14 +133,14 @@ export const Filters = ({ isShowing, closeHandler, data }: Props) => {
                   leaveFrom="opacity-100"
                   leaveTo="opacity-0"
                 >
-                  <Combobox.Options className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <ComboboxOptions className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     {filteredData.length === 0 && search !== "" ? (
                       <div className="relative cursor-default select-none py-2 px-4 text-gray-700">
                         Nothing found.
                       </div>
                     ) : (
                       filteredData.map((person) => (
-                        <Combobox.Option
+                        <ComboboxOption
                           key={person}
                           className={({ active }) =>
                             `relative cursor-default select-none py-2 pl-10 pr-4 ${active ? "bg-teal-600 text-white" : "text-gray-900"
@@ -169,10 +166,10 @@ export const Filters = ({ isShowing, closeHandler, data }: Props) => {
                               ) : null}
                             </>
                           )}
-                        </Combobox.Option>
+                        </ComboboxOption>
                       ))
                     )}
-                  </Combobox.Options>
+                  </ComboboxOptions>
                 </Transition>
 
               </div>
@@ -214,17 +211,15 @@ export const Filters = ({ isShowing, closeHandler, data }: Props) => {
             <Button
               onClick={reset}
               title="Reset filters"
-              className="flex items-center rounded p-1"
             >
-              <span>Reset</span>
+              <span>RESET</span>
             </Button>
             <Button
               secondary
               onClick={closeHandler}
-              title="Reset filters"
-              className="flex items-center rounded p-1"
+              title="apply and close filter menu"
             >
-              <span>Apply</span>
+              <span>APPLY</span>
             </Button>
           </div>
         </div>

@@ -20,11 +20,3 @@ export default async function HomePage() {
     </MainContent>
   );
 }
-
-/*
-  <Filters
-    data={makeFilterData(data)}
-    isShowing={showFilterMenu}
-    closeHandler={closeFilters}
-  />
-*/

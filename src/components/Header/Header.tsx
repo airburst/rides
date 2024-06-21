@@ -1,27 +1,18 @@
 import { env } from "@/env";
-// import { useAtom } from "jotai";
-import Image from "next/image";
-import Logo from "../../public/static/images/bath-cc-logo.svg";
-// import { filterQueryAtom, showFilterAtom } from "../store";
 import { getServerAuthSession } from "@/server/auth";
+import Image from "next/image";
 import Link from "next/link";
-import { UserMenu } from "./UserMenu";
+import Logo from "../../../public/static/images/bath-cc-logo.svg";
+import { FilterButton } from "../Filters";
+import { UserMenu } from "../UserMenu";
 
 const { NEXT_PUBLIC_CLUB_SHORT_NAME } = env;
 
 export const Header = async () => {
   const session = await getServerAuthSession()
   const user = session?.user;
-  // const [, setShowFilterMenu] = useAtom(showFilterAtom);
-  // const [filterQuery] = useAtom(filterQueryAtom);
-  // const isRidesPage = params.pathname === "/";
-
   const isAuthenticated = !!user;
   const role = user?.role;
-
-  // const showFilters = () => setShowFilterMenu(true);
-
-  // const hasFiltersApplied = !!(filterQuery.onlyJoined ?? filterQuery.q);
 
   return (
     <div className="fixed  z-10 flex h-16 w-full items-center justify-center bg-primary text-white sm:h-24  ">
@@ -44,22 +35,7 @@ export const Header = async () => {
         </div>
 
         <div className="flex items-center gap-4">
-          {/* {isRidesPage && (
-            <button
-              type="button"
-              onClick={showFilters}
-              title="Filter results"
-              aria-label="Filter results"
-              className="flex items-center rounded p-1 text-3xl"
-            >
-              {hasFiltersApplied ? (
-                <FilterSelectedIcon className="fill-white w-6 h-6" />
-              ) : (
-                <FilterIcon className="fill-white w-6 h-6" />
-              )}
-            </button>
-          )} */}
-
+          <FilterButton />
           <UserMenu
             isAuthenticated={isAuthenticated}
             role={role}

@@ -141,7 +141,7 @@ export const isReady = (ride: Ride | RideList): boolean => {
 
 // Flatten ride data into array of searchable text
 export const makeFilterData = (
-  rides: Ride[],
+  rides: RideList[],
 ): (string | null | undefined)[] => {
   const data = new Set(
     rides.flatMap(({ name, rideGroup, destination }) => [
