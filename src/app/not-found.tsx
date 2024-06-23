@@ -1,4 +1,6 @@
-import { BackButton, CircleQuestionIcon, MainContent } from "@/components";
+import { BackButton } from "@/components/Button";
+import { CircleQuestionIcon } from "@/components/Icon";
+import { MainContent } from "@/components/Layout/MainContent";
 
 const NotFound = () => (
   <MainContent>

@@ -1,5 +1,8 @@
-import { Button, Calendar, ChevronLeftIcon, ChevronRightIcon, FullPageContent } from "@/components";
+import { Button } from "@/components/Button";
+import { Calendar } from "@/components/Calendar";
 import { CalendarSkeleton } from "@/components/Calendar/CalendarSkeleton";
+import { ChevronLeftIcon, ChevronRightIcon } from "@/components/Icon";
+import { FullPageContent } from "@/components/Layout/FullPageContent";
 import { env } from "@/env";
 import { formatCalendarDate, getLastMonth, getNextMonth, getNow } from "@utils/dates";
 import { flattenQuery } from "@utils/general";

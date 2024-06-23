@@ -1,4 +1,6 @@
-import { BackButton, MainContent, UserProfileForm } from "@/components";
+import { BackButton } from "@/components/Button";
+import { MainContent } from "@/components/Layout/MainContent";
+import { UserProfileForm } from "@/components/forms/UserProfileForm";
 import { env } from "@/env";
 import { getUser } from "@/server/actions/getUser";
 import { getServerAuthSession } from "@/server/auth";

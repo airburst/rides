@@ -1,4 +1,8 @@
-import { BackButton, Button, MainContent, PlusIcon, RidesList, RidesListSkeleton } from "@/components";
+import { BackButton, Button } from "@/components/Button";
+import { PlusIcon } from "@/components/Icon";
+import { MainContent } from "@/components/Layout/MainContent";
+import { RidesList } from "@/components/RidesList";
+import { RidesListSkeleton } from "@/components/RidesList/RidesListSkeleton";
 import { canUseAction } from "@/server/auth";
 import { formatDate, getNow } from "@utils/dates";
 import { flattenQuery } from "@utils/general";

@@ -1,4 +1,6 @@
-import { MainContent, RidesList, RidesListSkeleton } from "@/components";
+import { MainContent } from "@/components/Layout/MainContent";
+import { RidesList } from "@/components/RidesList";
+import { RidesListSkeleton } from "@/components/RidesList/RidesListSkeleton";
 import { env } from "@/env";
 import type { Metadata } from 'next';
 import { Suspense } from "react";

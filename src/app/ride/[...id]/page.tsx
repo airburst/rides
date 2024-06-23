@@ -1,4 +1,6 @@
-import { BackButton, MainContent, RideDetails } from "@/components";
+import { BackButton } from "@/components/Button";
+import { MainContent } from "@/components/Layout/MainContent";
+import { RideDetails } from "@/components/RideDetails";
 import { env } from "@/env";
 import { getRide } from "@/server/actions/getRide";
 import { getServerAuthSession } from "@/server/auth";
