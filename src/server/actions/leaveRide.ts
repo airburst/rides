@@ -32,8 +32,7 @@ export const leaveRide = async (
     revalidatePath("/ride/[...id]", "page");
 
     return {
-      success: false,
-      error: new Error("Not authorised to use this API"),
+      success: true,
     };
   } catch (error) {
     return {
