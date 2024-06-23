@@ -78,7 +78,9 @@ export const getQueryDateRange = ({
 
   const st = start ? getDateFromString(start) : now;
   // st.set("hour", 0);
-  let en = end ? getDateFromString(end, true) : getNextTwoWeeks();
+  let en = end
+    ? getDateFromString(end, true)
+    : getDateFromString(FOREVER, true);
 
   // Set end of day on en
   en = dayjs(en)

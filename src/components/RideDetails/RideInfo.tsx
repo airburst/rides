@@ -94,7 +94,7 @@ export const RideInfo = ({ ride }: Props) => {
 
       {cancelled && (<CancelledBanner />)}
 
-      {notes && (
+      {!cancelled && notes && (
         <div className="flex w-full flex-col gap-2 rounded bg-white py-2 shadow-md">
           <div className="px-2 text-xl font-bold tracking-wide text-neutral-700">
             Notes
@@ -109,7 +109,7 @@ export const RideInfo = ({ ride }: Props) => {
         </div>
       )}
 
-      <Messages riderNotes={riderNotes} />
+      {!cancelled && <Messages riderNotes={riderNotes} />}
     </div>
   );
 };

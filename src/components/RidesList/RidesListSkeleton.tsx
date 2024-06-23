@@ -1,6 +1,6 @@
 "use client";
 
-import { CardSkeleton } from "./Card/CardSkeleton";
+import { CardSkeleton } from "../Card/CardSkeleton";
 
 type SkeletonProps = {
   dateText?: string;

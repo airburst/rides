@@ -33,13 +33,13 @@ export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
   const ridersLabel = hasLimit ? `${riderCount}/${limit}` : riderCount;
 
   const cardClass = clsx(
-    "grid w-full grid-cols-[auto_1fr_80px] p-1"
+    "grid w-full grid-cols-[auto_1fr_80px]"
   );
 
   // If a rider is going, span the title across 2 columns to make space
   // else span the entire row (of 3 columns)
   const titleClass = clsx(
-    "truncate p-1 font-bold uppercase tracking-wide",
+    "truncate p-1 pl-2 font-bold uppercase tracking-wide",
     isGoing ? "col-span-2" : "col-span-3"
   );
 
@@ -57,14 +57,14 @@ export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
           </div>
         )}
 
-        {isCancelled ? (<Cancelled />)
+        {isCancelled ? (<div className="p-1 col-span-3"><Cancelled /></div>)
           : (<>
-            <div className="p-1 font-bold tracking-wide text-neutral-600">
+            <div className="pl-2 font-bold tracking-wide text-neutral-600">
               {time}
             </div>
-            <div className="truncate p-1">{details}</div>
+            <div className="truncate pl-2">{details}</div>
             {/* Rider count icon */}
-            <div className="flex flex-row items-center justify-end gap-2 pr-1">
+            <div className="flex flex-row items-center justify-end gap-2 pr-2">
               <Image
                 src="/static/images/biking-neutral-500-64.png"
                 width={16}

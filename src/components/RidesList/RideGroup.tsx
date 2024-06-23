@@ -1,7 +1,7 @@
+import { ungroupRides } from "@utils/transformRideData";
 import Link from "next/link";
-import { ungroupRides } from "../../shared/utils";
-import { type Group, type User } from "../types";
-import { RideCard } from "./Card";
+import { type Group, type User } from "../../types";
+import { RideCard } from "../Card/RideCard";
 
 type Props = {
   group: Group;

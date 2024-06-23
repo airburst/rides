@@ -8,7 +8,11 @@ import { UserMenu } from "../UserMenu";
 
 const { NEXT_PUBLIC_CLUB_SHORT_NAME } = env;
 
-export const Header = async () => {
+type Props = {
+  showFilterButton?: boolean;
+};
+
+export const Header = async ({ showFilterButton }: Props) => {
   const session = await getServerAuthSession()
   const user = session?.user;
   const isAuthenticated = !!user;
@@ -35,7 +39,7 @@ export const Header = async () => {
         </div>
 
         <div className="flex items-center gap-4">
-          <FilterButton />
+          {showFilterButton && isAuthenticated && <FilterButton />}
           <UserMenu
             isAuthenticated={isAuthenticated}
             role={role}
