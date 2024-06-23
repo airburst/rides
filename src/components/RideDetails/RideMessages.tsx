@@ -4,7 +4,7 @@ import { updateMessage } from "@/server/actions/updateMessage";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { type FormValues, RideMessagesForm } from "../forms/RideMessagesForm";
+import { RideMessagesForm, type FormValues } from "../forms/RideMessagesForm";
 
 type Props = {
   rideId?: string;
@@ -33,6 +33,13 @@ export const RideMessages = ({
   // Initial state for form: set name, leader and time
   const defaultValues = { notes: messages };
 
+  // Only close the dialog if the value is truthy
+  const doClose = (value?: unknown) => {
+    if (value) {
+      closeHandler();
+    }
+  };
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onSubmit: SubmitHandler<FormValues> = async ({ notes }) => {
     if (rideId && userId) {
@@ -44,7 +51,7 @@ export const RideMessages = ({
   };
 
   return (
-    <Dialog open={showNotesForm} onClose={closeHandler} className="relative z-10">
+    <Dialog open={showNotesForm} onClose={doClose} className="relative z-10">
       {/* Background */}
       <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
       <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
