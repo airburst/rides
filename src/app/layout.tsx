@@ -39,7 +39,7 @@ export default async function RootLayout({
         />
       </head>
       <body>
-        <Header showFilterButton />
+        <Header />
         {children}
         <Toaster position="bottom-center" />
       </body>

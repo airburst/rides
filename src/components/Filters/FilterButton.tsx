@@ -4,9 +4,12 @@
 import { DEFAULT_WEEKS_TO_SHOW } from "@/constants";
 import { filterQueryAtom, showFilterAtom } from "@/store";
 import { useAtom } from "jotai";
+import { usePathname } from "next/navigation";
 import { FilterIcon, FilterSelectedIcon } from "../Icon";
 
 export const FilterButton = () => {
+  const path = usePathname();
+  const shouldShowFilterButton = path === "/";
   // Get reactive data from atom
   const [showFilterMenu, setShowFilterMenu] = useAtom(showFilterAtom);
   const [filterQuery] = useAtom(filterQueryAtom);
@@ -15,6 +18,8 @@ export const FilterButton = () => {
     || filterQuery.weeksAhead !== DEFAULT_WEEKS_TO_SHOW);
 
   const toggle = () => setShowFilterMenu(!showFilterMenu);
+
+  if (!shouldShowFilterButton) return null;
 
   return (
     <>
