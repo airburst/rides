@@ -16,6 +16,8 @@ const main = async () => {
   console.log("Cleaning tables");
 
   for (const table of [
+    schema.archivedUserOnRides,
+    schema.archivedRides,
     schema.sessions,
     schema.accounts,
     schema.userOnRides,
@@ -134,6 +136,13 @@ from "RepeatingRide"`);
   from "ArchivedRide"`);
   //@ts-expect-error data typing
   await db.insert(schema.archivedRides).values(archivedRidesData);
+
+  // Users on rides  ---------------------------------------------//
+  const archivedUorData = await sourceDb.execute(
+    sql`SELECT * from "ArchivedUsersOnRides"`,
+  );
+  //@ts-expect-error data typing
+  await db.insert(schema.archivedUserOnRides).values(archivedUorData);
 
   console.log("Data migration done");
   process.exit(0);
