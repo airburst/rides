@@ -9,7 +9,7 @@ export const env = createEnv({
   server: {
     HOST_URL: z.string().url(),
     DATABASE_URL: z.string().url(),
-    // DIRECT_URL: z.string().url(),
+    SOURCE_URL: z.string().url(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
@@ -53,6 +53,7 @@ export const env = createEnv({
     NEXT_PUBLIC_REPO: process.env.NEXT_PUBLIC_REPO,
     HOST_URL: process.env.HOST_URL,
     DATABASE_URL: process.env.DATABASE_URL,
+    SOURCE_URL: process.env.SOURCE_URL, // FIXME:
     NODE_ENV: process.env.NODE_ENV,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,
