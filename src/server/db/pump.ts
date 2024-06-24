@@ -114,6 +114,27 @@ from "RepeatingRide"`);
   //@ts-expect-error data typing
   await db.insert(schema.repeatingRides).values(repeatingRidesData);
 
+  // Archived Rides ---------------------------------------------//
+  const archivedRidesData = await sourceDb.execute(sql`SELECT
+    id,
+    name,
+    "group" as "rideGroup",
+    "date" as "rideDate",
+    destination,
+    distance,
+    "meetPoint",
+    route,
+    leader,
+    notes,
+    speed,
+    "limit",
+    deleted,
+    cancelled,
+    "createdAt"
+  from "ArchivedRide"`);
+  //@ts-expect-error data typing
+  await db.insert(schema.archivedRides).values(archivedRidesData);
+
   console.log("Data migration done");
   process.exit(0);
 };

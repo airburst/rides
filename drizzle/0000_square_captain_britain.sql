@@ -23,7 +23,7 @@ CREATE TABLE IF NOT EXISTS "archived_rides" (
 	"id" text PRIMARY KEY NOT NULL,
 	"name" varchar(255) NOT NULL,
 	"ride_group" varchar(255),
-	"ride_date" timestamp NOT NULL,
+	"ride_date" timestamp(3) NOT NULL,
 	"destination" varchar(255),
 	"distance" integer,
 	"meet_point" varchar(255),
@@ -34,16 +34,14 @@ CREATE TABLE IF NOT EXISTS "archived_rides" (
 	"limit" integer DEFAULT -1 NOT NULL,
 	"deleted" boolean DEFAULT false NOT NULL,
 	"cancelled" boolean DEFAULT false NOT NULL,
-	"schedule_id" varchar(255),
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL
+	"created_at" timestamp(3) DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "archived_users_on_rides" (
 	"user_id" varchar(255) NOT NULL,
 	"ride_id" varchar(255) NOT NULL,
 	"notes" text,
-	"created_at" timestamp DEFAULT now() NOT NULL,
+	"created_at" timestamp(3) DEFAULT now() NOT NULL,
 	CONSTRAINT "archived_users_on_rides_user_id_ride_id_pk" PRIMARY KEY("user_id","ride_id")
 );
 --> statement-breakpoint
@@ -82,7 +80,7 @@ CREATE TABLE IF NOT EXISTS "rides" (
 	"id" text PRIMARY KEY NOT NULL,
 	"name" varchar(255) NOT NULL,
 	"ride_group" varchar(255),
-	"ride_date" timestamp NOT NULL,
+	"ride_date" timestamp(3) NOT NULL,
 	"destination" varchar(255),
 	"distance" integer,
 	"meet_point" varchar(255),
@@ -94,8 +92,8 @@ CREATE TABLE IF NOT EXISTS "rides" (
 	"deleted" boolean DEFAULT false NOT NULL,
 	"cancelled" boolean DEFAULT false NOT NULL,
 	"schedule_id" varchar(255),
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL
+	"created_at" timestamp(3) DEFAULT now() NOT NULL,
+	"updated_at" timestamp(3) DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "sessions" (
@@ -108,7 +106,7 @@ CREATE TABLE IF NOT EXISTS "users_on_rides" (
 	"user_id" varchar(255) NOT NULL,
 	"ride_id" varchar(255) NOT NULL,
 	"notes" text,
-	"created_at" timestamp DEFAULT now() NOT NULL,
+	"created_at" timestamp(3) DEFAULT now() NOT NULL,
 	CONSTRAINT "users_on_rides_user_id_ride_id_pk" PRIMARY KEY("user_id","ride_id")
 );
 --> statement-breakpoint
@@ -122,8 +120,8 @@ CREATE TABLE IF NOT EXISTS "users" (
 	"emergency" varchar(255),
 	"role" "role" DEFAULT 'USER',
 	"preferences" json DEFAULT '{"units":"km"}'::json,
-	"created_at" timestamp DEFAULT now() NOT NULL,
-	"updated_at" timestamp DEFAULT now() NOT NULL
+	"created_at" timestamp(3) DEFAULT now() NOT NULL,
+	"updated_at" timestamp(3) DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "verification_tokens" (

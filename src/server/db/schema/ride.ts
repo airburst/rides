@@ -20,7 +20,10 @@ const rides = pgTable(
       .$defaultFn(() => crypto.randomUUID()),
     name: varchar("name", { length: 255 }).notNull(),
     rideGroup: varchar("ride_group", { length: 255 }),
-    rideDate: timestamp("ride_date", { mode: "string" }).notNull(),
+    rideDate: timestamp("ride_date", {
+      precision: 3,
+      mode: "string",
+    }).notNull(),
     destination: varchar("destination", { length: 255 }),
     distance: integer("distance"),
     meetPoint: varchar("meet_point", { length: 255 }),
