@@ -29,8 +29,12 @@ const users = pgTable("users", {
   emergency: varchar("emergency", { length: 255 }),
   role: roleEnum("role").default("USER"),
   preferences: json("preferences").default({ units: "km" }),
-  createdAt: timestamp("created_at").notNull().defaultNow(),
-  updatedAt: timestamp("updated_at").notNull().defaultNow(),
+  createdAt: timestamp("created_at", { precision: 3, mode: "string" })
+    .defaultNow()
+    .notNull(),
+  updatedAt: timestamp("updated_at", { precision: 3, mode: "string" })
+    .defaultNow()
+    .notNull(),
 });
 
 export const userRelations = relations(users, ({ many }) => ({

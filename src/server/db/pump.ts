@@ -86,15 +86,33 @@ and expires > NOW()`);
     "scheduleId",
     "createdAt"
 from "Ride"`);
-
-  ridesData.forEach((ride) => {
-    //@ts-expect-error data typing
-    ride.createdAt = new Date(ride.createdAt);
-  });
   //@ts-expect-error data typing
   await db.insert(schema.rides).values(ridesData);
 
-  // await seeds.usersOnRides(db);
+  // Users on rides  ---------------------------------------------//
+  const uorData = await sourceDb.execute(sql`SELECT * from "UsersOnRides"`);
+  //@ts-expect-error data typing
+  await db.insert(schema.userOnRides).values(uorData);
+
+  // Repeating rides  ---------------------------------------------//
+  const repeatingRidesData = await sourceDb.execute(sql`SELECT
+    id,
+    name,
+    schedule,
+    "winterStartTime",
+    "group" as "rideGroup",
+    destination,
+    distance,
+    "meetPoint",
+    route,
+    leader,
+    notes,
+    speed,
+    "limit",
+    "createdAt"
+from "RepeatingRide"`);
+  //@ts-expect-error data typing
+  await db.insert(schema.repeatingRides).values(repeatingRidesData);
 
   console.log("Data migration done");
   process.exit(0);
