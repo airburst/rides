@@ -47,7 +47,7 @@ export type Ride = {
   speed?: number | null;
   notes?: string | null;
   cancelled?: boolean;
-  limit?: number;
+  rideLimit?: number;
   scheduleId?: string;
   createdAt: string;
   users?: { user: User; notes?: string }[];
@@ -87,7 +87,7 @@ export type RepeatingRide = {
   speed?: number | null;
   notes?: string | null;
   cancelled?: boolean;
-  limit?: number;
+  rideLimit?: number;
 };
 
 export type RepeatingRideDb = Omit<
@@ -148,7 +148,7 @@ export type RideFormValues = {
   distance: number;
   leader: string;
   route: string;
-  limit?: number;
+  rideLimit?: number;
   // Repeating ride
   interval?: number;
   freq: number;

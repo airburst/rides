@@ -1,5 +1,5 @@
 {
-  "id": "9c164088-468e-4a1d-aad9-3981b4624b30",
+  "id": "9b878402-7760-46a7-bcef-8929d623adb6",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -188,8 +188,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "limit": {
-          "name": "limit",
+        "ride_limit": {
+          "name": "ride_limit",
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
@@ -454,8 +454,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "limit": {
-          "name": "limit",
+        "ride_limit": {
+          "name": "ride_limit",
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
@@ -567,8 +567,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "limit": {
-          "name": "limit",
+        "ride_limit": {
+          "name": "ride_limit",
           "type": "integer",
           "primaryKey": false,
           "notNull": true,

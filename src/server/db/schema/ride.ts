@@ -31,7 +31,7 @@ const rides = pgTable(
     leader: varchar("leader", { length: 255 }),
     notes: text("notes"),
     speed: integer("speed"), // TODO: Deprecate
-    limit: integer("limit").notNull().default(-1),
+    rideLimit: integer("ride_limit").notNull().default(-1),
     deleted: boolean("deleted").notNull().default(false),
     cancelled: boolean("cancelled").notNull().default(false),
     scheduleId: varchar("schedule_id", { length: 255 }),

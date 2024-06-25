@@ -158,7 +158,7 @@ export const generateRide = (
     leader,
     speed,
     notes,
-    limit,
+    rideLimit,
   }: RepeatingRideDb,
   date: string,
 ) => {
@@ -173,7 +173,7 @@ export const generateRide = (
     leader,
     speed,
     notes,
-    limit,
+    rideLimit,
     scheduleId: id,
   };
 

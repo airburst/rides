@@ -96,13 +96,13 @@ export const RideForm = ({
           </label>
         </div>
         <div className="flex flex-col gap-4 md:gap-8">
-          <label htmlFor="limit" className="flex flex-col gap-1">
+          <label htmlFor="rideLimit" className="flex flex-col gap-1">
             Rider limit
             <select
-              id="limit"
+              id="rideLimit"
               className="input"
-              defaultValue={defaultValues.limit}
-              {...register("limit")}
+              defaultValue={defaultValues.rideLimit}
+              {...register("rideLimit")}
             >
               <option value="-1">No limit</option>
               {RIDER_LIMIT_OPTIONS.map((val: number) => (

@@ -24,7 +24,7 @@ const repeatingRides = pgTable(
     leader: varchar("leader", { length: 255 }),
     notes: text("notes"), // TODO: Deprecate
     speed: integer("speed"),
-    limit: integer("limit").default(-1).notNull(),
+    rideLimit: integer("ride_limit").default(-1).notNull(),
     createdAt: timestamp("created_at", { precision: 3, mode: "string" })
       .defaultNow()
       .notNull(),

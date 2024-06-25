@@ -82,7 +82,7 @@ and expires > NOW()`);
     leader,
     notes,
     speed,
-    "limit",
+    "limit" as "rideLimit",
     deleted,
     cancelled,
     "scheduleId",
@@ -110,7 +110,7 @@ from "Ride"`);
     leader,
     notes,
     speed,
-    "limit",
+    "limit" as "rideLimit",
     "createdAt"
 from "RepeatingRide"`);
   //@ts-expect-error data typing
@@ -129,7 +129,7 @@ from "RepeatingRide"`);
     leader,
     notes,
     speed,
-    "limit",
+    "limit" as "rideLimit",
     deleted,
     cancelled,
     "createdAt"

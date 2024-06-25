@@ -3,7 +3,7 @@ import { makeRepeatingRide } from "./forms";
 const ride = {
   name: "xxx",
   group: "Used to be fast",
-  limit: -1,
+  rideLimit: -1,
   meetPoint: "Brunel Square",
   distance: 123,
   destination: "Somewhere",

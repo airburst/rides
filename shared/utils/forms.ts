@@ -22,7 +22,7 @@ export const makeRide = (formData: RideFormValues) => {
     leader,
     route,
     notes,
-    limit,
+    rideLimit,
   } = formData;
   const utcDate = makeUtcDate(date, time);
 
@@ -36,7 +36,7 @@ export const makeRide = (formData: RideFormValues) => {
     route,
     meetPoint,
     notes,
-    limit,
+    rideLimit,
   };
 };
 

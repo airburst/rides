@@ -158,7 +158,7 @@ export const makeFilterData = (
 };
 
 export const hasSpace = (ride: Ride): boolean => {
-  const rideLimit = ride.limit ?? -1;
+  const rideLimit = ride.rideLimit ?? -1;
   const hasLimit = rideLimit > -1;
 
   if (!hasLimit) {

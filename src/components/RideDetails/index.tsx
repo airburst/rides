@@ -28,7 +28,7 @@ type Props = {
 
 export const RideDetails = ({ ride, user, role }: Props) => {
   const [showNotesForm, setShowNotesForm] = useState<boolean>(false);
-  const { id, name, rideDate, day, cancelled, limit, users } = ride;
+  const { id, name, rideDate, day, cancelled, rideLimit, users } = ride;
   const userList = users?.map((u: { user: User }) => u.user);
 
   const hasRiders = users && users?.length > 0;
@@ -40,8 +40,8 @@ export const RideDetails = ({ ride, user, role }: Props) => {
   const rideNotes =
     userList && user && userList?.find((u: User) => u.id === user.id)?.rideNotes;
   const riderCount = users?.length ?? 0;
-  const hasLimit = limit && limit > -1;
-  const ridersLabel = hasLimit ? `${riderCount}/${limit}` : riderCount;
+  const hasLimit = rideLimit && rideLimit > -1;
+  const ridersLabel = hasLimit ? `${riderCount}/${rideLimit}` : riderCount;
 
   const openNotes = () => setShowNotesForm(true);
   const closeNotes = () => setShowNotesForm(false);

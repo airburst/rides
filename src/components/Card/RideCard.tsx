@@ -13,7 +13,7 @@ type Props = {
 };
 
 export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
-  const { id, name, time, rideGroup, destination, distance, limit, users } =
+  const { id, name, time, rideGroup, destination, distance, rideLimit, users } =
     ride;
   const details = destination
     ? `${destination} - ${distance ?? ""}`
@@ -29,8 +29,8 @@ export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
   const isCancelled = ride.cancelled ?? false;
   const isGoing = user ? users?.map((u) => u.userId).includes(user.id) : false;
   const riderCount = users?.length ?? 0;
-  const hasLimit = limit && limit > -1;
-  const ridersLabel = hasLimit ? `${riderCount}/${limit}` : riderCount;
+  const hasLimit = rideLimit && rideLimit > -1;
+  const ridersLabel = hasLimit ? `${riderCount}/${rideLimit}` : riderCount;
 
   const cardClass = clsx(
     "grid w-full grid-cols-[auto_1fr_80px]"
