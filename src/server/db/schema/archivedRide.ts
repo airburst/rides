@@ -29,7 +29,6 @@ const archivedRides = pgTable(
     route: varchar("route", { length: 255 }),
     leader: varchar("leader", { length: 255 }),
     notes: text("notes"),
-    speed: integer("speed"), // TODO: Deprecate
     rideLimit: integer("ride_limit").notNull().default(-1),
     deleted: boolean("deleted").notNull().default(false),
     cancelled: boolean("cancelled").notNull().default(false),

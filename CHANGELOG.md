@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Almost all APIs and hooks, which are no longer needed for data fetching
 - Without APIs, there are dramatically fewer lambdas in the production infrastructure
+- Removed "speed" from ride table schema
 
 ## Previous Versions
 

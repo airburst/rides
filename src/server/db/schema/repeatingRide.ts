@@ -22,8 +22,7 @@ const repeatingRides = pgTable(
     meetPoint: varchar("meet_point", { length: 255 }),
     route: varchar("route", { length: 255 }),
     leader: varchar("leader", { length: 255 }),
-    notes: text("notes"), // TODO: Deprecate
-    speed: integer("speed"),
+    notes: text("notes"),
     rideLimit: integer("ride_limit").default(-1).notNull(),
     createdAt: timestamp("created_at", { precision: 3, mode: "string" })
       .defaultNow()

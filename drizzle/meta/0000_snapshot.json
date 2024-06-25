@@ -1,5 +1,5 @@
 {
-  "id": "9b878402-7760-46a7-bcef-8929d623adb6",
+  "id": "36078eb0-c132-4b7b-8206-a93d8e90ec45",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -179,12 +179,6 @@
         "notes": {
           "name": "notes",
           "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "speed": {
-          "name": "speed",
-          "type": "integer",
           "primaryKey": false,
           "notNull": false
         },
@@ -448,12 +442,6 @@
           "primaryKey": false,
           "notNull": false
         },
-        "speed": {
-          "name": "speed",
-          "type": "integer",
-          "primaryKey": false,
-          "notNull": false
-        },
         "ride_limit": {
           "name": "ride_limit",
           "type": "integer",
@@ -558,12 +546,6 @@
         "notes": {
           "name": "notes",
           "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "speed": {
-          "name": "speed",
-          "type": "integer",
           "primaryKey": false,
           "notNull": false
         },

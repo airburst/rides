@@ -18,7 +18,6 @@ export const RideInfo = ({ ride }: Props) => {
     distance,
     leader,
     route,
-    speed,
     notes,
     cancelled,
     users,
@@ -64,12 +63,6 @@ export const RideInfo = ({ ride }: Props) => {
           <Row>
             <div>Distance</div>
             <div>{distance}</div>
-          </Row>
-        )}
-        {speed && (
-          <Row>
-            <div>Average Speed</div>
-            <div>{speed}/h (est)</div>
           </Row>
         )}
         {leader && (

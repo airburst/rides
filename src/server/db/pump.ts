@@ -81,7 +81,6 @@ and expires > NOW()`);
     route,
     leader,
     notes,
-    speed,
     "limit" as "rideLimit",
     deleted,
     cancelled,
@@ -109,7 +108,6 @@ from "Ride"`);
     route,
     leader,
     notes,
-    speed,
     "limit" as "rideLimit",
     "createdAt"
 from "RepeatingRide"`);
@@ -128,7 +126,6 @@ from "RepeatingRide"`);
     route,
     leader,
     notes,
-    speed,
     "limit" as "rideLimit",
     deleted,
     cancelled,

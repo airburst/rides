@@ -44,7 +44,6 @@ export type Ride = {
   meetPoint?: string | null;
   route?: string | null;
   leader?: string | null;
-  speed?: number | null;
   notes?: string | null;
   cancelled?: boolean;
   rideLimit?: number;
@@ -84,7 +83,6 @@ export type RepeatingRide = {
   meetPoint?: string | null;
   route?: string | null;
   leader?: string | null;
-  speed?: number | null;
   notes?: string | null;
   cancelled?: boolean;
   rideLimit?: number;

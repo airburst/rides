@@ -30,7 +30,6 @@ CREATE TABLE IF NOT EXISTS "archived_rides" (
 	"route" varchar(255),
 	"leader" varchar(255),
 	"notes" text,
-	"speed" integer,
 	"ride_limit" integer DEFAULT -1 NOT NULL,
 	"deleted" boolean DEFAULT false NOT NULL,
 	"cancelled" boolean DEFAULT false NOT NULL,
@@ -70,7 +69,6 @@ CREATE TABLE IF NOT EXISTS "repeating_rides" (
 	"route" varchar(255),
 	"leader" varchar(255),
 	"notes" text,
-	"speed" integer,
 	"ride_limit" integer DEFAULT -1 NOT NULL,
 	"created_at" timestamp(3) DEFAULT now() NOT NULL,
 	"updated_at" timestamp DEFAULT now() NOT NULL
@@ -87,7 +85,6 @@ CREATE TABLE IF NOT EXISTS "rides" (
 	"route" varchar(255),
 	"leader" varchar(255),
 	"notes" text,
-	"speed" integer,
 	"ride_limit" integer DEFAULT -1 NOT NULL,
 	"deleted" boolean DEFAULT false NOT NULL,
 	"cancelled" boolean DEFAULT false NOT NULL,

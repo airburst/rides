@@ -159,7 +159,6 @@ distance?: number | null;
 meetPoint?: string | null;
 route?: string | null;
 leader?: string | null;
-speed?: number | null;
 notes?: string | null;
 ```
 
