@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS "rides" (
 	"ride_limit" integer DEFAULT -1 NOT NULL,
 	"deleted" boolean DEFAULT false NOT NULL,
 	"cancelled" boolean DEFAULT false NOT NULL,
-	"schedule_id" varchar(255),
+	"schedule_id" text,
 	"created_at" timestamp(3) DEFAULT now() NOT NULL,
 	"updated_at" timestamp(3) DEFAULT now() NOT NULL
 );

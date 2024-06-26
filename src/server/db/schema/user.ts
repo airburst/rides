@@ -9,7 +9,7 @@ import {
 } from "drizzle-orm/pg-core";
 
 import accounts from "./account";
-import membership from "./membership";
+import memberships from "./membership";
 import sessions from "./session";
 import userOnRides from "./usersOnRide";
 
@@ -43,7 +43,7 @@ export const userRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
   sessions: many(sessions),
   rides: many(userOnRides),
-  membership: many(membership),
+  memberships: many(memberships),
 }));
 
 export default users;

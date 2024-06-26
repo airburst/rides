@@ -33,7 +33,7 @@ const rides = pgTable(
     rideLimit: integer("ride_limit").notNull().default(-1),
     deleted: boolean("deleted").notNull().default(false),
     cancelled: boolean("cancelled").notNull().default(false),
-    scheduleId: varchar("schedule_id", { length: 255 }),
+    scheduleId: text("schedule_id"),
     createdAt: timestamp("created_at", { precision: 3, mode: "string" })
       .defaultNow()
       .notNull(),
@@ -48,7 +48,7 @@ const rides = pgTable(
 
 export const rideRelations = relations(rides, ({ one, many }) => ({
   users: many(userOnRides),
-  repeatingRide: one(repeatingRides, {
+  repeatingRides: one(repeatingRides, {
     fields: [rides.scheduleId],
     references: [repeatingRides.id],
   }),

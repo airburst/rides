@@ -1,5 +1,5 @@
 {
-  "id": "3bf62927-5700-46a9-98ab-d5d05e165005",
+  "id": "4767e107-9c15-40fd-bd38-e00a3b5d2fda",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -579,7 +579,7 @@
         },
         "schedule_id": {
           "name": "schedule_id",
-          "type": "varchar(255)",
+          "type": "text",
           "primaryKey": false,
           "notNull": false
         },
