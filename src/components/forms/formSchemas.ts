@@ -12,6 +12,7 @@ export const userProfileFormSchema = z.object({
   preferences: z.object({
     units: z.string(),
   }),
+  role: z.string(),
 });
 
 export type UserProfileFormSchema = z.output<typeof userProfileFormSchema>;

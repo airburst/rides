@@ -8,7 +8,7 @@ import { users } from "../db/schema";
 
 type UserUpdate = Pick<
   User,
-  "id" | "name" | "mobile" | "emergency" | "preferences"
+  "id" | "name" | "mobile" | "emergency" | "preferences" | "role"
 >;
 
 export const updateUser = async (
@@ -27,12 +27,12 @@ export const updateUser = async (
     };
   }
 
-  const { id, name, mobile, emergency, preferences } = user;
+  const { id, name, mobile, emergency, preferences, role } = user;
 
   try {
     const result = await db
       .update(users)
-      .set({ name, mobile, emergency, preferences })
+      .set({ name, mobile, emergency, preferences, role })
       .where(eq(users.id, id))
       .returning({ id: users.id });
 

@@ -12,10 +12,12 @@ import { userProfileFormSchema, type UserProfileFormSchema } from "./formSchemas
 
 type UserFormProps = {
   user: User;
+  isAdmin?: boolean;
 };
 
 export const UserProfileForm = ({
   user,
+  isAdmin
 }: UserFormProps) => {
   const { register,
     handleSubmit,
@@ -31,6 +33,7 @@ export const UserProfileForm = ({
       preferences: {
         units: user?.preferences?.units ?? "km",
       },
+      role: user?.role ?? "USER",
     },
   })
   const router = useRouter()
@@ -44,14 +47,12 @@ export const UserProfileForm = ({
     formData.append("emergency", data.emergency);
     formData.append("email", data.email);
     formData.append("preferences", JSON.stringify(data.preferences));
-    // Object.entries(data).forEach(([key, value]) => {
-    //   formData.append(key, value);
-    // });
+    formData.append("role", data.role);
     const result = await updateProfile(formData);
 
     if (result.success) {
       toast.success(result.message);
-      router.push("/");
+      router.back();
     } else {
       toast.error(result.message);
     }
@@ -130,9 +131,25 @@ export const UserProfileForm = ({
             />
           </label>
         </div>
+
+        {isAdmin && (<div className="grid w-full grid-cols-1 gap-4 md:gap-8">
+          <label htmlFor="role" className="flex flex-col">
+            Role
+            <select
+              id="role"
+              className="input"
+              defaultValue={defaultValues?.role ?? ""}
+              {...register("role")}
+            >
+              <option value="USER">USER</option>
+              <option value="LEADER">LEADER</option>
+              <option value="ADMIN">ADMIN</option>
+            </select>
+          </label>
+        </div>)}
       </div>
 
-      <div className="mx-[-8px] flex w-screen flex-row items-center justify-center bg-primary p-2 font-bold uppercase tracking-wide text-white sm:rounded md:mx-0 md:w-full">
+      <div className="mt-4 flex w-screen flex-row items-center justify-center bg-primary p-2 font-bold uppercase tracking-wide text-white sm:rounded md:mx-0 md:w-full">
         Preferences
       </div>
       <div className="grid grid-cols-1 gap-4 p-2">

@@ -55,17 +55,17 @@ export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout
       <ul className="menu text-base-300 text-lg p-0">
         {!isAuthenticated && (
           <MenuEntry label="Log in" onClick={handleSignin}>
-            <LoginIcon className="fill-neutral-700" />
+            <LoginIcon className="fill-white" />
           </MenuEntry>
         )}
 
         <MenuEntry label="Calendar" href="/calendar" onClick={closeMenu}>
-          <CalendarIcon className="fill-neutral-700" />
+          <CalendarIcon className="fill-white" />
         </MenuEntry>
 
         {isLeader && (
           <MenuEntry label="Add Ride" href="/ride/new" onClick={closeMenu}>
-            <PlusIcon className="fill-neutral-700" />
+            <PlusIcon className="fill-white" />
           </MenuEntry>
         )}
 
@@ -75,7 +75,7 @@ export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout
             href={`/ride/${flattenQuery(rideId)}/copy`}
             onClick={closeMenu}
           >
-            <CopyIcon className="fill-neutral-700" />
+            <CopyIcon className="fill-white" />
           </MenuEntry>
         )}
 
@@ -86,16 +86,16 @@ export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout
               href={`/ride/${flattenQuery(rideId)}/edit`}
               onClick={closeMenu}
             >
-              <EditIcon className="fill-neutral-700" />
+              <EditIcon className="fill-white" />
             </MenuEntry>
             <MenuEntry label="Cancel Ride" onClick={confirmCancel}>
-              <CircleExclamationIcon className="fill-neutral-700" />
+              <CircleExclamationIcon className="fill-white" />
             </MenuEntry>
             <MenuEntry label="Delete Ride" onClick={confirmDelete}>
-              <DeleteIcon className="fill-neutral-700" />
+              <DeleteIcon className="fill-white" />
             </MenuEntry>
             <MenuEntry label="Copy Ride Link" onClick={copyLink}>
-              <LinkIcon className="fill-neutral-700" />
+              <LinkIcon className="fill-white" />
             </MenuEntry>
           </>
         )}
@@ -103,14 +103,14 @@ export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout
         {isAdmin && (
           <>
             <MenuEntry label="Manage Users" href="/users" onClick={closeMenu}>
-              <UsersIcon className="fill-neutral-700" />
+              <UsersIcon className="fill-white" />
             </MenuEntry>
             <MenuEntry
               label="Repeating Rides"
               href="/repeating-rides"
               onClick={closeMenu}
             >
-              <RepeatIcon className="fill-neutral-700" />
+              <RepeatIcon className="fill-white" />
             </MenuEntry>
           </>
         )}
@@ -118,10 +118,10 @@ export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout
         {isAuthenticated && (
           <>
             <MenuEntry label="Settings" href="/profile" onClick={closeMenu}>
-              <SettingsIcon className="fill-neutral-700" />
+              <SettingsIcon className="fill-white" />
             </MenuEntry>
             <MenuEntry className="text-error" label="Log out" onClick={handleSignout}>
-              <LogoutIcon className="fill-neutral-700" />
+              <LogoutIcon className="fill-error" />
             </MenuEntry>
           </>
         )}
