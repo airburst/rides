@@ -1,3 +1,6 @@
+import { sql, type SQL } from "drizzle-orm";
+import { type AnyPgColumn } from "drizzle-orm/pg-core";
+
 export { accountRelations, default as accounts } from "./account";
 export {
   archivedRideRelations,
@@ -17,3 +20,7 @@ export { sessionRelations, default as sessions } from "./session";
 export { roleEnum, userRelations, default as users } from "./user";
 export { default as userOnRides, userOnRidesRelations } from "./usersOnRide";
 export { default as verificationTokens } from "./verificationToken";
+
+export function lower(col: AnyPgColumn): SQL {
+  return sql`lower(${col})`;
+}

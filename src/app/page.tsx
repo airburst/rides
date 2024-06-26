@@ -12,7 +12,6 @@ export const metadata: Metadata = {
   description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} Ride Planner`,
 }
 
-
 export default async function HomePage() {
   return (
     <MainContent>
