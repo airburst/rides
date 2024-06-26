@@ -1,22 +1,19 @@
-import { getUsers } from "@/server/actions/getUsers";
+"use client";
+
+import { type User } from "@/types";
+import { useState, type ChangeEvent } from "react";
 import { UserCard } from "../Card";
 
 type Props = {
-  query?: string;
+  users: User[];
 }
 
-export const UsersList = async ({ query }: Props) => {
-  const { users, error } = await getUsers(query);
+export const UsersList = ({ users }: Props) => {
+  const [searchText, setSearchText] = useState("");
 
-  if (error) {
-    return (
-      <div className="grid w-full grid-cols-1 gap-4 md:gap-8">
-        <div className="flex h-full items-center p-8 pt-32 text-2xl">
-          Error loading rides
-        </div>
-      </div>
-    );
-  }
+  const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchText(event.currentTarget.value);
+  };
 
   const userCount = users.length;
 
@@ -30,11 +27,30 @@ export const UsersList = async ({ query }: Props) => {
     );
   }
 
+  const filteredUsers = searchText
+    ? users.filter(({ name, email }) =>
+      `${name}${email}`.toLowerCase().includes(searchText.toLowerCase())
+    )
+    : users;
+
   return (
-    <div className="grid w-full grid-cols-1 gap-2 md:gap-2 px-2 sm:px-0">
-      {users.map((user) => (
-        <UserCard key={user.id} user={user} />
-      ))}
-    </div>
+    <>
+      <div className="w-full px-2 sm:px-0">
+        <input
+          type="text"
+          id="search"
+          name="search"
+          className="input input-bordered input-lg w-full mb-4"
+          placeholder="Search by name or email"
+          onChange={handleSearch}
+        />
+      </div>
+
+      <div className="grid w-full grid-cols-1 gap-2 md:gap-2 px-2 sm:px-0">
+        {filteredUsers.map((user) => (
+          <UserCard key={user.id} user={user} />
+        ))}
+      </div>
+    </>
   );
 }

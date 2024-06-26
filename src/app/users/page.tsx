@@ -1,6 +1,7 @@
 import { MainContent } from "@/components/Layout/MainContent";
 import { UsersList } from "@/components/Users/UsersList";
 import { env } from "@/env";
+import { getUsers } from "@/server/actions/getUsers";
 import { canUseAction } from "@/server/auth";
 import { type Metadata } from "next";
 import { redirect } from "next/navigation";
@@ -21,6 +22,18 @@ export default async function Users() {
     redirect("/");
   }
 
+  const { users, error } = await getUsers();
+
+  if (error) {
+    return (
+      <div className="grid w-full grid-cols-1 gap-4 md:gap-8">
+        <div className="flex h-full items-center p-8 pt-32 text-2xl">
+          Error loading rides
+        </div>
+      </div>
+    );
+  }
+
   return (
     <MainContent>
       <>
@@ -31,7 +44,7 @@ export default async function Users() {
         </div>
 
         <Suspense fallback={<div>Loading...</div>}>
-          <UsersList query="air" />
+          <UsersList users={users} />
         </Suspense>
       </>
     </MainContent>
