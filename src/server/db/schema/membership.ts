@@ -1,6 +1,9 @@
+import { relations } from "drizzle-orm";
 import { boolean, pgTable, text } from "drizzle-orm/pg-core";
+import users from "./user";
 
-const membership = pgTable("membership", {
+const memberships = pgTable("membership", {
+  system: text("system").notNull().default("RiderHQ"),
   memberId: text("member_id").primaryKey().notNull(),
   userId: text("user_id").notNull(),
   handle: text("handle").notNull(),
@@ -13,4 +16,11 @@ const membership = pgTable("membership", {
   isGuest: boolean("is_guest"),
 });
 
-export default membership;
+export const membershipRelations = relations(memberships, ({ one }) => ({
+  user: one(users, {
+    fields: [memberships.memberId],
+    references: [users.membershipId],
+  }),
+}));
+
+export default memberships;

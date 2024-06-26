@@ -45,6 +45,7 @@ CREATE TABLE IF NOT EXISTS "archived_users_on_rides" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "membership" (
+	"system" text DEFAULT 'RiderHQ' NOT NULL,
 	"member_id" text PRIMARY KEY NOT NULL,
 	"user_id" text NOT NULL,
 	"handle" text NOT NULL,
@@ -117,6 +118,7 @@ CREATE TABLE IF NOT EXISTS "users" (
 	"emergency" varchar(255),
 	"role" "role" DEFAULT 'USER',
 	"preferences" json DEFAULT '{"units":"km"}'::json,
+	"membership_id" text,
 	"created_at" timestamp(3) DEFAULT now() NOT NULL,
 	"updated_at" timestamp(3) DEFAULT now() NOT NULL
 );

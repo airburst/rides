@@ -1,5 +1,5 @@
 {
-  "id": "36078eb0-c132-4b7b-8206-a93d8e90ec45",
+  "id": "3bf62927-5700-46a9-98ab-d5d05e165005",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -306,6 +306,13 @@
       "name": "membership",
       "schema": "",
       "columns": {
+        "system": {
+          "name": "system",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'RiderHQ'"
+        },
         "member_id": {
           "name": "member_id",
           "type": "text",
@@ -801,6 +808,12 @@
           "primaryKey": false,
           "notNull": false,
           "default": "'{\"units\":\"km\"}'::json"
+        },
+        "membership_id": {
+          "name": "membership_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "created_at": {
           "name": "created_at",

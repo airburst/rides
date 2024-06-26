@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import {
   index,
   integer,
@@ -6,6 +7,7 @@ import {
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
+import rides from "./ride";
 
 const repeatingRides = pgTable(
   "repeating_rides",
@@ -35,3 +37,7 @@ const repeatingRides = pgTable(
 );
 
 export default repeatingRides;
+
+export const repeatingRideRelations = relations(repeatingRides, ({ many }) => ({
+  rides: many(rides),
+}));

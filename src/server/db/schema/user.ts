@@ -9,6 +9,7 @@ import {
 } from "drizzle-orm/pg-core";
 
 import accounts from "./account";
+import membership from "./membership";
 import sessions from "./session";
 import userOnRides from "./usersOnRide";
 
@@ -29,6 +30,7 @@ const users = pgTable("users", {
   emergency: varchar("emergency", { length: 255 }),
   role: roleEnum("role").default("USER"),
   preferences: json("preferences").default({ units: "km" }),
+  membershipId: text("membership_id"),
   createdAt: timestamp("created_at", { precision: 3, mode: "string" })
     .defaultNow()
     .notNull(),
@@ -41,6 +43,7 @@ export const userRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
   sessions: many(sessions),
   rides: many(userOnRides),
+  membership: many(membership),
 }));
 
 export default users;

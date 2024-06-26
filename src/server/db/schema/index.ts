@@ -7,8 +7,11 @@ export {
   default as archivedUserOnRides,
   archivedUserOnRidesRelations,
 } from "./archivedUsersOnRide";
-export { default as membership } from "./membership";
-export { default as repeatingRides } from "./repeatingRide";
+export { membershipRelations, default as memberships } from "./membership";
+export {
+  repeatingRideRelations,
+  default as repeatingRides,
+} from "./repeatingRide";
 export { rideRelations, default as rides } from "./ride";
 export { sessionRelations, default as sessions } from "./session";
 export { roleEnum, userRelations, default as users } from "./user";
