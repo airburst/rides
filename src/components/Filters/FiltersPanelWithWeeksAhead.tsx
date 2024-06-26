@@ -24,6 +24,9 @@ export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
     filters?.onlyJoined ?? false
   );
   const [search, setSearch] = useState<string>(filters?.q ?? "");
+  const [weeksAhead, setWeeksAhead] = useState<string>(
+    filters?.weeksAhead ?? DEFAULT_WEEKS_TO_SHOW
+  );
   const [filterQuery, setFilterQuery] = useAtom(filterQueryAtom);
   const [, setFilters] = useLocalStorage<FilterQuery>("bcc-filters", {});
 
@@ -52,6 +55,12 @@ export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
     setSearch(e.target.value);
   };
 
+  const handleWeeksChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const val = e.target.value;
+    setWeeksAhead(val);
+    setFilterAtomAndStorage({ ...filterQuery, weeksAhead: val });
+  };
+
   const handleSelected = (q: string) => {
     setFilterAtomAndStorage({ ...filterQuery, q });
     setSearch(q);
@@ -60,6 +69,7 @@ export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
   const reset = () => {
     setOnlyJoined(false);
     setSearch("");
+    setWeeksAhead(DEFAULT_WEEKS_TO_SHOW);
     setFilterAtomAndStorage({ onlyJoined: false, weeksAhead: DEFAULT_WEEKS_TO_SHOW });
   };
 
@@ -176,6 +186,25 @@ export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
               <span className="sr-only">Enable notifications</span>
               <span className={toggleClass} />
             </Switch>
+          </div>
+
+          <div className="mt-4 flex flex-row justify-between items-center">
+            <div>Weeks ahead</div>
+            <label htmlFor="weeks" className="flex flex-col gap-1 w-32">
+              <select
+                id="weeks"
+                aria-label="Weeks ahead"
+                className="rounded-md text-neutral-700"
+                value={weeksAhead}
+                onChange={handleWeeksChange}
+              >
+                <option value="2">2</option>
+                <option value="4">4</option>
+                <option value="6">6</option>
+                <option value="8">8</option>
+                <option value="-1">Forever</option>
+              </select>
+            </label>
           </div>
 
           <div className="mt-4 flex flex-row justify-end gap-4">
