@@ -59,10 +59,10 @@ export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
 
         {isCancelled ? (<div className="p-1 col-span-3"><Cancelled /></div>)
           : (<>
-            <div className="pl-2 font-bold tracking-wide text-neutral-600">
+            <div className="p-1 pl-2 items-center font-bold tracking-wide text-neutral-600">
               {time}
             </div>
-            <div className="truncate pl-2">{details}</div>
+            <div className="truncate p-1 pl-2 items-center">{details}</div>
             {/* Rider count icon */}
             <div className="flex flex-row items-center justify-end gap-2 pr-2">
               <Image

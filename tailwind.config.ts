@@ -1,5 +1,5 @@
-import { type Config } from "tailwindcss";
 import { fontFamily } from "tailwindcss/defaultTheme";
+import { type Config } from "tailwindcss/types/config";
 import club from "./src/themes/bath";
 
 export default {
@@ -8,6 +8,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ["var(--font-outfit)", ...fontFamily.sans],
+        display: ["var(--font-signika)", ...fontFamily.sans],
       },
       colors: {
         "dark-100": "#171717",

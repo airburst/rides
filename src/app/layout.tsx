@@ -2,12 +2,20 @@ import { Header } from "@/components/Header/Header";
 import { env } from "@/env";
 import "@/styles/globals.css";
 import { type Metadata } from "next";
-import { Outfit } from "next/font/google";
+import { Outfit, Signika } from "next/font/google";
 import { Toaster } from "sonner";
 
 const outfit = Outfit({
   subsets: ["latin"],
+  weight: ["400", "700"],
   variable: "--font-outfit",
+  display: "swap",
+});
+
+const signika = Signika({
+  subsets: ["latin"],
+  weight: ["300"],
+  variable: "--font-signika",
   display: "swap",
 });
 
@@ -26,7 +34,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${outfit.variable}`} data-theme="club">
+    <html lang="en" className={`${outfit.variable} ${signika.variable}`} data-theme="club">
       <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />

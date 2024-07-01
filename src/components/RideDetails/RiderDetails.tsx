@@ -33,27 +33,27 @@ export const RiderDetails = ({ user, isLeader, sessionUser }: Props) => {
     isMe && "text-neutral-800"
   );
 
+  const numberToDisplay = showEmergency ? emergencyNumber : mobile;
+
+  const numberClass = clsx("flex items-center gap-2",
+    showEmergency ? "text-red-700" : "text-neutral-500"
+  );
+  const iconClass = clsx("flex items-center gap-2",
+    showEmergency ? "fill-red-700" : "fill-neutral-500"
+  );
+
   return (
     <div className={rowClass} key={userId}>
       <div className="truncate">{userName}</div>
 
       {isLeader && (
         <div className="grid grid-cols-[1fr_44px] gap-2">
-          {!showEmergency && (
-            <div className="flex items-center gap-2">
-              {mobile && <PhoneIcon className="fill-neutral-500" />}
-              <a href={`tel:${mobile}`} className="text-right">
-                {mobile}
-              </a>
-            </div>
-          )}
-          {showEmergency && (
-            <div className="flex items-center gap-2 text-red-700">
-              <a href={`tel:${emergencyNumber}`} className="text-right">
-                {emergency}
-              </a>
-            </div>
-          )}
+          <div className={numberClass}>
+            {numberToDisplay && <PhoneIcon className={iconClass} />}
+            <a href={`tel:${numberToDisplay}`} className="text-right">
+              {numberToDisplay}
+            </a>
+          </div>
 
           <Switch
             checked={showEmergency}
