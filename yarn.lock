@@ -2971,6 +2971,7 @@ __metadata:
     daisyui: "npm:^4.12.2"
     dayjs: "npm:^1.11.11"
     dotenv: "npm:^16.4.5"
+    drizzle-dbml-generator: "npm:^0.7.0"
     drizzle-kit: "npm:^0.22.4"
     drizzle-orm: "npm:^0.31.1"
     eslint: "npm:8.57.0"
@@ -3763,6 +3764,15 @@ __metadata:
   version: 16.4.5
   resolution: "dotenv@npm:16.4.5"
   checksum: 10/55a3134601115194ae0f924e54473459ed0d9fc340ae610b676e248cca45aa7c680d86365318ea964e6da4e2ea80c4514c1adab5adb43d6867fb57ff068f95c8
+  languageName: node
+  linkType: hard
+
+"drizzle-dbml-generator@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "drizzle-dbml-generator@npm:0.7.0"
+  dependencies:
+    drizzle-orm: "npm:^0.31.1"
+  checksum: 10/50a7c574ebee7fbd40d985f474b5d91d150eb7bad2c6aef6081d4398f14b0fdfe47f1b772f8dd0d9a068911cbc472343801ba1ab671f71350f26af25caebe4bf
   languageName: node
   linkType: hard
 
