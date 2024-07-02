@@ -5,12 +5,20 @@ import { db } from "@/server/db";
 import { userOnRides } from "@/server/db/schema";
 import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import { z } from "zod";
 import { canUseAction } from "../auth";
 
-export const leaveRide = async (
-  rideId: string,
-  userId: string,
-): Promise<{
+const joinSchema = z.object({
+  userId: z.string(),
+  rideId: z.string(),
+});
+
+type JoinType = z.infer<typeof joinSchema>;
+
+export const leaveRide = async ({
+  rideId,
+  userId,
+}: JoinType): Promise<{
   success: boolean;
   error?: string;
 }> => {

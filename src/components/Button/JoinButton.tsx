@@ -6,8 +6,8 @@ import { CloseIcon, PlusIcon } from "../Icon";
 import { Button, type ButtonProps } from "./Button";
 
 type Props = ButtonProps & {
-  userId: string;
   rideId: string;
+  userId: string;
   going?: boolean;
 };
 
@@ -21,13 +21,13 @@ export const JoinButton: React.FC<Props> = ({
 
   const handleJoin = async () => {
     setLoading(true);
-    await joinRide(rideId, userId);
+    await joinRide({ rideId, userId });
     setLoading(false);
   };
 
   const handleLeave = async () => {
     setLoading(true);
-    await leaveRide(rideId, userId);
+    await leaveRide({ rideId, userId });
     setLoading(false);
   };
 

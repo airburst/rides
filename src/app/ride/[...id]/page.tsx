@@ -25,7 +25,7 @@ export default async function RideDetailsPage({ params }: { params: { id: string
           <div className="flex h-64 w-full items-center justify-center text-2xl">
             This ride is no longer available
           </div>
-          <div className="flex h-4 flex-row justify-between px-2 pt-8 sm:px-0">
+          <div className="flex mb-16 flex-row justify-between px-2 pt-8 sm:px-0">
             <BackButton />
           </div>
         </>

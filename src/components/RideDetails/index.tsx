@@ -55,7 +55,7 @@ export const RideDetails = ({ ride, user, role }: Props) => {
       <RideInfo ride={ride} />
 
       {cancelled ? (
-        <div className="flex h-4 flex-row justify-between md:justify-start md:gap-4 px-2 pt-2 sm:px-0">
+        <div className="flex mb-16 flex-row justify-between md:justify-start md:gap-4 px-2 pt-2 sm:px-0">
           <BackButton className="md:min-w-32 min-w-28" url={`/#${id}`} />
         </div>
       )
@@ -81,7 +81,7 @@ export const RideDetails = ({ ride, user, role }: Props) => {
               hasRiders={hasRiders}
               isLeader={isLeader}
             />
-            <div className="flex h-4 flex-row justify-between md:justify-start md:gap-4 px-2 pt-2 sm:px-0">
+            <div className="flex mb-16 flex-row justify-between md:justify-start md:gap-4 px-2 pt-2 sm:px-0">
               <BackButton className="md:min-w-32 min-w-28" url={`/#${id}`} />
 
               {isGoing && (
