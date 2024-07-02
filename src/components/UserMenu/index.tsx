@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 "use client";
 
-import { cancelRide } from "@/server/actions/cancelRide";
-import { deleteRide } from "@/server/actions/deleteRide";
+import { cancelRide } from "@/server/actions/cancel-ride";
+import { deleteRide } from "@/server/actions/delete-ride";
 import { type Role } from "@/types";
 import { signIn, signOut } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";

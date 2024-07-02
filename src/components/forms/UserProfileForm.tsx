@@ -1,6 +1,6 @@
 "use client";
 
-import { updateProfile } from "@/server/actions/updateProfile";
+import { updateProfile } from "@/server/actions/update-profile";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from 'next/navigation';
 import { useForm } from "react-hook-form";

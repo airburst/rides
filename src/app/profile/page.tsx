@@ -2,7 +2,7 @@ import { BackButton } from "@/components/Button";
 import { MainContent } from "@/components/Layout/MainContent";
 import { UserProfileForm } from "@/components/forms/UserProfileForm";
 import { env } from "@/env";
-import { getUser } from "@/server/actions/getUser";
+import { getUser } from "@/server/actions/get-user";
 import { getServerAuthSession } from "@/server/auth";
 import { type Metadata } from "next";
 

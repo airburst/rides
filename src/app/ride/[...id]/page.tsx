@@ -2,7 +2,7 @@ import { BackButton } from "@/components/Button";
 import { MainContent } from "@/components/Layout/MainContent";
 import { RideDetails } from "@/components/RideDetails";
 import { env } from "@/env";
-import { getRide } from "@/server/actions/getRide";
+import { getRide } from "@/server/actions/get-ride";
 import { getServerAuthSession } from "@/server/auth";
 import { type Metadata } from "next";
 

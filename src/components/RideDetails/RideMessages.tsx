@@ -1,6 +1,6 @@
 "use client";
 
-import { updateMessage } from "@/server/actions/updateMessage";
+import { updateMessage } from "@/server/actions/update-message";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";

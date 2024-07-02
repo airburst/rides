@@ -2,7 +2,7 @@
 
 import { userProfileFormSchema } from "@/components/forms/formSchemas";
 import { revalidatePath } from "next/cache";
-import { updateUser } from "./updateUser";
+import { updateUser } from "./update-user";
 
 export type FormState = {
   message: string;

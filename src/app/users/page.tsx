@@ -1,7 +1,7 @@
 import { MainContent } from "@/components/Layout/MainContent";
 import { UsersList } from "@/components/Users/UsersList";
 import { env } from "@/env";
-import { getUsers } from "@/server/actions/getUsers";
+import { getUsers } from "@/server/actions/get-users";
 import { canUseAction } from "@/server/auth";
 import { type Metadata } from "next";
 import { redirect } from "next/navigation";

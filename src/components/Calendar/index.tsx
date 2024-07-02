@@ -1,4 +1,4 @@
-import { getRides } from "@/server/actions/getRides";
+import { getRides } from "@/server/actions/get-rides";
 import { generateCalendar } from "@utils/calendar";
 import {
   flattenQuery,

@@ -1,6 +1,6 @@
 "use client";
-import { joinRide } from "@/server/actions/joinRide";
-import { leaveRide } from "@/server/actions/leaveRide";
+import { joinRide } from "@/server/actions/join-ride";
+import { leaveRide } from "@/server/actions/leave-ride";
 import { useState } from "react";
 import { CloseIcon, PlusIcon } from "../Icon";
 import { Button, type ButtonProps } from "./Button";

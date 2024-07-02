@@ -1,4 +1,4 @@
-import { getRides } from "@/server/actions/getRides";
+import { getRides } from "@/server/actions/get-rides";
 import { getServerAuthSession } from "@/server/auth";
 import { getQueryDateRange } from "@utils/dates";
 import { FilteredRides } from "./FilteredRides";
