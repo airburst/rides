@@ -1,8 +1,9 @@
 import { relations } from "drizzle-orm";
-import { boolean, pgTable, text } from "drizzle-orm/pg-core";
+import { boolean, text } from "drizzle-orm/pg-core";
+import { createTable } from "./create-table";
 import users from "./user";
 
-const memberships = pgTable("membership", {
+const memberships = createTable("membership", {
   system: text("system").notNull().default("RiderHQ"),
   memberId: text("member_id").primaryKey().notNull(),
   userId: text("user_id").notNull(),

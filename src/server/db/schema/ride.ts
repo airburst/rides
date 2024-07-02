@@ -3,16 +3,16 @@ import {
   boolean,
   index,
   integer,
-  pgTable,
   text,
   timestamp,
   varchar,
 } from "drizzle-orm/pg-core";
 
+import { createTable } from "./create-table";
 import repeatingRides from "./repeatingRide";
 import userOnRides from "./usersOnRide";
 
-const rides = pgTable(
+const rides = createTable(
   "rides",
   {
     id: text("id")

@@ -1,21 +1,15 @@
 import { relations } from "drizzle-orm";
-import {
-  json,
-  pgEnum,
-  pgTable,
-  text,
-  timestamp,
-  varchar,
-} from "drizzle-orm/pg-core";
+import { json, pgEnum, text, timestamp, varchar } from "drizzle-orm/pg-core";
 
 import accounts from "./account";
+import { createTable } from "./create-table";
 import memberships from "./membership";
 import sessions from "./session";
 import userOnRides from "./usersOnRide";
 
 export const roleEnum = pgEnum("role", ["USER", "LEADER", "ADMIN"]);
 
-const users = pgTable("users", {
+const users = createTable("users", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),

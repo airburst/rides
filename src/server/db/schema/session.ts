@@ -1,8 +1,9 @@
 import { relations } from "drizzle-orm";
-import { index, pgTable, timestamp, varchar } from "drizzle-orm/pg-core";
+import { index, timestamp, varchar } from "drizzle-orm/pg-core";
+import { createTable } from "./create-table";
 import users from "./user";
 
-const sessions = pgTable(
+const sessions = createTable(
   "sessions",
   {
     sessionToken: varchar("session_token", { length: 255 })

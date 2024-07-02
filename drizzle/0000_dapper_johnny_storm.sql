@@ -4,7 +4,7 @@ EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "accounts" (
+CREATE TABLE IF NOT EXISTS "bcc_accounts" (
 	"user_id" varchar(255) NOT NULL,
 	"type" varchar(255) NOT NULL,
 	"provider" varchar(255) NOT NULL,
@@ -16,10 +16,10 @@ CREATE TABLE IF NOT EXISTS "accounts" (
 	"scope" varchar(255),
 	"id_token" text,
 	"session_state" varchar(255),
-	CONSTRAINT "accounts_provider_provider_account_id_pk" PRIMARY KEY("provider","provider_account_id")
+	CONSTRAINT "bcc_accounts_provider_provider_account_id_pk" PRIMARY KEY("provider","provider_account_id")
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "archived_rides" (
+CREATE TABLE IF NOT EXISTS "bcc_archived_rides" (
 	"id" text PRIMARY KEY NOT NULL,
 	"name" varchar(255) NOT NULL,
 	"ride_group" varchar(255),
@@ -36,15 +36,15 @@ CREATE TABLE IF NOT EXISTS "archived_rides" (
 	"created_at" timestamp(3) DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "archived_users_on_rides" (
+CREATE TABLE IF NOT EXISTS "bcc_archived_users_on_rides" (
 	"user_id" varchar(255) NOT NULL,
 	"ride_id" varchar(255) NOT NULL,
 	"notes" text,
 	"created_at" timestamp(3) DEFAULT now() NOT NULL,
-	CONSTRAINT "archived_users_on_rides_user_id_ride_id_pk" PRIMARY KEY("user_id","ride_id")
+	CONSTRAINT "bcc_archived_users_on_rides_user_id_ride_id_pk" PRIMARY KEY("user_id","ride_id")
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "membership" (
+CREATE TABLE IF NOT EXISTS "bcc_membership" (
 	"system" text DEFAULT 'RiderHQ' NOT NULL,
 	"member_id" text PRIMARY KEY NOT NULL,
 	"user_id" text NOT NULL,
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS "membership" (
 	"is_guest" boolean
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "repeating_rides" (
+CREATE TABLE IF NOT EXISTS "bcc_repeating_rides" (
 	"id" text PRIMARY KEY NOT NULL,
 	"name" varchar(255) NOT NULL,
 	"schedule" text NOT NULL,
@@ -75,7 +75,7 @@ CREATE TABLE IF NOT EXISTS "repeating_rides" (
 	"updated_at" timestamp DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "rides" (
+CREATE TABLE IF NOT EXISTS "bcc_rides" (
 	"id" text PRIMARY KEY NOT NULL,
 	"name" varchar(255) NOT NULL,
 	"ride_group" varchar(255),
@@ -94,21 +94,21 @@ CREATE TABLE IF NOT EXISTS "rides" (
 	"updated_at" timestamp(3) DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "sessions" (
+CREATE TABLE IF NOT EXISTS "bcc_sessions" (
 	"session_token" varchar(255) PRIMARY KEY NOT NULL,
 	"user_id" varchar(255) NOT NULL,
 	"expires" timestamp with time zone NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "users_on_rides" (
+CREATE TABLE IF NOT EXISTS "bcc_users_on_rides" (
 	"user_id" varchar(255) NOT NULL,
 	"ride_id" varchar(255) NOT NULL,
 	"notes" text,
 	"created_at" timestamp(3) DEFAULT now() NOT NULL,
-	CONSTRAINT "users_on_rides_user_id_ride_id_pk" PRIMARY KEY("user_id","ride_id")
+	CONSTRAINT "bcc_users_on_rides_user_id_ride_id_pk" PRIMARY KEY("user_id","ride_id")
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "users" (
+CREATE TABLE IF NOT EXISTS "bcc_users" (
 	"id" text PRIMARY KEY NOT NULL,
 	"name" varchar(255),
 	"email" varchar(255) NOT NULL,
@@ -123,51 +123,51 @@ CREATE TABLE IF NOT EXISTS "users" (
 	"updated_at" timestamp(3) DEFAULT now() NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "verification_tokens" (
+CREATE TABLE IF NOT EXISTS "bcc_verification_tokens" (
 	"identifier" varchar(255) NOT NULL,
 	"token" varchar(255) NOT NULL,
 	"expires" timestamp (3) with time zone NOT NULL,
-	CONSTRAINT "verification_tokens_identifier_token_pk" PRIMARY KEY("identifier","token")
+	CONSTRAINT "bcc_verification_tokens_identifier_token_pk" PRIMARY KEY("identifier","token")
 );
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "accounts" ADD CONSTRAINT "accounts_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "bcc_accounts" ADD CONSTRAINT "bcc_accounts_user_id_bcc_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."bcc_users"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "archived_users_on_rides" ADD CONSTRAINT "archived_users_on_rides_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "bcc_archived_users_on_rides" ADD CONSTRAINT "bcc_archived_users_on_rides_user_id_bcc_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."bcc_users"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "archived_users_on_rides" ADD CONSTRAINT "archived_users_on_rides_ride_id_archived_rides_id_fk" FOREIGN KEY ("ride_id") REFERENCES "public"."archived_rides"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "bcc_archived_users_on_rides" ADD CONSTRAINT "bcc_archived_users_on_rides_ride_id_bcc_archived_rides_id_fk" FOREIGN KEY ("ride_id") REFERENCES "public"."bcc_archived_rides"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "sessions" ADD CONSTRAINT "sessions_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "bcc_sessions" ADD CONSTRAINT "bcc_sessions_user_id_bcc_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."bcc_users"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "users_on_rides" ADD CONSTRAINT "users_on_rides_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "bcc_users_on_rides" ADD CONSTRAINT "bcc_users_on_rides_user_id_bcc_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."bcc_users"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "users_on_rides" ADD CONSTRAINT "users_on_rides_ride_id_rides_id_fk" FOREIGN KEY ("ride_id") REFERENCES "public"."rides"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "bcc_users_on_rides" ADD CONSTRAINT "bcc_users_on_rides_ride_id_bcc_rides_id_fk" FOREIGN KEY ("ride_id") REFERENCES "public"."bcc_rides"("id") ON DELETE no action ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
-CREATE INDEX IF NOT EXISTS "account_userId_idx" ON "accounts" USING btree (user_id);--> statement-breakpoint
-CREATE INDEX IF NOT EXISTS "archived_rides_name_index" ON "archived_rides" USING btree (name);--> statement-breakpoint
-CREATE INDEX IF NOT EXISTS "repeating_rides_name_index" ON "repeating_rides" USING btree (name);--> statement-breakpoint
-CREATE INDEX IF NOT EXISTS "rides_name_index" ON "rides" USING btree (name);--> statement-breakpoint
-CREATE INDEX IF NOT EXISTS "session_userId_idx" ON "sessions" USING btree (user_id);
+CREATE INDEX IF NOT EXISTS "account_userId_idx" ON "bcc_accounts" USING btree (user_id);--> statement-breakpoint
+CREATE INDEX IF NOT EXISTS "bcc_archived_rides_name_index" ON "bcc_archived_rides" USING btree (name);--> statement-breakpoint
+CREATE INDEX IF NOT EXISTS "bcc_repeating_rides_name_index" ON "bcc_repeating_rides" USING btree (name);--> statement-breakpoint
+CREATE INDEX IF NOT EXISTS "bcc_rides_name_index" ON "bcc_rides" USING btree (name);--> statement-breakpoint
+CREATE INDEX IF NOT EXISTS "session_userId_idx" ON "bcc_sessions" USING btree (user_id);

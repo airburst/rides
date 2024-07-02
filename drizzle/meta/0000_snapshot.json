@@ -1,11 +1,11 @@
 {
-  "id": "4767e107-9c15-40fd-bd38-e00a3b5d2fda",
+  "id": "daba464f-8476-4f0c-b25f-05d24a5bfa14",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
-    "public.accounts": {
-      "name": "accounts",
+    "public.bcc_accounts": {
+      "name": "bcc_accounts",
       "schema": "",
       "columns": {
         "user_id": {
@@ -93,10 +93,10 @@
         }
       },
       "foreignKeys": {
-        "accounts_user_id_users_id_fk": {
-          "name": "accounts_user_id_users_id_fk",
-          "tableFrom": "accounts",
-          "tableTo": "users",
+        "bcc_accounts_user_id_bcc_users_id_fk": {
+          "name": "bcc_accounts_user_id_bcc_users_id_fk",
+          "tableFrom": "bcc_accounts",
+          "tableTo": "bcc_users",
           "columnsFrom": [
             "user_id"
           ],
@@ -108,8 +108,8 @@
         }
       },
       "compositePrimaryKeys": {
-        "accounts_provider_provider_account_id_pk": {
-          "name": "accounts_provider_provider_account_id_pk",
+        "bcc_accounts_provider_provider_account_id_pk": {
+          "name": "bcc_accounts_provider_provider_account_id_pk",
           "columns": [
             "provider",
             "provider_account_id"
@@ -118,8 +118,8 @@
       },
       "uniqueConstraints": {}
     },
-    "public.archived_rides": {
-      "name": "archived_rides",
+    "public.bcc_archived_rides": {
+      "name": "bcc_archived_rides",
       "schema": "",
       "columns": {
         "id": {
@@ -212,8 +212,8 @@
         }
       },
       "indexes": {
-        "archived_rides_name_index": {
-          "name": "archived_rides_name_index",
+        "bcc_archived_rides_name_index": {
+          "name": "bcc_archived_rides_name_index",
           "columns": [
             {
               "expression": "name",
@@ -232,8 +232,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.archived_users_on_rides": {
-      "name": "archived_users_on_rides",
+    "public.bcc_archived_users_on_rides": {
+      "name": "bcc_archived_users_on_rides",
       "schema": "",
       "columns": {
         "user_id": {
@@ -264,10 +264,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "archived_users_on_rides_user_id_users_id_fk": {
-          "name": "archived_users_on_rides_user_id_users_id_fk",
-          "tableFrom": "archived_users_on_rides",
-          "tableTo": "users",
+        "bcc_archived_users_on_rides_user_id_bcc_users_id_fk": {
+          "name": "bcc_archived_users_on_rides_user_id_bcc_users_id_fk",
+          "tableFrom": "bcc_archived_users_on_rides",
+          "tableTo": "bcc_users",
           "columnsFrom": [
             "user_id"
           ],
@@ -277,10 +277,10 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "archived_users_on_rides_ride_id_archived_rides_id_fk": {
-          "name": "archived_users_on_rides_ride_id_archived_rides_id_fk",
-          "tableFrom": "archived_users_on_rides",
-          "tableTo": "archived_rides",
+        "bcc_archived_users_on_rides_ride_id_bcc_archived_rides_id_fk": {
+          "name": "bcc_archived_users_on_rides_ride_id_bcc_archived_rides_id_fk",
+          "tableFrom": "bcc_archived_users_on_rides",
+          "tableTo": "bcc_archived_rides",
           "columnsFrom": [
             "ride_id"
           ],
@@ -292,8 +292,8 @@
         }
       },
       "compositePrimaryKeys": {
-        "archived_users_on_rides_user_id_ride_id_pk": {
-          "name": "archived_users_on_rides_user_id_ride_id_pk",
+        "bcc_archived_users_on_rides_user_id_ride_id_pk": {
+          "name": "bcc_archived_users_on_rides_user_id_ride_id_pk",
           "columns": [
             "user_id",
             "ride_id"
@@ -302,8 +302,8 @@
       },
       "uniqueConstraints": {}
     },
-    "public.membership": {
-      "name": "membership",
+    "public.bcc_membership": {
+      "name": "bcc_membership",
       "schema": "",
       "columns": {
         "system": {
@@ -379,8 +379,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.repeating_rides": {
-      "name": "repeating_rides",
+    "public.bcc_repeating_rides": {
+      "name": "bcc_repeating_rides",
       "schema": "",
       "columns": {
         "id": {
@@ -472,8 +472,8 @@
         }
       },
       "indexes": {
-        "repeating_rides_name_index": {
-          "name": "repeating_rides_name_index",
+        "bcc_repeating_rides_name_index": {
+          "name": "bcc_repeating_rides_name_index",
           "columns": [
             {
               "expression": "name",
@@ -492,8 +492,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.rides": {
-      "name": "rides",
+    "public.bcc_rides": {
+      "name": "bcc_rides",
       "schema": "",
       "columns": {
         "id": {
@@ -599,8 +599,8 @@
         }
       },
       "indexes": {
-        "rides_name_index": {
-          "name": "rides_name_index",
+        "bcc_rides_name_index": {
+          "name": "bcc_rides_name_index",
           "columns": [
             {
               "expression": "name",
@@ -619,8 +619,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.sessions": {
-      "name": "sessions",
+    "public.bcc_sessions": {
+      "name": "bcc_sessions",
       "schema": "",
       "columns": {
         "session_token": {
@@ -660,10 +660,10 @@
         }
       },
       "foreignKeys": {
-        "sessions_user_id_users_id_fk": {
-          "name": "sessions_user_id_users_id_fk",
-          "tableFrom": "sessions",
-          "tableTo": "users",
+        "bcc_sessions_user_id_bcc_users_id_fk": {
+          "name": "bcc_sessions_user_id_bcc_users_id_fk",
+          "tableFrom": "bcc_sessions",
+          "tableTo": "bcc_users",
           "columnsFrom": [
             "user_id"
           ],
@@ -677,8 +677,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.users_on_rides": {
-      "name": "users_on_rides",
+    "public.bcc_users_on_rides": {
+      "name": "bcc_users_on_rides",
       "schema": "",
       "columns": {
         "user_id": {
@@ -709,10 +709,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "users_on_rides_user_id_users_id_fk": {
-          "name": "users_on_rides_user_id_users_id_fk",
-          "tableFrom": "users_on_rides",
-          "tableTo": "users",
+        "bcc_users_on_rides_user_id_bcc_users_id_fk": {
+          "name": "bcc_users_on_rides_user_id_bcc_users_id_fk",
+          "tableFrom": "bcc_users_on_rides",
+          "tableTo": "bcc_users",
           "columnsFrom": [
             "user_id"
           ],
@@ -722,10 +722,10 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "users_on_rides_ride_id_rides_id_fk": {
-          "name": "users_on_rides_ride_id_rides_id_fk",
-          "tableFrom": "users_on_rides",
-          "tableTo": "rides",
+        "bcc_users_on_rides_ride_id_bcc_rides_id_fk": {
+          "name": "bcc_users_on_rides_ride_id_bcc_rides_id_fk",
+          "tableFrom": "bcc_users_on_rides",
+          "tableTo": "bcc_rides",
           "columnsFrom": [
             "ride_id"
           ],
@@ -737,8 +737,8 @@
         }
       },
       "compositePrimaryKeys": {
-        "users_on_rides_user_id_ride_id_pk": {
-          "name": "users_on_rides_user_id_ride_id_pk",
+        "bcc_users_on_rides_user_id_ride_id_pk": {
+          "name": "bcc_users_on_rides_user_id_ride_id_pk",
           "columns": [
             "user_id",
             "ride_id"
@@ -747,8 +747,8 @@
       },
       "uniqueConstraints": {}
     },
-    "public.users": {
-      "name": "users",
+    "public.bcc_users": {
+      "name": "bcc_users",
       "schema": "",
       "columns": {
         "id": {
@@ -835,8 +835,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.verification_tokens": {
-      "name": "verification_tokens",
+    "public.bcc_verification_tokens": {
+      "name": "bcc_verification_tokens",
       "schema": "",
       "columns": {
         "identifier": {
@@ -861,8 +861,8 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {
-        "verification_tokens_identifier_token_pk": {
-          "name": "verification_tokens_identifier_token_pk",
+        "bcc_verification_tokens_identifier_token_pk": {
+          "name": "bcc_verification_tokens_identifier_token_pk",
           "columns": [
             "identifier",
             "token"

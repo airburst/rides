@@ -1,15 +1,9 @@
 import { relations } from "drizzle-orm";
-import {
-  index,
-  integer,
-  pgTable,
-  text,
-  timestamp,
-  varchar,
-} from "drizzle-orm/pg-core";
+import { index, integer, text, timestamp, varchar } from "drizzle-orm/pg-core";
+import { createTable } from "./create-table";
 import rides from "./ride";
 
-const repeatingRides = pgTable(
+const repeatingRides = createTable(
   "repeating_rides",
   {
     id: text("id")

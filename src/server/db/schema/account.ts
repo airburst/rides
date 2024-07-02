@@ -1,16 +1,10 @@
 import { relations } from "drizzle-orm";
-import {
-  index,
-  integer,
-  pgTable,
-  primaryKey,
-  text,
-  varchar,
-} from "drizzle-orm/pg-core";
+import { index, integer, primaryKey, text, varchar } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
+import { createTable } from "./create-table";
 import users from "./user";
 
-const accounts = pgTable(
+const accounts = createTable(
   "accounts",
   {
     userId: varchar("user_id", { length: 255 })

@@ -1,16 +1,11 @@
-import {
-  pgTable,
-  primaryKey,
-  text,
-  timestamp,
-  varchar,
-} from "drizzle-orm/pg-core";
+import { primaryKey, text, timestamp, varchar } from "drizzle-orm/pg-core";
 
 import { relations } from "drizzle-orm";
+import { createTable } from "./create-table";
 import rides from "./ride";
 import users from "./user";
 
-const userOnRides = pgTable(
+const userOnRides = createTable(
   "users_on_rides",
   {
     userId: varchar("user_id", { length: 255 })

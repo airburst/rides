@@ -6,3 +6,5 @@ export * from "./preferences";
 export const RIDER_LIMIT_OPTIONS: number[] = Array.from(Array(45).keys()).map(
   (x) => x + 5,
 );
+
+export const DATABASE_PREFIX = "bcc_";
