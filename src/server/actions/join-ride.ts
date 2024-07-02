@@ -1,5 +1,6 @@
 "use server";
 
+import { NOT_AUTHORISED } from "@/constants";
 import { db } from "@/server/db";
 import { userOnRides } from "@/server/db/schema";
 import { revalidatePath } from "next/cache";
@@ -10,7 +11,7 @@ export const joinRide = async (
   userId: string,
 ): Promise<{
   success: boolean;
-  error?: Error;
+  error?: string;
 }> => {
   // A user can only add themselves; a leader or admin can add other riders
   const isAuthorised = await canUseAction("LEADER", userId);
@@ -18,7 +19,7 @@ export const joinRide = async (
   if (!isAuthorised) {
     return {
       success: false,
-      error: new Error("Not authorised to use this API"),
+      error: NOT_AUTHORISED,
     };
   }
 
@@ -32,7 +33,7 @@ export const joinRide = async (
   } catch (error) {
     return {
       success: false,
-      error: new Error(`Unable to add rider to ride id ${rideId}`),
+      error: `Unable to add rider to ride id ${rideId}`,
     };
   }
 };

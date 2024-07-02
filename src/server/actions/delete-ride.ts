@@ -1,5 +1,6 @@
 "use server";
 
+import { NOT_AUTHORISED } from "@/constants";
 import { db } from "@/server/db";
 import { rides } from "@/server/db/schema";
 import { eq } from "drizzle-orm";
@@ -10,14 +11,14 @@ export const deleteRide = async (
   rideId: string,
 ): Promise<{
   success: boolean;
-  error?: Error;
+  error?: string;
 }> => {
   const isAuthorised = await canUseAction("LEADER");
 
   if (!isAuthorised) {
     return {
       success: false,
-      error: new Error("Not authorised to use this API"),
+      error: NOT_AUTHORISED,
     };
   }
 
@@ -31,7 +32,7 @@ export const deleteRide = async (
   } catch (error) {
     return {
       success: false,
-      error: new Error(`Unable to delete ride id ${rideId}`),
+      error: `Unable to delete ride id ${rideId}`,
     };
   }
 };

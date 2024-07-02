@@ -1,5 +1,6 @@
 "use server";
 
+import { NOT_AUTHORISED } from "@/constants";
 import { db } from "@/server/db";
 import { type User } from "@/types";
 import { eq } from "drizzle-orm";
@@ -15,7 +16,7 @@ export const updateUser = async (
   user: UserUpdate,
 ): Promise<{
   id: string | null;
-  error?: Error;
+  error?: string;
 }> => {
   // A user can only change their own record; an admin can change other riders
   const isAuthorised = await canUseAction("ADMIN", user.id);
@@ -23,7 +24,7 @@ export const updateUser = async (
   if (!isAuthorised) {
     return {
       id: null,
-      error: new Error("Not authorised to use this API"),
+      error: NOT_AUTHORISED,
     };
   }
 
@@ -42,7 +43,7 @@ export const updateUser = async (
   } catch (error) {
     return {
       id: null,
-      error: new Error(`Unable to update user id ${id}`),
+      error: `Unable to update user id ${id}`,
     };
   }
 };

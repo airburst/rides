@@ -1,5 +1,6 @@
 "use server";
 
+import { NOT_AUTHORISED } from "@/constants";
 import { db } from "@/server/db";
 import { lower, users } from "@/server/db/schema";
 import { type User } from "@/types";
@@ -10,7 +11,7 @@ export const getUsers = async (
   query?: string,
 ): Promise<{
   users: User[];
-  error?: Error;
+  error?: string;
 }> => {
   // Admin only
   const isAuthorised = await canUseAction("ADMIN");
@@ -19,7 +20,7 @@ export const getUsers = async (
   if (!isAuthorised) {
     return {
       users: [],
-      error: new Error("Not authorised to use this API"),
+      error: NOT_AUTHORISED,
     };
   }
 
@@ -62,7 +63,7 @@ export const getUsers = async (
   } catch (error) {
     return {
       users: [],
-      error: new Error(`Unable to fetch users`),
+      error: `Unable to fetch users`,
     };
   }
 };

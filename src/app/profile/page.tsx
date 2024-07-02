@@ -37,7 +37,7 @@ export default async function ProfilePage({ params }: { params: { id: string } }
 
   if (error ?? !user) {
     return <MainContent>
-      <div>{error?.message}</div>
+      <div>{error}</div>
     </MainContent>
   }
 

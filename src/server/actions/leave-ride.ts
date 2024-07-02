@@ -1,5 +1,6 @@
 "use server";
 
+import { NOT_AUTHORISED } from "@/constants";
 import { db } from "@/server/db";
 import { userOnRides } from "@/server/db/schema";
 import { and, eq } from "drizzle-orm";
@@ -11,7 +12,7 @@ export const leaveRide = async (
   userId: string,
 ): Promise<{
   success: boolean;
-  error?: Error;
+  error?: string;
 }> => {
   // A user can only remove themselves; a leader or admin can remove other riders
   const isAuthorised = await canUseAction("LEADER", userId);
@@ -19,7 +20,7 @@ export const leaveRide = async (
   if (!isAuthorised) {
     return {
       success: false,
-      error: new Error("Not authorised to use this API"),
+      error: NOT_AUTHORISED,
     };
   }
 
@@ -37,7 +38,7 @@ export const leaveRide = async (
   } catch (error) {
     return {
       success: false,
-      error: new Error(`Unable to remove rider from ride id ${rideId}`),
+      error: `Unable to remove rider from ride id ${rideId}`,
     };
   }
 };

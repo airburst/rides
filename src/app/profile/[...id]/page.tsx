@@ -42,7 +42,7 @@ export default async function UserPage({ params }: { params: { id: string } }) {
 
   if (error ?? !user) {
     return <MainContent>
-      <div>{error?.message}</div>
+      <div>{error}</div>
     </MainContent>
   }
 

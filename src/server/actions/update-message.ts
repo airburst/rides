@@ -1,5 +1,6 @@
 "use server";
 
+import { NOT_AUTHORISED } from "@/constants";
 import { db } from "@/server/db";
 import { userOnRides } from "@/server/db/schema";
 import { and, eq } from "drizzle-orm";
@@ -12,7 +13,7 @@ export const updateMessage = async (
   notes: string,
 ): Promise<{
   success: boolean;
-  error?: Error;
+  error?: string;
 }> => {
   // A user can only update their own record
   const isAuthorised = await canUseAction("ADMIN", userId);
@@ -20,7 +21,7 @@ export const updateMessage = async (
   if (!isAuthorised) {
     return {
       success: false,
-      error: new Error("Not authorised to use this API"),
+      error: NOT_AUTHORISED,
     };
   }
 
@@ -39,7 +40,7 @@ export const updateMessage = async (
   } catch (error) {
     return {
       success: false,
-      error: new Error(`Unable to remove rider from ride id ${rideId}`),
+      error: `Unable to update message`,
     };
   }
 };
