@@ -1,5 +1,7 @@
 import { z } from "zod";
+import { zfd } from "zod-form-data";
 
+//  User
 export const userProfileFormSchema = z.object({
   id: z.string().trim().min(3, { message: "Id is required" }),
   name: z.string().trim().min(3, { message: "Name is required" }),
@@ -16,3 +18,33 @@ export const userProfileFormSchema = z.object({
 });
 
 export type UserProfileFormSchema = z.output<typeof userProfileFormSchema>;
+
+// Ride
+export const rideFormSchema = zfd.formData({
+  id: zfd.text(z.string().optional()),
+  name: zfd.text(z.string().trim().min(3, { message: "Name is required" })),
+  rideDate: zfd.text(
+    z.string().trim().min(10, { message: "Date is required" }),
+  ),
+  time: zfd.text(z.string().trim().optional()),
+  rideGroup: zfd.text(z.string().optional()),
+  destination: zfd.text(z.string().optional()),
+  meetPoint: zfd.text(z.string().optional()),
+  notes: zfd.text(z.string().optional()),
+  distance: zfd.numeric(),
+  leader: zfd.text(z.string().optional()),
+  route: zfd.text(z.string().optional()),
+  rideLimit: zfd.numeric(),
+  // Repeating ride
+  interval: zfd.numeric(z.number().optional()),
+  freq: zfd.numeric(),
+  startDate: zfd.text(z.string().optional()), // Mandatory for repeating rides
+  endDate: zfd.text(z.string().trim().optional()),
+  winterStartTime: zfd.text(z.string().trim().optional()),
+  byweekday: zfd.numeric(z.number().optional()),
+  bysetpos: zfd.numeric(z.number().optional()),
+  bymonth: zfd.numeric(z.number().optional()),
+  bymonthday: zfd.numeric(z.number().optional()),
+});
+
+export type RideFormSchema = z.output<typeof rideFormSchema>;

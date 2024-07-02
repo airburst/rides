@@ -2,7 +2,7 @@ import { makeRepeatingRide } from "./forms";
 
 const ride = {
   name: "xxx",
-  group: "Used to be fast",
+  rideGroup: "Used to be fast",
   rideLimit: -1,
   meetPoint: "Brunel Square",
   distance: 123,
@@ -14,7 +14,7 @@ const ride = {
 
 const weeklyRide = {
   ...ride,
-  date: "2023-07-25",
+  rideDate: "2023-07-25",
   time: "08:30",
   bymonthday: 25,
   byweekday: 1,
@@ -27,7 +27,7 @@ const weeklyRide = {
 
 const monthlyByDay = {
   ...ride,
-  date: "2023-07-25",
+  rideDate: "2023-07-25",
   time: "08:30",
   byweekday: 1,
   winterStartTime: "09:30",
@@ -40,7 +40,7 @@ const monthlyByDay = {
 
 const monthlyByWeek = {
   ...ride,
-  date: "2023-07-25",
+  rideDate: "2023-07-25",
   time: "08:30",
   byweekday: 1,
   winterStartTime: "09:30",

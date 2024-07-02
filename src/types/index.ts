@@ -137,9 +137,9 @@ export type FilterQuery = {
 export type RideFormValues = {
   id?: string;
   name: string;
-  date: string;
+  rideDate: string;
   time: string;
-  group?: string;
+  rideGroup?: string;
   destination?: string;
   meetPoint?: string;
   notes?: string;

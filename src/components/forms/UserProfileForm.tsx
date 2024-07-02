@@ -3,6 +3,7 @@
 import { updateProfile } from "@/server/actions/update-profile";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from 'next/navigation';
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from 'sonner';
 import { type User } from "../../types";
@@ -35,10 +36,12 @@ export const UserProfileForm = ({
       },
       role: user?.role ?? "USER",
     },
-  })
-  const router = useRouter()
+  });
+  const router = useRouter();
+  const [isPending, setIsPending] = useState(false);
 
   const onSubmit = async (data: UserProfileFormSchema) => {
+    setIsPending(true);
     // Convert form data to FormData
     const formData = new FormData();
     formData.append("id", data.id);
@@ -56,6 +59,7 @@ export const UserProfileForm = ({
     } else {
       toast.error(result.message);
     }
+    setIsPending(false);
   }
 
   return (
@@ -172,7 +176,7 @@ export const UserProfileForm = ({
           <Button
             primary
             type="submit"
-            // loading={isPending}
+            loading={isPending}
             disabled={!isDirty}
           >
             SAVE

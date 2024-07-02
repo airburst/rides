@@ -1,52 +1,49 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
-/* eslint-disable jsx-a11y/label-has-associated-control */
-import { Switch } from "@headlessui/react";
+// import { Switch } from "@headlessui/react";
+import { addRide } from "@/server/actions/add-ride";
+import { zodResolver } from "@hookform/resolvers/zod";
 import clsx from "clsx";
-import { useState, type FormEventHandler } from "react";
-import {
-  type FieldErrorsImpl,
-  type UseFormRegister,
-  type UseFormReturn,
-} from "react-hook-form";
-import { getNow } from "../../../shared/utils";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { getNow, makeUtcDate } from "../../../shared/utils";
 import { RIDER_LIMIT_OPTIONS } from "../../constants";
-import { type Preferences, type RideFormValues } from "../../types";
+import { type Preferences, type Ride } from "../../types";
 import { Button } from "../Button";
 import { CancelButton } from "../Button/CancelButton";
-import { RepeatingRideForm } from "./RepeatingRideForm";
+import { rideFormSchema, type RideFormSchema } from "./formSchemas";
 
 const today = getNow().split("T")[0] ?? "";
 
 type RideFormProps = {
-  defaultValues: RideFormValues;
-  register: UseFormRegister<RideFormValues>;
-  errors: Partial<FieldErrorsImpl<RideFormValues>>;
-  handleSubmit: FormEventHandler<HTMLFormElement>;
-  handleSchedule?: FormEventHandler<HTMLFormElement>;
-  waiting: boolean;
-  preferences: Preferences;
-  isAdmin: boolean;
-  watch: UseFormReturn<RideFormValues>["watch"];
-  setValue: UseFormReturn<RideFormValues>["setValue"];
+  ride?: Ride;
+  isAdmin?: boolean;
   isRepeating?: boolean;
+  defaultValues: RideFormSchema;
+  preferences?: Preferences;
 };
 
 export const RideForm = ({
-  defaultValues,
-  register,
-  errors,
-  handleSubmit,
-  handleSchedule,
-  waiting,
-  preferences,
+  ride,
   isAdmin,
-  watch,
-  setValue,
-  isRepeating = false,
+  isRepeating,
+  defaultValues: defaults,
+  preferences,
 }: RideFormProps) => {
-  const isNewRide = !defaultValues.id;
-  const [repeats, setRepeats] = useState<boolean>(isRepeating);
+  const { register,
+    handleSubmit,
+    formState: { defaultValues, errors }
+  } = useForm<RideFormSchema>({
+    resolver: zodResolver(rideFormSchema),
+    defaultValues: defaults,
+  });
+  const router = useRouter();
+  const isNewRide = !defaultValues?.id;
+  const [repeats, setRepeats] = useState<boolean>(isRepeating ?? false);
+  const [isPending, setIsPending] = useState(false);
   const showRepeatingSwitch = isAdmin && (isNewRide || isRepeating);
 
   const switchClass = clsx(
@@ -59,10 +56,40 @@ export const RideForm = ({
   );
   const handleRepeatsChange = () => setRepeats(!repeats);
 
+  const onSubmit = async (data: RideFormSchema) => {
+    setIsPending(true);
+    // Convert form data to FormData
+    const rideDate = makeUtcDate(data.rideDate, data.time!)
+    const formData = new FormData();
+    // formData.append("id", data.id);
+    formData.append("name", data.name);
+    formData.append("rideDate", rideDate);
+    formData.append("distance", data.distance.toString());
+    formData.append("destination", data.destination ?? "");
+    formData.append("meetPoint", data.meetPoint ?? "");
+    formData.append("route", data.route ?? "");
+    formData.append("leader", data.leader ?? "");
+    formData.append("notes", data.notes ?? "");
+    formData.append("rideLimit", data.rideLimit.toString());
+    formData.append("freq", data.freq.toString());
+
+    const result = await addRide(formData);
+    console.log("🚀 ~ onSubmit ~ result:", result); //FIXME:
+
+    if (result.success) {
+      toast.success(result.message);
+      router.back();
+    } else {
+      toast.error(result.message);
+    }
+    setIsPending(false);
+  }
+
   return (
     <form
-      className="form-control relative grid w-full grid-cols-1 gap-4 p-2"
-      onSubmit={repeats ? handleSchedule : handleSubmit}
+      className="form-control relative grid w-full grid-cols-1 gap-4 p-2 mb-4"
+      onSubmit={handleSubmit(onSubmit)}
+    // onSubmit={repeats ? handleSchedule : handleSubmit(onSubmit)}
     >
       <div className="flex flex-col gap-4 md:gap-8">
         <label htmlFor="name" className="flex flex-col gap-1">
@@ -71,7 +98,7 @@ export const RideForm = ({
             id="name"
             type="text"
             className="input"
-            defaultValue={defaultValues.name}
+            defaultValue={defaultValues?.name}
             {...register("name", { required: true })}
           />
           {errors.name && (
@@ -84,14 +111,14 @@ export const RideForm = ({
 
       <div className="grid grid-cols-2 gap-4">
         <div className="flex flex-col gap-4 md:gap-8">
-          <label htmlFor="group" className="flex flex-col gap-1">
+          <label htmlFor="rideGroup" className="flex flex-col gap-1">
             Group name
             <input
-              id="group"
+              id="rideGroup"
               type="text"
               className="input"
-              defaultValue={defaultValues.group}
-              {...register("group")}
+              defaultValue={defaultValues?.rideGroup ?? ""}
+              {...register("rideGroup")}
             />
           </label>
         </div>
@@ -101,7 +128,7 @@ export const RideForm = ({
             <select
               id="rideLimit"
               className="input"
-              defaultValue={defaultValues.rideLimit}
+              defaultValue={defaultValues?.rideLimit}
               {...register("rideLimit")}
             >
               <option value="-1">No limit</option>
@@ -117,19 +144,19 @@ export const RideForm = ({
 
       <div className="grid grid-cols-2 gap-4">
         <div className="flex flex-col gap-4 md:gap-8">
-          <label htmlFor="date" className="flex flex-col gap-1">
+          <label htmlFor="rideDate" className="flex flex-col gap-1">
             Date *
             <input
-              id="date"
+              id="rideDate"
               type="date"
               min={today}
               className="input"
-              defaultValue={defaultValues.date}
-              {...register("date", {
+              defaultValue={defaultValues?.rideDate}
+              {...register("rideDate", {
                 required: true,
               })}
             />
-            {errors.date && (
+            {errors.rideDate && (
               <span className="font-normal text-red-500">
                 Ride date is required
               </span>
@@ -144,7 +171,7 @@ export const RideForm = ({
               id="time"
               type="time"
               className="input"
-              defaultValue={defaultValues.time}
+              defaultValue={defaultValues?.time}
               {...register("time", { required: true })}
             />
             {errors.time && (
@@ -163,7 +190,7 @@ export const RideForm = ({
             id="meetPoint"
             type="text"
             className="input"
-            defaultValue={defaultValues.meetPoint}
+            defaultValue={defaultValues?.meetPoint}
             {...register("meetPoint")}
           />
         </label>
@@ -171,12 +198,12 @@ export const RideForm = ({
 
       <div className="flex flex-col gap-4 md:gap-8">
         <label htmlFor="distance" className="flex flex-col">
-          Distance ({preferences.units}) *
+          Distance ({preferences?.units ?? "km"}) *
           <input
             id="distance"
             type="number"
             className="input"
-            defaultValue={defaultValues.distance}
+            defaultValue={defaultValues?.distance}
             {...register("distance", {
               required: {
                 value: true,
@@ -203,7 +230,7 @@ export const RideForm = ({
             id="destination"
             type="text"
             className="input"
-            defaultValue={defaultValues.destination}
+            defaultValue={defaultValues?.destination}
             {...register("destination")}
           />
         </label>
@@ -216,7 +243,7 @@ export const RideForm = ({
             id="route"
             type="text"
             className="input"
-            defaultValue={defaultValues.route}
+            defaultValue={defaultValues?.route}
             {...register("route")}
           />
         </label>
@@ -229,7 +256,7 @@ export const RideForm = ({
             id="leader"
             type="text"
             className="input"
-            defaultValue={defaultValues.leader}
+            defaultValue={defaultValues?.leader}
             {...register("leader")}
           />
         </label>
@@ -242,13 +269,13 @@ export const RideForm = ({
             id="notes"
             className="textarea"
             rows={4}
-            defaultValue={defaultValues.notes}
+            defaultValue={defaultValues?.notes}
             {...register("notes")}
           />
         </label>
       </div>
 
-      {showRepeatingSwitch && (
+      {/* {showRepeatingSwitch && (
         <>
           <div className="flex flex-row">
             <div className="pr-8">This ride repeats</div>
@@ -271,10 +298,10 @@ export const RideForm = ({
             isRepeating={isRepeating}
           />
         </>
-      )}
+      )} */}
 
       <div className="grid w-full grid-cols-2 gap-4 md:gap-8">
-        <Button primary loading={waiting} type="submit">
+        <Button primary loading={isPending} type="submit">
           <div>Save</div>
         </Button>
         <CancelButton />

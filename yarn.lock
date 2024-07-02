@@ -2283,103 +2283,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@typeschema/core@npm:0.13.2":
-  version: 0.13.2
-  resolution: "@typeschema/core@npm:0.13.2"
-  peerDependencies:
-    "@types/json-schema": ^7.0.15
-  peerDependenciesMeta:
-    "@types/json-schema":
-      optional: true
-  checksum: 10/80c4c972314b414c95d7a6b2f3e96efdf9b437f97c7d5c686c94709103c6bb45367a0009aaf741dbe1ab5f80915afa6fa79b03b566583811c785a11aabd259f7
-  languageName: node
-  linkType: hard
-
-"@typeschema/main@npm:^0.13.10":
-  version: 0.13.10
-  resolution: "@typeschema/main@npm:0.13.10"
-  dependencies:
-    "@typeschema/core": "npm:0.13.2"
-  peerDependencies:
-    "@typeschema/arktype": 0.13.2
-    "@typeschema/class-validator": 0.1.2
-    "@typeschema/deepkit": 0.13.4
-    "@typeschema/effect": 0.13.4
-    "@typeschema/fastest-validator": 0.1.0
-    "@typeschema/function": 0.13.2
-    "@typeschema/io-ts": 0.13.3
-    "@typeschema/joi": 0.13.3
-    "@typeschema/json": 0.13.3
-    "@typeschema/ow": 0.13.3
-    "@typeschema/runtypes": 0.13.2
-    "@typeschema/superstruct": 0.13.2
-    "@typeschema/suretype": 0.1.0
-    "@typeschema/typebox": 0.13.4
-    "@typeschema/valibot": 0.13.5
-    "@typeschema/valita": 0.1.0
-    "@typeschema/vine": 0.1.0
-    "@typeschema/yup": 0.13.3
-    "@typeschema/zod": 0.13.3
-  peerDependenciesMeta:
-    "@typeschema/arktype":
-      optional: true
-    "@typeschema/class-validator":
-      optional: true
-    "@typeschema/deepkit":
-      optional: true
-    "@typeschema/effect":
-      optional: true
-    "@typeschema/fastest-validator":
-      optional: true
-    "@typeschema/function":
-      optional: true
-    "@typeschema/io-ts":
-      optional: true
-    "@typeschema/joi":
-      optional: true
-    "@typeschema/json":
-      optional: true
-    "@typeschema/ow":
-      optional: true
-    "@typeschema/runtypes":
-      optional: true
-    "@typeschema/superstruct":
-      optional: true
-    "@typeschema/suretype":
-      optional: true
-    "@typeschema/typebox":
-      optional: true
-    "@typeschema/valibot":
-      optional: true
-    "@typeschema/valita":
-      optional: true
-    "@typeschema/vine":
-      optional: true
-    "@typeschema/yup":
-      optional: true
-    "@typeschema/zod":
-      optional: true
-  checksum: 10/bc78af66ccc2cef4135ce19975b44b4d0755da55183ccee4345560f442cc6e3835d914338a90716f3415ef3d366da8b52d15fbbd0c48c82ff6b7f9810e4d87a7
-  languageName: node
-  linkType: hard
-
-"@typeschema/zod@npm:^0.13.3":
-  version: 0.13.3
-  resolution: "@typeschema/zod@npm:0.13.3"
-  dependencies:
-    "@typeschema/core": "npm:0.13.2"
-  peerDependencies:
-    zod: ^3.22.4
-    zod-to-json-schema: ^3.22.4
-  peerDependenciesMeta:
-    zod:
-      optional: true
-    zod-to-json-schema:
-      optional: true
-  checksum: 10/47d875bfde7afde4ef5e4a1a4d5dd4a6fdbf328eb7fb9dbdff9b159b26906d90dad45b541e991e70ed3c73276d7d625c9ebabcedb0043ca10f5ce3fafc117f8f
-  languageName: node
-  linkType: hard
-
 "@typescript-eslint/eslint-plugin@npm:^7.12.0":
   version: 7.12.0
   resolution: "@typescript-eslint/eslint-plugin@npm:7.12.0"
@@ -3088,7 +2991,6 @@ __metadata:
     lint-staged: "npm:^15.2.5"
     next: "npm:^14.2.3"
     next-auth: "npm:^4.24.7"
-    next-safe-action: "npm:^7.1.3"
     postcss: "npm:^8.4.38"
     postgres: "npm:^3.4.4"
     prettier: "npm:3.3.1"
@@ -3106,6 +3008,7 @@ __metadata:
     typescript: "npm:^5.4.5"
     use-onclickoutside: "npm:^0.4.1"
     zod: "npm:^3.23.8"
+    zod-form-data: "npm:^2.0.2"
   languageName: unknown
   linkType: soft
 
@@ -7143,24 +7046,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"next-safe-action@npm:^7.1.3":
-  version: 7.1.3
-  resolution: "next-safe-action@npm:7.1.3"
-  dependencies:
-    "@typeschema/main": "npm:^0.13.10"
-    "@typeschema/zod": "npm:^0.13.3"
-  peerDependencies:
-    next: ">= 14.0.0"
-    react: ">= 18.2.0"
-    react-dom: ">= 18.2.0"
-    zod: ">= 3.0.0"
-  peerDependenciesMeta:
-    zod:
-      optional: true
-  checksum: 10/22b101401f0b4c5ae2277aa010d541e2581ed45067a931dd3cf42e5b854038fbf84c65180b28f428d6b68f5983fdc52ae1bc72da61a7f19c438484d2d2f9bd74
-  languageName: node
-  linkType: hard
-
 "next@npm:^14.2.3":
   version: 14.2.3
   resolution: "next@npm:14.2.3"
@@ -9690,6 +9575,15 @@ __metadata:
   version: 0.1.0
   resolution: "yocto-queue@npm:0.1.0"
   checksum: 10/f77b3d8d00310def622123df93d4ee654fc6a0096182af8bd60679ddcdfb3474c56c6c7190817c84a2785648cdee9d721c0154eb45698c62176c322fb46fc700
+  languageName: node
+  linkType: hard
+
+"zod-form-data@npm:^2.0.2":
+  version: 2.0.2
+  resolution: "zod-form-data@npm:2.0.2"
+  peerDependencies:
+    zod: ">= 3.11.0"
+  checksum: 10/35acc6fac24f58ca67bc59fb0b372ec2b9efbf463b28752785694c914501c86ea13315f589e0abb5503f1be1b45e1780bdf8da9af317aa898f1c048d04314064
   languageName: node
   linkType: hard
 

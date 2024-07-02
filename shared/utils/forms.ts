@@ -13,9 +13,9 @@ export const flattenArrayNumber = (
 export const makeRide = (formData: RideFormValues) => {
   const {
     name,
-    date,
+    rideDate,
     time,
-    group,
+    rideGroup,
     meetPoint,
     destination,
     distance,
@@ -23,20 +23,22 @@ export const makeRide = (formData: RideFormValues) => {
     route,
     notes,
     rideLimit,
+    freq,
   } = formData;
-  const utcDate = makeUtcDate(date, time);
+  const utcDate = makeUtcDate(rideDate, time);
 
   return {
     name,
-    date: utcDate,
-    group,
+    rideDate: utcDate,
+    rideGroup,
     destination,
     distance: +distance,
     leader,
     route,
     meetPoint,
     notes,
-    rideLimit,
+    rideLimit: +(rideLimit ?? -1),
+    freq: +(freq ?? 2),
   };
 };
 
@@ -45,7 +47,7 @@ export const makeRide = (formData: RideFormValues) => {
 export const makeRepeatingRide = (formData: RideFormValues): RepeatingRide => {
   const {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    date, // Remove from object
+    rideDate, // Remove from object
     time,
     distance: distanceString,
     startDate,
