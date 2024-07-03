@@ -14,12 +14,16 @@ export const getScalarValue = (
   return Array.isArray(value) ? Number(value[0]) : value || null;
 };
 
-export const convertObjectToFormData = (
-  data: Record<string, string | number | { units: string } | undefined>,
-): FormData => {
+type FormDataType = Record<
+  string,
+  string | number | { units: string } | undefined
+>;
+
+export const convertObjectToFormData = (data: FormDataType): FormData => {
   const formData = new FormData();
+
   Object.entries(data).forEach(([key, value]) => {
-    if (!value) {
+    if (value === undefined || value === null) {
       formData.append(key, "");
       return;
     }
@@ -37,4 +41,16 @@ export const convertObjectToFormData = (
   });
 
   return formData;
+};
+
+export const cleanUndefinedKeys = (data: FormDataType): FormDataType => {
+  const cleaned = { ...data };
+
+  Object.keys(cleaned).forEach((key) => {
+    if (cleaned[key] === undefined) {
+      cleaned[key] = "";
+    }
+  });
+
+  return cleaned;
 };
