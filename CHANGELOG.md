@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Removed
 
+- Removed filter option for "weeks ahead"; all rides are shown in list by default now
 - Almost all APIs and hooks, which are no longer needed for data fetching
 - Without APIs, there are dramatically fewer lambdas in the production infrastructure
 - Removed "speed" from ride table schema

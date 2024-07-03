@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */ // FIXME:
 "use client";
 
 // import { Switch } from "@headlessui/react";
@@ -58,7 +58,6 @@ export const RideForm = ({
 
   const onSubmit = async (data: RideFormSchema) => {
     setIsPending(true);
-    // Convert form data to FormData
     const rideDate = makeUtcDate(data.rideDate, data.time!)
     const formData = new FormData();
     // formData.append("id", data.id);
@@ -74,15 +73,14 @@ export const RideForm = ({
     formData.append("freq", data.freq.toString());
 
     const result = await addRide(formData);
-    console.log("🚀 ~ onSubmit ~ result:", result); //FIXME:
 
+    setIsPending(false);
     if (result.success) {
       toast.success(result.message);
       router.back();
     } else {
       toast.error(result.message);
     }
-    setIsPending(false);
   }
 
   return (
@@ -97,13 +95,12 @@ export const RideForm = ({
           <input
             id="name"
             type="text"
-            className="input"
-            defaultValue={defaultValues?.name}
-            {...register("name", { required: true })}
+            className="input input-bordered"
+            {...register("name")}
           />
           {errors.name && (
             <span className="font-normal text-red-500">
-              Ride name is required
+              {errors.name?.message}
             </span>
           )}
         </label>
@@ -116,8 +113,7 @@ export const RideForm = ({
             <input
               id="rideGroup"
               type="text"
-              className="input"
-              defaultValue={defaultValues?.rideGroup ?? ""}
+              className="input input-bordered"
               {...register("rideGroup")}
             />
           </label>
@@ -127,8 +123,7 @@ export const RideForm = ({
             Rider limit
             <select
               id="rideLimit"
-              className="input"
-              defaultValue={defaultValues?.rideLimit}
+              className="input input-bordered"
               {...register("rideLimit")}
             >
               <option value="-1">No limit</option>
@@ -150,15 +145,12 @@ export const RideForm = ({
               id="rideDate"
               type="date"
               min={today}
-              className="input"
-              defaultValue={defaultValues?.rideDate}
-              {...register("rideDate", {
-                required: true,
-              })}
+              className="input input-bordered"
+              {...register("rideDate")}
             />
             {errors.rideDate && (
               <span className="font-normal text-red-500">
-                Ride date is required
+                {errors.rideDate?.message}
               </span>
             )}
           </label>
@@ -170,13 +162,12 @@ export const RideForm = ({
             <input
               id="time"
               type="time"
-              className="input"
-              defaultValue={defaultValues?.time}
-              {...register("time", { required: true })}
+              className="input input-bordered"
+              {...register("time")}
             />
             {errors.time && (
               <span className="font-normal text-red-500">
-                Start time is required
+                {errors.time?.message}
               </span>
             )}
           </label>
@@ -189,8 +180,7 @@ export const RideForm = ({
           <input
             id="meetPoint"
             type="text"
-            className="input"
-            defaultValue={defaultValues?.meetPoint}
+            className="input input-bordered"
             {...register("meetPoint")}
           />
         </label>
@@ -202,18 +192,8 @@ export const RideForm = ({
           <input
             id="distance"
             type="number"
-            className="input"
-            defaultValue={defaultValues?.distance}
-            {...register("distance", {
-              required: {
-                value: true,
-                message: "You must set a distance",
-              },
-              min: {
-                value: 2,
-                message: "Distance must be greater than 1km",
-              },
-            })}
+            className="input input-bordered"
+            {...register("distance")}
           />
           {errors.distance && (
             <span className="font-normal text-red-500">
@@ -229,8 +209,7 @@ export const RideForm = ({
           <input
             id="destination"
             type="text"
-            className="input"
-            defaultValue={defaultValues?.destination}
+            className="input input-bordered"
             {...register("destination")}
           />
         </label>
@@ -242,8 +221,7 @@ export const RideForm = ({
           <input
             id="route"
             type="text"
-            className="input"
-            defaultValue={defaultValues?.route}
+            className="input input-bordered"
             {...register("route")}
           />
         </label>
@@ -255,8 +233,7 @@ export const RideForm = ({
           <input
             id="leader"
             type="text"
-            className="input"
-            defaultValue={defaultValues?.leader}
+            className="input input-bordered"
             {...register("leader")}
           />
         </label>
@@ -267,9 +244,8 @@ export const RideForm = ({
           Notes
           <textarea
             id="notes"
-            className="textarea"
+            className="textarea input-bordered"
             rows={4}
-            defaultValue={defaultValues?.notes}
             {...register("notes")}
           />
         </label>
@@ -302,7 +278,7 @@ export const RideForm = ({
 
       <div className="grid w-full grid-cols-2 gap-4 md:gap-8">
         <Button primary loading={isPending} type="submit">
-          <div>Save</div>
+          <div>SAVE</div>
         </Button>
         <CancelButton />
       </div>
