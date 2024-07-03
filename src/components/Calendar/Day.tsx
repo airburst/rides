@@ -53,7 +53,7 @@ export const Day = ({ day, date, rides = [], classes, past }: Props) => {
 export const OutsideDay = (props: Props) => (
   <Day
     {...props}
-    classes="lg:text-md h-full w-full justify-self-center bg-base-200 p-1 md:p-2 mb-0 text-sm cursor-pointer text-neutral-700"
+    classes="flex flex-col lg:text-md h-full w-full justify-center bg-base-200 p-1 md:p-2 mb-0 text-sm cursor-pointer text-neutral-700"
     past
   />
 );

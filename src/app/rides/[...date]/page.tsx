@@ -32,7 +32,7 @@ export default async function RidesOnDate({ params }: { params: { date: string }
           <div className="m-2 sm:mx-0 flex h-10 flex-row justify-between md:justify-start gap-4">
             <BackButton />
             {isLeader && isInFuture && (
-              <Link href={`/ride/new?date=${date}`}>
+              <Link href={`/ride/new/${date}`}>
                 <Button accent>
                   <PlusIcon className="fill-white" />
                   <span>ADD RIDE</span>
