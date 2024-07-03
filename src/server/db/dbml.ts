@@ -6,5 +6,4 @@ const relational = true;
 
 pgGenerate({ schema, out, relational });
 
-// Now view generated DBML file at
-// https://dbdiagram.io/d
+console.log("Now view generated DBML file at https://dbdiagram.io/d\n");
