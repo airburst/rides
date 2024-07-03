@@ -35,6 +35,7 @@ export const RideForm = ({
   preferences,
 }: RideFormProps) => {
   const { register,
+    setValue,
     handleSubmit,
     formState: { defaultValues, errors }
   } = useForm<RideFormSchema>({
@@ -56,6 +57,10 @@ export const RideForm = ({
     repeats ? "translate-x-6" : "translate-x-1"
   );
   const handleRepeatsChange = () => setRepeats(!repeats);
+
+  const handleNotesChange = (text: string) => {
+    setValue("notes", text);
+  }
 
   const onSubmit = async (data: RideFormSchema) => {
     setIsPending(true);
@@ -243,13 +248,14 @@ export const RideForm = ({
       <div className="flex flex-col gap-4 md:gap-8">
         <label htmlFor="notes" className="flex flex-col">
           Notes
-          <Editor />
-          {/* <textarea
+          <Editor onChange={handleNotesChange} />
+          <textarea
             id="notes"
             className="textarea input-bordered"
             rows={4}
+            disabled
             {...register("notes")}
-          /> */}
+          />
         </label>
       </div>
 

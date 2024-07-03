@@ -1,5 +1,6 @@
-import { makeClickableUrl } from "../../../shared/utils";
+import { makeClickableUrl } from "@utils/makeClickableUrl";
 import { type Ride } from "../../types";
+import { Viewer } from "../Markdown/Viewer";
 import { CancelledBanner } from "./Cancelled";
 import { Messages } from "./Messages";
 import { Row } from "./Row";
@@ -27,7 +28,7 @@ export const RideInfo = ({ ride }: Props) => {
     .map(({ user, notes }) => ({
       name: user.name,
       image: user.image,
-      rideNotes: notes,
+      rideNotes: makeClickableUrl(notes ?? ""),
     }));
 
   return (
@@ -88,18 +89,7 @@ export const RideInfo = ({ ride }: Props) => {
       {cancelled && (<CancelledBanner />)}
 
       {!cancelled && notes && (
-        <div className="flex w-full flex-col gap-2 rounded bg-white py-2 shadow-md">
-          <div className="px-2 text-xl font-bold tracking-wide text-neutral-700">
-            Notes
-          </div>
-          <Row>
-            <div
-              className="col-span-2 whitespace-pre-line"
-              // eslint-disable-next-line react/no-danger
-              dangerouslySetInnerHTML={{ __html: makeClickableUrl(notes) }}
-            />
-          </Row>
-        </div>
+        <Viewer markdown={notes} title="Notes" />
       )}
 
       {!cancelled && <Messages riderNotes={riderNotes} />}
