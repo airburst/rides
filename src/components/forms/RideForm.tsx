@@ -62,7 +62,6 @@ export const RideForm = ({
   }
 
   const onSubmit = async (data: RideFormSchema) => {
-    console.log("🚀 ~ onSubmit ~ data:", data)
     setIsPending(true);
     const rideDate = makeUtcDate(data.rideDate, data.time!)
     const formData = new FormData();
