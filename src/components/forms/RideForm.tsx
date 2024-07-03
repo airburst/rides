@@ -3,6 +3,7 @@
 
 // import { Switch } from "@headlessui/react";
 import { addRide } from "@/server/actions/add-ride";
+import { updateRide } from "@/server/actions/update-ride";
 import { zodResolver } from "@hookform/resolvers/zod";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
@@ -11,7 +12,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { getNow, makeUtcDate } from "../../../shared/utils";
 import { RIDER_LIMIT_OPTIONS } from "../../constants";
-import { type Preferences, type Ride } from "../../types";
+import { type Preferences } from "../../types";
 import { Button } from "../Button";
 import { CancelButton } from "../Button/CancelButton";
 import { Editor } from "../Markdown/Editor";
@@ -20,7 +21,6 @@ import { rideFormSchema, type RideFormSchema } from "./formSchemas";
 const today = getNow().split("T")[0] ?? "";
 
 type RideFormProps = {
-  ride?: Ride;
   isAdmin?: boolean;
   isRepeating?: boolean;
   defaultValues: RideFormSchema;
@@ -28,7 +28,6 @@ type RideFormProps = {
 };
 
 export const RideForm = ({
-  ride,
   isAdmin,
   isRepeating,
   defaultValues: defaults,
@@ -63,10 +62,11 @@ export const RideForm = ({
   }
 
   const onSubmit = async (data: RideFormSchema) => {
+    console.log("🚀 ~ onSubmit ~ data:", data)
     setIsPending(true);
     const rideDate = makeUtcDate(data.rideDate, data.time!)
     const formData = new FormData();
-    // formData.append("id", data.id);
+    formData.append("id", defaults.id!);
     formData.append("name", data.name);
     formData.append("rideDate", rideDate);
     formData.append("distance", data.distance.toString());
@@ -78,7 +78,12 @@ export const RideForm = ({
     formData.append("rideLimit", data.rideLimit.toString());
     formData.append("freq", data.freq.toString());
 
-    const result = await addRide(formData);
+    let result;
+    if (data.id) {
+      result = await updateRide(formData);
+    } else {
+      result = await addRide(formData);
+    }
 
     setIsPending(false);
     if (result.success) {
@@ -248,12 +253,11 @@ export const RideForm = ({
       <div className="flex flex-col gap-4 md:gap-8">
         <label htmlFor="notes" className="flex flex-col">
           Notes
-          <Editor onChange={handleNotesChange} />
-          <textarea
+          <Editor initialValue={defaultValues?.notes} onChange={handleNotesChange} />
+          <input
             id="notes"
+            type="hidden"
             className="textarea input-bordered"
-            rows={4}
-            disabled
             {...register("notes")}
           />
         </label>

@@ -52,7 +52,7 @@ export const RideDetails = ({ ride, user, role }: Props) => {
         <div>{day}</div>
       </Heading>
 
-      <RideInfo ride={ride} />
+      <RideInfo ride={ride} user={user} />
 
       {cancelled ? (
         <div className="flex mb-16 flex-row justify-between md:justify-start md:gap-4 px-2 pt-2 sm:px-0">

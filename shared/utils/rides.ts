@@ -74,17 +74,21 @@ export const convertToKms = (miles: number): number =>
 export const convertDistance = (
   distance: number | null | string,
   units: string | undefined,
+): number => {
+  let d = distance ?? 0;
+
+  if (typeof d === "string") {
+    d = parseFloat(d ?? 0);
+  }
+  return units !== DEFAULT_PREFERENCES.units ? convertToMiles(d ?? 0) : d;
+};
+
+export const formatDistance = (
+  distance: number | string,
+  units: string | undefined,
 ): string => {
-  if (!distance) {
-    return "Not set";
-  }
-  if (typeof distance === "string") {
-    distance = parseFloat(distance);
-  }
-  if (units !== DEFAULT_PREFERENCES.units) {
-    return `${convertToMiles(distance || 0)} ${units}`;
-  }
-  return `${distance} ${units}`;
+  const d = convertDistance(distance, units);
+  return `${d} ${units}`;
 };
 
 export const formatRideData = (
@@ -99,7 +103,7 @@ export const formatRideData = (
 
   return {
     ...rest,
-    rideDate: new Date(rideDate).toISOString(),
+    rideDate: new Date(rideDate).toISOString().split("T")[0],
     day,
     time,
     distance: convertDistance(distance ?? 0, units),

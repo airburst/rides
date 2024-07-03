@@ -13,14 +13,15 @@ export const metadata: Metadata = {
   description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} User Profile Page`,
 }
 
-export default async function NewRidePage() {
+export default async function NewRidePageWithDate({ params }: { params: { date?: string } }) {
   const session = await getServerAuthSession();
   const user = session?.user;
   const isAdmin = await canUseAction("ADMIN");
+  const dateString = params.date ?? "";
 
   const defaultValues = {
     name: "",
-    rideDate: "",
+    rideDate: dateString,
     time: "08:30",
     rideGroup: "",
     destination: "",

@@ -1,5 +1,6 @@
 import { makeClickableUrl } from "@utils/makeClickableUrl";
-import { type Ride } from "../../types";
+import { formatDistance } from "@utils/rides";
+import { type Ride, type User } from "../../types";
 import { Viewer } from "../Markdown/Viewer";
 import { CancelledBanner } from "./Cancelled";
 import { Messages } from "./Messages";
@@ -7,9 +8,10 @@ import { Row } from "./Row";
 
 type Props = {
   ride: Ride;
+  user?: User;
 };
 
-export const RideInfo = ({ ride }: Props) => {
+export const RideInfo = ({ ride, user }: Props) => {
   const {
     name,
     rideGroup,
@@ -23,6 +25,8 @@ export const RideInfo = ({ ride }: Props) => {
     cancelled,
     users,
   } = ride;
+
+  const formattedDistance = formatDistance(distance ?? 0, user?.preferences?.units ?? "km");
 
   const riderNotes = users?.filter(({ notes }) => notes)
     .map(({ user, notes }) => ({
@@ -60,12 +64,10 @@ export const RideInfo = ({ ride }: Props) => {
             <div className="min-w-0">{destination}</div>
           </Row>
         )}
-        {distance && (
-          <Row>
-            <div>Distance</div>
-            <div>{distance}</div>
-          </Row>
-        )}
+        <Row>
+          <div>Distance</div>
+          <div>{formattedDistance}</div>
+        </Row>
         {leader && (
           <Row>
             <div>Leader</div>

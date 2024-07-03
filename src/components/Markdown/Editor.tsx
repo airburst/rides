@@ -1,5 +1,5 @@
 "use client";
-import MarkdownIt from "markdown-it";
+import markdownIt from "markdown-it";
 import dynamic from "next/dynamic";
 import "quill/dist/quill.snow.css";
 import { useMemo, useState } from "react";
@@ -28,10 +28,11 @@ const formats = [
 ]
 
 // Configure markdown
-const md = new MarkdownIt();
-
-md.set({ html: true });
-
+const md = new markdownIt({
+  html: true,
+  linkify: true,
+  typographer: true
+});
 const td = new Turndown();
 
 // Add custom style rules
@@ -49,11 +50,13 @@ td.addRule("strikethrough", {
 });
 
 type EditorProps = {
+  initialValue?: string;
   onChange?: (value: string) => void;
 }
 
-export const Editor = ({ onChange }: EditorProps) => {
-  const [value, setValue] = useState("");
+export const Editor = ({ initialValue = "", onChange }: EditorProps) => {
+  const html = md.render(initialValue);
+  const [value, setValue] = useState(html);
   const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
 
   const handleChange = (html: string) => {

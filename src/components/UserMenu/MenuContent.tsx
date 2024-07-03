@@ -72,7 +72,7 @@ export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout
         {isLeader && rideId && (
           <MenuEntry
             label="Copy Ride"
-            href={`/ride/${flattenQuery(rideId)}/copy`}
+            href={`/ride/copy/${flattenQuery(rideId)}`}
             onClick={closeMenu}
           >
             <CopyIcon className="fill-white" />
@@ -83,7 +83,7 @@ export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout
           <>
             <MenuEntry
               label="Edit Ride"
-              href={`/ride/${flattenQuery(rideId)}/edit`}
+              href={`/ride/edit/${flattenQuery(rideId)}`}
               onClick={closeMenu}
             >
               <EditIcon className="fill-white" />
