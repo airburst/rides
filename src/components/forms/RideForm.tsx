@@ -14,6 +14,7 @@ import { RIDER_LIMIT_OPTIONS } from "../../constants";
 import { type Preferences, type Ride } from "../../types";
 import { Button } from "../Button";
 import { CancelButton } from "../Button/CancelButton";
+import { Editor } from "../Markdown/Editor";
 import { rideFormSchema, type RideFormSchema } from "./formSchemas";
 
 const today = getNow().split("T")[0] ?? "";
@@ -242,12 +243,13 @@ export const RideForm = ({
       <div className="flex flex-col gap-4 md:gap-8">
         <label htmlFor="notes" className="flex flex-col">
           Notes
-          <textarea
+          <Editor />
+          {/* <textarea
             id="notes"
             className="textarea input-bordered"
             rows={4}
             {...register("notes")}
-          />
+          /> */}
         </label>
       </div>
 

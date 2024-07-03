@@ -54,3 +54,34 @@ svg {
 .alert {
   @apply rounded;
 }
+
+/* Markdown editor overrides */
+.ql-container {
+  border-bottom-left-radius: 0.5em;
+  border-bottom-right-radius: 0.5em;
+  background: #fefcfc;
+}
+
+.ql-snow.ql-toolbar {
+  display: flex;
+  /* flex-direction: column; */
+  background: #eaecec;
+  border-top-left-radius: 0.5em;
+  border-top-right-radius: 0.5em;
+}
+
+.ql-picker,
+.ql-snow .ql-picker-label {
+  display: flex !important;
+  align-items: center;
+}
+
+/* Bubble Theme */
+.ql-bubble .ql-editor {
+  border: 1px solid #ccc;
+  border-radius: 0.5em;
+}
+
+.ql-editor {
+  min-height: 18em;
+}
