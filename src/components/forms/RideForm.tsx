@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { getNow, makeUtcDate } from "../../../shared/utils";
+import { convertObjectToFormData, getNow, makeUtcDate } from "../../../shared/utils";
 import { RIDER_LIMIT_OPTIONS } from "../../constants";
 import { type Preferences } from "../../types";
 import { Button } from "../Button";
@@ -64,18 +64,7 @@ export const RideForm = ({
   const onSubmit = async (data: RideFormSchema) => {
     setIsPending(true);
     const rideDate = makeUtcDate(data.rideDate, data.time!)
-    const formData = new FormData();
-    formData.append("id", defaults.id!);
-    formData.append("name", data.name);
-    formData.append("rideDate", rideDate);
-    formData.append("distance", data.distance.toString());
-    formData.append("destination", data.destination ?? "");
-    formData.append("meetPoint", data.meetPoint ?? "");
-    formData.append("route", data.route ?? "");
-    formData.append("leader", data.leader ?? "");
-    formData.append("notes", data.notes ?? "");
-    formData.append("rideLimit", data.rideLimit.toString());
-    formData.append("freq", data.freq.toString());
+    const formData = convertObjectToFormData({ ...data, rideDate });
 
     let result;
     if (data.id) {

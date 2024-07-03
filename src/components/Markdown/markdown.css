@@ -1,3 +1,8 @@
+:root {
+  --markdown-line-height: 1.6rem;
+  --markdown-bottom-margin: 0.8rem;
+}
+
 #ride-notes {
   a {
     color: #24376e;
@@ -5,15 +10,15 @@
   }
 
   p {
-    line-height: 1.6rem;
-    margin-bottom: 0.4rem;
+    line-height: var(--markdown-line-height);
+    margin-bottom: var(--markdown-bottom-margin);
   }
 
   blockquote {
     border-left: 0.25rem solid #e5e5e5;
     background-color: #f5f5f5;
     padding: 0.5rem 1rem;
-    margin-bottom: 0.4rem;
+    margin-bottom: var(--markdown-bottom-margin);
 
     p {
       margin-bottom: 0;
@@ -23,12 +28,12 @@
   ul {
     list-style-type: disc;
     padding-left: 1.4rem;
-    margin-bottom: 0.4rem;
+    margin-bottom: var(--markdown-bottom-margin);
   }
 
   ol {
     list-style-type: decimal;
     padding-left: 1.4rem;
-    margin-bottom: 0.4rem;
+    margin-bottom: var(--markdown-bottom-margin);
   }
 }

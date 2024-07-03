@@ -2,6 +2,7 @@
 
 import { updateProfile } from "@/server/actions/update-profile";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { convertObjectToFormData } from "@utils/general";
 import { useRouter } from 'next/navigation';
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -42,15 +43,7 @@ export const UserProfileForm = ({
 
   const onSubmit = async (data: UserProfileFormSchema) => {
     setIsPending(true);
-    // Convert form data to FormData
-    const formData = new FormData();
-    formData.append("id", data.id);
-    formData.append("name", data.name);
-    formData.append("mobile", data.mobile);
-    formData.append("emergency", data.emergency);
-    formData.append("email", data.email);
-    formData.append("preferences", JSON.stringify(data.preferences));
-    formData.append("role", data.role);
+    const formData = convertObjectToFormData(data);
     const result = await updateProfile(formData);
 
     if (result.success) {

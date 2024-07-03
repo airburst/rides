@@ -84,5 +84,5 @@ svg {
 
 .ql-editor ol,
 .ql-editor ul {
-  padding-left: 0;
+  padding-left: 0 !important;
 }
