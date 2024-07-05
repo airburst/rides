@@ -28,3 +28,22 @@ export const RidesList = async ({ date }: Props) => {
     <FilteredRides rides={rides} user={user} />
   );
 }
+
+
+// TODO: Investigate infinite scroll
+/*
+import InfiniteScroll from "react-infinite-scroll-component";
+
+<InfiniteScroll
+  dataLength={this.state.items.length}
+  next={this.fetchMoreData}
+  hasMore={true}
+  loader={<h4>Loading...</h4>}
+>
+  {this.state.items.map((i, index) => (
+    <div style={style} key={index}>
+      div - #{index}
+    </div>
+  ))}
+</InfiniteScroll>
+*/

@@ -1,4 +1,5 @@
 "use client";
+import { formatDistance } from "@utils/rides";
 import clsx from "clsx";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -15,9 +16,10 @@ type Props = {
 export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
   const { id, name, time, rideGroup, destination, distance, rideLimit, users } =
     ride;
+  const convertedDistance = formatDistance(distance ?? 0, user?.preferences?.units);
   const details = destination
-    ? `${destination} - ${distance ?? ""}`
-    : `${distance ?? ""}`;
+    ? `${destination} - ${convertedDistance}`
+    : `${convertedDistance}`;
   const router = useRouter();
 
   const onPress = () => router.push(`/ride/${id}`);

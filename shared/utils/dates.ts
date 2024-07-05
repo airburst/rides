@@ -4,12 +4,10 @@ import utc from "dayjs/plugin/utc.js";
 
 dayjs.extend(utc);
 
-// Current local time
-export const getNow = () => {
-  const delta = dayjs().utcOffset();
+const delta = dayjs().utcOffset();
 
-  return dayjs().utc().add(delta, "minutes").toISOString();
-};
+// Current local time
+export const getNow = () => dayjs().utc().add(delta, "minutes").toISOString();
 
 // Determine whether a ride can be joined yet
 // Allow join and leave up to 12 hours after ride starts
@@ -21,8 +19,6 @@ export const isJoinable = (date: string) => {
 };
 
 export const getDateFromString = (dateString: string, end?: boolean) => {
-  const delta = dayjs().utcOffset();
-
   return end
     ? dayjs(dateString)
         .utc()
@@ -68,7 +64,6 @@ export const getQueryDateRange = ({
   end?: string;
 }): { start: string; end: string } => {
   // Show all rides until end of day
-  const delta = dayjs().utcOffset();
   const now = dayjs()
     .utc()
     .set("hour", delta / 60)
@@ -95,10 +90,10 @@ export const getQueryDateRange = ({
 export const isSaturday = (date: string) => dayjs(date).day() === 6;
 
 export const formatDate = (date: string) =>
-  dayjs(date).utc().format("dddd DD MMMM");
+  dayjs(date).utc().add(delta, "minutes").format("dddd DD MMMM");
 
 export const formatCalendarDate = (date: string) =>
-  dayjs(date).utc().format("MMMM YYYY");
+  dayjs(date).utc().add(delta, "minutes").format("MMMM YYYY");
 
 export const getDay = (date?: string): number => +(dayjs(date).date() || 1);
 
@@ -107,10 +102,14 @@ export const formatTime = (date: string) => dayjs(date).utc().format("HH:mm");
 export const formatFormDate = (date: string = getNow()) =>
   dayjs(date).utc().format("YYYY-MM-DD");
 
-export const getRideDateAndTime = (date: string) => ({
-  day: formatDate(date),
-  time: formatTime(date),
-});
+export const getRideDateAndTime = (date: string) => {
+  const d = dayjs(date).utc().add(delta, "minutes").toISOString();
+
+  return {
+    day: formatDate(d),
+    time: formatTime(d),
+  };
+};
 
 // Formatted for form inputs:
 // date = "yyyy-mm-dd" and time = "hh:mm"

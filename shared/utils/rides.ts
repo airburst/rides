@@ -85,7 +85,7 @@ export const convertDistance = (
 
 export const formatDistance = (
   distance: number | string,
-  units: string | undefined,
+  units: string | undefined = "km",
 ): string => {
   const d = convertDistance(distance, units);
   return `${d} ${units}`;

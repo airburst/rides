@@ -15,7 +15,7 @@ import {
   users,
   verificationTokens,
 } from "@/server/db/schema/index";
-import { type Role, type User } from "@/types";
+import { type Preferences, type Role, type User } from "@/types";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -43,6 +43,8 @@ export const authOptions: NextAuthOptions = {
         id: user.id,
         // @ts-expect-error `role is not a property of AdapterUser`
         role: user.role as Role,
+        // @ts-expect-error `preferences is not a property of AdapterUser`
+        preferences: user.preferences as Preferences,
       },
     }),
   },
