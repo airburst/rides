@@ -63,7 +63,7 @@ export const RideForm = ({
 
   const onSubmit = async (data: RideFormSchema) => {
     setIsPending(true);
-    const rideDate = makeUtcDate(data.rideDate, data.time!)
+    const rideDate = makeUtcDate(data.rideDate, data.time)
     const formData = convertObjectToFormData({ ...data, rideDate });
 
     let result;
@@ -84,7 +84,7 @@ export const RideForm = ({
 
   return (
     <form
-      className="form-control relative grid w-full grid-cols-1 gap-4 p-2 mb-4"
+      className="form-control relative grid w-full grid-cols-1 gap-4 p-2 mb-4 text-neutral-800"
       onSubmit={handleSubmit(onSubmit)}
     // onSubmit={repeats ? handleSchedule : handleSubmit(onSubmit)}
     >

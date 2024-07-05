@@ -22,16 +22,21 @@ export type UserProfileFormSchema = z.output<typeof userProfileFormSchema>;
 // Ride
 export const rideFormSchema = zfd.formData({
   id: zfd.text(z.string().optional()),
-  name: zfd.text(z.string().trim().min(3, { message: "Name is required" })),
-  rideDate: zfd.text(
-    z.string().trim().min(10, { message: "Date is required" }),
+  name: zfd.text(
+    z
+      .string({ required_error: "Ride name is required" })
+      .trim()
+      .min(3, { message: "Ride name must contain at least 3 letters" }),
   ),
-  time: zfd.text(z.string().trim().optional()),
+  rideDate: zfd.text(z.string({ required_error: "Ride date is required" })),
+  time: zfd.text(z.string()),
   rideGroup: zfd.text(z.string().optional()),
   destination: zfd.text(z.string().optional()),
   meetPoint: zfd.text(z.string().optional()),
   notes: zfd.text(z.string().optional()),
-  distance: zfd.numeric(),
+  distance: zfd.numeric(
+    z.number().min(10, { message: "Ride must be at least 10km" }),
+  ),
   leader: zfd.text(z.string().optional()),
   route: zfd.text(z.string().optional()),
   rideLimit: zfd.numeric(),

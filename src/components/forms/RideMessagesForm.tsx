@@ -37,7 +37,7 @@ export const RideMessagesForm = ({
 
   return (
     <form
-      className="relative grid w-full grid-cols-1 gap-4"
+      className="relative grid w-full grid-cols-1 gap-4 text-neutral-800"
       onSubmit={handleSubmit}
     >
       <div className="flex flex-col gap-4 md:gap-8">
