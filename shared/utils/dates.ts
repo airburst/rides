@@ -38,9 +38,9 @@ export const getNextWeek = () => {
 };
 
 export const getNextTwoWeeks = () => {
-  const nextWeek = dayjs().add(14, "day").toISOString();
+  const inTwoWeeks = dayjs().add(14, "day").add(delta, "minutes").toISOString();
 
-  return nextWeek;
+  return inTwoWeeks;
 };
 
 // Get next Day of Week
@@ -72,10 +72,9 @@ export const getQueryDateRange = ({
     .toISOString();
 
   const st = start ? getDateFromString(start) : now;
-  // st.set("hour", 0);
   let en = end
     ? getDateFromString(end, true)
-    : getDateFromString(FOREVER, true);
+    : getDateFromString(getNextTwoWeeks(), true);
 
   // Set end of day on en
   en = dayjs(en)

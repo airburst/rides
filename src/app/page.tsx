@@ -1,9 +1,7 @@
 import { MainContent } from "@/components/Layout/MainContent";
 import { RidesList } from "@/components/RidesList";
-import { RidesListSkeleton } from "@/components/RidesList/RidesListSkeleton";
 import { env } from "@/env";
 import type { Metadata } from 'next';
-import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: `${env.NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`,
@@ -13,9 +11,7 @@ export const metadata: Metadata = {
 export default async function HomePage() {
   return (
     <MainContent>
-      <Suspense fallback={<RidesListSkeleton />}>
-        <RidesList />
-      </Suspense>
+      <RidesList />
     </MainContent>
   );
 }
