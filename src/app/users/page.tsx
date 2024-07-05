@@ -5,7 +5,6 @@ import { getUsers } from "@/server/actions/get-users";
 import { canUseAction } from "@/server/auth";
 import { type Metadata } from "next";
 import { redirect } from "next/navigation";
-import { Suspense } from "react";
 
 export const dynamic = "force-dynamic";
 
@@ -42,10 +41,7 @@ export default async function Users() {
             Manage Users
           </div>
         </div>
-
-        <Suspense fallback={<div>Loading...</div>}>
-          <UsersList users={users} />
-        </Suspense>
+        <UsersList users={users} />
       </>
     </MainContent>
   );

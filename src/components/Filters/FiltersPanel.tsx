@@ -97,7 +97,7 @@ export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
       leaveTo="-translate-y-full"
 
     >
-      <div className="fixed z-10 h-82 w-full bg-neutral-800 text-white shadow-xl top-0 left-0">
+      <div className="fixed z-30 h-82 w-full bg-neutral-800 text-white shadow-xl top-0 left-0">
         <div className="container mx-auto flex w-full flex-col p-4 md:px-4 lg:max-w-[1024px]">
           <div className="flex flex-row justify-between">
             <div className="text-3xl">Filters</div>
