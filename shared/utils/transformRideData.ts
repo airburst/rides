@@ -5,10 +5,16 @@ import {
   type RideList,
   type User,
 } from "../../src/types";
-import { formatDate } from "./dates";
+import { formatDate, getNextNWeeks } from "./dates";
 
 const isGoing = (userId: string, users?: { userId: string | undefined }[]) =>
   users?.map((u) => u.userId).includes(userId);
+
+const filterEndDate = (rides: RideList[], weeksAhead = "2") => {
+  const endDate = getNextNWeeks(weeksAhead);
+
+  return rides.filter(({ rideDate }) => rideDate <= endDate);
+};
 
 const filterOnlyJoined = (rides: RideList[], userId: string) =>
   rides.filter((ride) => isGoing(userId, ride.users));
@@ -31,16 +37,16 @@ const filterRides = (
   filterQuery: FilterQuery,
   user?: User,
 ): RideList[] => {
-  const { onlyJoined, q } = filterQuery;
+  const { onlyJoined, q, weeksAhead } = filterQuery;
+
+  let filteredData: RideList[] = filterEndDate(data, weeksAhead);
 
   if (!q && !onlyJoined) {
-    return data;
+    return filteredData;
   }
 
-  let filteredData: RideList[] = data;
-
   if (onlyJoined && user?.id) {
-    filteredData = filterOnlyJoined(data, user.id);
+    filteredData = filterOnlyJoined(filteredData, user.id);
   }
   if (q) {
     filteredData = filterSearchText(filteredData, q);

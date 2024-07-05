@@ -7,6 +7,7 @@ import { type RideList } from "@/types";
 import { getNow } from "@utils/dates";
 import { formatRideData } from "@utils/rides";
 import { and, asc, desc, eq, gt, lt } from "drizzle-orm";
+import { revalidatePath } from "next/cache";
 
 export const getRides = async (
   start: string = getNow(),
@@ -42,6 +43,8 @@ export const getRides = async (
       ),
       orderBy: [asc(rides.rideDate), asc(rides.name), desc(rides.distance)],
     });
+
+    revalidatePath("/");
 
     return {
       rides: result.map((ride) =>

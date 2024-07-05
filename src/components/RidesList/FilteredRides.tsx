@@ -24,6 +24,8 @@ export const FilteredRides = ({ rides, user }: Props) => {
   const shouldApplyFilters = path === "/";
 
   useEffect(() => {
+    console.log("recalculate filters");
+
     setFilterQuery(filters);
   }, [filters, setFilterQuery]);
 
