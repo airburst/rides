@@ -15,7 +15,7 @@ export const Header = async () => {
   const role = user?.role;
 
   return (
-    <div className="fixed  z-10 flex h-16 w-full items-center justify-center bg-primary text-white sm:h-24  ">
+    <div className="fixed flex h-16 w-full items-center justify-center bg-primary text-white sm:h-24 z-20">
       <div className="container flex w-full flex-row justify-between px-2 md:px-4 lg:max-w-[1024px]">
         <div className=" text-4xl tracking-wide sm:text-5xl">
           <Link

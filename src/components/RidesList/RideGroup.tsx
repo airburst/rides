@@ -15,7 +15,7 @@ export const RideGroup = ({ group, user }: Props) => {
 
   return (
     <div className="flex w-full flex-col items-start gap-2">
-      <div className="flex w-full justify-center bg-primary p-2 font-bold uppercase tracking-widest text-white sm:rounded">
+      <div className="sticky top-[64px] sm:top-[96px] flex w-full justify-center p-2 font-bold uppercase tracking-widest text-white bg-primary sm:rounded z-10">
         <div>{rideDate}</div>
       </div>
 
