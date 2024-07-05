@@ -37,6 +37,7 @@ export const RideInfo = ({ ride, user }: Props) => {
 
   return (
     <div className="flex w-full flex-col gap-2 px-2 sm:px-0">
+      {cancelled && (<CancelledBanner />)}
       <div className="relative flex w-full flex-col gap-2 rounded bg-white py-2 shadow-md">
         <Row>
           <div className="text-xl font-bold tracking-wide text-neutral-700">
@@ -87,8 +88,6 @@ export const RideInfo = ({ ride, user }: Props) => {
           </Row>
         )}
       </div>
-
-      {cancelled && (<CancelledBanner />)}
 
       {!cancelled && notes && (
         <Viewer markdown={notes} title="Notes" />
