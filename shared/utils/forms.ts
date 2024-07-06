@@ -1,3 +1,4 @@
+import { type RideFormSchema } from "@/components/forms/formSchemas";
 import { type RepeatingRide, type RideFormValues } from "src/types";
 import { makeUtcDate } from "./dates";
 
@@ -42,9 +43,7 @@ export const makeRide = (formData: RideFormValues) => {
   };
 };
 
-// TODO: Set empty values to null so that rides are created with red flags
-// Filter ride form with repeating information into a valid API request shape
-export const makeRepeatingRide = (formData: RideFormValues): RepeatingRide => {
+export const makeRepeatingRide = (formData: RideFormSchema): RepeatingRide => {
   const {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     rideDate, // Remove from object
@@ -64,7 +63,7 @@ export const makeRepeatingRide = (formData: RideFormValues): RepeatingRide => {
   const weekno = bysetpos ?? 1;
   const monthday = bymonthday ?? 1;
   // Concatenate time onto startDate, to ensure that all generated rides are correct
-  const startDateWithTime = makeUtcDate(startDate, time);
+  const startDateWithTime = makeUtcDate(startDate!, time);
 
   let payload: RepeatingRide = {
     freq,
@@ -89,23 +88,3 @@ export const makeRepeatingRide = (formData: RideFormValues): RepeatingRide => {
   // Convert to RRule
   return payload;
 };
-
-// export const convertToFormData = (
-//   data: unknown,
-//   formData = new FormData(),
-//   parentKey?: string,
-// ) => {
-//   if (data && typeof data === "object") {
-//     Object.keys(data as Record<string, unknown>).forEach((key) =>
-//       convertToFormData(
-//         (data as Record<string, unknown>)[key],
-//         formData,
-//         parentKey ? `${parentKey}[${key}]` : key,
-//       ),
-//     );
-//   } else {
-//     const value = data == null ?? data;
-
-//     formData.append(parentKey, value.toString());
-//   }
-// };

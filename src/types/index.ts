@@ -110,6 +110,12 @@ export type TemplateRide = PartialRide & {
   date: string;
 };
 
+export type RideSet = {
+  id?: string;
+  schedule: string;
+  rides: TemplateRide[];
+};
+
 export type Riders = {
   name: string;
   mobile?: string;

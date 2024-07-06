@@ -163,7 +163,7 @@ export const generateRide = (
 ) => {
   const ride = {
     name,
-    date,
+    rideDate: date,
     destination,
     rideGroup,
     distance,
@@ -186,10 +186,13 @@ export type RideSet = {
   rides: TemplateRide[];
 };
 
-export const makeRidesInPeriod = (template: RepeatingRideDb): RideSet => {
+export const makeRidesInPeriod = (
+  template: RepeatingRideDb,
+  date?: string,
+): RideSet => {
   const { id, schedule } = template;
-  const start = new Date();
-  const nextMonth = getNextMonth();
+  const start = date ? new Date(date) : new Date();
+  const nextMonth = getNextMonth(date);
   const lastDay = daysInMonth(nextMonth);
   const end = new Date(`${nextMonth.substring(0, 8)}${lastDay.toString()}`);
   const rideDates = RRule.fromString(schedule).between(start, end);

@@ -11,7 +11,11 @@ export const getScalarValue = (
     return null;
   }
 
-  return Array.isArray(value) ? Number(value[0]) : value || null;
+  if (Array.isArray(value)) {
+    return value.length === 0 ? null : Number(value[0]) ?? null;
+  }
+
+  return value;
 };
 
 type FormDataType = Record<
