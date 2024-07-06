@@ -299,17 +299,17 @@ export const RideForm = ({
           </label>
         </div>
 
-        <div className="flex flex-col gap-4 md:gap-8">
+        <div className="flex flex-col">
           <label className="flex flex-col">
             Notes
-            <Editor initialValue={defaultValues?.notes} onChange={handleNotesChange} aria-label="rich notes editor" />
-            <input
-              id="notes"
-              type="hidden"
-              className="textarea input-bordered"
-              {...register("notes")}
-            />
           </label>
+          <Editor initialValue={defaultValues?.notes} onChange={handleNotesChange} />
+          <input
+            id="notes"
+            type="hidden"
+            aria-label="notes"
+            {...register("notes")}
+          />
         </div>
 
         {showRepeatingSwitch && (
