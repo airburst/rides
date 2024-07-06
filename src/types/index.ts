@@ -78,7 +78,7 @@ export type RepeatingRide = {
   winterStartTime?: string | null;
   endDate?: string | null;
   destination?: string | null;
-  group?: string | null;
+  rideGroup?: string | null;
   distance?: number | null;
   meetPoint?: string | null;
   route?: string | null;
