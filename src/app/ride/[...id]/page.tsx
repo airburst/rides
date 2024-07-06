@@ -6,8 +6,6 @@ import { getRide } from "@/server/actions/get-ride";
 import { getServerAuthSession } from "@/server/auth";
 import { type Metadata } from "next";
 
-export const dynamic = "force-dynamic";
-
 export const metadata: Metadata = {
   title: `${env.NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`,
   description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} Ride Details`,

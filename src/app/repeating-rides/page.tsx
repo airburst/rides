@@ -6,14 +6,12 @@ import { canUseAction } from "@/server/auth";
 import { type Metadata } from "next";
 import { redirect } from "next/navigation";
 
-export const dynamic = "force-dynamic";
-
 export const metadata: Metadata = {
   title: `Manage Repeating Rides`,
   description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} - Repeating Rides`,
 }
 
-export default async function Users() {
+export default async function RepeatingRides() {
   const isAdmin = await canUseAction("ADMIN");
 
   // Redirect if not admin
