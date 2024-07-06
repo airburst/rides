@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 "use client";
 
 import { addRepeatingRide } from "@/server/actions/add-repeating-ride";
 import { addRide } from "@/server/actions/add-ride";
+import { generateRidesFromClient } from "@/server/actions/generate-rides-from-client";
 import { updateRide } from "@/server/actions/update-ride";
 import { Switch } from "@headlessui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -39,6 +41,7 @@ export const RideForm = ({
     setValue,
     handleSubmit,
     watch,
+    getValues,
     formState: { defaultValues, errors }
   } = useForm<RideFormSchema>({
     resolver: zodResolver(rideFormSchema),
@@ -105,8 +108,8 @@ export const RideForm = ({
         // Store schedule id to use in handleYes function
         setScheduleId(results.id);
         // Calculate rides list and ask to create them
-        const rideList = makeRidesInPeriod(repeatingRideToDb(payload));
-        const rideDates = rideList.rides.map(({ date }) => formatDate(date));
+        const rideList = makeRidesInPeriod(repeatingRideToDb(payload), data.startDate);
+        const rideDates = rideList.rides.map(({ rideDate }) => formatDate(rideDate));
         if (rideDates.length > 0) {
           setRideDateList(rideDates);
           show();
@@ -128,14 +131,15 @@ export const RideForm = ({
     hide();
 
     if (scheduleId) {
-      // TODO: Implement this
-      // const results = await generateRides(scheduleId);
-      // if (results.success) {
-      //   router.push("/");
-      //   cb(true);
-      // } else {
-      //   cb(false);
-      // }
+      const date = getValues("rideDate");
+      const results = await generateRidesFromClient(scheduleId, date);
+      if (results.success) {
+        toast.success(results.message)
+        router.push("/");
+        cb(true);
+      } else {
+        cb(false);
+      }
     }
   };
 

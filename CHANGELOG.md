@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- Added toast notifications for create, cancel and delete actions
 - Added a rich text editor for ride notes
 - Date headers are sticky on home page (rides list)
 
@@ -21,13 +22,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Dropdown menu has been replaced with a sliding drawer menu
 - Calendar is now full-screen layout, and remembers the month when using a "back" button after clicking into a day
 - Changed appearance of Cancelled ride banner and no longer show riders section of cancelled rides in details view
-- Upgraded to NextJS v15 App Router (from Pages router)
+- Upgraded to NextJS v15 App Router (from Pages Router)
 - Upgraded to React v19 and implemented React Server Components for all server-based data fetches
 - The project now uses Drizzle ORM instead of Prisma
 
 ### Removed
 
-- Removed filter option for "weeks ahead"; all rides are shown in list by default now
 - Almost all APIs and hooks, which are no longer needed for data fetching
 - Without APIs, there are dramatically fewer lambdas in the production infrastructure
 - Removed "speed" from ride table schema

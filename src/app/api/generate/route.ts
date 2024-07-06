@@ -23,6 +23,17 @@ type BodyProps = {
   date: string;
 };
 
+export type GenerateApiResponse = {
+  success: boolean;
+  generateFromDate?: string;
+  message?: string;
+  results?: {
+    scheduleId?: string;
+    count?: number;
+    error?: string;
+  }[];
+};
+
 const getRidesFromTemplates = async ({ scheduleId, date }: BodyProps) => {
   // If we have an id, find one match, else return all templates
   let templates: RepeatingRideDb[] = [];
@@ -70,7 +81,9 @@ export const createRides = async (rideSet: RideSet[]) => {
   return results;
 };
 
-export async function POST(request: Request) {
+export async function POST(
+  request: Request,
+): Promise<NextResponse<GenerateApiResponse>> {
   const headersList = headers();
   const authorization = headersList.get("authorization");
   const body = await request.json();

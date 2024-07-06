@@ -30,6 +30,7 @@ export const env = createEnv({
     RIDERHQ_URL: z.string(),
     RIDERHQ_ACCOUNT_ID: z.string(),
     RIDERHQ_PRIVATE_KEY: z.string(),
+    API_KEY: z.string(),
   },
 
   /**
@@ -63,6 +64,7 @@ export const env = createEnv({
     RIDERHQ_URL: process.env.RIDERHQ_URL,
     RIDERHQ_ACCOUNT_ID: process.env.RIDERHQ_ACCOUNT_ID,
     RIDERHQ_PRIVATE_KEY: process.env.RIDERHQ_PRIVATE_KEY,
+    API_KEY: process.env.API_KEY,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

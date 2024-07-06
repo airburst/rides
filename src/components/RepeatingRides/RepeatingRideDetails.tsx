@@ -45,9 +45,9 @@ export const RepeatingRideDetails = ({ ride }: Props) => {
   } = ride;
   const time = formatTime(startDate);
 
-  const goToCopy = () => router.push(`./${id}/copy`);
+  const goToCopy = () => router.push(`./copy/${id}`);
 
-  const goToEdit = () => router.push(`./${id}/edit`);
+  const goToEdit = () => router.push(`./edit/${id}`);
 
   const toggleDeleteAllRides = () => setDeleteAllRides(!deleteAllRides);
 
