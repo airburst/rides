@@ -55,7 +55,10 @@ export const RepeatingRideDetails = ({ ride }: Props) => {
     const results = await deleteRepeatingRide(id!, deleteAllRides);
 
     if (results.success) {
-      toast.success("Repeating ride has been deleted.")
+      const message = results.deletedRideCount && results.deletedRideCount > 0
+        ? `Repeating ride and ${results.deletedRideCount} future rides have been deleted.`
+        : "Repeating ride has been deleted.";
+      toast.success(message)
       hideConfirm();
       router.back();
       cb(true);
