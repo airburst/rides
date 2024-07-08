@@ -4,13 +4,13 @@
 import { cancelRide } from "@/server/actions/cancel-ride";
 import { deleteRide } from "@/server/actions/delete-ride";
 import { type Role } from "@/types";
+import { Menu } from 'lucide-react';
 import { signIn, signOut } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { flattenQuery } from "shared/utils";
 import { toast } from "sonner";
 import { Confirm } from "../Confirm";
-import { BarsIcon } from "../Icon";
 import { MenuContent } from "./MenuContent";
 
 type MenuProps = {
@@ -97,7 +97,7 @@ export const UserMenu = ({ role, isAuthenticated }: MenuProps) => {
               onClick={toggleMenu}
               onKeyDown={toggleMenu}
               aria-label="open menu">
-              <BarsIcon className="fill-white w-6 h-6" />
+              <Menu className="fill-white w-8 h-8" />
             </button>
           </div>
         </div>

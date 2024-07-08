@@ -3,7 +3,7 @@ import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 
 export const CardSkeleton = () => (
-  <div className="md:mx-autotext-neutral-500 box-border flex w-full cursor-pointer gap-2 rounded bg-white shadow-md hover:text-neutral-700 hover:shadow-lg md:gap-2">
+  <div className="md:mx-auto text-neutral-600 box-border flex w-full cursor-pointer gap-2 rounded bg-white shadow-md hover:text-neutral-700 hover:shadow-lg md:gap-2">
     <div className="grid w-full grid-cols-[auto_1fr_68px] pl-1">
       <div className="col-span-2 p-1 font-bold uppercase tracking-wide">
         <Skeleton />

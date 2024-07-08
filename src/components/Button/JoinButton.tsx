@@ -1,8 +1,8 @@
 "use client";
 import { joinRide } from "@/server/actions/join-ride";
 import { leaveRide } from "@/server/actions/leave-ride";
+import { Plus, X } from 'lucide-react';
 import { useState } from "react";
-import { CloseIcon, PlusIcon } from "../Icon";
 import { Button, type ButtonProps } from "./Button";
 
 type Props = ButtonProps & {
@@ -33,12 +33,12 @@ export const JoinButton: React.FC<Props> = ({
 
   return going ? (
     <Button {...props} success loading={loading} onClick={handleLeave}>
-      <CloseIcon className="fill-white" />
+      <X className="fill-white h-8 w-8" />
       LEAVE
     </Button>
   ) : (
     <Button {...props} error loading={loading} onClick={handleJoin}>
-      <PlusIcon className="fill-white" />
+      <Plus className="fill-white h-8 w-8" />
       JOIN
     </Button>
   );

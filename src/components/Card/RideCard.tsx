@@ -41,7 +41,7 @@ export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
   // If a rider is going, span the title across 2 columns to make space
   // else span the entire row (of 3 columns)
   const titleClass = clsx(
-    "truncate p-1 pl-2 font-bold uppercase tracking-wide",
+    "truncate p-1 pl-2 font-bold uppercase tracking-wide text-neutral-600",
     isGoing ? "col-span-2" : "col-span-3"
   );
 
@@ -61,7 +61,7 @@ export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
 
         {isCancelled ? (<div className="p-1 col-span-3"><Cancelled /></div>)
           : (<>
-            <div className="p-1 pl-2 items-center font-bold tracking-wide text-neutral-600">
+            <div className="p-1 pl-2 items-center font-bold tracking-wide text-neutral-700">
               {time}
             </div>
             <div className="truncate p-1 pl-2 items-center">{details}</div>

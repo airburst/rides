@@ -1,6 +1,7 @@
 "use client"
 import { type User } from "@/types";
 import clsx from "clsx";
+import { ShieldCheck } from 'lucide-react';
 import { useRouter } from "next/navigation";
 import { BasicCard } from "./BasicCard";
 
@@ -13,7 +14,7 @@ export const UserCard: React.FC<Props> = ({ user }: Props) => {
   const { id, name, email, role, membershipId } = user;
   const showBadge = ["ADMIN", "LEADER"].includes(role);
   const badgeClass = clsx(
-    "text-white badge",
+    "text-white badge badge-lg",
     role === "LEADER" && "bg-accent",
     role === "ADMIN" && "bg-primary"
   );
@@ -24,16 +25,16 @@ export const UserCard: React.FC<Props> = ({ user }: Props) => {
 
   return (
     <BasicCard key={id} id={id} onPress={onPress}>
-      <div className="flex flex-col">
+      <div className="flex flex-col w-full">
         <div className="p-2 flex-1">
-          <div className="items-center align-middle font-bold uppercase tracking-wide">
-            <div className="truncate">{name}</div>
+          <div className="flex items-center align-middle font-bold uppercase tracking-wide">
+            <div className="flex-1 truncate">{name}</div>
+            {membershipId && <ShieldCheck className="text-secondary w-8 h-8" />}
           </div>
           <div className="truncate">{email}</div>
         </div>
         <div className="flex flex-row gap-2 p-2 pt-0">
           {showBadge && <div className={badgeClass}>{role}</div>}
-          {membershipId && <div className="badge badge-secondary">MEMBER</div>}
         </div>
       </div>
     </BasicCard>

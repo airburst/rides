@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- User profiles include RiderHQ membership badge; user form includes RiderHQ id
 - Added toast notifications for create, cancel and delete actions
 - Added a rich text editor for ride notes
 - Date headers are sticky on home page (rides list)

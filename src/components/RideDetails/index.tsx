@@ -1,10 +1,10 @@
 "use client";
+import { MessageSquare } from "lucide-react";
 import { useState } from "react";
 import { hasSpace, isJoinable } from "../../../shared/utils";
 import { type Ride, type User } from "../../types";
 import { Badge } from "../Badge";
 import { BackButton, Button, JoinButton } from "../Button";
-import { MessageIcon } from "../Icon";
 import { RideInfo } from "./RideInfo";
 import { RideMessages } from "./RideMessages";
 import { RidersGoing } from "./RidersGoing";
@@ -86,7 +86,7 @@ export const RideDetails = ({ ride, user, role }: Props) => {
 
               {isGoing && (
                 <Button accent onClick={openNotes}>
-                  <MessageIcon className="fill-white" />
+                  <MessageSquare className="w-8 h-8" />
                   MESSAGE
                 </Button>
               )}

@@ -46,7 +46,7 @@ export const UsersList = ({ users }: Props) => {
         />
       </div>
 
-      <div className="grid w-full grid-cols-1 gap-2 md:gap-2 px-2 sm:px-0">
+      <div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 px-2 sm:px-0">
         {filteredUsers.map((user) => (
           <UserCard key={user.id} user={user} />
         ))}

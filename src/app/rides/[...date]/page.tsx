@@ -1,10 +1,10 @@
 import { BackButton, Button } from "@/components/Button";
-import { PlusIcon } from "@/components/Icon";
 import { MainContent } from "@/components/Layout/MainContent";
 import { RidesList } from "@/components/RidesList";
 import { canUseAction } from "@/server/auth";
 import { getNow } from "@utils/dates";
 import { flattenQuery } from "@utils/general";
+import { Plus } from "lucide-react";
 import Link from "next/link";
 
 export const dynamic = "force-dynamic";
@@ -27,7 +27,7 @@ export default async function RidesOnDate({ params }: { params: { date: string }
             {isLeader && isInFuture && (
               <Link href={`/ride/new/${date}`}>
                 <Button accent>
-                  <PlusIcon className="fill-white" />
+                  <Plus className="h-8 w-8" />
                   <span>ADD RIDE</span>
                 </Button>
               </Link>

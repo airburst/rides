@@ -1,11 +1,11 @@
 import { Button } from "@/components/Button";
 import { Calendar } from "@/components/Calendar";
 import { CalendarSkeleton } from "@/components/Calendar/CalendarSkeleton";
-import { ChevronLeftIcon, ChevronRightIcon } from "@/components/Icon";
 import { FullPageContent } from "@/components/Layout/FullPageContent";
 import { env } from "@/env";
 import { formatCalendarDate, getLastMonth, getNextMonth, getNow } from "@utils/dates";
 import { flattenQuery } from "@utils/general";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { type Metadata } from "next";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -29,11 +29,11 @@ export default async function RideCalendar({ params }: { params: { date: string 
         <div className="flex w-full flex-col gap-2 bg-white">
           <div className="flex w-full flex-row items-center justify-between p-2 font-bold uppercase tracking-wider text-neutral-700">
             <Link href={`/calendar/${lastMonth}`}><Button accent>
-              <ChevronLeftIcon className="fill-accent-content" />
+              <ChevronLeft className="w-8 h-8" />
             </Button></Link>
             <span>{formatCalendarDate(monthDate)}</span>
             <Link href={`/calendar/${nextMonth}`}><Button accent>
-              <ChevronRightIcon className="fill-accent-content" />
+              <ChevronRight className="w-8 h-8" />
             </Button></Link>
           </div>
         </div>

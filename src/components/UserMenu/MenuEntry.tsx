@@ -21,10 +21,10 @@ export const MenuEntry = ({
 
   return href ? (
     <li className={classes}>
-      <Link href={href} className="focus:text-white focus:bg-neutral-800">
+      <Link href={href} className="px-4 py-2 focus:text-white focus:bg-neutral-800">
         <button
           type="button"
-          className="grid w-full grid-cols-[20px_1fr] items-center gap-2"
+          className="grid w-full grid-cols-[20px_1fr] items-center gap-6"
           onClick={onClick}
         >
           {children}
@@ -36,7 +36,7 @@ export const MenuEntry = ({
     <li className={classes}>
       <button
         type="button"
-        className="grid w-full grid-cols-[20px_1fr] items-center gap-2"
+        className="grid w-full grid-cols-[20px_1fr] items-center gap-6"
         onClick={onClick}
       >
         {children}

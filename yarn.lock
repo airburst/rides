@@ -3080,6 +3080,7 @@ __metadata:
     jest-environment-jsdom: "npm:^29.7.0"
     jotai: "npm:^2.8.4"
     lint-staged: "npm:^15.2.7"
+    lucide-react: "npm:^0.403.0"
     markdown-it: "npm:^14.1.0"
     next: "npm:^14.2.4"
     next-auth: "npm:^4.24.7"
@@ -7083,6 +7084,15 @@ __metadata:
   dependencies:
     yallist: "npm:^4.0.0"
   checksum: 10/fc1fe2ee205f7c8855fa0f34c1ab0bcf14b6229e35579ec1fd1079f31d6fc8ef8eb6fd17f2f4d99788d7e339f50e047555551ebd5e434dda503696e7c6591825
+  languageName: node
+  linkType: hard
+
+"lucide-react@npm:^0.403.0":
+  version: 0.403.0
+  resolution: "lucide-react@npm:0.403.0"
+  peerDependencies:
+    react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  checksum: 10/e2f721f7f8b9c12cbe99db11453eb57883a07534695b6e582e244961de731f73830edbb9a5d3605687002df265cffabde02b1d10694512d148a9e2a089b37690
   languageName: node
   linkType: hard
 

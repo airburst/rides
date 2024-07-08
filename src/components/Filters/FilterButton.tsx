@@ -4,8 +4,8 @@
 import { DEFAULT_WEEKS_TO_SHOW } from "@/constants";
 import { filterQueryAtom, showFilterAtom } from "@/store";
 import { useAtom } from "jotai";
+import { Filter, FilterX } from "lucide-react";
 import { usePathname } from "next/navigation";
-import { FilterIcon, FilterSelectedIcon } from "../Icon";
 
 export const FilterButton = () => {
   const path = usePathname();
@@ -31,9 +31,9 @@ export const FilterButton = () => {
         className="flex items-center rounded p-1 text-3xl"
       >
         {hasFiltersApplied ? (
-          <FilterSelectedIcon className="fill-white w-6 h-6" />
+          <FilterX className="fill-white w-6 h-6" />
         ) : (
-          <FilterIcon className="fill-white w-6 h-6" />
+          <Filter className="fill-white w-6 h-6" />
         )}
       </button>
     </>

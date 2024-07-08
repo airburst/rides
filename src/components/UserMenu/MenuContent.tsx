@@ -3,23 +3,9 @@
 
 import { type Role } from "@/types";
 import copy from "copy-to-clipboard";
+import { Calendar, CircleAlert, Copy, Link, LogIn, LogOut, Pencil, Plus, Repeat, Settings, Trash2, Users, X } from 'lucide-react';
 import { flattenQuery } from "shared/utils";
 import pkg from "../../../package.json";
-import {
-  CalendarIcon,
-  CircleExclamationIcon,
-  CloseIcon,
-  CopyIcon,
-  DeleteIcon,
-  EditIcon,
-  LinkIcon,
-  LoginIcon,
-  LogoutIcon,
-  PlusIcon,
-  RepeatIcon,
-  SettingsIcon,
-  UsersIcon
-} from "../Icon";
 import { MenuEntry } from "./MenuEntry";
 
 type MenuContentProps = {
@@ -48,24 +34,24 @@ export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout
           onClick={closeMenu}
           onKeyDown={closeMenu}
           aria-label="open menu">
-          <CloseIcon className="fill-white w-8 h-8" />
+          <X className="w-8 h-8" />
         </button>
       </div>
 
-      <ul className="menu text-base-300 text-lg p-0">
+      <ul className="menu text-base-300 text-xl p-0">
         {!isAuthenticated && (
           <MenuEntry label="Log in" onClick={handleSignin}>
-            <LoginIcon className="fill-white" />
+            <LogIn className="w-6 h-6" />
           </MenuEntry>
         )}
 
         <MenuEntry label="Calendar" href="/calendar" onClick={closeMenu}>
-          <CalendarIcon className="fill-white" />
+          <Calendar className="h-6 w-6" />
         </MenuEntry>
 
         {isLeader && (
           <MenuEntry label="Add Ride" href="/ride/new" onClick={closeMenu}>
-            <PlusIcon className="fill-white" />
+            <Plus className="w-6 h-6" />
           </MenuEntry>
         )}
 
@@ -75,7 +61,7 @@ export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout
             href={`/ride/copy/${flattenQuery(rideId)}`}
             onClick={closeMenu}
           >
-            <CopyIcon className="fill-white" />
+            <Copy className="w-6 h-6" />
           </MenuEntry>
         )}
 
@@ -86,16 +72,16 @@ export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout
               href={`/ride/edit/${flattenQuery(rideId)}`}
               onClick={closeMenu}
             >
-              <EditIcon className="fill-white" />
+              <Pencil className="w-6 h-6" />
             </MenuEntry>
             <MenuEntry label="Cancel Ride" onClick={confirmCancel}>
-              <CircleExclamationIcon className="fill-white" />
+              <CircleAlert className="w-6 h-6" />
             </MenuEntry>
             <MenuEntry label="Delete Ride" onClick={confirmDelete}>
-              <DeleteIcon className="fill-white" />
+              <Trash2 className="w-6 h-6" />
             </MenuEntry>
             <MenuEntry label="Copy Ride Link" onClick={copyLink}>
-              <LinkIcon className="fill-white" />
+              <Link className="w-6 h-6" />
             </MenuEntry>
           </>
         )}
@@ -103,14 +89,14 @@ export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout
         {isAdmin && (
           <>
             <MenuEntry label="Manage Users" href="/users" onClick={closeMenu}>
-              <UsersIcon className="fill-white" />
+              <Users className="w-6 h-6" />
             </MenuEntry>
             <MenuEntry
               label="Repeating Rides"
               href="/repeating-rides"
               onClick={closeMenu}
             >
-              <RepeatIcon className="fill-white" />
+              <Repeat className="w-6 h-6" />
             </MenuEntry>
           </>
         )}
@@ -118,10 +104,10 @@ export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout
         {isAuthenticated && (
           <>
             <MenuEntry label="Settings" href="/profile" onClick={closeMenu}>
-              <SettingsIcon className="fill-white" />
+              <Settings className="w-6 h-6" />
             </MenuEntry>
             <MenuEntry className="text-error" label="Log out" onClick={handleSignout}>
-              <LogoutIcon className="fill-error" />
+              <LogOut className="fill-error" />
             </MenuEntry>
           </>
         )}

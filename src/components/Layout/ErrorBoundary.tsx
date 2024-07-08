@@ -1,7 +1,7 @@
 "use client";
 /* eslint-disable no-console */
+import { CircleAlert } from "lucide-react";
 import { Component, type ErrorInfo, type ReactNode } from "react";
-import { CircleExclamationIcon } from "../Icon";
 
 interface Props {
   children?: ReactNode;
@@ -32,7 +32,7 @@ export class ErrorBoundary extends Component<Props, State> {
       return (
         <div className="flex flex-col text-neutral-800 justify-center">
           <div className="flex h-64 items-center justify-center">
-            <CircleExclamationIcon className="fill-red-500 w-24 h-24" />
+            <CircleAlert className="text-error w-24 h-24" />
           </div>
           <div className="flex items-center p-4 text-center text-2xl text-neutral-700">
             Sorry.. the app is experiencing problems

@@ -6,10 +6,10 @@ import { type FilterQuery } from "@/types";
 import { Combobox, ComboboxButton, ComboboxInput, ComboboxOption, ComboboxOptions, Switch, Transition } from "@headlessui/react";
 import clsx from "clsx";
 import { useAtom } from "jotai";
+import { Check, ChevronDown, X } from 'lucide-react';
 import { Fragment, useRef, useState, type ChangeEvent } from "react";
 import useOnClickOutside from "use-onclickoutside";
 import { Button } from "../Button";
-import { ChevronDownIcon, CloseIcon, TickIcon } from "../Icon";
 
 type Props = {
   isShowing: boolean;
@@ -108,7 +108,7 @@ export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
               title="Close filters"
               className="flex items-center rounded p-1 text-3xl"
             >
-              <CloseIcon className="fill-white w-6 h-6" />
+              <X className="fill-white h-8 w-8" />
             </button>
           </div>
 
@@ -124,7 +124,7 @@ export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
                     onChange={handleSearchChange}
                   />
                   <ComboboxButton className="absolute inset-y-0 right-0 flex items-center pr-2 text-gray-700">
-                    <ChevronDownIcon className="fill-neutral-700" />
+                    <ChevronDown className="fill-neutral-700 h-4 w-4" />
                   </ComboboxButton>
                 </div>
                 <Transition
@@ -161,7 +161,7 @@ export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
                                   className={`absolute inset-y-0 left-0 flex items-center pl-3 ${active ? "text-white" : "text-teal-600"
                                     }`}
                                 >
-                                  <TickIcon className="fill-white" />
+                                  <Check className="fill-white w-8 h-8" />
                                 </span>
                               ) : null}
                             </>

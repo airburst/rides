@@ -1,6 +1,6 @@
 "use client";
+import { ChevronLeft } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { ChevronLeftIcon } from "../Icon";
 import { Button } from "./Button";
 
 type ButtonProps = {
@@ -21,7 +21,7 @@ export const BackButton = ({ url, className, ...props }: ButtonProps) => {
 
   return (
     <Button primary {...props} className={className} onClick={goBack}>
-      <ChevronLeftIcon className="fill-white" />
+      <ChevronLeft className="w-8 h-8" />
       BACK
     </Button>
   );

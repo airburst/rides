@@ -1,9 +1,9 @@
 "use client";
 import { Switch } from "@headlessui/react";
 import clsx from "clsx";
+import { Phone } from "lucide-react";
 import { useState } from "react";
 import { type User } from "../../types";
-import { PhoneIcon } from "../Icon";
 
 type Props = {
   user: User;
@@ -38,9 +38,6 @@ export const RiderDetails = ({ user, isLeader, sessionUser }: Props) => {
   const numberClass = clsx("flex items-center gap-2",
     showEmergency ? "text-red-700" : "text-neutral-500"
   );
-  const iconClass = clsx("flex items-center gap-2",
-    showEmergency ? "fill-red-700" : "fill-neutral-500"
-  );
 
   return (
     <div className={rowClass} key={userId}>
@@ -49,7 +46,7 @@ export const RiderDetails = ({ user, isLeader, sessionUser }: Props) => {
       {isLeader && (
         <div className="grid grid-cols-[1fr_44px] gap-2">
           <div className={numberClass}>
-            {numberToDisplay && <PhoneIcon className={iconClass} />}
+            {numberToDisplay && <Phone className="w-6 h-6" />}
             <a href={`tel:${numberToDisplay}`} className="text-right">
               {numberToDisplay}
             </a>
