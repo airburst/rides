@@ -42,7 +42,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const classes = clsx(
-      "btn",
+      "btn h-full",
       { "btn-primary": primary },
       { "btn-secondary": secondary },
       { "btn-accent": accent },
@@ -52,7 +52,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       { "btn-error": error },
       { "btn-link": link },
       { "btn-disabled": disabled },
-      "gap-2",
       className
     );
 

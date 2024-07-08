@@ -49,6 +49,7 @@ svg {
 .btn {
   @apply rounded;
   @apply text-base;
+  padding: 8px;
 }
 
 .alert {

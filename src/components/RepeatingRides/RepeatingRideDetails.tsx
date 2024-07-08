@@ -182,16 +182,16 @@ export const RepeatingRideDetails = ({ ride }: Props) => {
         </div>
       </div>
 
-      <div className="flex justify-between sm:justify-start w-full gap-4 px-2 sm:p-0">
-        <BackButton />
+      <div className="justify-self-start grid grid-cols-4 w-full gap-2 md:gap-4 px-2 sm:p-0">
+        <BackButton noIcon />
         <Button secondary onClick={goToEdit}>
-          Edit
+          EDIT
         </Button>
         <Button accent onClick={goToCopy}>
-          Copy
+          COPY
         </Button>
         <Button error onClick={showConfirm}>
-          Delete
+          DELETE
         </Button>
       </div>
 

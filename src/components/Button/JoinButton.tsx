@@ -33,12 +33,12 @@ export const JoinButton: React.FC<Props> = ({
 
   return going ? (
     <Button {...props} success loading={loading} onClick={handleLeave}>
-      <X className="fill-white h-8 w-8" />
+      <X className="h-6 w-6" />
       LEAVE
     </Button>
   ) : (
     <Button {...props} error loading={loading} onClick={handleJoin}>
-      <Plus className="fill-white h-8 w-8" />
+      <Plus className="h-6 w-6" />
       JOIN
     </Button>
   );

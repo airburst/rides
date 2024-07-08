@@ -6,10 +6,12 @@ import { Button } from "./Button";
 type ButtonProps = {
   url?: string;
   className?: string;
+  noIcon?: boolean;
 };
 
-export const BackButton = ({ url, className, ...props }: ButtonProps) => {
+export const BackButton = ({ url, className, noIcon = false, ...props }: ButtonProps) => {
   const router = useRouter();
+  const showIcon = !noIcon
 
   const goBack = () => {
     if (url) {
@@ -21,7 +23,7 @@ export const BackButton = ({ url, className, ...props }: ButtonProps) => {
 
   return (
     <Button primary {...props} className={className} onClick={goBack}>
-      <ChevronLeft className="w-8 h-8" />
+      {showIcon && <ChevronLeft className="w-6 h-6" />}
       BACK
     </Button>
   );

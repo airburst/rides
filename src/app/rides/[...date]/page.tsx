@@ -7,8 +7,6 @@ import { flattenQuery } from "@utils/general";
 import { Plus } from "lucide-react";
 import Link from "next/link";
 
-export const dynamic = "force-dynamic";
-
 export default async function RidesOnDate({ params }: { params: { date: string } }) {
   const { date } = params;
   const dateString = `${flattenQuery(date)}T01:00:00.000Z`;
