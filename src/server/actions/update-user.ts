@@ -9,7 +9,13 @@ import { users } from "../db/schema";
 
 type UserUpdate = Pick<
   User,
-  "id" | "name" | "mobile" | "emergency" | "preferences" | "role"
+  | "id"
+  | "name"
+  | "mobile"
+  | "emergency"
+  | "preferences"
+  | "role"
+  | "membershipId"
 >;
 
 export const updateUser = async (
@@ -28,12 +34,12 @@ export const updateUser = async (
     };
   }
 
-  const { id, name, mobile, emergency, preferences, role } = user;
+  const { id, name, mobile, emergency, preferences, role, membershipId } = user;
 
   try {
     const result = await db
       .update(users)
-      .set({ name, mobile, emergency, preferences, role })
+      .set({ name, mobile, emergency, preferences, role, membershipId })
       .where(eq(users.id, id))
       .returning({ id: users.id });
 

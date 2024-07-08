@@ -28,6 +28,7 @@ export const userProfileFormSchema = z.object({
     units: z.string(),
   }),
   role: z.string(),
+  membershipId: z.string(),
 });
 
 export type UserProfileFormSchema = z.output<typeof userProfileFormSchema>;
