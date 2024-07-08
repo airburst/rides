@@ -14,6 +14,7 @@ export type User = {
   role: Role;
   preferences?: Preferences;
   rideNotes?: string;
+  membershipId?: string;
 };
 
 export type Session = {

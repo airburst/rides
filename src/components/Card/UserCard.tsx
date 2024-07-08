@@ -10,11 +10,11 @@ type Props = {
 
 export const UserCard: React.FC<Props> = ({ user }: Props) => {
   const router = useRouter();
-  const { id, name, email, role } = user;
+  const { id, name, email, role, membershipId } = user;
   const showBadge = ["ADMIN", "LEADER"].includes(role);
   const badgeClass = clsx(
-    "px-2 text-white h-full flex items-center justify-center rounded-r w-24",
-    role === "LEADER" && "bg-secondary",
+    "text-white badge",
+    role === "LEADER" && "bg-accent",
     role === "ADMIN" && "bg-primary"
   );
 
@@ -24,14 +24,18 @@ export const UserCard: React.FC<Props> = ({ user }: Props) => {
 
   return (
     <BasicCard key={id} id={id} onPress={onPress}>
-      <div className="flex-col lg:flex-row flex-1 p-2 gap-1 truncate">
-        <div className="align-middle font-bold uppercase tracking-wide">
-          {name}
+      <div className="flex flex-col">
+        <div className="p-2 flex-1">
+          <div className="items-center align-middle font-bold uppercase tracking-wide">
+            <div className="truncate">{name}</div>
+          </div>
+          <div className="truncate">{email}</div>
         </div>
-        <div className="truncate">{email}</div>
+        <div className="flex flex-row gap-2 p-2 pt-0">
+          {showBadge && <div className={badgeClass}>{role}</div>}
+          {membershipId && <div className="badge badge-secondary">MEMBER</div>}
+        </div>
       </div>
-
-      {showBadge && <div className={badgeClass}>{role}</div>}
     </BasicCard>
   );
 };
