@@ -46,7 +46,7 @@ export const RiderDetails = ({ user, isLeader, sessionUser }: Props) => {
       {isLeader && (
         <div className="grid grid-cols-[1fr_44px] gap-2">
           <div className={numberClass}>
-            {numberToDisplay && <Phone className="w-6 h-6" />}
+            {numberToDisplay && <Phone className="w-4 h-4" />}
             <a href={`tel:${numberToDisplay}`} className="text-right">
               {numberToDisplay}
             </a>

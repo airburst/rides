@@ -8,7 +8,6 @@ export default {
     extend: {
       fontFamily: {
         sans: ["var(--font-outfit)", ...fontFamily.sans],
-        display: ["var(--font-signika)", ...fontFamily.sans],
       },
       colors: {
         "dark-100": "#171717",
