@@ -118,9 +118,10 @@ export const getRideDateAndTime = (date: string) => {
 
 // Formatted for form inputs:
 // date = "yyyy-mm-dd" and time = "hh:mm"
-export const getFormRideDateAndTime = (date: string, fixedDate?: string) => ({
-  date: formatFormDate(fixedDate ?? date),
-  time: formatTime(fixedDate ?? date),
+export const getFormRideDateAndTime = (rideDate: string, fixedDate?: string) => ({
+  rideDate: formatFormDate(fixedDate ?? rideDate),
+  startDate: formatFormDate(fixedDate ?? rideDate),
+  time: formatTime(fixedDate ?? rideDate),
 });
 
 // Calendar view helpers

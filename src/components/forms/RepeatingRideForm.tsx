@@ -201,7 +201,7 @@ export const RepeatingRideForm = ({
               </div>
 
               <div className="col-span-2 form-control w-full">
-                <label htmlFor="byweekday">Day of week</label>
+                <label htmlFor="byweekday-month">Day of week</label>
                 <select
                   id="byweekday-month"
                   aria-label="Repeating schedule freqency"

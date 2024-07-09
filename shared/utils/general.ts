@@ -47,7 +47,7 @@ export const convertObjectToFormData = (data: FormDataType): FormData => {
   return formData;
 };
 
-export const cleanUndefinedKeys = (data: FormDataType): FormDataType => {
+export const cleanUndefinedKeys = (data: Record<string, unknown>): Record<string, unknown> => {
   const cleaned = { ...data };
 
   Object.keys(cleaned).forEach((key) => {

@@ -7,6 +7,7 @@ import { useState } from "react";
 import { toast } from "sonner";
 import { BackButton, Button } from "../Button";
 import { ConfirmWithContent } from "../ConfirmWithContent";
+import { Viewer } from "../Markdown/Viewer";
 
 type Props = {
   ride: RepeatingRide;
@@ -136,18 +137,7 @@ export const RepeatingRideDetails = ({ ride }: Props) => {
         </div>
 
         {notes && (
-          <div className="flex w-full flex-col gap-2 rounded bg-white py-2 shadow-md">
-            <div className="px-2 text-xl font-bold tracking-wide text-neutral-700">
-              Notes
-            </div>
-            <Row>
-              <div
-                className="col-span-2 whitespace-pre-line"
-                // eslint-disable-next-line react/no-danger
-                dangerouslySetInnerHTML={{ __html: (notes) }}
-              />
-            </Row>
-          </div>
+          <Viewer markdown={notes} title="Notes" />
         )}
 
         <div className="flex w-full flex-col gap-2 rounded bg-white py-2 shadow-md">

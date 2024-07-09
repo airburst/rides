@@ -4,6 +4,7 @@
 import { addRepeatingRide } from "@/server/actions/add-repeating-ride";
 import { addRide } from "@/server/actions/add-ride";
 import { generateRidesFromClient } from "@/server/actions/generate-rides-from-client";
+import { updateRepeatingRide } from "@/server/actions/update-repeating-ride";
 import { updateRide } from "@/server/actions/update-ride";
 import { Switch } from "@headlessui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -102,20 +103,29 @@ export const RideForm = ({
 
     try {
       const payload = makeRepeatingRide(data);
-      const results = await addRepeatingRide(formData);
+      if (data.id) {
+        const results = await updateRepeatingRide(formData);
 
-      if (results?.id) {
-        // Store schedule id to use in handleYes function
-        setScheduleId(results.id);
-        // Calculate rides list and ask to create them
-        const rideList = makeRidesInPeriod(repeatingRideToDb(payload), data.startDate);
-        const rideDates = rideList.rides.map(({ rideDate }) => formatDate(rideDate));
-        if (rideDates.length > 0) {
-          setRideDateList(rideDates);
-          show();
-        }
         setIsPending(false);
         toast.success(results.message);
+        router.back();
+      } else {
+        const results = await addRepeatingRide(formData);
+
+        if (results?.id) {
+          // Store schedule id to use in handleYes function
+          setScheduleId(results.id);
+          // Calculate rides list and ask to create them
+          const rideList = makeRidesInPeriod(repeatingRideToDb(payload), data.startDate);
+          const rideDates = rideList.rides.map(({ rideDate }) => formatDate(rideDate));
+          if (rideDates.length > 0) {
+            setRideDateList(rideDates);
+            show();
+          }
+          setIsPending(false);
+          toast.success(results.message);
+          router.back();
+        }
       }
     } catch (err) {
       console.error(err);
