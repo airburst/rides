@@ -3091,12 +3091,12 @@ __metadata:
     react: "npm:^18.3.0"
     react-dom: "npm:^18.3.0"
     react-hook-form: "npm:^7.52.1"
-    react-loading-skeleton: "npm:^3.4.0"
     react-quill: "npm:^2.0.0"
     rrule: "npm:^2.8.1"
     sharp: "npm:^0.33.4"
     sonner: "npm:^1.5.0"
     swr: "npm:^2.2.5"
+    tailwind-merge: "npm:^2.4.0"
     tailwindcss: "npm:^3.4.4"
     tsx: "npm:^4.16.2"
     turndown: "npm:^7.2.0"
@@ -8428,15 +8428,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-loading-skeleton@npm:^3.4.0":
-  version: 3.4.0
-  resolution: "react-loading-skeleton@npm:3.4.0"
-  peerDependencies:
-    react: ">=16.8.0"
-  checksum: 10/f504c55f2b448e05abfe480950d89a4a7301773590e3c9fc42025370bcfd1c177466bb0a9cee6291d975772218c63c83656ac8b158a75de7a2e9ad75d440925b
-  languageName: node
-  linkType: hard
-
 "react-quill@npm:^2.0.0":
   version: 2.0.0
   resolution: "react-quill@npm:2.0.0"
@@ -9328,6 +9319,13 @@ __metadata:
   version: 6.2.0
   resolution: "tabbable@npm:6.2.0"
   checksum: 10/980fa73476026e99dcacfc0d6e000d41d42c8e670faf4682496d30c625495e412c4369694f2a15cf1e5252d22de3c396f2b62edbe8d60b5dadc40d09e3f2dde3
+  languageName: node
+  linkType: hard
+
+"tailwind-merge@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "tailwind-merge@npm:2.4.0"
+  checksum: 10/dda331a95146c9943dd18f152156fe7a5daf450a686d0562fb521ebc027273bd0c8f9503742668b3e90d27e887aa794ea5e79c38faa51216e19e9d0f1ec55925
   languageName: node
   linkType: hard
 

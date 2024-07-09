@@ -3,7 +3,6 @@ import { formatDistance } from "@utils/rides";
 import clsx from "clsx";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import "react-loading-skeleton/dist/skeleton.css";
 import { type RideList, type User } from "../../types";
 import { Cancelled } from "../RideDetails/Cancelled";
 import { BasicCard } from "./BasicCard";
