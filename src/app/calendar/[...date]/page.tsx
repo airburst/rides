@@ -25,7 +25,7 @@ export default async function RideCalendar({ params }: { params: { date: string 
 
   return (
     <FullPageContent>
-      <div className="flex flex-col h-[100svh] w-full">
+      <div className="flex flex-col h-[calc(100svh_-_64px)] md:h-[calc(100svh_-_96px)] w-full">
         <div className="flex w-full flex-col gap-2 bg-white">
           <div className="flex w-full flex-row items-center justify-between p-2 font-bold uppercase tracking-wider text-neutral-700">
             <Link href={`/calendar/${lastMonth}`}><Button accent>
