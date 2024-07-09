@@ -24,7 +24,7 @@ export const RideGroup = ({ group, user }: Props) => {
           <Link href={`/ride/${ride.id}`}
             id={ride.id}
             key={ride.id}
-            className="w-full scroll-mt-16 px-2 md:scroll-mt-24 md:px-0"
+            className="w-full scroll-mt-32 md:scroll-mt-36 px-2 md:px-0"
           >
             <RideCard ride={ride} user={user} />
           </Link>
