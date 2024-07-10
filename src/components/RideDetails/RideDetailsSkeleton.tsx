@@ -19,7 +19,7 @@ const Heading = ({ children }: RowProps) => (
 export const RideDetailsSkeleton = () => (
   <div className="flex w-full flex-col gap-2">
     <Heading>
-      <div>Repeating Ride Details</div>
+      <div>Ride Details</div>
     </Heading>
 
     <div className="flex w-full flex-col gap-2 px-2 sm:px-0">

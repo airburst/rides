@@ -6,8 +6,6 @@ import { canUseAction } from "@/server/auth";
 import { flattenQuery } from "@utils/general";
 import { type Metadata } from "next";
 
-export const dynamic = "force-dynamic";
-
 export const metadata: Metadata = {
   title: `${env.NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`,
 }

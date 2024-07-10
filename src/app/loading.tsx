@@ -3,7 +3,10 @@ import { RidesListSkeleton } from "@/components/RidesList/RidesListSkeleton";
 
 const LoadingRides = () => {
   return <MainContent>
-    <RidesListSkeleton />
+    <RidesListSkeleton
+      numberOfCards={5}
+      dateText="Loading rides..."
+    />
   </MainContent>;
 };
 

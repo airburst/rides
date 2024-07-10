@@ -1,9 +1,13 @@
 import { MainContent } from "@/components/Layout/MainContent";
+import { RidesListSkeleton } from "@/components/RidesList/RidesListSkeleton";
 
-const Loading = () => {
+const LoadingRepeatingRides = () => {
   return <MainContent>
-    <div>Loading...</div>
+    <RidesListSkeleton
+      numberOfCards={5}
+      dateText="Manage Repeating Rides"
+    />
   </MainContent>;
-}
+};
 
-export default Loading;
+export default LoadingRepeatingRides;

@@ -7,8 +7,6 @@ import { flattenArrayNumber } from "@utils/forms";
 import { flattenQuery } from "@utils/general";
 import { redirect } from "next/navigation";
 
-export const dynamic = "force-dynamic";
-
 export default async function EditRepeatingRide({ params }: { params: { id: string } }) {
   const { id } = params;
   const isAdmin = await canUseAction("LEADER");
