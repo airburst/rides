@@ -17,9 +17,10 @@ type MenuContentProps = {
   confirmCancel: () => void;
   confirmDelete: () => void;
   rideId?: string;
+  isCancelled?: boolean;
 };
 
-export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout, closeMenu, rideId, confirmCancel, confirmDelete }: MenuContentProps) => {
+export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout, closeMenu, rideId, confirmCancel, confirmDelete, isCancelled }: MenuContentProps) => {
   const isLeader = role && ["ADMIN", "LEADER"].includes(role);
   const isAdmin = role === "ADMIN";
   const showEditAndDelete = isLeader && rideId;
@@ -74,9 +75,9 @@ export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout
             >
               <Pencil className="w-6 h-6" />
             </MenuEntry>
-            <MenuEntry label="Cancel Ride" onClick={confirmCancel}>
+            {!isCancelled && <MenuEntry label="Cancel Ride" onClick={confirmCancel}>
               <CircleAlert className="w-6 h-6" />
-            </MenuEntry>
+            </MenuEntry>}
             <MenuEntry label="Delete Ride" onClick={confirmDelete}>
               <Trash2 className="w-6 h-6" />
             </MenuEntry>

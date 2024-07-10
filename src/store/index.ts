@@ -4,3 +4,5 @@ import { type FilterQuery } from "../types";
 export const showFilterAtom = atom(false);
 
 export const filterQueryAtom = atom<FilterQuery>({});
+
+export const isCancelledAtom = atom(false);

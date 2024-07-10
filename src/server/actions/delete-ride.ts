@@ -23,7 +23,11 @@ export const deleteRide = async (
   }
 
   try {
-    await db.update(rides).set({ deleted: true }).where(eq(rides.id, rideId));
+    await db
+      .update(rides)
+      .set({ deleted: true })
+      .where(eq(rides.id, rideId));
+
     revalidatePath("/ride/[...id]", "page");
 
     return {

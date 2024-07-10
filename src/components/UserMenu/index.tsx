@@ -3,7 +3,9 @@
 
 import { cancelRide } from "@/server/actions/cancel-ride";
 import { deleteRide } from "@/server/actions/delete-ride";
+import { isCancelledAtom } from "@/store";
 import { type Role } from "@/types";
+import { useAtom } from "jotai";
 import { Menu } from 'lucide-react';
 import { signIn, signOut } from "next-auth/react";
 import { useParams, useRouter } from "next/navigation";
@@ -22,6 +24,7 @@ export const UserMenu = ({ role, isAuthenticated }: MenuProps) => {
   const router = useRouter();
   const params = useParams();
   const rideId = flattenQuery(params.id);
+  const [isCancelled] = useAtom(isCancelledAtom);
   const [show, setShow] = useState<boolean>(false);
   const [showConfirmCancel, setShowConfirmCancel] = useState<boolean>(false);
   const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
@@ -113,6 +116,7 @@ export const UserMenu = ({ role, isAuthenticated }: MenuProps) => {
             confirmCancel={confirmCancel}
             confirmDelete={confirmDelete}
             rideId={rideId}
+            isCancelled={isCancelled}
           />
         </div>
       </div>

@@ -1,6 +1,8 @@
 "use client";
+import { isCancelledAtom } from "@/store";
+import { useAtom } from "jotai";
 import { MessageSquare } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { hasSpace, isJoinable } from "../../../shared/utils";
 import { type Ride, type User } from "../../types";
 import { Badge } from "../Badge";
@@ -29,8 +31,11 @@ type Props = {
 export const RideDetails = ({ ride, user, role }: Props) => {
   const [showNotesForm, setShowNotesForm] = useState<boolean>(false);
   const { id, name, rideDate, day, cancelled, rideLimit, users } = ride;
-  const userList = users?.map((u: { user: User }) => u.user);
 
+  // Set cancelled state so UserMenu can show or hide cancel action
+  const [, setCancelled] = useAtom(isCancelledAtom);
+
+  const userList = users?.map((u: { user: User }) => u.user);
   const hasRiders = users && users?.length > 0;
   const isGoing =
     userList && user ? userList?.map((u: User) => u.id).includes(user?.id) : false;
@@ -45,6 +50,11 @@ export const RideDetails = ({ ride, user, role }: Props) => {
 
   const openNotes = () => setShowNotesForm(true);
   const closeNotes = () => setShowNotesForm(false);
+
+  useEffect(() => {
+    setCancelled(cancelled ?? false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <div className="flex w-full flex-col gap-2 md:gap-4">
