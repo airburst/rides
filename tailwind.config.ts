@@ -22,4 +22,13 @@ export default {
   },
   plugins: [require("daisyui"), require("@tailwindcss/forms")],
   jit: true,
+  // Remove unused styles in production
+  purge: {
+    mode: 'all',
+    preserveHtmlElements: false,
+    content: [
+      './src/**/*.tsx',
+      // Any third party libs that have classes in the HTML
+    ],
+  },
 } satisfies Config;
