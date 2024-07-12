@@ -1,12 +1,23 @@
-/**
- * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially useful
- * for Docker builds.
- */
+import bundleAnalyzer from "@next/bundle-analyzer";
 await import("./src/env.js");
 
+export const withBundleAnalyzer = bundleAnalyzer({
+  enabled: process.env.ANALYZE === "true",
+});
+
 /** @type {import("next").NextConfig} */
-const config = {
-  // distDir: "build",
-};
+const config = withBundleAnalyzer({
+  reactStrictMode: true,
+  swcMinify: true,
+  i18n: {
+    locales: ["en"],
+    defaultLocale: "en",
+  },
+});
 
 export default config;
+
+// Export PWA in production only
+// export default process.env.NODE_ENV === "production"
+//   ? withPWA(appConfig)
+//   : appConfig;
