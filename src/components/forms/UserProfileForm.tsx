@@ -13,12 +13,12 @@ import { Button } from "../Button";
 import { CancelButton } from "../Button/CancelButton";
 import { userProfileFormSchema, type UserProfileFormSchema } from "./formSchemas";
 
-type UserFormProps = {
+export type UserFormProps = {
   user: User;
   isAdmin?: boolean;
 };
 
-export const UserProfileForm = ({
+const UserProfileForm = ({
   user,
   isAdmin
 }: UserFormProps) => {
@@ -202,3 +202,5 @@ export const UserProfileForm = ({
     </form>
   );
 }
+
+export default UserProfileForm;

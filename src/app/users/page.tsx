@@ -1,12 +1,12 @@
 import { MainContent } from "@/components/Layout/MainContent";
-import { UsersList } from "@/components/Users/UsersList";
 import { env } from "@/env";
 import { getUsers } from "@/server/actions/get-users";
 import { canUseAction } from "@/server/auth";
 import { type Metadata } from "next";
+import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
 
-export const dynamic = "force-dynamic";
+const UsersList = dynamic(() => import("@/components/Users/UsersList"));
 
 export const metadata: Metadata = {
   title: `Manage Users`,

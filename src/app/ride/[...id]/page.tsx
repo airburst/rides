@@ -1,10 +1,12 @@
 import { BackButton } from "@/components/Button";
 import { MainContent } from "@/components/Layout/MainContent";
-import { RideDetails } from "@/components/RideDetails";
 import { env } from "@/env";
 import { getRide } from "@/server/actions/get-ride";
 import { getServerAuthSession } from "@/server/auth";
 import { type Metadata } from "next";
+import dynamic from "next/dynamic";
+
+const RideDetails = dynamic(() => import("@/components/RideDetails"));
 
 export const metadata: Metadata = {
   title: `${env.NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`,

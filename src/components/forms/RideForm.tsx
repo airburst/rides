@@ -9,6 +9,7 @@ import { updateRide } from "@/server/actions/update-ride";
 import { Switch } from "@headlessui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import clsx from "clsx";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -19,20 +20,22 @@ import { type Preferences } from "../../types";
 import { Button } from "../Button";
 import { CancelButton } from "../Button/CancelButton";
 import { ConfirmWithContent } from "../ConfirmWithContent";
-import { Editor } from "../Markdown/Editor";
 import { rideFormSchema, type RideFormSchema } from "./formSchemas";
-import { RepeatingRideForm } from "./RepeatingRideForm";
+
+const RepeatingRideForm = dynamic(() => import("./RepeatingRideForm"));
+
+const Editor = dynamic(() => import("../Markdown/Editor"), { ssr: false });
 
 const today = getNow().split("T")[0] ?? "";
 
-type RideFormProps = {
+export type RideFormProps = {
   isAdmin?: boolean;
   isRepeating?: boolean;
   defaultValues: RideFormSchema;
   preferences?: Preferences;
 };
 
-export const RideForm = ({
+const RideForm = ({
   isAdmin,
   isRepeating,
   defaultValues: defaults,
@@ -370,3 +373,5 @@ export const RideForm = ({
     </>
   );
 };
+
+export default RideForm;

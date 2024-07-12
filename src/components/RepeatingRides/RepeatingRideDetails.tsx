@@ -2,14 +2,16 @@
 import { deleteRepeatingRide } from "@/server/actions/delete-repeating-ride";
 import { type RepeatingRide } from "@/types";
 import { formatDate, formatTime } from "@utils/dates";
+import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
 import { BackButton, Button } from "../Button";
 import { ConfirmWithContent } from "../ConfirmWithContent";
-import { Viewer } from "../Markdown/Viewer";
 
-type Props = {
+const Viewer = dynamic(() => import("@/components/Markdown/Viewer"));
+
+export type RepeatingRideDetailsProps = {
   ride: RepeatingRide;
 };
 
@@ -23,7 +25,7 @@ const Row = ({ children }: RowProps) => (
   </div>
 );
 
-export const RepeatingRideDetails = ({ ride }: Props) => {
+const RepeatingRideDetails = ({ ride }: RepeatingRideDetailsProps) => {
   const [showConfirmDelete, setShowDelete] = useState<boolean>(false);
   const [deleteAllRides, setDeleteAllRides] = useState<boolean>(true);
   const router = useRouter();
@@ -226,3 +228,5 @@ export const RepeatingRideDetails = ({ ride }: Props) => {
     </>
   );
 }
+
+export default RepeatingRideDetails;

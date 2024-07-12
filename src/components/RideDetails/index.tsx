@@ -21,14 +21,14 @@ const Heading = ({ children }: RowProps) => (
   </div>
 );
 
-type Props = {
+export type RideDetailsProps = {
   ride: Ride;
   user?: User;
   role?: string;
   embedded?: boolean;
 };
 
-export const RideDetails = ({ ride, user, role }: Props) => {
+const RideDetails = ({ ride, user, role }: RideDetailsProps) => {
   const [showNotesForm, setShowNotesForm] = useState<boolean>(false);
   const { id, name, rideDate, day, cancelled, rideLimit, users } = ride;
 
@@ -123,3 +123,5 @@ export const RideDetails = ({ ride, user, role }: Props) => {
     </div >
   );
 };
+
+export default RideDetails;

@@ -1,5 +1,5 @@
 import { Button } from "@/components/Button";
-import { type CalendarProps } from "@/components/Calendar";
+import { type CalendarSkeletonProps } from "@/components/Calendar/CalendarSkeleton";
 import { FullPageContent } from "@/components/Layout/FullPageContent";
 import { env } from "@/env";
 import { formatCalendarDate, getLastMonth, getNextMonth, getNow } from "@utils/dates";
@@ -8,7 +8,7 @@ import { type Metadata } from "next";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 
-const Calendar = dynamic<CalendarProps>(() => import('@/components/Calendar'));
+const CalendarSkeleton = dynamic<CalendarSkeletonProps>(() => import('@/components/Calendar/CalendarSkeleton'));
 
 export const metadata: Metadata = {
   title: `${env.NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`,
@@ -34,7 +34,7 @@ export default async function RideCalendar() {
             </Button></Link>
           </div>
         </div>
-        <Calendar date={monthDate} />
+        <CalendarSkeleton date={monthDate} />
       </div>
     </FullPageContent>
   )

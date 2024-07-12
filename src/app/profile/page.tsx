@@ -1,12 +1,12 @@
 import { BackButton } from "@/components/Button";
 import { MainContent } from "@/components/Layout/MainContent";
-import { UserProfileForm } from "@/components/forms/UserProfileForm";
 import { env } from "@/env";
 import { getUser } from "@/server/actions/get-user";
 import { getServerAuthSession } from "@/server/auth";
 import { type Metadata } from "next";
+import dynamic from "next/dynamic";
 
-export const dynamic = "force-dynamic";
+const UserProfileForm = dynamic(() => import("@/components/forms/UserProfileForm"));
 
 export const metadata: Metadata = {
   title: `${env.NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`,

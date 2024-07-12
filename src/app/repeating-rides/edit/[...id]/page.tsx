@@ -1,11 +1,14 @@
-import { RideForm } from "@/components/forms/RideForm";
+import { type RideFormProps } from "@/components/forms/RideForm";
 import { MainContent } from "@/components/Layout/MainContent";
 import { getRepeatingRide } from "@/server/actions/get-repeating-ride";
 import { canUseAction } from "@/server/auth";
 import { formatFormDate, getFormRideDateAndTime } from "@utils/dates";
 import { flattenArrayNumber } from "@utils/forms";
 import { flattenQuery } from "@utils/general";
+import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
+
+const RideForm = dynamic<RideFormProps>(() => import("@/components/forms/RideForm"));
 
 export default async function EditRepeatingRide({ params }: { params: { id: string } }) {
   const { id } = params;

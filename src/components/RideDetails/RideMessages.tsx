@@ -2,9 +2,12 @@
 
 import { updateMessage } from "@/server/actions/update-message";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import dynamic from "next/dynamic";
 import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { RideMessagesForm, type FormValues } from "../forms/RideMessagesForm";
+import { type FormValues } from "../forms/RideMessagesForm";
+
+const RideMessagesForm = dynamic(() => import("../forms/RideMessagesForm"));
 
 type Props = {
   rideId?: string;

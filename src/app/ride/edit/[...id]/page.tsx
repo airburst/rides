@@ -1,10 +1,13 @@
+import { type RideFormProps } from "@/components/forms/RideForm";
 import { MainContent } from "@/components/Layout/MainContent";
-import { RideForm } from "@/components/forms/RideForm";
 import { env } from "@/env";
 import { getRide } from "@/server/actions/get-ride";
 import { canUseAction } from "@/server/auth";
 import { flattenQuery } from "@utils/general";
 import { type Metadata } from "next";
+import dynamic from "next/dynamic";
+
+const RideForm = dynamic<RideFormProps>(() => import("@/components/forms/RideForm"));
 
 export const metadata: Metadata = {
   title: `${env.NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`,

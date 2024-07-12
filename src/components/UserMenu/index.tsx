@@ -15,12 +15,12 @@ import { toast } from "sonner";
 import { Confirm } from "../Confirm";
 import { MenuContent } from "./MenuContent";
 
-type MenuProps = {
+export type MenuProps = {
   role?: Role;
   isAuthenticated: boolean;
 };
 
-export const UserMenu = ({ role, isAuthenticated }: MenuProps) => {
+const UserMenu = ({ role, isAuthenticated }: MenuProps) => {
   const router = useRouter();
   const params = useParams();
   const rideId = flattenQuery(params.id);
@@ -137,3 +137,5 @@ export const UserMenu = ({ role, isAuthenticated }: MenuProps) => {
     </>
   );
 };
+
+export default UserMenu;

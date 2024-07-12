@@ -10,7 +10,7 @@ export type FormValues = {
   notes?: string;
 };
 
-type RideMessagesFormProps = {
+export type RideMessagesFormProps = {
   defaultValues: FormValues;
   register: UseFormRegister<FormValues>;
   errors: Partial<FieldErrorsImpl<FormValues>>;
@@ -22,7 +22,7 @@ type RideMessagesFormProps = {
 };
 
 // Define the form
-export const RideMessagesForm = ({
+const RideMessagesForm = ({
   defaultValues,
   register,
   handleSubmit,
@@ -67,3 +67,5 @@ export const RideMessagesForm = ({
     </form>
   );
 };
+
+export default RideMessagesForm;

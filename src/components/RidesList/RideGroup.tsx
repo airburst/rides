@@ -25,6 +25,7 @@ export const RideGroup = ({ group, user }: Props) => {
             id={ride.id}
             key={ride.id}
             className="w-full scroll-mt-32 md:scroll-mt-36 px-2 md:px-0"
+            prefetch={false}
           >
             <RideCard ride={ride} user={user} />
           </Link>

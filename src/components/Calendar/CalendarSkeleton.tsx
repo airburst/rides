@@ -6,12 +6,11 @@ import {
 import { Day, OutsideDay } from "./Day";
 import { HeadingGroup } from "./Heading";
 
-type Props = {
+export type CalendarSkeletonProps = {
   date: string;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const CalendarSkeleton: React.FC<Props> = async ({ date }: Props) => {
+const CalendarSkeleton: React.FC<CalendarSkeletonProps> = async ({ date }: CalendarSkeletonProps) => {
   const monthDate = date ? flattenQuery(date) : getNow();
   const calGrid = generateCalendar(monthDate);
   const rowCount = calGrid.length / 7;
@@ -42,3 +41,5 @@ export const CalendarSkeleton: React.FC<Props> = async ({ date }: Props) => {
     </>
   );
 };
+
+export default CalendarSkeleton

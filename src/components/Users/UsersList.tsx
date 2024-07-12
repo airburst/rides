@@ -4,11 +4,11 @@ import { type User } from "@/types";
 import { useState, type ChangeEvent } from "react";
 import { UserCard } from "../Card";
 
-type Props = {
+export type UsersListProps = {
   users: User[];
 }
 
-export const UsersList = ({ users }: Props) => {
+const UsersList = ({ users }: UsersListProps) => {
   const [searchText, setSearchText] = useState("");
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
@@ -54,3 +54,5 @@ export const UsersList = ({ users }: Props) => {
     </>
   );
 }
+
+export default UsersList;

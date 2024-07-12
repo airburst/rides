@@ -12,7 +12,7 @@ import { type RideFormSchema } from "./formSchemas";
 
 const today = getNow().split("T")[0] ?? "";
 
-type RepeatingRideFormProps = {
+export type RepeatingRideFormProps = {
   isRepeating?: boolean;
   defaultValues: RideFormSchema;
   repeats: boolean;
@@ -22,7 +22,7 @@ type RepeatingRideFormProps = {
   errors: FieldErrors<RideFormSchema>;
 };
 
-export const RepeatingRideForm = ({
+const RepeatingRideForm = ({
   isRepeating,
   defaultValues,
   repeats,
@@ -275,3 +275,5 @@ export const RepeatingRideForm = ({
     </>
   );
 };
+
+export default RepeatingRideForm;

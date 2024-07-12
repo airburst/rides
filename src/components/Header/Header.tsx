@@ -1,10 +1,12 @@
 import { env } from "@/env";
 import { getServerAuthSession } from "@/server/auth";
+import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
 import Logo from "../../../public/static/images/bath-cc-logo.svg";
 import { FilterButton } from "../Filters";
-import { UserMenu } from "../UserMenu";
+
+const UserMenu = dynamic(() => import("../UserMenu"));
 
 const { NEXT_PUBLIC_CLUB_SHORT_NAME } = env;
 

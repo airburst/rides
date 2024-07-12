@@ -3,11 +3,11 @@ import { getServerAuthSession } from "@/server/auth";
 import { getQueryDateRange } from "@utils/dates";
 import { FilteredRides } from "./FilteredRides";
 
-type Props = {
+export type RidesListProps = {
   date?: string;
 }
 
-export const RidesList = async ({ date }: Props) => {
+const RidesList = async ({ date }: RidesListProps) => {
   const session = await getServerAuthSession();
   const user = session?.user;
   // Get date range for supplied date, or all rides from today
@@ -28,3 +28,5 @@ export const RidesList = async ({ date }: Props) => {
     <FilteredRides rides={rides} user={user} />
   );
 }
+
+export default RidesList;

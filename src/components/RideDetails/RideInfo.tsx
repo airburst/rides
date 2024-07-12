@@ -1,10 +1,12 @@
 import { makeClickableUrl } from "@utils/makeClickableUrl";
 import { formatDistance } from "@utils/rides";
+import dynamic from "next/dynamic";
 import { type Ride, type User } from "../../types";
-import { Viewer } from "../Markdown/Viewer";
 import { CancelledBanner } from "./Cancelled";
 import { Messages } from "./Messages";
 import { Row } from "./Row";
+
+const Viewer = dynamic(() => import("@/components/Markdown/Viewer"));
 
 type Props = {
   ride: Ride;

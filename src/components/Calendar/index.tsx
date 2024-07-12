@@ -11,13 +11,13 @@ import { MainContent } from "../Layout/MainContent";
 import { Day, OutsideDay } from "./Day";
 import { HeadingGroup } from "./Heading";
 
-type Props = {
+export type CalendarProps = {
   date: string;
   rides?: RideList[];
 };
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-export const Calendar: React.FC<Props> = async ({ date }: Props) => {
+const Calendar: React.FC<CalendarProps> = async ({ date }: CalendarProps) => {
   const monthDate = date ? flattenQuery(date) : getNow();
   const { start, end } = getMonthDateRange(monthDate);
   const calGrid = generateCalendar(monthDate);
@@ -66,3 +66,5 @@ export const Calendar: React.FC<Props> = async ({ date }: Props) => {
     </>
   );
 };
+
+export default Calendar

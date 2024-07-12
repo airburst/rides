@@ -1,7 +1,10 @@
 import { MainContent } from "@/components/Layout/MainContent";
-import { RidesList } from "@/components/RidesList";
+import { type RidesListProps } from "@/components/RidesList";
 import { env } from "@/env";
 import type { Metadata } from 'next';
+import dynamic from "next/dynamic";
+
+const RidesList = dynamic<RidesListProps>(() => import('@/components/RidesList'));
 
 export const metadata: Metadata = {
   title: `${env.NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`,

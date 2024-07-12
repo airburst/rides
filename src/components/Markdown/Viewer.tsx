@@ -1,12 +1,12 @@
 import markdownIt from "markdown-it";
 import "./markdown.css";
 
-type Props = {
+export type ViewerProps = {
   markdown?: string;
   title?: string;
 };
 
-export const Viewer = ({ markdown, title }: Props) => {
+const Viewer = ({ markdown, title }: ViewerProps) => {
   const md = new markdownIt({
     html: true,
     linkify: true,
@@ -29,3 +29,5 @@ export const Viewer = ({ markdown, title }: Props) => {
     </div>
   );
 }
+
+export default Viewer;

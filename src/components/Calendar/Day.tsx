@@ -47,7 +47,7 @@ export const Day = ({ day, date, rides = [], classes, past }: Props) => {
     </div>
   );
 
-  return <Link href={`/rides/${date}`}>{Content}</Link>;
+  return <Link href={`/rides/${date}`} prefetch={false}>{Content}</Link>;
 };
 
 export const OutsideDay = (props: Props) => (

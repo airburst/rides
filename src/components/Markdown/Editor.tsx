@@ -5,6 +5,7 @@ import "quill/dist/quill.snow.css";
 import { useMemo, useState } from "react";
 import Turndown from "turndown";
 
+
 // Configure Quill
 const modules = {
   toolbar: [
@@ -49,15 +50,15 @@ td.addRule("strikethrough", {
   },
 });
 
-type EditorProps = {
+export type EditorProps = {
   initialValue?: string;
   onChange?: (value: string) => void;
 }
 
-export const Editor = ({ initialValue = "", onChange }: EditorProps) => {
+const Editor = ({ initialValue = "", onChange }: EditorProps) => {
   const html = md.render(initialValue);
   const [value, setValue] = useState(html);
-  const ReactQuill = useMemo(() => dynamic(() => import('react-quill'), { ssr: false }), []);
+  const ReactQuill = useMemo(() => dynamic(() => import('react-quill')), []);
 
   const handleChange = (html: string) => {
     setValue(html);
@@ -75,3 +76,5 @@ export const Editor = ({ initialValue = "", onChange }: EditorProps) => {
     </div>
   );
 };
+
+export default Editor;

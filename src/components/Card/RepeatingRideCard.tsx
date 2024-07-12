@@ -18,7 +18,7 @@ export const RepeatingRideCard: React.FC<Props> = ({ ride }: Props) => {
   }
 
   return (
-    <Link href={`/repeating-rides/${id}`}>
+    <Link href={`/repeating-rides/${id}`} prefetch={false}>
       <BasicCard>
         <div className="flex-col lg:flex-row flex-1 p-2 gap-1 truncate">
           <div className="align-middle font-bold uppercase tracking-wide">

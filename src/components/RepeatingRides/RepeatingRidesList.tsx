@@ -3,11 +3,11 @@ import { type RepeatingRide } from "@/types";
 import { type ChangeEvent, useState } from "react";
 import { RepeatingRideCard } from "../Card";
 
-type Props = {
+export type RepeatingRidesListProps = {
   repeatingRides: RepeatingRide[];
 };
 
-export const RepeatingRidesList = ({ repeatingRides }: Props) => {
+const RepeatingRidesList = ({ repeatingRides }: RepeatingRidesListProps) => {
   const [searchText, setSearchText] = useState("");
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
@@ -55,3 +55,5 @@ export const RepeatingRidesList = ({ repeatingRides }: Props) => {
     </>
   );
 }
+
+export default RepeatingRidesList;

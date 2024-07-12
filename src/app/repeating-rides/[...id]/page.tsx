@@ -1,8 +1,10 @@
 import { MainContent } from "@/components/Layout/MainContent";
-import { RepeatingRideDetails } from "@/components/RepeatingRides/RepeatingRideDetails";
 import { getRepeatingRide } from "@/server/actions/get-repeating-ride";
 import { canUseAction } from "@/server/auth";
+import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
+
+const RepeatingRideDetails = dynamic(() => import("@/components/RepeatingRides/RepeatingRideDetails"));
 
 export default async function RepeatingRide({ params }: { params: { id: string } }) {
   const { id } = params;
