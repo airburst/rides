@@ -30,6 +30,7 @@
     "@headlessui/react": "^2.1.2",
     "@hookform/resolvers": "^3.9.0",
     "@t3-oss/env-nextjs": "^0.10.1",
+    "@vercel/speed-insights": "^1.0.12",
     "clsx": "^2.1.1",
     "copy-to-clipboard": "^3.3.3",
     "daisyui": "^4.12.10",
