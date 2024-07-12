@@ -25,7 +25,15 @@ export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout
   const isAdmin = role === "ADMIN";
   const showEditAndDelete = isLeader && rideId;
 
-  const copyLink = () => copy(window.location.href); // next usePathname?
+  // Make a short url with last 6 characters of ride id
+  const copyLink = () => {
+    const path = window.location.href;
+    const parts = path.split("/");
+    const shortId = parts.pop()?.slice(-6);
+    const url = [...parts.slice(0, 3), "r", shortId].join("/");
+    copy(url);
+    return true;
+  }
 
   return (
     <div className="w-80 sm:w-96 min-h-full bg-dark-100 px-2">
