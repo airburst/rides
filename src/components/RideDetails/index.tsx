@@ -92,10 +92,10 @@ const RideDetails = ({ ride, user, role }: RideDetailsProps) => {
               isLeader={isLeader}
             />
             <div className="grid grid-cols-3 mb-16 md:gap-4 gap-2 p-2 sm:px-0 md:max-w-[460px]">
-              <BackButton url={`/#${id}`} />
+              <BackButton url={`/#${id}`} className="ps-[4px] pe-[4px]" />
 
               {isGoing && (
-                <Button accent onClick={openNotes}>
+                <Button accent className="ps-[4px] pe-[4px]" onClick={openNotes}>
                   <MessageSquare className="w-6 h-6" />
                   NOTE
                 </Button>
@@ -103,6 +103,7 @@ const RideDetails = ({ ride, user, role }: RideDetailsProps) => {
 
               {user && (canJoin || isGoing) && (
                 <JoinButton
+                  className="ps-[4px] pe-[4px]"
                   going={isGoing}
                   ariaLabel={`Join ${name} ride`}
                   rideId={id!}
@@ -125,3 +126,8 @@ const RideDetails = ({ ride, user, role }: RideDetailsProps) => {
 };
 
 export default RideDetails;
+
+/*
+  padding-inline-start: 4px;
+  padding-inline-end: 4px;
+  */
