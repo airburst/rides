@@ -6,7 +6,6 @@ import { type Ride } from "@/types";
 import { formatRideData } from "@utils/rides";
 import { and, eq } from "drizzle-orm";
 
-// TODO: preferences
 export const getRide = async (
   id: string,
 ): Promise<{

@@ -33,7 +33,6 @@ export default async function RideDetailsPage({ params }: { params: { id: string
     );
   }
 
-  // TODO: Move this into RSC
   const { ride, error } = await getRide(id);
 
   if (error) {

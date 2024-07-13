@@ -54,7 +54,7 @@ export const env = createEnv({
     NEXT_PUBLIC_REPO: process.env.NEXT_PUBLIC_REPO,
     HOST_URL: process.env.HOST_URL,
     DATABASE_URL: process.env.DATABASE_URL,
-    SOURCE_URL: process.env.SOURCE_URL, // FIXME:
+    SOURCE_URL: process.env.SOURCE_URL,
     NODE_ENV: process.env.NODE_ENV,
     NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
     NEXTAUTH_URL: process.env.NEXTAUTH_URL,

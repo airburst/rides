@@ -27,7 +27,6 @@ export default async function CopyRidePage({ params }: { params: { id: string } 
     )
   }
 
-  // TODO: preferences
   const { ride, error } = await getRide(id);
 
   if (error) {

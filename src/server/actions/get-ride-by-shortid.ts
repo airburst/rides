@@ -11,7 +11,6 @@ import { and, eq, like } from "drizzle-orm";
  * We create a short id with the last 6 characters of the ride id.
  * And match on id with a LIKE clause.
  */
-// TODO: preferences
 export const getRideByShortId = async (
   shortId: string,
 ): Promise<{
