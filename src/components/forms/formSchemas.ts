@@ -23,7 +23,7 @@ export const userProfileFormSchema = z.object({
     .trim()
     .regex(phoneRegex, "Emergency contact must include a telephone number")
     .min(11, { message: "Too short for an emergency contact and number" }),
-  email: z.string().trim().email({ message: "Invalid email address" }),
+    email: z.string().trim().email({ message: "Invalid email address" }),
   preferences: z.object({
     units: z.string(),
   }),

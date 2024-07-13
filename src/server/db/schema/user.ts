@@ -19,7 +19,7 @@ const users = createTable("users", {
     precision: 3,
     withTimezone: true,
   }).defaultNow(),
-  image: varchar("image", { length: 255 }),
+  image: text("image"),
   mobile: varchar("mobile", { length: 255 }),
   emergency: varchar("emergency", { length: 255 }),
   role: roleEnum("role").default("USER"),

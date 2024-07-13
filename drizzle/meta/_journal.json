@@ -8,6 +8,13 @@
       "when": 1719936854769,
       "tag": "0000_dapper_johnny_storm",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1720888414355,
+      "tag": "0001_complete_satana",
+      "breakpoints": true
     }
   ]
 }

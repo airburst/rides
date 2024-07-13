@@ -13,6 +13,7 @@ type UserUpdate = Pick<
   | "name"
   | "mobile"
   | "emergency"
+  | "image"
   | "preferences"
   | "role"
   | "membershipId"
