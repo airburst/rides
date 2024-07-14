@@ -1,10 +1,12 @@
 "use client";
 
+import { MAX_FILE_SIZE_IN_BYTES } from '@/constants';
 import { updateAvatar } from '@/server/actions/update-avatar';
 import { type User } from '@/types';
 import { Upload } from 'lucide-react';
 import Image from 'next/image';
 import { type MouseEvent, useRef, useState } from 'react';
+import { toast } from 'sonner';
 import { Button } from './Button';
 
 export type ImageUploadProps = {
@@ -27,25 +29,32 @@ const ImageUpload = ({ user, onClose }: ImageUploadProps) => {
       if (fileUploadRef?.current?.files) {
         const uploadedFile = fileUploadRef.current.files[0];
 
+        if (uploadedFile?.size && uploadedFile?.size > MAX_FILE_SIZE_IN_BYTES) {
+          toast.error("File size too large");
+          return;
+        }
+
         const reader = new FileReader();
 
         reader.onloadend = async () => {
           setAvatarURL(reader.result as string);
           await updateAvatar(user.id, reader.result as string);
+          toast.success("Changed profile image");
           onClose();
         }
         reader.readAsDataURL(uploadedFile!);
       }
     } catch (error) {
       console.error(error);
+      toast.error("Unable to upload image");
       setAvatarURL(user.image!);
     }
   }
 
   return (
-    <div className="flex flex-row gap-8">
+    <div className="flex flex-row gap-8 items-center">
       <div className="avatar">
-        <div className="w-[40px] rounded-full">
+        <div className="w-[40px] h-[40px] rounded-full">
           <Image className="text-neutral-500" src={avatarURL} width={40} height={40} alt="Avatar" />
         </div>
       </div>

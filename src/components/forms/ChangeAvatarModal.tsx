@@ -18,7 +18,7 @@ const ChangeAvatarModal = ({ open, onClose, user }: ChangeAvatarModalProps) => {
       <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
         <DialogPanel className="max-w-lg space-y-4 rounded-md bg-white p-8">
           <DialogTitle className="text-xl">Change Avatar Image</DialogTitle>
-          <Description>Upload a picture of your choice.  A square format will work best.</Description>
+          <Description>Upload or take a picture of your choice, no larger than 4mb.</Description>
           <div><ImageUpload user={user} onClose={onClose} /></div>
           <div className="mt-4 flex h-10 flex-row gap-4">
             <Button
