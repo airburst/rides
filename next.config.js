@@ -21,6 +21,12 @@ const config = withBundleAnalyzer({
         port: "",
         pathname: "/avatar/**",
       },
+      {
+        protocol: "https",
+        hostname: "s.gravatar.com",
+        port: "",
+        pathname: "/avatar/**",
+      },
     ],
   },
   experimental: {
