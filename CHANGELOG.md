@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 3.0.0-beta.2 - 2024-07-10
+## 3.0.0-beta.3 - 2024-07-14
 
 ### Breaking changes
 
@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- Users can change their profile image in Settings page
 - User profiles include RiderHQ membership badge; user form includes RiderHQ id
 - Added toast notifications for create, cancel and delete actions
 - Added a rich text editor for ride notes
