@@ -16,6 +16,7 @@ export type ImageUploadProps = {
 
 const ImageUpload = ({ user, onClose }: ImageUploadProps) => {
   const [avatarURL, setAvatarURL] = useState(user.image!);
+  const [isUploading, setIsUploading] = useState(false);
 
   const fileUploadRef = useRef<HTMLInputElement>(null);
 
@@ -40,13 +41,17 @@ const ImageUpload = ({ user, onClose }: ImageUploadProps) => {
           setAvatarURL(reader.result as string);
           await updateAvatar(user.id, reader.result as string);
           toast.success("Changed profile image");
+          setIsUploading(false);
           onClose();
         }
+
+        setIsUploading(true);
         reader.readAsDataURL(uploadedFile!);
       }
     } catch (error) {
       console.error(error);
       toast.error("Unable to upload image");
+      setIsUploading(false);
       setAvatarURL(user.image!);
     }
   }
@@ -61,7 +66,10 @@ const ImageUpload = ({ user, onClose }: ImageUploadProps) => {
 
       <form id="form" encType='multipart/form-data'>
         <Button accent
-          type='submit'
+          className="min-w-32"
+          type="submit"
+          disabled={isUploading}
+          loading={isUploading}
           onClick={handleImageUpload}>
           <Upload className="w-6 h-6" />
           UPLOAD
