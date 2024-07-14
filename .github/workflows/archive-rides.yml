@@ -1,0 +1,23 @@
+name: Archive Rides
+on:
+  schedule:
+    # At 01:05 on the 1st day of each month
+    #       +------------ minute (0 - 59)
+    #       | +---------- hour (0 - 23)
+    #       | | +-------- day of month (1 - 31)
+    #       | | | +------ month (1 - 12)
+    #       | | | | +---- day of week (0 - 7) (Sunday=0 or 7)
+    #       | | | | |
+    #       * * * * *
+    - cron: 5 1 1 * *
+  workflow_dispatch:
+
+jobs:
+  cron:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Archive rides from previous month
+        run: |
+          curl --request POST \
+          --url "https://bcc-rides.vercel.app/api/archive-rides" \
+          --header "Authorization: Bearer ${{ secrets.API_KEY }}"
