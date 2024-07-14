@@ -29,6 +29,7 @@ export const userProfileFormSchema = z.object({
   }),
   role: z.string(),
   membershipId: z.string(),
+  isMember: z.boolean(),
 });
 
 export type UserProfileFormSchema = z.output<typeof userProfileFormSchema>;

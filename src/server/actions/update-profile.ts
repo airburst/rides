@@ -16,6 +16,8 @@ export async function updateProfile(data: FormData): Promise<FormState> {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-base-to-string
     formData.preferences = JSON.parse(formData.preferences.toString());
   }
+  // @ts-expect-error boolean value in FormData
+  formData.isMember = formData.isMember === "true";
 
   const parsed = userProfileFormSchema.safeParse(formData);
 

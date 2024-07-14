@@ -34,6 +34,7 @@ export const getUsers = async (
           image: true,
           role: true,
           membershipId: true,
+          isMember: true,
         },
         where: or(
           // @ts-expect-error col type string
@@ -52,6 +53,7 @@ export const getUsers = async (
           image: true,
           role: true,
           membershipId: true,
+          isMember: true,
         },
         orderBy: [asc(users.name)],
       });

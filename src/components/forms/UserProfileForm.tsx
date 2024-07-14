@@ -26,6 +26,7 @@ const UserProfileForm = ({
 }: UserFormProps) => {
   const { register,
     handleSubmit,
+    getValues,
     formState: { defaultValues, errors, isDirty }
   } = useForm<UserProfileFormSchema>({
     resolver: zodResolver(userProfileFormSchema),
@@ -40,6 +41,7 @@ const UserProfileForm = ({
       },
       role: user?.role ?? "USER",
       membershipId: user?.membershipId ?? "",
+      isMember: user?.isMember ?? false,
     },
   });
   const router = useRouter();
@@ -161,17 +163,29 @@ const UserProfileForm = ({
                 </label>
               </div>
 
-              <div className="grid w-full grid-cols-1 gap-4 md:gap-8">
-                <label htmlFor="role" className="flex flex-col">
+              <div className="grid w-full grid-cols-[1fr_auto] gap-4 md:gap-8">
+                <label htmlFor="membershipId" className="flex flex-col">
                   <div className="flex flex-row">
                     <span className="flex-1">RiderHQ Membership Id</span>
-                    {defaultValues?.membershipId && <ShieldCheck className="text-secondary w-6 h-6" />}
+                    {user?.isMember && <ShieldCheck className="w-6 h-6 text-secondary" />}
                   </div>
                   <input
                     id="membershipId"
                     className="input input-bordered"
+                    placeholder="E.g. gm_r3nqcaa"
                     defaultValue={defaultValues?.membershipId ?? ""}
                     {...register("membershipId")}
+                  />
+                </label>
+                <label htmlFor="isMember" className="flex flex-col items-end">
+                  <span className="flex-1">Member</span>
+                  <input
+                    id="isMember"
+                    type="checkbox"
+                    className="checkbox checkbox-primary checkbox-lg my-2"
+                    disabled={getValues()?.membershipId === ""}
+                    defaultChecked={defaultValues?.isMember}
+                    {...register("isMember")}
                   />
                 </label>
               </div>

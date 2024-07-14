@@ -20,7 +20,7 @@ export const getScalarValue = (
 
 type FormDataType = Record<
   string,
-  string | number | { units: string } | undefined
+  string | number | boolean | { units: string } | undefined
 >;
 
 export const convertObjectToFormData = (data: FormDataType): FormData => {
@@ -36,6 +36,9 @@ export const convertObjectToFormData = (data: FormDataType): FormData => {
         formData.append(key, value.toString());
         break;
       case "object":
+        formData.append(key, JSON.stringify(value));
+        break;
+      case "boolean":
         formData.append(key, JSON.stringify(value));
         break;
       default:

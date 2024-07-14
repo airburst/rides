@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { json, pgEnum, text, timestamp, varchar } from "drizzle-orm/pg-core";
+import { boolean, json, pgEnum, text, timestamp, varchar } from "drizzle-orm/pg-core";
 
 import accounts from "./account";
 import { createTable } from "./create-table";
@@ -25,6 +25,7 @@ const users = createTable("users", {
   role: roleEnum("role").default("USER"),
   preferences: json("preferences").default({ units: "km" }),
   membershipId: text("membership_id"),
+  isMember: boolean("is_member").default(false),
   createdAt: timestamp("created_at", { precision: 3, mode: "string" })
     .defaultNow()
     .notNull(),

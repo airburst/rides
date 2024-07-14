@@ -15,6 +15,13 @@
       "when": 1720888414355,
       "tag": "0001_complete_satana",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1720967407234,
+      "tag": "0002_lush_gamma_corps",
+      "breakpoints": true
     }
   ]
 }

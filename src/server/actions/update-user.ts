@@ -17,6 +17,7 @@ type UserUpdate = Pick<
   | "preferences"
   | "role"
   | "membershipId"
+  | "isMember"
 >;
 
 export const updateUser = async (
@@ -35,12 +36,12 @@ export const updateUser = async (
     };
   }
 
-  const { id, name, mobile, emergency, preferences, role, membershipId } = user;
+  const { id, name, mobile, emergency, preferences, role, membershipId, isMember } = user;
 
   try {
     const result = await db
       .update(users)
-      .set({ name, mobile, emergency, preferences, role, membershipId })
+      .set({ name, mobile, emergency, preferences, role, membershipId, isMember })
       .where(eq(users.id, id))
       .returning({ id: users.id });
 

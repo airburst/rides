@@ -13,7 +13,7 @@ type Props = {
 
 export const RiderDetails = ({ user, isLeader, sessionUser }: Props) => {
   const [showEmergency, setShowEmergency] = useState<boolean>(false);
-  const { id: userId, name: userName, mobile, emergency, membershipId } = user;
+  const { id: userId, name: userName, mobile, emergency, isMember } = user;
   const isMe = sessionUser === userId;
   // Make emergency number callable - strip out text
   const emergencyNumber = emergency?.replace(/\D+/g, "");
@@ -43,7 +43,7 @@ export const RiderDetails = ({ user, isLeader, sessionUser }: Props) => {
     <div className={rowClass} key={userId}>
       <div className="flex items-center gap-2">
         <div className="truncate">{userName}</div>
-        {membershipId && <ShieldCheck className="text-secondary w-6 h-6" />}
+        {isMember && <ShieldCheck className="text-secondary w-6 h-6" />}
       </div>
 
       {isLeader && (
