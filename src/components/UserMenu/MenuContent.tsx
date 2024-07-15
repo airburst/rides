@@ -122,7 +122,7 @@ export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout
         )}
       </ul>
 
-      <div className="flex h-6 items-center justify-center text-xs text-neutral-400 mt-4">
+      <div className="flex h-6 items-center justify-center text-md text-neutral-400 mt-4">
         Version {pkg.version}
       </div>
     </div>

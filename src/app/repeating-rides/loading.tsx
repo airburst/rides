@@ -1,9 +1,9 @@
 import { MainContent } from "@/components/Layout/MainContent";
-import { RepeatingRideDetailsSkeleton } from "@/components/RepeatingRides/RepeatingRideDetailsSkeleton";
+import RepeatingRidesListSkeleton from "@/components/RepeatingRides/RepeatingRidesListSkeleton";
 
 const LoadingRepeatingRides = () => {
   return <MainContent>
-    <RepeatingRideDetailsSkeleton />
+    <RepeatingRidesListSkeleton />
   </MainContent>;
 };
 

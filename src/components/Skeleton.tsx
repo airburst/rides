@@ -7,7 +7,7 @@ type SkeletonProps = {
 }
 
 export const Skeleton = ({ height = 4, width = 48, className }: SkeletonProps) => {
-  const classes = twMerge("bg-gray-200 rounded-full dark:bg-gray-700",
+  const classes = twMerge("bg-gray-200 rounded-full",
     `h-${height}`,
     `w-${width}`,
     className,
