@@ -43,7 +43,7 @@ export const RiderDetails = ({ user, isLeader, sessionUser }: Props) => {
 
   return (
     <div className={rowClass} key={userId}>
-      <div className="flex items-center gap-1">
+      <div className="flex items-center truncate gap-1">
         <div className="truncate">{userName}</div>
         {isMember && <ShieldCheck className="text-secondary w-6 h-6" />}
       </div>
