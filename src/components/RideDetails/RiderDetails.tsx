@@ -38,7 +38,7 @@ export const RiderDetails = ({ user, isLeader, sessionUser }: Props) => {
   const numberToDisplay = showEmergency ? emergencyNumber : mobileNumber;
 
   const numberClass = clsx("flex items-center gap-2 px-1 rounded-md",
-    showEmergency ? "bg-error text-white" : "bg-base-200 text-neutral-600"
+    showEmergency ? "bg-error text-white" : "text-neutral-600"
   );
 
   return (
