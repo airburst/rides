@@ -1,5 +1,6 @@
 "use client";
 import { Switch } from "@headlessui/react";
+import { onlyNumbers } from "@utils/general";
 import clsx from "clsx";
 import { Phone, ShieldCheck } from "lucide-react";
 import { useState } from "react";
@@ -16,7 +17,8 @@ export const RiderDetails = ({ user, isLeader, sessionUser }: Props) => {
   const { id: userId, name: userName, mobile, emergency, isMember } = user;
   const isMe = sessionUser === userId;
   // Make emergency number callable - strip out text
-  const emergencyNumber = emergency?.replace(/\D+/g, "");
+  const mobileNumber = onlyNumbers(mobile!);
+  const emergencyNumber = onlyNumbers(emergency!);
 
   const switchClass = clsx(
     "relative inline-flex h-6 w-11 self-center items-center rounded-full",
@@ -29,29 +31,30 @@ export const RiderDetails = ({ user, isLeader, sessionUser }: Props) => {
   );
 
   const rowClass = clsx(
-    "flex w-full flex-row items-center justify-between px-2 font-medium md:grid md:grid-cols-[1fr_96px] md:justify-start md:gap-4",
+    "flex w-full flex-row items-center justify-between px-2 font-medium md:grid md:grid-cols-[1fr_auto] md:justify-start md:gap-4",
     isMe && "text-neutral-800"
   );
 
-  const numberToDisplay = showEmergency ? emergencyNumber : mobile;
+  const numberToDisplay = showEmergency ? emergencyNumber : mobileNumber;
 
-  const numberClass = clsx("flex items-center gap-2 px-4 rounded-md",
+  const numberClass = clsx("flex items-center gap-2 px-1 rounded-md",
     showEmergency ? "bg-error text-white" : "bg-base-200 text-neutral-600"
   );
 
   return (
     <div className={rowClass} key={userId}>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-1">
         <div className="truncate">{userName}</div>
         {isMember && <ShieldCheck className="text-secondary w-6 h-6" />}
       </div>
 
       {isLeader && (
-        <div className="grid grid-cols-[44px_44px] gap-2">
+        <div className="grid grid-cols-[1fr_44px] gap-1">
           <div className={numberClass}>
             {numberToDisplay &&
-              <a href={`tel:${numberToDisplay}`}>
+              <a className="flex flex-row items-center gap-2 truncate" href={`tel:${numberToDisplay}`}>
                 <Phone className="w-4 h-4" />
+                {numberToDisplay}
               </a>
             }
           </div>

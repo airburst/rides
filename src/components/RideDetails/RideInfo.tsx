@@ -91,6 +91,8 @@ export const RideInfo = ({ ride, user }: Props) => {
         )}
       </div>
 
+      {/* <iframe title="route" src="https://ridewithgps.com/embeds?type=route&id=47560483&metricUnits=true&sampleGraph=true" style={{ width: "1px", minWidth: "100%", height: "400px" }}></iframe> */}
+
       {!cancelled && notes && (
         <Viewer markdown={notes} title="Notes" />
       )}

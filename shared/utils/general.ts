@@ -61,3 +61,7 @@ export const cleanUndefinedKeys = (data: Record<string, unknown>): Record<string
 
   return cleaned;
 };
+
+
+export const onlyNumbers = (value: string): string =>
+  value.replace(/\D+/g, "").replace(/\s+/g, "");
