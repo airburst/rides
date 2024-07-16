@@ -8,10 +8,10 @@ const RepeatingRideDetails = dynamic(() => import("@/components/RepeatingRides/R
 
 export default async function RepeatingRide({ params }: { params: { id: string } }) {
   const { id } = params;
-  const isAdmin = await canUseAction("ADMIN");
+  const isLeader = await canUseAction("LEADER");
 
   // Redirect if not admin
-  if (!isAdmin) {
+  if (!isLeader) {
     redirect("/");
   }
 

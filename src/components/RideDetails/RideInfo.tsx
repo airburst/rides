@@ -7,6 +7,7 @@ import { Messages } from "./Messages";
 import { Row } from "./Row";
 
 const Viewer = dynamic(() => import("@/components/Markdown/Viewer"));
+// const RideWithGpsMap = dynamic(() => import("@/components/RideWithGpsMap"));
 
 type Props = {
   ride: Ride;
@@ -27,7 +28,6 @@ export const RideInfo = ({ ride, user }: Props) => {
     cancelled,
     users,
   } = ride;
-
   const formattedDistance = formatDistance(distance ?? 0, user?.preferences?.units ?? "km");
 
   const riderNotes = users?.filter(({ notes }) => notes)
@@ -36,6 +36,7 @@ export const RideInfo = ({ ride, user }: Props) => {
       image: user.image,
       rideNotes: makeClickableUrl(notes ?? ""),
     }));
+
 
   return (
     <div className="flex w-full flex-col gap-2 px-2 sm:px-0">
@@ -91,7 +92,7 @@ export const RideInfo = ({ ride, user }: Props) => {
         )}
       </div>
 
-      {/* <iframe title="route" src="https://ridewithgps.com/embeds?type=route&id=47560483&metricUnits=true&sampleGraph=true" style={{ width: "1px", minWidth: "100%", height: "400px" }}></iframe> */}
+      {/* <RideWithGpsMap url={route} units={user?.preferences?.units} /> */}
 
       {!cancelled && notes && (
         <Viewer markdown={notes} title="Notes" />

@@ -16,7 +16,7 @@ export const metadata: Metadata = {
 
 export default async function EditRidePage({ params }: { params: { id: string } }) {
   const id = flattenQuery(params.id);
-  const isAdmin = await canUseAction("ADMIN");
+  const isAdmin = await canUseAction("LEADER");
 
   if (!isAdmin) {
     return (
