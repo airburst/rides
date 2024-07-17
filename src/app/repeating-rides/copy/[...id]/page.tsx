@@ -45,7 +45,7 @@ export default async function CopyRepeatingRide({ params }: { params: { id: stri
       ? formatFormDate(repeatingRide.endDate)
       : undefined,
     time,
-    winterStartTime: "08:30",
+    winterStartTime: time,
     rideGroup: repeatingRide.rideGroup ?? "",
     destination: repeatingRide.destination ?? "",
     meetPoint: repeatingRide.meetPoint ?? "",

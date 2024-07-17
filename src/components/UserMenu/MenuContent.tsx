@@ -17,13 +17,18 @@ type MenuContentProps = {
   confirmCancel: () => void;
   confirmDelete: () => void;
   rideId?: string;
+  repeatingRideId?: string;
   isCancelled?: boolean;
 };
 
-export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout, closeMenu, rideId, confirmCancel, confirmDelete, isCancelled }: MenuContentProps) => {
+export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout, closeMenu, rideId, repeatingRideId, confirmCancel, confirmDelete, isCancelled }: MenuContentProps) => {
   const isLeader = role && ["ADMIN", "LEADER"].includes(role);
   const isAdmin = role === "ADMIN";
-  const showEditAndDelete = isLeader && rideId;
+  // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+  const showEditAndDelete = isLeader && (repeatingRideId || rideId);
+  const editRideUrl = repeatingRideId
+    ? `/repeating-rides/edit/${repeatingRideId}`
+    : `/ride/edit/${rideId}`;
 
   // Make a short url with last 6 characters of ride id
   const copyLink = () => {
@@ -78,7 +83,7 @@ export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout
           <>
             <MenuEntry
               label="Edit Ride"
-              href={`/ride/edit/${flattenQuery(rideId)}`}
+              href={editRideUrl}
               onClick={closeMenu}
             >
               <Pencil className="w-6 h-6" />

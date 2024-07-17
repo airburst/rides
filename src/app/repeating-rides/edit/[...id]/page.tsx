@@ -45,7 +45,7 @@ export default async function EditRepeatingRide({ params }: { params: { id: stri
       ? formatFormDate(repeatingRide.endDate)
       : undefined,
     time,
-    winterStartTime: "08:30",
+    winterStartTime: repeatingRide.winterStartTime ?? "08:30",
     rideGroup: repeatingRide.rideGroup ?? "",
     destination: repeatingRide.destination ?? "",
     meetPoint: repeatingRide.meetPoint ?? "",

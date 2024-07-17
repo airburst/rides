@@ -8,7 +8,7 @@ import { type Role } from "@/types";
 import { useAtom } from "jotai";
 import { Menu } from 'lucide-react';
 import { signIn, signOut } from "next-auth/react";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { flattenQuery } from "shared/utils";
 import { toast } from "sonner";
@@ -22,12 +22,17 @@ export type MenuProps = {
 
 const UserMenu = ({ role, isAuthenticated }: MenuProps) => {
   const router = useRouter();
+  const pathname = usePathname()
   const params = useParams();
   const rideId = flattenQuery(params.id);
   const [isCancelled] = useAtom(isCancelledAtom);
   const [show, setShow] = useState<boolean>(false);
   const [showConfirmCancel, setShowConfirmCancel] = useState<boolean>(false);
   const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
+
+  // Derive rideId or repeatingRideId from the pathname
+  const repeatingRideId = pathname.includes("repeating") ? rideId : undefined;
+
 
   const closeMenu = () => {
     setShow(false);
@@ -116,6 +121,7 @@ const UserMenu = ({ role, isAuthenticated }: MenuProps) => {
             confirmCancel={confirmCancel}
             confirmDelete={confirmDelete}
             rideId={rideId}
+            repeatingRideId={repeatingRideId}
             isCancelled={isCancelled}
           />
         </div>

@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.0.2 - 2024-07-17
+
+### Added
+
+- Added a "show more / less" toggle in long notes
+
+### Fixed
+
+- Winter start time is preserved when editing Repeating Rides.
+- Menu entry for "Edit Ride" will link to a ride or repeating ride, depending on current page
+
 ## 3.0.0 - 2024-07-16
 
 ### Breaking changes
