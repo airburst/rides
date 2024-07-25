@@ -17,8 +17,8 @@ export const RiderDetails = ({ user, isLeader, sessionUser }: Props) => {
   const { id: userId, name: userName, mobile, emergency, isMember } = user;
   const isMe = sessionUser === userId;
   // Make emergency number callable - strip out text
-  const mobileNumber = onlyNumbers(mobile!);
-  const emergencyNumber = onlyNumbers(emergency!);
+  const mobileNumber = onlyNumbers(mobile ?? "");
+  const emergencyNumber = onlyNumbers(emergency ?? "");
 
   const switchClass = clsx(
     "relative inline-flex h-6 w-11 self-center items-center rounded-full",
