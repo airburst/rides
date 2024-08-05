@@ -5,7 +5,7 @@ import {
   type RepeatingRideDb,
   type TemplateRide,
 } from "src/types";
-import { daysInMonth, getNextMonth, isWinter } from "./dates";
+import { getNextMonth, isWinter } from "./dates";
 import { getScalarValue } from "./general";
 
 export const convertToRRule = (data: RepeatingRide): string => {
@@ -193,8 +193,7 @@ export const makeRidesInPeriod = (
   const { id, schedule } = template;
   const start = date ? new Date(date) : new Date();
   const nextMonth = getNextMonth(date);
-  const lastDay = daysInMonth(nextMonth);
-  const end = new Date(`${nextMonth.substring(0, 8)}${lastDay.toString()}`);
+  const end = new Date(nextMonth);
   const rideDates = RRule.fromString(schedule).between(start, end);
 
   // Update timings if winterStartTime is set
