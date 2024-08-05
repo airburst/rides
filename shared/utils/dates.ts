@@ -6,6 +6,8 @@ dayjs.extend(utc);
 
 const delta = dayjs().utcOffset();
 
+const utcDate = (date?: string) => dayjs(date).utc().add(delta, "minutes")
+
 // Current local time
 export const getNow = () => dayjs().utc().add(delta, "minutes").toISOString();
 
@@ -128,10 +130,10 @@ export const getFormRideDateAndTime = (rideDate: string, fixedDate?: string) => 
 export const getMonth = () => dayjs().month();
 
 export const getLastMonth = (date?: string) =>
-  dayjs(date).subtract(1, "month").toISOString();
+  utcDate(date).subtract(1, "month").set('date', 1).toISOString();
 
 export const getNextMonth = (date?: string) =>
-  dayjs(date).add(1, "month").set('date', 1).toISOString();
+  utcDate(date).add(1, "month").set('date', 1).toISOString();
 
 export const firstDayOfMonth = (date?: string) =>
   date ? dayjs(date).startOf("month").day() : dayjs().startOf("month").day();
