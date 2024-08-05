@@ -35,9 +35,7 @@ export async function POST(
       scheduleId,
       date: generateFromDate,
     });
-    console.log("🚀 ~ rides:", rides)
     const results = await createRides(rides);
-    console.log("🚀 ~ results:", results)
     const totalErrors = results.filter((r) => r.error).length;
 
     return NextResponse.json(
