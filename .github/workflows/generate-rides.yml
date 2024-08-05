@@ -19,5 +19,5 @@ jobs:
       - name: Create rides for following month
         run: |
           curl --request POST \
-          --url "https://bcc-rides.vercel.app/api/repeating-ride/generate" \
+          --url "https://bcc-rides.vercel.app/api/generate" \
           --header "Authorization: Bearer ${{ secrets.API_KEY }}"
