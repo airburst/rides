@@ -13,14 +13,6 @@ export const getRepeatingRides = async (): Promise<{
 }> => {
   try {
     const result = await db.query.repeatingRides.findMany({
-      columns: {
-        id: true,
-        name: true,
-        rideGroup: true,
-        distance: true,
-        schedule: true,
-        createdAt: true,
-      },
       orderBy: [asc(repeatingRides.name), desc(repeatingRides.distance)],
     });
 
