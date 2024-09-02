@@ -18,6 +18,9 @@ jobs:
     steps:
       - name: Create rides for following month
         run: |
-          curl --request POST \
+          curl \
+          --request POST \
           --url "https://bcc-rides.vercel.app/api/generate" \
+          --data '{}' \
+          --header "Content-Type: application/json" \
           --header "Authorization: Bearer ${{ secrets.API_KEY }}"
