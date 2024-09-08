@@ -15,6 +15,15 @@ const serwist = new Serwist({
   clientsClaim: true,
   navigationPreload: false,
   runtimeCaching: [
+    // Handle html pages
+    {
+      matcher({ request }) {
+        return request.destination === "document";
+      },
+      handler: new StaleWhileRevalidate({
+        cacheName: "pages",
+      }),
+    },
     // Handle images
     {
       matcher({ request }) {
@@ -24,10 +33,12 @@ const serwist = new Serwist({
         cacheName: "images",
       }),
     },
-    // Handle scripts
+    // Handle scripts and manifest
     {
       matcher({ request }) {
-        return request.destination === "script";
+        return (
+          request.destination === "script" || request.destination === "manifest"
+        );
       },
       handler: new CacheFirst({
         cacheName: "scripts",
@@ -40,6 +51,15 @@ const serwist = new Serwist({
       },
       handler: new CacheFirst({
         cacheName: "styles",
+      }),
+    },
+    // Handle fonts
+    {
+      matcher({ request }) {
+        return request.destination === "font";
+      },
+      handler: new CacheFirst({
+        cacheName: "fonts",
       }),
     },
   ],

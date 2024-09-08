@@ -33,6 +33,7 @@ export const metadata: Metadata = {
     statusBarStyle: "black-translucent",
     title: APP_NAME,
   },
+  manifest: "/manifest.json",
 };
 
 export default async function RootLayout({

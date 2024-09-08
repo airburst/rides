@@ -47,7 +47,7 @@
     "node_modules",
     "build",
     "jest.config.cjs",
-    "public/sw.js",
+    "public/sw*.js",
     "**/*.test.ts",
     "**/*.test.tsx"
   ]
