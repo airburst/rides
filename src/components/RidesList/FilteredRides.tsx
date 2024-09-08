@@ -23,6 +23,15 @@ export const FilteredRides = ({ rides, user }: Props) => {
   const path = usePathname();
   const shouldApplyFilters = path === "/";
 
+  // useEffect(() => {
+  //   if ("serviceWorker" in navigator) {
+  //     // eslint-disable-next-line @typescript-eslint/no-floating-promises
+  //     navigator.serviceWorker
+  //       .register("/service-worker.js" /*, { scope: "/docs" }*/)
+  //       .then((registration) => console.log("scope is: ", registration.scope));
+  //   }
+  // }, []);
+
   useEffect(() => {
     setFilterQuery(filters);
   }, [filters, setFilterQuery]);
@@ -61,4 +70,4 @@ export const FilteredRides = ({ rides, user }: Props) => {
       />
     </>
   );
-}
+};
