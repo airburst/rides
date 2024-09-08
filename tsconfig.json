@@ -13,7 +13,7 @@
     "noUncheckedIndexedAccess": true,
     "checkJs": true,
     /* Bundled projects */
-    "lib": ["dom", "dom.iterable", "ES2022"],
+    "lib": ["dom", "dom.iterable", "ES2022", "webworker"],
     "noEmit": true,
     "module": "ESNext",
     "moduleResolution": "Bundler",
@@ -30,7 +30,8 @@
       "@/*": ["./src/*"],
       "@components/*": ["./src/components/*"],
       "@utils/*": ["shared/utils/*"]
-    }
+    },
+    "types": ["@serwist/next/typings"]
   },
   "include": [
     ".eslintrc.cjs",
@@ -42,5 +43,12 @@
     ".next/types/**/*.ts",
     "build/types/**/*.ts"
   ],
-  "exclude": ["node_modules", "build", "jest.config.cjs"]
+  "exclude": [
+    "node_modules",
+    "build",
+    "jest.config.cjs",
+    "public/sw.js",
+    "**/*.test.ts",
+    "**/*.test.tsx"
+  ]
 }
