@@ -1,5 +1,5 @@
 import type { PrecacheEntry, SerwistGlobalConfig } from "serwist";
-import { CacheFirst, Serwist, StaleWhileRevalidate } from "serwist";
+import { NetworkFirst, Serwist, StaleWhileRevalidate } from "serwist";
 
 declare global {
   interface WorkerGlobalScope extends SerwistGlobalConfig {
@@ -20,8 +20,19 @@ const serwist = new Serwist({
       matcher({ request }) {
         return request.destination === "document";
       },
-      handler: new StaleWhileRevalidate({
+      handler: new NetworkFirst({
         cacheName: "pages",
+      }),
+    },
+    // Handle scripts and manifest
+    {
+      matcher({ request }) {
+        return (
+          request.destination === "script" || request.destination === "manifest"
+        );
+      },
+      handler: new NetworkFirst({
+        cacheName: "scripts",
       }),
     },
     // Handle images
@@ -33,23 +44,12 @@ const serwist = new Serwist({
         cacheName: "images",
       }),
     },
-    // Handle scripts and manifest
-    {
-      matcher({ request }) {
-        return (
-          request.destination === "script" || request.destination === "manifest"
-        );
-      },
-      handler: new CacheFirst({
-        cacheName: "scripts",
-      }),
-    },
     // Handle styles
     {
       matcher({ request }) {
         return request.destination === "style";
       },
-      handler: new CacheFirst({
+      handler: new StaleWhileRevalidate({
         cacheName: "styles",
       }),
     },
@@ -58,7 +58,7 @@ const serwist = new Serwist({
       matcher({ request }) {
         return request.destination === "font";
       },
-      handler: new CacheFirst({
+      handler: new StaleWhileRevalidate({
         cacheName: "fonts",
       }),
     },
