@@ -3162,6 +3162,7 @@ __metadata:
     react-dom: "npm:^18.3.1"
     react-hook-form: "npm:^7.52.1"
     react-quill: "npm:^2.0.0"
+    react-snowfall: "npm:^2.2.0"
     rrule: "npm:^2.8.1"
     sharp: "npm:^0.33.4"
     sonner: "npm:^1.5.0"
@@ -8533,6 +8534,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-fast-compare@npm:^3.2.2":
+  version: 3.2.2
+  resolution: "react-fast-compare@npm:3.2.2"
+  checksum: 10/a6826180ba75cefba1c8d3ac539735f9b627ca05d3d307fe155487f5d0228d376dac6c9708d04a283a7b9f9aee599b637446635b79c8c8753d0b4eece56c125c
+  languageName: node
+  linkType: hard
+
 "react-hook-form@npm:^7.52.1":
   version: 7.52.1
   resolution: "react-hook-form@npm:7.52.1"
@@ -8567,6 +8575,18 @@ __metadata:
     react: ^16 || ^17 || ^18
     react-dom: ^16 || ^17 || ^18
   checksum: 10/e9aa49815bf3f52aefcef067eb3e3d474a737464ba06e3ac81a37806bac486bfa440303e5f2bf95b719aedc8918bbe19948ada83a7b62d7211ae95b053cb00b1
+  languageName: node
+  linkType: hard
+
+"react-snowfall@npm:^2.2.0":
+  version: 2.2.0
+  resolution: "react-snowfall@npm:2.2.0"
+  dependencies:
+    react-fast-compare: "npm:^3.2.2"
+  peerDependencies:
+    react: ^16.8 || 17.x || 18.x
+    react-dom: ^16.8 || 17.x || 18.x
+  checksum: 10/ef9945ec75294e44ff17ec2b90f3e6ab9ec07f2a04804b253fc5737e9838baa20085351d019dc6a366f24874f0c58e8360d23b38a08242a022ff86e3a68ed22c
   languageName: node
   linkType: hard
 
