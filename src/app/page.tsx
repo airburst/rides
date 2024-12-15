@@ -1,6 +1,7 @@
 import { MainContent } from "@/components/Layout/MainContent";
 import { type RidesListProps } from "@/components/RidesList";
 import Snow from "@/components/Snow/Snow";
+import { UnregisterServiceWorkers } from "@/components/UnregisterServiceWorkers";
 import { env } from "@/env";
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
@@ -21,6 +22,7 @@ export default async function HomePage() {
       <MainContent>
         <RidesList />
       </MainContent>
+      <UnregisterServiceWorkers />
     </>
   );
 }
