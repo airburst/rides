@@ -1,12 +1,13 @@
 "use client";
 
 import { type User } from "@/types";
+import Link from "next/link";
 import { useState, type ChangeEvent } from "react";
 import { UserCard } from "../Card";
 
 export type UsersListProps = {
   users: User[];
-}
+};
 
 const UsersList = ({ users }: UsersListProps) => {
   const [searchText, setSearchText] = useState<string>("");
@@ -39,27 +40,33 @@ const UsersList = ({ users }: UsersListProps) => {
 
   const filteredUsers = searchText
     ? users.filter(({ name, email }) =>
-      `${name}${email}`.toLowerCase().includes(searchText.toLowerCase())
-    )
+        `${name}${email}`.toLowerCase().includes(searchText.toLowerCase()),
+      )
     : users;
-  const filteredMembers = onlyMembers ? filteredUsers.filter(({ isMember }) => isMember) : filteredUsers;
-  const filteredRoles = roleFilter === "ALL"
-    ? filteredMembers
-    : filteredMembers.filter(({ role }) => role === roleFilter);
+  const filteredMembers = onlyMembers
+    ? filteredUsers.filter(({ isMember }) => isMember)
+    : filteredUsers;
+  const filteredRoles =
+    roleFilter === "ALL"
+      ? filteredMembers
+      : filteredMembers.filter(({ role }) => role === roleFilter);
 
   return (
     <>
-      <div className="flex flex-col md:flex-row w-full grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 mb-4 px-2 md:px-0 text-neutral-700">
+      <div className="mb-4 flex w-full grid-cols-1 flex-col gap-4 px-2 text-neutral-700 md:grid-cols-2 md:flex-row md:gap-8 md:px-0">
         <input
           type="text"
           id="search"
           name="search"
-          className="input input-bordered input-lg w-full"
+          className="input input-lg input-bordered w-full"
           placeholder="Search by name or email"
           onChange={handleSearch}
         />
-        <div className="flex flex-row gap-2 md:gap-4 justify-between">
-          <label htmlFor="role" className="flex-1 flex flex-row gap-2 items-center">
+        <div className="flex flex-row justify-between gap-2 md:gap-4">
+          <label
+            htmlFor="role"
+            className="flex flex-1 flex-row items-center gap-2"
+          >
             Role
             <select
               id="role"
@@ -74,25 +81,30 @@ const UsersList = ({ users }: UsersListProps) => {
             </select>
           </label>
 
-          <label htmlFor="members" className="flex flex-row gap-2 items-center justify-end">
+          <label
+            htmlFor="members"
+            className="flex flex-row items-center justify-end gap-2"
+          >
             <span className="pr-2">Members</span>
             <input
               id="members"
               type="checkbox"
-              className="checkbox checkbox-primary checkbox-lg my-2"
+              className="checkbox-primary checkbox checkbox-lg my-2"
               onChange={handleMembersChecked}
             />
           </label>
         </div>
       </div>
 
-      <div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 px-2 sm:px-0">
+      <div className="grid w-full grid-cols-1 gap-2 px-2 sm:px-0 md:grid-cols-2 md:gap-4 lg:grid-cols-3">
         {filteredRoles.map((user) => (
-          <UserCard key={user.id} user={user} />
+          <Link href={`/profile/${user.id}`} key={user.id} prefetch={true}>
+            <UserCard user={user} />
+          </Link>
         ))}
       </div>
     </>
   );
-}
+};
 
 export default UsersList;
