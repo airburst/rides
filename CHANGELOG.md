@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.2.2 - 2024-12-18
+
+### Added
+
+- The list of ride cards on homepage will prefetch ride details pages when the scroll into view. This should make clicking through to a details page faster.
+
 ## 3.2.1 - 2024-12-15
 
 ### Fixed

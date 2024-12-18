@@ -15,21 +15,22 @@ export const RideGroup = ({ group, user }: Props) => {
 
   return (
     <div className="flex w-full flex-col items-start gap-2">
-      <div className="sticky top-[64px] sm:top-[96px] flex w-full justify-center p-2 font-bold uppercase tracking-widest text-white bg-primary sm:rounded z-10">
+      <div className="sticky top-[64px] z-10 flex w-full justify-center bg-primary p-2 font-bold uppercase tracking-widest text-white sm:top-[96px] sm:rounded">
         <div>{rideDate}</div>
       </div>
 
       {types.map(({ rides }) =>
         rides.map((ride) => (
-          <Link href={`/ride/${ride.id}`}
+          <Link
+            href={`/ride/${ride.id}`}
             id={ride.id}
             key={ride.id}
-            className="w-full scroll-mt-32 md:scroll-mt-36 px-2 md:px-0"
-            prefetch={false}
+            className="w-full scroll-mt-32 px-2 md:scroll-mt-36 md:px-0"
+            prefetch={true}
           >
             <RideCard ride={ride} user={user} />
           </Link>
-        ))
+        )),
       )}
     </div>
   );
