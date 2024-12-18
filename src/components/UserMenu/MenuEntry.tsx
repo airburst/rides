@@ -17,11 +17,18 @@ export const MenuEntry = ({
   className,
   children,
 }: MenuEntryProps) => {
-  const classes = clsx("hover:bg-neutral-800 hover:text-white rounded", className);
+  const classes = clsx(
+    "hover:bg-neutral-800 hover:text-white rounded",
+    className,
+  );
 
   return href ? (
     <li className={classes}>
-      <Link href={href} className="px-4 py-2 focus:text-white focus:bg-neutral-800" prefetch={false}>
+      <Link
+        href={href}
+        className="px-4 py-2 focus:bg-neutral-800 focus:text-white"
+        prefetch={true}
+      >
         <button
           type="button"
           className="grid w-full grid-cols-[20px_1fr] items-center gap-6"
@@ -44,5 +51,4 @@ export const MenuEntry = ({
       </button>
     </li>
   );
-
-}
+};

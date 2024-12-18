@@ -11,9 +11,7 @@ type Props = {
   classes?: string;
 };
 
-const getBadgeStyle = (
-  past: boolean | undefined,
-): string => {
+const getBadgeStyle = (past: boolean | undefined): string => {
   if (past) {
     return "past";
   }
@@ -36,18 +34,19 @@ export const Day = ({ day, date, rides = [], classes, past }: Props) => {
     <div className={wrapperClasses}>
       <span className="text-md md:text-lg">{day}</span>
       {/* Mobile layout */}
-      <div className="flex grow justify-center items-center pb-4">
+      <div className="flex grow items-center justify-center pb-4">
         {rides && rides.length > 0 && (
-          <RoundBadge
-            text={rides.length}
-            style={getBadgeStyle(past)}
-          />
+          <RoundBadge text={rides.length} style={getBadgeStyle(past)} />
         )}
       </div>
     </div>
   );
 
-  return <Link href={`/rides/${date}`} prefetch={false}>{Content}</Link>;
+  return (
+    <Link href={`/rides/${date}`} prefetch={true}>
+      {Content}
+    </Link>
+  );
 };
 
 export const OutsideDay = (props: Props) => (

@@ -18,9 +18,9 @@ export const RepeatingRideCard: React.FC<Props> = ({ ride }: Props) => {
   }
 
   return (
-    <Link href={`/repeating-rides/${id}`} prefetch={false}>
+    <Link href={`/repeating-rides/${id}`} prefetch={true}>
       <BasicCard>
-        <div className="flex-col lg:flex-row flex-1 p-2 gap-1 truncate">
+        <div className="flex-1 flex-col gap-1 truncate p-2 lg:flex-row">
           <div className="align-middle font-bold uppercase tracking-wide">
             {name} {rideGroup ? `- ${rideGroup}` : ""}{" "}
           </div>
@@ -28,7 +28,7 @@ export const RepeatingRideCard: React.FC<Props> = ({ ride }: Props) => {
         </div>
 
         {isExpired && (
-          <div className="px-2 text-white h-full flex items-center justify-center rounded-r w-24 bg-secondary">
+          <div className="flex h-full w-24 items-center justify-center rounded-r bg-secondary px-2 text-white">
             EXPIRED
           </div>
         )}
