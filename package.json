@@ -1,6 +1,6 @@
 {
   "name": "bcc3",
-  "version": "3.2.2",
+  "version": "3.2.3",
   "private": true,
   "type": "module",
   "scripts": {
@@ -26,7 +26,6 @@
   "dependencies": {
     "@auth/drizzle-adapter": "^1.4.1",
     "@auth0/nextjs-auth0": "^3.5.0",
-    "@formkit/auto-animate": "1.0.0-beta.6",
     "@headlessui/react": "^2.1.2",
     "@hookform/resolvers": "^3.9.0",
     "@t3-oss/env-nextjs": "^0.10.1",
