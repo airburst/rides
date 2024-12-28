@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Dropped original (v2) tables
 - Reduce padding on all dialogs
 - Remove dynamic import from Notes viewer (fixes jank when loading ride details view)
+- Set default text layout styles
+- Remove unused dependencies (auto-animate, swr)
 
 ## 3.2.2 - 2024-12-18
 
