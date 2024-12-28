@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 - Data pump copies production tables
 - Dropped original (v2) tables
+- Reduce padding on all dialogs
+- Remove dynamic import from Notes viewer (fixes jank when loading ride details view)
 
 ## 3.2.2 - 2024-12-18
 
