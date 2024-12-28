@@ -1102,13 +1102,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@formkit/auto-animate@npm:1.0.0-beta.6":
-  version: 1.0.0-beta.6
-  resolution: "@formkit/auto-animate@npm:1.0.0-beta.6"
-  checksum: 10/2cbf733c4601683709c49f8fe6613d1a3c1a9b10a7a83e6e154483c007edf96e8c4e12ced2245995462ae811e9a95b31fbe8b654a307fbe30396d2bbbfe62c6e
-  languageName: node
-  linkType: hard
-
 "@hapi/hoek@npm:^9.0.0, @hapi/hoek@npm:^9.3.0":
   version: 9.3.0
   resolution: "@hapi/hoek@npm:9.3.0"
@@ -3105,7 +3098,6 @@ __metadata:
   dependencies:
     "@auth/drizzle-adapter": "npm:^1.4.1"
     "@auth0/nextjs-auth0": "npm:^3.5.0"
-    "@formkit/auto-animate": "npm:1.0.0-beta.6"
     "@headlessui/react": "npm:^2.1.2"
     "@hookform/resolvers": "npm:^3.9.0"
     "@next/bundle-analyzer": "npm:^14.2.5"
@@ -3166,7 +3158,6 @@ __metadata:
     rrule: "npm:^2.8.1"
     sharp: "npm:^0.33.4"
     sonner: "npm:^1.5.0"
-    swr: "npm:^2.2.5"
     tailwind-merge: "npm:^2.4.0"
     tailwindcss: "npm:^3.4.4"
     tsx: "npm:^4.16.2"
@@ -3431,7 +3422,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"client-only@npm:0.0.1, client-only@npm:^0.0.1":
+"client-only@npm:0.0.1":
   version: 0.0.1
   resolution: "client-only@npm:0.0.1"
   checksum: 10/0c16bf660dadb90610553c1d8946a7fdfb81d624adea073b8440b7d795d5b5b08beb3c950c6a2cf16279365a3265158a236876d92bce16423c485c322d7dfaf8
@@ -9445,18 +9436,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"swr@npm:^2.2.5":
-  version: 2.2.5
-  resolution: "swr@npm:2.2.5"
-  dependencies:
-    client-only: "npm:^0.0.1"
-    use-sync-external-store: "npm:^1.2.0"
-  peerDependencies:
-    react: ^16.11.0 || ^17.0.0 || ^18.0.0
-  checksum: 10/f02b3bd5a198a0f62f9a53d7c0528c4a58aa61a43310bea169614b6e873dadb52599e856ef0775405b6aa7409835343da0cf328948aa892aa309bf4b7e7d6902
-  languageName: node
-  linkType: hard
-
 "symbol-tree@npm:^3.2.4":
   version: 3.2.4
   resolution: "symbol-tree@npm:3.2.4"
@@ -9924,15 +9903,6 @@ __metadata:
   peerDependencies:
     react: ^16.8.0 || ^17.0.0 || ^18.0.0
   checksum: 10/198b8ff9b9239c75728d13795c7c641e6e3db8d1f751ff23d20a8f40914c715c1f265c593847292ef173a94d9aa2190a28b09f1856c48ef5dbe0631e54d0a586
-  languageName: node
-  linkType: hard
-
-"use-sync-external-store@npm:^1.2.0":
-  version: 1.2.2
-  resolution: "use-sync-external-store@npm:1.2.2"
-  peerDependencies:
-    react: ^16.8.0 || ^17.0.0 || ^18.0.0
-  checksum: 10/671e9c190aab9a8374a5d468c6ba17f52c38b6fae970110bc196fc1e2b57204149aea9619be49a1bb5207fb6e51d8afd19c3bcb94afe61813fed039821461dc0
   languageName: node
   linkType: hard
 

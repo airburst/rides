@@ -1,12 +1,10 @@
+import Viewer from "@/components/Markdown/Viewer";
 import { makeClickableUrl } from "@utils/makeClickableUrl";
 import { formatDistance } from "@utils/rides";
-import dynamic from "next/dynamic";
 import { type Ride, type User } from "../../types";
 import { CancelledBanner } from "./Cancelled";
 import { Messages } from "./Messages";
 import { Row } from "./Row";
-
-const Viewer = dynamic(() => import("@/components/Markdown/Viewer"));
 // const RideWithGpsMap = dynamic(() => import("@/components/RideWithGpsMap"));
 
 type Props = {
@@ -28,19 +26,22 @@ export const RideInfo = ({ ride, user }: Props) => {
     cancelled,
     users,
   } = ride;
-  const formattedDistance = formatDistance(distance ?? 0, user?.preferences?.units ?? "km");
+  const formattedDistance = formatDistance(
+    distance ?? 0,
+    user?.preferences?.units ?? "km",
+  );
 
-  const riderNotes = users?.filter(({ notes }) => notes)
+  const riderNotes = users
+    ?.filter(({ notes }) => notes)
     .map(({ user, notes }) => ({
       name: user.name,
       image: user.image,
       rideNotes: makeClickableUrl(notes ?? ""),
     }));
 
-
   return (
     <div className="flex w-full flex-col gap-2 px-2 sm:px-0">
-      {cancelled && (<CancelledBanner />)}
+      {cancelled && <CancelledBanner />}
       <div className="relative flex w-full flex-col gap-2 rounded bg-white py-2 shadow-md">
         <Row>
           <div className="text-xl font-bold tracking-wide text-neutral-700">
@@ -81,7 +82,7 @@ export const RideInfo = ({ ride, user }: Props) => {
         {route && (
           <Row>
             <a
-              className="col-span-2 text-primary underline hover:text-primary-focus"
+              className="hover:text-primary-focus col-span-2 text-primary underline"
               href={route}
               target="_blank"
               rel="noreferrer"
@@ -94,9 +95,7 @@ export const RideInfo = ({ ride, user }: Props) => {
 
       {/* <RideWithGpsMap url={route} units={user?.preferences?.units} /> */}
 
-      {!cancelled && notes && (
-        <Viewer markdown={notes} title="Notes" />
-      )}
+      {!cancelled && notes && <Viewer markdown={notes} title="Notes" />}
 
       {!cancelled && <Messages riderNotes={riderNotes} />}
     </div>

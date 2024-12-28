@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.2.3 - 2024-12-27
+
+### Fixed
+
+- Data pump copies production tables
+- Dropped original (v2) tables
+- Reduce padding on all dialogs
+- Remove dynamic import from Notes viewer (fixes jank when loading ride details view)
+- Set default text layout styles
+- Remove unused dependencies (auto-animate, swr)
+
 ## 3.2.2 - 2024-12-18
 
 ### Added

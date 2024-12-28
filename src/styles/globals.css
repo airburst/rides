@@ -39,6 +39,22 @@ body {
   min-height: 100svh;
 }
 
+/* Text styles */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply text-balance;
+}
+
+p,
+li,
+figcaption {
+  @apply text-pretty;
+}
+
 /* SVG Icon overrides */
 svg {
   @apply h-4;
