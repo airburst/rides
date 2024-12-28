@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 
 - Data pump copies production tables
+- Dropped original (v2) tables
 
 ## 3.2.2 - 2024-12-18
 
