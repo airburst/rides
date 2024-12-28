@@ -5,7 +5,7 @@ import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
-  const headersList = headers();
+  const headersList = await headers();
   const authorization = headersList.get("authorization");
   const body = await request.json();
   const { date } = body;

@@ -5,7 +5,7 @@ import { FilteredRides } from "./FilteredRides";
 
 export type RidesListProps = {
   date?: string;
-}
+};
 
 const RidesList = async ({ date }: RidesListProps) => {
   const session = await getServerAuthSession();
@@ -24,9 +24,7 @@ const RidesList = async ({ date }: RidesListProps) => {
     );
   }
 
-  return (
-    <FilteredRides rides={rides} user={user} />
-  );
-}
+  return <FilteredRides rides={rides} user={user} />;
+};
 
 export default RidesList;

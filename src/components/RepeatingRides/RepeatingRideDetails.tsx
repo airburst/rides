@@ -4,7 +4,7 @@ import { type RepeatingRide } from "@/types";
 import { formatDate, formatTime } from "@utils/dates";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useState, type JSX } from "react";
 import { toast } from "sonner";
 import { BackButton, Button } from "../Button";
 import { ConfirmWithContent } from "../ConfirmWithContent";

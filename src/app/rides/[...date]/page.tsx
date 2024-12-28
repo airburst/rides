@@ -12,11 +12,12 @@ const RidesList = dynamic<RidesListProps>(
   () => import("@/components/RidesList"),
 );
 
-export default async function RidesOnDate({
-  params,
-}: {
-  params: { date: string };
-}) {
+export default async function RidesOnDate(
+  props: {
+    params: Promise<{ date: string }>;
+  }
+) {
+  const params = await props.params;
   const { date } = params;
   const dateString = `${flattenQuery(date)}T01:00:00.000Z`;
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -46,7 +46,7 @@ const fetchAllMembers = async (
 };
 
 export async function POST() {
-  const headersList = headers();
+  const headersList = await headers();
   const authorization = headersList.get("authorization");
 
   if (authorization === `Bearer ${process.env.API_KEY}`) {

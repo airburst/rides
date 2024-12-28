@@ -10,7 +10,8 @@ import { redirect } from "next/navigation";
 
 const RideForm = dynamic<RideFormProps>(() => import("@/components/forms/RideForm"));
 
-export default async function EditRepeatingRide({ params }: { params: { id: string } }) {
+export default async function EditRepeatingRide(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const { id } = params;
   const isAdmin = await canUseAction("LEADER");
 
