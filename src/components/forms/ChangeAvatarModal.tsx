@@ -21,7 +21,7 @@ const ChangeAvatarModal = ({ open, onClose, user }: ChangeAvatarModalProps) => {
       {/* Background */}
       <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
       <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-        <DialogPanel className="max-w-lg space-y-4 rounded-md bg-white p-4">
+        <DialogPanel className="motion-preset-slide-up max-w-lg space-y-4 rounded-md bg-white p-4">
           <DialogTitle className="text-xl">Change Avatar Image</DialogTitle>
           <Description>
             Upload or take a picture of your choice, no larger than 4mb.

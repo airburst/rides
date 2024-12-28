@@ -2958,6 +2958,7 @@ __metadata:
     sonner: "npm:^1.7.1"
     tailwind-merge: "npm:^2.6.0"
     tailwindcss: "npm:^3.4.17"
+    tailwindcss-motion: "npm:^1.0.0"
     tsx: "npm:^4.19.2"
     turndown: "npm:^7.2.0"
     typescript: "npm:^5.7.2"
@@ -9165,6 +9166,15 @@ __metadata:
   version: 2.6.0
   resolution: "tailwind-merge@npm:2.6.0"
   checksum: 10/a84f49d6f2cfb18ba06dc51b446b69f6b42cedcb9c9fa4e7c5f931b56e739870e513339e02b348b43f44011fa4852f02f72658a3f3e066e5101b09fc28644210
+  languageName: node
+  linkType: hard
+
+"tailwindcss-motion@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "tailwindcss-motion@npm:1.0.0"
+  peerDependencies:
+    tailwindcss: "*"
+  checksum: 10/5f1794c72fc73f3d6b43f1717cd1a30eb845000fae1c344d74cc91bd1e2314f97a6927401cf737efc32cc8daf5f504788d99fb57ba0f4905605992eae69cea7c
   languageName: node
   linkType: hard
 

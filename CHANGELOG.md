@@ -7,8 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 3.3.0 - 2024-12-28
 
-### Changed
+### Added
 
+- Animate dialog entry with slide-up
 - Updated NextJS to v15
 
 ## 3.2.3 - 2024-12-27

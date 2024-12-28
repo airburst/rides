@@ -20,6 +20,10 @@ export default {
   daisyui: {
     themes: [{ club }, "dark"],
   },
-  plugins: [require("daisyui"), require("@tailwindcss/forms")],
+  plugins: [
+    require("daisyui"),
+    require("@tailwindcss/forms"),
+    require("tailwindcss-motion"),
+  ],
   jit: true,
 } satisfies Config;
