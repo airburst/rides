@@ -6,7 +6,7 @@ import {
   DialogPanel,
   DialogTitle,
 } from "@headlessui/react";
-import { useState } from "react";
+import { useState, type JSX } from "react";
 import { Button } from "./Button";
 
 type Props = {

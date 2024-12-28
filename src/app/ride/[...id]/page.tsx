@@ -13,7 +13,8 @@ export const metadata: Metadata = {
   description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} Ride Details`,
 }
 
-export default async function RideDetailsPage({ params }: { params: { id: string } }) {
+export default async function RideDetailsPage(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const { id } = params;
   const session = await getServerAuthSession();
   const user = session?.user;

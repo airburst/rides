@@ -14,7 +14,8 @@ export const metadata: Metadata = {
   description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} User Profile Page`,
 }
 
-export default async function NewRidePageWithDate({ params }: { params: { date?: string } }) {
+export default async function NewRidePageWithDate(props: { params: Promise<{ date?: string }> }) {
+  const params = await props.params;
   const session = await getServerAuthSession();
   const user = session?.user;
   const isAdmin = await canUseAction("ADMIN");

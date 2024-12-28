@@ -14,7 +14,8 @@ export const metadata: Metadata = {
   description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} User Profile Page`,
 }
 
-export default async function EditRidePage({ params }: { params: { id: string } }) {
+export default async function EditRidePage(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const id = flattenQuery(params.id);
   const isAdmin = await canUseAction("LEADER");
 

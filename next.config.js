@@ -8,7 +8,6 @@ export const withBundleAnalyzer = bundleAnalyzer({
 /** @type {import("next").NextConfig} */
 const config = withBundleAnalyzer({
   reactStrictMode: true,
-  swcMinify: true,
   i18n: {
     locales: ["en"],
     defaultLocale: "en",

@@ -14,7 +14,8 @@ export const metadata: Metadata = {
   title: `${env.NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`,
 }
 
-export default async function CopyRidePage({ params }: { params: { id: string } }) {
+export default async function CopyRidePage(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   const id = flattenQuery(params.id);
   const isAdmin = await canUseAction("ADMIN");
   const isLeader = await canUseAction("LEADER");

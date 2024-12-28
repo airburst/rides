@@ -1,5 +1,7 @@
 import { Skeleton } from "../Skeleton";
 
+import type { JSX } from "react";
+
 type RowProps = {
   children: JSX.Element | JSX.Element[] | null | undefined;
 };

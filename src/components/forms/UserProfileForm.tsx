@@ -5,29 +5,30 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { convertObjectToFormData } from "@utils/general";
 import { EditIcon, ShieldCheck } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from 'sonner';
+import { toast } from "sonner";
 import { type User } from "../../types";
 import { Button } from "../Button";
 import { CancelButton } from "../Button/CancelButton";
 import ChangeAvatarModal from "./ChangeAvatarModal";
-import { userProfileFormSchema, type UserProfileFormSchema } from "./formSchemas";
+import {
+  userProfileFormSchema,
+  type UserProfileFormSchema,
+} from "./formSchemas";
 
 export type UserFormProps = {
   user: User;
   isAdmin?: boolean;
 };
 
-const UserProfileForm = ({
-  user,
-  isAdmin
-}: UserFormProps) => {
-  const { register,
+const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
+  const {
+    register,
     handleSubmit,
     getValues,
-    formState: { defaultValues, errors, isDirty }
+    formState: { defaultValues, errors, isDirty },
   } = useForm<UserProfileFormSchema>({
     resolver: zodResolver(userProfileFormSchema),
     defaultValues: {
@@ -63,14 +64,13 @@ const UserProfileForm = ({
       toast.error(result.message);
     }
     setIsPending(false);
-  }
+  };
 
   return (
     <>
       <form
         className="form-control relative w-full text-neutral-800"
         onSubmit={handleSubmit(onSubmit)}
-        action={updateProfile}
       >
         <div className="flex w-full flex-row items-center justify-center bg-primary p-2 font-bold uppercase tracking-wide text-white sm:rounded">
           Profile
@@ -128,21 +128,26 @@ const UserProfileForm = ({
             </label>
           </div>
           <div className="grid w-full grid-cols-[auto_1fr] gap-4 md:gap-8">
-            <div className="flex flex-col gap-1">
-              Email
-            </div>
+            <div className="flex flex-col gap-1">Email</div>
             <div className="text-neutral-500">{defaultValues?.email}</div>
           </div>
-          <div className="grid w-full grid-cols-[auto_auto_auto] gap-4 md:gap-8 items-center justify-start">
-            <div className="flex flex-col gap-1">
-              Avatar
-            </div>
+          <div className="grid w-full grid-cols-[auto_auto_auto] items-center justify-start gap-4 md:gap-8">
+            <div className="flex flex-col gap-1">Avatar</div>
             <div className="avatar">
               <div className="w-[40px] rounded-full">
-                <Image className="text-neutral-500" src={user.image!} width={40} height={40} alt="Avatar" />
+                <Image
+                  className="text-neutral-500"
+                  src={user.image!}
+                  width={40}
+                  height={40}
+                  alt="Avatar"
+                />
               </div>
             </div>
-            <Button accent onClick={showAvatarModal}><EditIcon />CHANGE</Button>
+            <Button accent onClick={showAvatarModal}>
+              <EditIcon />
+              CHANGE
+            </Button>
           </div>
 
           {isAdmin && (
@@ -167,7 +172,9 @@ const UserProfileForm = ({
                 <label htmlFor="membershipId" className="flex flex-col">
                   <div className="flex flex-row">
                     <span className="flex-1">RiderHQ Membership Id</span>
-                    {user?.isMember && <ShieldCheck className="w-6 h-6 text-secondary" />}
+                    {user?.isMember && (
+                      <ShieldCheck className="h-6 w-6 text-secondary" />
+                    )}
                   </div>
                   <input
                     id="membershipId"
@@ -182,7 +189,7 @@ const UserProfileForm = ({
                   <input
                     id="isMember"
                     type="checkbox"
-                    className="checkbox checkbox-primary checkbox-lg my-2"
+                    className="checkbox-primary checkbox checkbox-lg my-2"
                     disabled={getValues()?.membershipId === ""}
                     defaultChecked={defaultValues?.isMember}
                     {...register("isMember")}
@@ -212,7 +219,7 @@ const UserProfileForm = ({
             </label>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 md:gap-8 md:flex">
+          <div className="grid grid-cols-2 gap-4 md:flex md:gap-8">
             <Button
               primary
               type="submit"
@@ -224,15 +231,15 @@ const UserProfileForm = ({
             <CancelButton />
           </div>
         </div>
-
       </form>
 
       <ChangeAvatarModal
         open={showAvatarModalForm}
         onClose={hideAvatarModal}
-        user={user} />
+        user={user}
+      />
     </>
   );
-}
+};
 
 export default UserProfileForm;
