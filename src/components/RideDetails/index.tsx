@@ -38,12 +38,16 @@ const RideDetails = ({ ride, user, role }: RideDetailsProps) => {
   const userList = users?.map((u: { user: User }) => u.user);
   const hasRiders = users && users?.length > 0;
   const isGoing =
-    userList && user ? userList?.map((u: User) => u.id).includes(user?.id) : false;
+    userList && user
+      ? userList?.map((u: User) => u.id).includes(user?.id)
+      : false;
   const isLeader = ["ADMIN", "LEADER"].includes(role ?? "");
   const isSpace = hasSpace(ride);
   const canJoin = isJoinable(rideDate) && isSpace;
   const rideNotes =
-    userList && user && userList?.find((u: User) => u.id === user.id)?.rideNotes;
+    userList &&
+    user &&
+    userList?.find((u: User) => u.id === user.id)?.rideNotes;
   const riderCount = users?.length ?? 0;
   const hasLimit = rideLimit && rideLimit > -1;
   const ridersLabel = hasLimit ? `${riderCount}/${rideLimit}` : riderCount;
@@ -65,54 +69,53 @@ const RideDetails = ({ ride, user, role }: RideDetailsProps) => {
       <RideInfo ride={ride} user={user} />
 
       {cancelled ? (
-        <div className="flex mb-16 flex-row justify-between md:justify-start md:gap-4 px-2 pt-2 sm:px-0">
-          <BackButton className="md:min-w-32 min-w-28" url={`/#${id}`} />
+        <div className="mb-16 flex flex-row justify-between px-2 pt-2 sm:px-0 md:justify-start md:gap-4">
+          <BackButton className="min-w-28 md:min-w-32" />
         </div>
-      )
-        : (
-          <>
-            <Heading>
-              <div className="flex items-center gap-4">
-                Going
-                <Badge text={ridersLabel} />
-              </div>
-            </Heading>
-            {!isSpace && (
-              <div className="mx-2 sm:mx-0">
-                <div className="alert alert-warning">
-                  This ride is full. Please contact the leader if you want to
-                  join.
-                </div>
-              </div>
-            )}
-            <RidersGoing
-              user={user}
-              users={userList}
-              hasRiders={hasRiders}
-              isLeader={isLeader}
-            />
-            <div className="grid grid-cols-3 mb-16 md:gap-4 gap-2 p-2 sm:px-0 md:max-w-[460px]">
-              <BackButton url={`/#${id}`} className="ps-[4px] pe-[4px]" />
-
-              {isGoing && (
-                <Button accent className="ps-[4px] pe-[4px]" onClick={openNotes}>
-                  <MessageSquare className="w-6 h-6" />
-                  NOTE
-                </Button>
-              )}
-
-              {user && (canJoin || isGoing) && (
-                <JoinButton
-                  className="ps-[4px] pe-[4px]"
-                  going={isGoing}
-                  ariaLabel={`Join ${name} ride`}
-                  rideId={id!}
-                  userId={user?.id}
-                />
-              )}
+      ) : (
+        <>
+          <Heading>
+            <div className="flex items-center gap-4">
+              Going
+              <Badge text={ridersLabel} />
             </div>
-          </>
-        )}
+          </Heading>
+          {!isSpace && (
+            <div className="mx-2 sm:mx-0">
+              <div className="alert alert-warning">
+                This ride is full. Please contact the leader if you want to
+                join.
+              </div>
+            </div>
+          )}
+          <RidersGoing
+            user={user}
+            users={userList}
+            hasRiders={hasRiders}
+            isLeader={isLeader}
+          />
+          <div className="mb-16 grid grid-cols-3 gap-2 p-2 sm:px-0 md:max-w-[460px] md:gap-4">
+            <BackButton className="pe-[4px] ps-[4px]" />
+
+            {isGoing && (
+              <Button accent className="pe-[4px] ps-[4px]" onClick={openNotes}>
+                <MessageSquare className="h-6 w-6" />
+                NOTE
+              </Button>
+            )}
+
+            {user && (canJoin || isGoing) && (
+              <JoinButton
+                className="pe-[4px] ps-[4px]"
+                going={isGoing}
+                ariaLabel={`Join ${name} ride`}
+                rideId={id!}
+                userId={user?.id}
+              />
+            )}
+          </div>
+        </>
+      )}
 
       <RideMessages
         userId={user?.id}
@@ -121,7 +124,7 @@ const RideDetails = ({ ride, user, role }: RideDetailsProps) => {
         showNotesForm={showNotesForm}
         closeHandler={closeNotes}
       />
-    </div >
+    </div>
   );
 };
 

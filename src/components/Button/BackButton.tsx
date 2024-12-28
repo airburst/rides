@@ -9,13 +9,18 @@ type ButtonProps = {
   noIcon?: boolean;
 };
 
-export const BackButton = ({ url, className, noIcon = false, ...props }: ButtonProps) => {
+export const BackButton = ({
+  url,
+  className,
+  noIcon = false,
+  ...props
+}: ButtonProps) => {
   const router = useRouter();
-  const showIcon = !noIcon
+  const showIcon = !noIcon;
 
   const goBack = () => {
     if (url) {
-      router.push(url);
+      router.replace(url);
     } else {
       router.back();
     }
@@ -23,7 +28,7 @@ export const BackButton = ({ url, className, noIcon = false, ...props }: ButtonP
 
   return (
     <Button primary {...props} className={className} onClick={goBack}>
-      {showIcon && <ChevronLeft className="w-6 h-6" />}
+      {showIcon && <ChevronLeft className="h-6 w-6" />}
       BACK
     </Button>
   );
