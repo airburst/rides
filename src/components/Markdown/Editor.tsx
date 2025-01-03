@@ -1,10 +1,9 @@
 "use client";
 import markdownIt from "markdown-it";
-import dynamic from "next/dynamic";
 import "quill/dist/quill.snow.css";
-import { useMemo, useState } from "react";
+import { useState } from "react";
+import ReactQuill from "react-quill-new";
 import Turndown from "turndown";
-
 
 // Configure Quill
 const modules = {
@@ -13,26 +12,31 @@ const modules = {
     ["blockquote"],
     ["link"],
     [{ list: "ordered" }, { list: "bullet" }],
-    ["clean"]
+    ["clean"],
   ],
   clipboard: {
     // toggle to add extra line breaks when pasting HTML:
     matchVisual: false,
-  }
-}
+  },
+};
 
 const formats = [
   "size",
-  "bold", "italic", "underline", "strike", "blockquote",
-  "list", "bullet", "indent",
-  "link"
-]
+  "bold",
+  "italic",
+  "underline",
+  "strike",
+  "blockquote",
+  "list",
+  "indent",
+  "link",
+];
 
 // Configure markdown
 const md = new markdownIt({
   html: true,
   linkify: true,
-  typographer: true
+  typographer: true,
 });
 const td = new Turndown();
 
@@ -53,17 +57,16 @@ td.addRule("strikethrough", {
 export type EditorProps = {
   initialValue?: string;
   onChange?: (value: string) => void;
-}
+};
 
 const Editor = ({ initialValue = "", onChange }: EditorProps) => {
   const html = md.render(initialValue);
   const [value, setValue] = useState(html);
-  const ReactQuill = useMemo(() => dynamic(() => import('react-quill')), []);
 
   const handleChange = (html: string) => {
     setValue(html);
     onChange?.(td.turndown(html));
-  }
+  };
 
   return (
     <div>
@@ -72,7 +75,8 @@ const Editor = ({ initialValue = "", onChange }: EditorProps) => {
         value={value}
         onChange={handleChange}
         modules={modules}
-        formats={formats} />
+        formats={formats}
+      />
     </div>
   );
 };

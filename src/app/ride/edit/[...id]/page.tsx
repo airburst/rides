@@ -7,14 +7,18 @@ import { flattenQuery } from "@utils/general";
 import { type Metadata } from "next";
 import dynamic from "next/dynamic";
 
-const RideForm = dynamic<RideFormProps>(() => import("@/components/forms/RideForm"));
+const RideForm = dynamic<RideFormProps>(
+  () => import("@/components/forms/RideForm"),
+);
 
 export const metadata: Metadata = {
   title: `${env.NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`,
   description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} User Profile Page`,
-}
+};
 
-export default async function EditRidePage(props: { params: Promise<{ id: string }> }) {
+export default async function EditRidePage(props: {
+  params: Promise<{ id: string }>;
+}) {
   const params = await props.params;
   const id = flattenQuery(params.id);
   const isAdmin = await canUseAction("LEADER");
@@ -24,7 +28,7 @@ export default async function EditRidePage(props: { params: Promise<{ id: string
       <MainContent>
         <h1>Not authorised</h1>
       </MainContent>
-    )
+    );
   }
 
   const { ride, error } = await getRide(id);
@@ -34,7 +38,7 @@ export default async function EditRidePage(props: { params: Promise<{ id: string
       <MainContent>
         <h1>Error fetching ride</h1>
       </MainContent>
-    )
+    );
   }
 
   const defaultValues = {
@@ -60,7 +64,8 @@ export default async function EditRidePage(props: { params: Promise<{ id: string
       <RideForm
         isRepeating={false}
         defaultValues={defaultValues}
-        isAdmin={!!isAdmin} />
+        isAdmin={!!isAdmin}
+      />
     </MainContent>
-  )
-};
+  );
+}

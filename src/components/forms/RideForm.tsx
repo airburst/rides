@@ -11,10 +11,18 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import clsx from "clsx";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { memo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { convertObjectToFormData, formatDate, getNow, makeRepeatingRide, makeRidesInPeriod, makeUtcDate, repeatingRideToDb } from "../../../shared/utils";
+import {
+  convertObjectToFormData,
+  formatDate,
+  getNow,
+  makeRepeatingRide,
+  makeRidesInPeriod,
+  makeUtcDate,
+  repeatingRideToDb,
+} from "../../../shared/utils";
 import { RIDER_LIMIT_OPTIONS } from "../../constants";
 import { type Preferences } from "../../types";
 import { Button } from "../Button";
@@ -23,8 +31,15 @@ import { ConfirmWithContent } from "../ConfirmWithContent";
 import { rideFormSchema, type RideFormSchema } from "./formSchemas";
 
 const RepeatingRideForm = dynamic(() => import("./RepeatingRideForm"));
-
-const Editor = dynamic(() => import("../Markdown/Editor"), { ssr: false });
+const Editor = dynamic(
+  () =>
+    import("../Markdown/Editor").then((mod) => {
+      const Component = memo(mod.default);
+      return { default: Component };
+    }),
+  { ssr: false },
+);
+// const Editor = dynamic(() => import("../Markdown/Editor"), { ssr: false });
 
 const today = getNow().split("T")[0] ?? "";
 
@@ -41,12 +56,13 @@ const RideForm = ({
   defaultValues: defaults,
   preferences,
 }: RideFormProps) => {
-  const { register,
+  const {
+    register,
     setValue,
     handleSubmit,
     watch,
     getValues,
-    formState: { defaultValues, errors }
+    formState: { defaultValues, errors },
   } = useForm<RideFormSchema>({
     resolver: zodResolver(rideFormSchema),
     defaultValues: defaults,
@@ -67,21 +83,21 @@ const RideForm = ({
 
   const switchClass = clsx(
     "relative inline-flex h-6 w-11 items-center rounded-full",
-    repeats ? "bg-green-600" : "bg-gray-200"
+    repeats ? "bg-green-600" : "bg-gray-200",
   );
   const toggleClass = clsx(
     "inline-block h-4 w-4 transform rounded-full bg-white transition",
-    repeats ? "translate-x-6" : "translate-x-1"
+    repeats ? "translate-x-6" : "translate-x-1",
   );
   const handleRepeatsChange = () => setRepeats(!repeats);
 
   const handleNotesChange = (text: string) => {
     setValue("notes", text);
-  }
+  };
 
   const createRide = async (data: RideFormSchema) => {
     setIsPending(true);
-    const rideDate = makeUtcDate(data.rideDate, data.time)
+    const rideDate = makeUtcDate(data.rideDate, data.time);
     const formData = convertObjectToFormData({ ...data, rideDate });
 
     let result;
@@ -98,7 +114,7 @@ const RideForm = ({
     } else {
       toast.error(result.message);
     }
-  }
+  };
 
   const createRepeating = async (data: RideFormSchema) => {
     setIsPending(true);
@@ -119,8 +135,13 @@ const RideForm = ({
           // Store schedule id to use in handleYes function
           setScheduleId(results.id);
           // Calculate rides list and ask to create them
-          const rideList = makeRidesInPeriod(repeatingRideToDb(payload), data.startDate);
-          const rideDates = rideList.rides.map(({ rideDate }) => formatDate(rideDate));
+          const rideList = makeRidesInPeriod(
+            repeatingRideToDb(payload),
+            data.startDate,
+          );
+          const rideDates = rideList.rides.map(({ rideDate }) =>
+            formatDate(rideDate),
+          );
           if (rideDates.length > 0) {
             setRideDateList(rideDates);
             show();
@@ -147,7 +168,7 @@ const RideForm = ({
       const date = getValues("rideDate");
       const results = await generateRidesFromClient(scheduleId, date);
       if (results.success) {
-        toast.success(results.message)
+        toast.success(results.message);
         router.push("/");
         cb(true);
       } else {
@@ -159,8 +180,10 @@ const RideForm = ({
   return (
     <>
       <form
-        className="form-control relative grid w-full grid-cols-1 gap-4 p-2 mb-4 text-neutral-800"
-        onSubmit={repeats ? handleSubmit(createRepeating) : handleSubmit(createRide)}
+        className="form-control relative mb-4 grid w-full grid-cols-1 gap-4 p-2 text-neutral-800"
+        onSubmit={
+          repeats ? handleSubmit(createRepeating) : handleSubmit(createRide)
+        }
       >
         <div className="flex flex-col gap-4 md:gap-8">
           <label htmlFor="name" className="flex flex-col gap-1">
@@ -313,10 +336,11 @@ const RideForm = ({
         </div>
 
         <div className="flex flex-col">
-          <label className="flex flex-col">
-            Notes
-          </label>
-          <Editor initialValue={defaultValues?.notes} onChange={handleNotesChange} />
+          <label className="flex flex-col">Notes</label>
+          <Editor
+            initialValue={defaultValues?.notes}
+            onChange={handleNotesChange}
+          />
           <input
             id="notes"
             type="hidden"
