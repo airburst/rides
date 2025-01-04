@@ -57,7 +57,7 @@ export default async function RootLayout({
       <body>
         <Header />
         {children}
-        <Toaster position="bottom-center" />
+        <Toaster position="bottom-center" richColors />
         <SpeedInsights />
       </body>
     </html>

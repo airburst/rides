@@ -6,11 +6,10 @@ export default async function Layout({
 }: {
   children: React.ReactNode;
 }) {
-
   return (
     <div className="w-full">
       {children}
-      <Toaster position="bottom-center" />
+      <Toaster position="bottom-center" richColors />
     </div>
   );
 }
