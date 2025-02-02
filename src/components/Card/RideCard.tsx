@@ -2,7 +2,7 @@
 import { formatDistance } from "@utils/rides";
 import clsx from "clsx";
 import Image from "next/image";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { type RideList, type User } from "../../types";
 import { Cancelled } from "../RideDetails/Cancelled";
 import { BasicCard } from "./BasicCard";
@@ -22,12 +22,9 @@ export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
   const details = destination
     ? `${destination} - ${convertedDistance}`
     : `${convertedDistance}`;
-  // const router = useRouter();
+  const router = useRouter();
 
-  // const onPress = () => {
-  //   console.log("RideCard onPress");
-  //   router.push(`/ride/${id}`);
-  // };
+  const onPress = () => router.push(`/ride/${id}`);
 
   if (!id) {
     return null;
@@ -49,7 +46,7 @@ export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
   );
 
   return (
-    <BasicCard>
+    <BasicCard onPress={onPress}>
       <div className={cardClass}>
         <div className={titleClass}>
           {name}
