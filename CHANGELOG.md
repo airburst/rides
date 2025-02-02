@@ -21,7 +21,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 
-- TODO
+- Cards respond to pressing on iOS devices again
 
 ## 3.3.2 - 2025-01-04
 
