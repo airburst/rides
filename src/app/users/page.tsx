@@ -11,7 +11,7 @@ const UsersList = dynamic(() => import("@/components/Users/UsersList"));
 export const metadata: Metadata = {
   title: `Manage Users`,
   description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} - Users`,
-}
+};
 
 export default async function Users() {
   const isAdmin = await canUseAction("ADMIN");
@@ -37,7 +37,7 @@ export default async function Users() {
     <MainContent>
       <>
         <div className="w-full text-neutral-800">
-          <div className="flex w-full flex-row items-center justify-center bg-primary p-2 font-bold uppercase tracking-wide text-white sm:rounded mb-4">
+          <div className="mb-4 flex w-full flex-row items-center justify-center bg-primary p-2 font-bold uppercase tracking-wide text-white sm:rounded">
             Manage Users
           </div>
         </div>

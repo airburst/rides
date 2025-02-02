@@ -3,7 +3,7 @@
 import { updateProfile } from "@/server/actions/update-profile";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { convertObjectToFormData } from "@utils/general";
-import { EditIcon, ShieldCheck } from "lucide-react";
+import { EditIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { type User } from "../../types";
 import { Button } from "../Button";
 import { CancelButton } from "../Button/CancelButton";
+import { MembershipIcon } from "../MembershipIcon";
 import ChangeAvatarModal from "./ChangeAvatarModal";
 import {
   userProfileFormSchema,
@@ -27,7 +28,6 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
   const {
     register,
     handleSubmit,
-    getValues,
     formState: { defaultValues, errors, isDirty },
   } = useForm<UserProfileFormSchema>({
     resolver: zodResolver(userProfileFormSchema),
@@ -42,7 +42,7 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
       },
       role: user?.role ?? "USER",
       membershipId: user?.membershipId ?? "",
-      isMember: user?.isMember ?? false,
+      membershipStatus: user?.membershipStatus ?? "NOT_MEMBER",
     },
   });
   const router = useRouter();
@@ -168,13 +168,15 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
                 </label>
               </div>
 
-              <div className="grid w-full grid-cols-[1fr_auto] gap-4 md:gap-8">
+              <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-[1fr_1fr] md:gap-8">
                 <label htmlFor="membershipId" className="flex flex-col">
                   <div className="flex flex-row">
                     <span className="flex-1">RiderHQ Membership Id</span>
-                    {user?.isMember && (
-                      <ShieldCheck className="h-6 w-6 text-secondary" />
-                    )}
+                    <MembershipIcon
+                      membershipStatus={
+                        defaultValues?.membershipStatus ?? "NON_MEMBER"
+                      }
+                    />
                   </div>
                   <input
                     id="membershipId"
@@ -184,16 +186,19 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
                     {...register("membershipId")}
                   />
                 </label>
-                <label htmlFor="isMember" className="flex flex-col items-end">
-                  <span className="flex-1">Member</span>
-                  <input
-                    id="isMember"
-                    type="checkbox"
-                    className="checkbox-primary checkbox checkbox-lg my-2"
-                    disabled={getValues()?.membershipId === ""}
-                    defaultChecked={defaultValues?.isMember}
-                    {...register("isMember")}
-                  />
+                <label htmlFor="membershipStatus" className="flex flex-col">
+                  Membership Status
+                  <select
+                    id="membershipStatus"
+                    className="input input-bordered"
+                    defaultValue={defaultValues?.membershipStatus ?? ""}
+                    {...register("membershipStatus")}
+                  >
+                    <option value="MEMBER">MEMBER</option>
+                    <option value="EXPIRED">EXPIRED</option>
+                    <option value="NOT_MEMBER">NOT A MEMBER</option>
+                    <option value="OTHER_CLUB">MEMBER OF ANOTHER CLUB</option>
+                  </select>
                 </label>
               </div>
             </>
