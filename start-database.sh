@@ -53,3 +53,7 @@ docker run -d \
   -e POSTGRES_DB=bcc3 \
   -p "$DB_PORT":5432 \
   docker.io/postgres && echo "Database container '$DB_CONTAINER_NAME' was successfully created"
+  # -e PG_JOURNAL_WAL_LEVEL=logical \
+  # -e REPLICATION_MAX_SENDERS=10 \
+  # -e REPLICATION_MAX_SLOTS=10 \
+  # -e PG_STANDBY_HOT=on \

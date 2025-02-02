@@ -34,7 +34,7 @@ export const getUsers = async (
           image: true,
           role: true,
           membershipId: true,
-          isMember: true,
+          membershipStatus: true,
         },
         where: or(
           // @ts-expect-error col type string
@@ -53,7 +53,7 @@ export const getUsers = async (
           image: true,
           role: true,
           membershipId: true,
-          isMember: true,
+          membershipStatus: true,
         },
         orderBy: [asc(users.name)],
       });
@@ -63,6 +63,7 @@ export const getUsers = async (
       users: result as unknown as User[],
     };
   } catch (error) {
+    console.log("🚀 ~ error:", error);
     return {
       users: [],
       error: `Unable to fetch users`,

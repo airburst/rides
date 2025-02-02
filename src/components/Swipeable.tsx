@@ -17,9 +17,6 @@ export const Swipable = ({ onPress }: SwipableProps) => {
         if (!isSwiping && e.button === 0) {
           onPress();
         }
-        // else {
-        //   console.log("dragging");
-        // }
         setSwiping(false);
       }}
       onTouchStart={() => setSwiping(false)}
@@ -29,9 +26,6 @@ export const Swipable = ({ onPress }: SwipableProps) => {
         if (!isSwiping) {
           onPress();
         }
-        // else {
-        //   console.log("swiping");
-        // }
         setSwiping(false);
       }}
     />

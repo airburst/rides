@@ -17,7 +17,7 @@ type UserUpdate = Pick<
   | "preferences"
   | "role"
   | "membershipId"
-  | "isMember"
+  | "membershipStatus"
 >;
 
 export const updateUser = async (
@@ -36,12 +36,29 @@ export const updateUser = async (
     };
   }
 
-  const { id, name, mobile, emergency, preferences, role, membershipId, isMember } = user;
+  const {
+    id,
+    name,
+    mobile,
+    emergency,
+    preferences,
+    role,
+    membershipId,
+    membershipStatus,
+  } = user;
 
   try {
     const result = await db
       .update(users)
-      .set({ name, mobile, emergency, preferences, role, membershipId, isMember })
+      .set({
+        name,
+        mobile,
+        emergency,
+        preferences,
+        role,
+        membershipId,
+        membershipStatus,
+      })
       .where(eq(users.id, id))
       .returning({ id: users.id });
 
@@ -49,6 +66,7 @@ export const updateUser = async (
       id: result?.[0]?.id ?? null,
     };
   } catch (error) {
+    console.log("🚀 ~ error:", error);
     return {
       id: null,
       error: `Unable to update user id ${id}`,

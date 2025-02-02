@@ -12,7 +12,7 @@ export type UsersListProps = {
 const UsersList = ({ users }: UsersListProps) => {
   const [searchText, setSearchText] = useState<string>("");
   const [roleFilter, setRoleFilter] = useState<string>("ALL");
-  const [onlyMembers, setOnlyMembers] = useState<boolean>(false);
+  const [statusFilter, setStatusFilter] = useState<string>("ALL");
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchText(event.currentTarget.value);
@@ -22,8 +22,10 @@ const UsersList = ({ users }: UsersListProps) => {
     setRoleFilter(event.currentTarget.value);
   };
 
-  const handleMembersChecked = (event: ChangeEvent<HTMLInputElement>) => {
-    setOnlyMembers(event.currentTarget.checked);
+  const handleMembershipStatusSelected = (
+    event: ChangeEvent<HTMLSelectElement>,
+  ) => {
+    setStatusFilter(event.currentTarget.value);
   };
 
   const userCount = users.length;
@@ -43,9 +45,12 @@ const UsersList = ({ users }: UsersListProps) => {
         `${name}${email}`.toLowerCase().includes(searchText.toLowerCase()),
       )
     : users;
-  const filteredMembers = onlyMembers
-    ? filteredUsers.filter(({ isMember }) => isMember)
-    : filteredUsers;
+  const filteredMembers =
+    statusFilter === "ALL"
+      ? filteredUsers
+      : filteredUsers.filter(
+          ({ membershipStatus }) => membershipStatus === statusFilter,
+        );
   const filteredRoles =
     roleFilter === "ALL"
       ? filteredMembers
@@ -53,7 +58,7 @@ const UsersList = ({ users }: UsersListProps) => {
 
   return (
     <>
-      <div className="mb-4 flex w-full grid-cols-1 flex-col gap-4 px-2 text-neutral-700 md:grid-cols-2 md:flex-row md:gap-8 md:px-0">
+      <div className="mb-4 grid w-full grid-cols-1 gap-2 px-2 text-neutral-700 md:px-0 lg:grid-cols-3 lg:gap-8">
         <input
           type="text"
           id="search"
@@ -62,38 +67,43 @@ const UsersList = ({ users }: UsersListProps) => {
           placeholder="Search by name or email"
           onChange={handleSearch}
         />
-        <div className="flex flex-row justify-between gap-2 md:gap-4">
-          <label
-            htmlFor="role"
-            className="flex flex-1 flex-row items-center gap-2"
-          >
-            Role
-            <select
-              id="role"
-              className="input input-bordered w-full md:w-32"
-              defaultValue={roleFilter}
-              onChange={handleRoleSelected}
-            >
-              <option value="ALL">All Roles</option>
-              <option value="USER">USER</option>
-              <option value="LEADER">LEADER</option>
-              <option value="ADMIN">ADMIN</option>
-            </select>
-          </label>
 
-          <label
-            htmlFor="members"
-            className="flex flex-row items-center justify-end gap-2"
+        <label
+          htmlFor="role"
+          className="flex flex-1 flex-row items-center gap-2"
+        >
+          <span className="w-32 lg:w-auto">Role</span>
+          <select
+            id="role"
+            className="input input-bordered flex-1 md:w-32"
+            defaultValue={roleFilter}
+            onChange={handleRoleSelected}
           >
-            <span className="pr-2">Members</span>
-            <input
-              id="members"
-              type="checkbox"
-              className="checkbox-primary checkbox checkbox-lg my-2"
-              onChange={handleMembersChecked}
-            />
-          </label>
-        </div>
+            <option value="ALL">All Roles</option>
+            <option value="USER">USER</option>
+            <option value="LEADER">LEADER</option>
+            <option value="ADMIN">ADMIN</option>
+          </select>
+        </label>
+
+        <label
+          htmlFor="membershipStatus"
+          className="flex flex-1 flex-row items-center gap-2"
+        >
+          <span className="w-32 lg:w-auto">Membership</span>
+          <select
+            id="membershipStatus"
+            className="input input-bordered flex-1 md:w-32"
+            defaultValue={statusFilter}
+            onChange={handleMembershipStatusSelected}
+          >
+            <option value="ALL">Any Status</option>
+            <option value="MEMBER">Members</option>
+            <option value="EXPIRED">Expired</option>
+            <option value="NOT_MEMBER">Non Members</option>
+            <option value="OTHER_CLUB">Other Clubs</option>
+          </select>
+        </label>
       </div>
 
       <div className="grid w-full grid-cols-1 gap-2 px-2 sm:px-0 md:grid-cols-2 md:gap-4 lg:grid-cols-3">

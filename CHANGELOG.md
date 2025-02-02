@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.4.0 - 2025-02-02
+
+### Added
+
+- Added new membership statuses and icons to database schema as follows:
+
+  - Member = sheild with tick (same as current)
+  - Non-member = empty (same as current)
+  - Expired = shield with exclamation, in red
+  - Other club = handshake
+
+- Updated user profile form and user management page to support filtering by membership status
+- Added MembershipIcon component to show correct icon in cards and forms
+
+### Fixed
+
+- Cards respond to pressing on iOS devices again
+
 ## 3.3.2 - 2025-01-04
 
 ### Changed

@@ -3,6 +3,11 @@ export type Preferences = {
 };
 
 export type Role = "USER" | "LEADER" | "ADMIN";
+export type MembershipStatus =
+  | "MEMBER"
+  | "NOT_MEMBER"
+  | "EXPIRED"
+  | "OTHER_CLUB";
 
 export type User = {
   id: string;
@@ -16,6 +21,7 @@ export type User = {
   rideNotes?: string;
   membershipId?: string;
   isMember?: boolean;
+  membershipStatus?: MembershipStatus;
 };
 
 export type Session = {
