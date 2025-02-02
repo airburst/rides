@@ -173,9 +173,7 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
                   <div className="flex flex-row">
                     <span className="flex-1">RiderHQ Membership Id</span>
                     <MembershipIcon
-                      membershipStatus={
-                        defaultValues?.membershipStatus ?? "NON_MEMBER"
-                      }
+                      membershipStatus={defaultValues?.membershipStatus}
                     />
                   </div>
                   <input

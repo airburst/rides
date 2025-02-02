@@ -1,7 +1,7 @@
-import { ShieldAlert, ShieldCheck, ShieldOff, ShieldPlus } from "lucide-react";
+import { Handshake, ShieldAlert, ShieldCheck } from "lucide-react";
 
 type MembershipIconProps = {
-  membershipStatus: string;
+  membershipStatus?: string;
 };
 
 export const MembershipIcon = ({ membershipStatus }: MembershipIconProps) => {
@@ -11,9 +11,10 @@ export const MembershipIcon = ({ membershipStatus }: MembershipIconProps) => {
     case "EXPIRED":
       return <ShieldAlert className="h-6 w-6 text-error" />;
     case "OTHER_CLUB":
-      return <ShieldPlus className="h-6 w-6 text-primary" />;
+      return <Handshake className="h-6 w-6 text-primary" />;
     default:
       // "NOT_MEMBER":
-      return <ShieldOff className="h-6 w-6 text-error" />;
+      return null;
+    // return <ShieldOff className="h-6 w-6 text-error" />;
   }
 };

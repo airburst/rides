@@ -26,9 +26,7 @@ export const UserCard: React.FC<Props> = ({ user }: Props) => {
         <div className="flex-1 p-2">
           <div className="flex items-center align-middle font-bold uppercase tracking-wide">
             <div className="flex-1 truncate">{name}</div>
-            <MembershipIcon
-              membershipStatus={membershipStatus ?? "NON_MEMBER"}
-            />
+            <MembershipIcon membershipStatus={membershipStatus} />
           </div>
           <div className="truncate">{email}</div>
         </div>

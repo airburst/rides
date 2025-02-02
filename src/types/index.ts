@@ -5,7 +5,7 @@ export type Preferences = {
 export type Role = "USER" | "LEADER" | "ADMIN";
 export type MembershipStatus =
   | "MEMBER"
-  | "NON_MEMBER"
+  | "NOT_MEMBER"
   | "EXPIRED"
   | "OTHER_CLUB";
 
