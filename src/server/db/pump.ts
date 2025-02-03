@@ -32,7 +32,19 @@ const main = async () => {
   console.log("Data migration started");
 
   // Users --------------------------------------------------//
-  const usersData = await sourceDb.execute(sql`select * from "bcc_users"`);
+  const usersData = await sourceDb.execute(sql`select
+  id,
+  name,
+  email,
+  image,
+  mobile,
+  emergency,
+  role,
+  preferences,
+  membership_id as "membershipId",
+  membership_status as "membershipStatus"
+from "bcc_users"`);
+
   //@ts-expect-error data typing
   await db.insert(schema.users).values(usersData);
   console.log("Users migrated", usersData.length);

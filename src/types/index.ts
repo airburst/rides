@@ -20,7 +20,6 @@ export type User = {
   preferences?: Preferences;
   rideNotes?: string;
   membershipId?: string;
-  isMember?: boolean;
   membershipStatus?: MembershipStatus;
 };
 

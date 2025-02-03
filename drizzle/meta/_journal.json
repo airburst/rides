@@ -29,6 +29,13 @@
       "when": 1738517390300,
       "tag": "0003_familiar_blackheart",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1738608619697,
+      "tag": "0004_aromatic_paladin",
+      "breakpoints": true
     }
   ]
 }
