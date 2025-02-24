@@ -2,7 +2,13 @@
 import { isCancelledAtom } from "@/store";
 import { useAtom } from "jotai";
 import { MessageSquare } from "lucide-react";
-import { useEffect, useState, type JSX } from "react";
+import {
+  startTransition,
+  useEffect,
+  useOptimistic,
+  useState,
+  type JSX,
+} from "react";
 import { hasSpace, isJoinable } from "../../../shared/utils";
 import { type Ride, type User } from "../../types";
 import { Badge } from "../Badge";
@@ -36,20 +42,41 @@ const RideDetails = ({ ride, user, role }: RideDetailsProps) => {
   const [, setCancelled] = useAtom(isCancelledAtom);
 
   const userList = users?.map((u: { user: User }) => u.user);
-  const hasRiders = users && users?.length > 0;
-  const isGoing =
-    userList && user
-      ? userList?.map((u: User) => u.id).includes(user?.id)
-      : false;
   const isLeader = ["ADMIN", "LEADER"].includes(role ?? "");
   const isSpace = hasSpace(ride);
   const canJoin = isJoinable(rideDate) && isSpace;
-  const rideNotes =
-    userList &&
-    user &&
-    userList?.find((u: User) => u.id === user.id)?.rideNotes;
-  const riderCount = users?.length ?? 0;
   const hasLimit = rideLimit && rideLimit > -1;
+
+  // Optimistically add or remove user from "going" list
+  const [optimisticRidersList, setOptimisticRidersList] = useOptimistic(
+    userList ?? [],
+    (state, newValue: User) => {
+      // Remove user from list if already in list
+      if (state.map((u) => u.id).includes(newValue.id)) {
+        return state.filter((u) => u.id !== newValue.id);
+      }
+      return [...state, newValue];
+    },
+  );
+
+  const toggleGoing = () => {
+    if (user) {
+      startTransition(() => {
+        setOptimisticRidersList(user);
+      });
+    }
+  };
+
+  const hasRiders = optimisticRidersList.length > 0;
+  const isGoing =
+    optimisticRidersList && user
+      ? optimisticRidersList?.map((u: User) => u.id).includes(user?.id)
+      : false;
+  const rideNotes =
+    optimisticRidersList &&
+    user &&
+    optimisticRidersList?.find((u: User) => u.id === user.id)?.rideNotes;
+  const riderCount = optimisticRidersList?.length ?? 0;
   const ridersLabel = hasLimit ? `${riderCount}/${rideLimit}` : riderCount;
 
   const openNotes = () => setShowNotesForm(true);
@@ -90,7 +117,7 @@ const RideDetails = ({ ride, user, role }: RideDetailsProps) => {
           )}
           <RidersGoing
             user={user}
-            users={userList}
+            users={optimisticRidersList}
             hasRiders={hasRiders}
             isLeader={isLeader}
           />
@@ -111,6 +138,7 @@ const RideDetails = ({ ride, user, role }: RideDetailsProps) => {
                 ariaLabel={`Join ${name} ride`}
                 rideId={id!}
                 userId={user?.id}
+                toggleGoing={toggleGoing}
               />
             )}
           </div>
@@ -129,8 +157,3 @@ const RideDetails = ({ ride, user, role }: RideDetailsProps) => {
 };
 
 export default RideDetails;
-
-/*
-  padding-inline-start: 4px;
-  padding-inline-end: 4px;
-  */
