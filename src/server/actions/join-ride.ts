@@ -7,6 +7,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { canUseAction } from "../auth";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const joinSchema = z.object({
   userId: z.string(),
   rideId: z.string(),
@@ -39,6 +40,7 @@ export const joinRide = async ({
       success: true,
     };
   } catch (error) {
+    console.error(error);
     return {
       success: false,
       error: `Unable to add rider to ride id ${rideId}`,

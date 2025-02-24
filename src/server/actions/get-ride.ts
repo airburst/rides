@@ -29,6 +29,7 @@ export const getRide = async (
       ride: formatRideData(result as unknown as Ride) as Ride,
     };
   } catch (error) {
+    console.error(error);
     return {
       ride: null,
       error: new Error(`Unable to fetch ride id ${id}`),
