@@ -58,7 +58,6 @@ const RideDetails = ({ ride, user, role }: RideDetailsProps) => {
       return [...state, newValue];
     },
   );
-  console.log("🚀 ~ RideDetails ~ optimisticRidersList:", optimisticRidersList);
 
   const toggleGoing = () => {
     if (user) {
