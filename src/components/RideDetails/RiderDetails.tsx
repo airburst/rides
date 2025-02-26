@@ -44,9 +44,9 @@ export const RiderDetails = ({ user, isLeader, sessionUser }: Props) => {
 
   const numberToDisplay = showEmergency ? emergencyNumber : mobileNumber;
 
-  const numberClass = clsx(
-    "flex items-center gap-2 px-1 rounded-md",
-    showEmergency ? "bg-error text-white" : "text-neutral-600",
+  const callButtonClass = clsx(
+    "btn btn-sm",
+    showEmergency ? "bg-error text-white" : "bg-neutral-100 text-neutral-600",
   );
 
   return (
@@ -58,17 +58,12 @@ export const RiderDetails = ({ user, isLeader, sessionUser }: Props) => {
 
       {isLeader && (
         <div className="grid grid-cols-[1fr_44px] gap-1">
-          <div className={numberClass}>
-            {numberToDisplay && (
-              <a
-                className="flex flex-row items-center gap-2 truncate"
-                href={`tel:${numberToDisplay}`}
-              >
-                <Phone className="h-4 w-4" />
-                {numberToDisplay}
-              </a>
-            )}
-          </div>
+          {numberToDisplay && (
+            <a className={callButtonClass} href={`tel:${numberToDisplay}`}>
+              <Phone className="h-4 w-4" />
+              CALL
+            </a>
+          )}
 
           <Switch
             checked={showEmergency}
