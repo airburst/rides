@@ -58,12 +58,10 @@ export const RiderDetails = ({ user, isLeader, sessionUser }: Props) => {
 
       {isLeader && (
         <div className="grid grid-cols-[1fr_44px] gap-1">
-          {numberToDisplay && (
-            <a className={callButtonClass} href={`tel:${numberToDisplay}`}>
-              <Phone className="h-4 w-4" />
-              CALL
-            </a>
-          )}
+          <a className={callButtonClass} href={`tel:${numberToDisplay}`}>
+            <Phone className="h-4 w-4" />
+            CALL
+          </a>
 
           <Switch
             checked={showEmergency}
