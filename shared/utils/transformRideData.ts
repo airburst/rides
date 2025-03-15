@@ -26,9 +26,9 @@ const filterSearchText = (rides: RideList[], searchText: string) =>
     const { name, rideGroup, destination } = ride;
 
     return (
-      name?.indexOf(searchText) > -1 ||
-      (rideGroup ?? "")?.indexOf(searchText) > -1 ||
-      (destination ?? "")?.indexOf(searchText) > -1
+      name?.includes(searchText) ||
+      (rideGroup ?? "")?.includes(searchText) ||
+      (destination ?? "")?.includes(searchText)
     );
   });
 

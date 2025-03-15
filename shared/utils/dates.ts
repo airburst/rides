@@ -4,12 +4,17 @@ import utc from "dayjs/plugin/utc.js";
 
 dayjs.extend(utc);
 
-const delta = dayjs().utcOffset();
+const utcDate = (date?: string) => {
+  const delta = dayjs(date).utcOffset();
 
-const utcDate = (date?: string) => dayjs(date).utc().add(delta, "minutes")
+  return dayjs(date).utc().add(delta, "minutes");
+};
 
 // Current local time
-export const getNow = () => dayjs().utc().add(delta, "minutes").toISOString();
+export const getNow = () => {
+  const delta = dayjs().utcOffset();
+  return dayjs().utc().add(delta, "minutes").toISOString();
+};
 
 // Determine whether a ride can be joined yet
 // Allow join and leave up to 12 hours after ride starts
@@ -21,6 +26,8 @@ export const isJoinable = (date: string) => {
 };
 
 export const getDateFromString = (dateString: string, end?: boolean) => {
+  const delta = dayjs(dateString).utcOffset();
+
   return end
     ? dayjs(dateString)
         .utc()
@@ -40,6 +47,8 @@ export const getNextWeek = () => {
 };
 
 export const getNextNWeeks = (weeks: string) => {
+  const delta = dayjs().utcOffset();
+
   if (weeks === "-1") {
     return dayjs(FOREVER).toISOString();
   }
@@ -73,6 +82,7 @@ export const getQueryDateRange = ({
   start?: string;
   end?: string;
 }): { start: string; end: string } => {
+  const delta = dayjs().utcOffset();
   // Show all rides until end of day
   const now = dayjs()
     .utc()
@@ -96,11 +106,17 @@ export const getQueryDateRange = ({
 
 export const isSaturday = (date: string) => dayjs(date).day() === 6;
 
-export const formatDate = (date: string) =>
-  dayjs(date).utc().add(delta, "minutes").format("dddd DD MMMM");
+export const formatDate = (date: string) => {
+  const delta = dayjs(date).utcOffset();
 
-export const formatCalendarDate = (date: string) =>
-  dayjs(date).utc().add(delta, "minutes").format("MMMM YYYY");
+  return dayjs(date).utc().add(delta, "minutes").format("dddd DD MMMM");
+};
+
+export const formatCalendarDate = (date: string) => {
+  const delta = dayjs(date).utcOffset();
+
+  return dayjs(date).utc().add(delta, "minutes").format("MMMM YYYY");
+};
 
 export const getDay = (date?: string): number => +(dayjs(date).date() || 1);
 
@@ -110,6 +126,7 @@ export const formatFormDate = (date: string = getNow()) =>
   dayjs(date).utc().format("YYYY-MM-DD");
 
 export const getRideDateAndTime = (date: string) => {
+  const delta = dayjs(date).utcOffset();
   const d = dayjs(date).utc().add(delta, "minutes").toISOString();
 
   return {
@@ -120,7 +137,10 @@ export const getRideDateAndTime = (date: string) => {
 
 // Formatted for form inputs:
 // date = "yyyy-mm-dd" and time = "hh:mm"
-export const getFormRideDateAndTime = (rideDate: string, fixedDate?: string) => ({
+export const getFormRideDateAndTime = (
+  rideDate: string,
+  fixedDate?: string,
+) => ({
   rideDate: formatFormDate(fixedDate ?? rideDate),
   startDate: formatFormDate(fixedDate ?? rideDate),
   time: formatTime(fixedDate ?? rideDate),
@@ -130,10 +150,10 @@ export const getFormRideDateAndTime = (rideDate: string, fixedDate?: string) => 
 export const getMonth = () => dayjs().month();
 
 export const getLastMonth = (date?: string) =>
-  utcDate(date).subtract(1, "month").set('date', 1).toISOString();
+  utcDate(date).subtract(1, "month").set("date", 1).toISOString();
 
 export const getNextMonth = (date?: string) =>
-  utcDate(date).add(1, "month").set('date', 1).toISOString();
+  utcDate(date).add(1, "month").set("date", 1).toISOString();
 
 export const firstDayOfMonth = (date?: string) =>
   date ? dayjs(date).startOf("month").day() : dayjs().startOf("month").day();

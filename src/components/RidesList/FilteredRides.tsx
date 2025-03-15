@@ -61,4 +61,4 @@ export const FilteredRides = ({ rides, user }: Props) => {
       />
     </>
   );
-}
+};
