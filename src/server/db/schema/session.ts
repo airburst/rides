@@ -6,13 +6,11 @@ import users from "./user";
 const sessions = createTable(
   "sessions",
   {
-    sessionToken: varchar("session_token", { length: 255 })
-      .notNull()
-      .primaryKey(),
-    userId: varchar("user_id", { length: 255 })
+    sessionToken: varchar({ length: 255 }).notNull().primaryKey(),
+    userId: varchar({ length: 255 })
       .notNull()
       .references(() => users.id),
-    expires: timestamp("expires", {
+    expires: timestamp({
       mode: "date",
       withTimezone: true,
     }).notNull(),

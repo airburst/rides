@@ -15,29 +15,29 @@ import userOnRides from "./usersOnRide";
 const rides = createTable(
   "rides",
   {
-    id: text("id")
+    id: text()
       .primaryKey()
       .$defaultFn(() => crypto.randomUUID()),
-    name: varchar("name", { length: 255 }).notNull(),
-    rideGroup: varchar("ride_group", { length: 255 }),
-    rideDate: timestamp("ride_date", {
+    name: varchar({ length: 255 }).notNull(),
+    rideGroup: varchar({ length: 255 }),
+    rideDate: timestamp({
       precision: 3,
       mode: "string",
     }).notNull(),
-    destination: varchar("destination", { length: 255 }),
-    distance: integer("distance"),
-    meetPoint: varchar("meet_point", { length: 255 }),
-    route: varchar("route", { length: 255 }),
-    leader: varchar("leader", { length: 255 }),
-    notes: text("notes"),
-    rideLimit: integer("ride_limit").notNull().default(-1),
-    deleted: boolean("deleted").notNull().default(false),
-    cancelled: boolean("cancelled").notNull().default(false),
-    scheduleId: text("schedule_id"),
-    createdAt: timestamp("created_at", { precision: 3, mode: "string" })
+    destination: varchar({ length: 255 }),
+    distance: integer(),
+    meetPoint: varchar({ length: 255 }),
+    route: varchar({ length: 255 }),
+    leader: varchar({ length: 255 }),
+    notes: text(),
+    rideLimit: integer().notNull().default(-1),
+    deleted: boolean().notNull().default(false),
+    cancelled: boolean().notNull().default(false),
+    scheduleId: text(),
+    createdAt: timestamp({ precision: 3, mode: "string" })
       .defaultNow()
       .notNull(),
-    updatedAt: timestamp("updated_at", { precision: 3, mode: "string" })
+    updatedAt: timestamp({ precision: 3, mode: "string" })
       .defaultNow()
       .notNull(),
   },

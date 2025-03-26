@@ -6,24 +6,24 @@ import rides from "./ride";
 const repeatingRides = createTable(
   "repeating_rides",
   {
-    id: text("id")
+    id: text()
       .primaryKey()
       .$defaultFn(() => crypto.randomUUID()),
-    name: varchar("name", { length: 255 }).notNull(),
-    schedule: text("schedule").notNull(),
-    winterStartTime: varchar("winter_start_time", { length: 255 }),
-    rideGroup: varchar("ride_group", { length: 255 }),
-    destination: varchar("destination", { length: 255 }),
-    distance: integer("distance"),
-    meetPoint: varchar("meet_point", { length: 255 }),
-    route: varchar("route", { length: 255 }),
-    leader: varchar("leader", { length: 255 }),
-    notes: text("notes"),
-    rideLimit: integer("ride_limit").default(-1).notNull(),
-    createdAt: timestamp("created_at", { precision: 3, mode: "string" })
+    name: varchar({ length: 255 }).notNull(),
+    schedule: text().notNull(),
+    winterStartTime: varchar({ length: 255 }),
+    rideGroup: varchar({ length: 255 }),
+    destination: varchar({ length: 255 }),
+    distance: integer(),
+    meetPoint: varchar({ length: 255 }),
+    route: varchar({ length: 255 }),
+    leader: varchar({ length: 255 }),
+    notes: text(),
+    rideLimit: integer().default(-1).notNull(),
+    createdAt: timestamp({ precision: 3, mode: "string" })
       .defaultNow()
       .notNull(),
-    updatedAt: timestamp("updated_at").notNull().defaultNow(),
+    updatedAt: timestamp().notNull().defaultNow(),
   },
   (ride) => ({
     repeatingRideIndex: index().on(ride.name),

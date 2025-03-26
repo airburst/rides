@@ -4,10 +4,12 @@
 
 https://orm.drizzle.team/docs/connect-overview
 
-- [ ] drizzle.config.ts (casing: "snake_case")
-- [ ] const db = drizzle( connection: "", casing: "snake_case")
-- [ ] Remove snake case from schema files
-- [ ] seed.ts: db.$client to access client
+- [x] drizzle.config.ts (casing: "snake_case")
+- [x] const db = drizzle( connection: "", casing: "snake_case")
+- [x] Remove snake case from schema files
+- [x] seed.ts
+- [ ] pump.ts
+- [ ] createTable ??
 - [ ] After each change, gen a migration until no changes
 
 - What would MySQL look like?

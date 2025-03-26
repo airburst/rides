@@ -8,14 +8,14 @@ import users from "./user";
 const userOnRides = createTable(
   "users_on_rides",
   {
-    userId: varchar("user_id", { length: 255 })
+    userId: varchar({ length: 255 })
       .notNull()
       .references(() => users.id),
-    rideId: varchar("ride_id", { length: 255 })
+    rideId: varchar({ length: 255 })
       .notNull()
       .references(() => rides.id),
-    notes: text("notes"),
-    createdAt: timestamp("created_at", { precision: 3, mode: "string" })
+    notes: text(),
+    createdAt: timestamp({ precision: 3, mode: "string" })
       .defaultNow()
       .notNull(),
   },
