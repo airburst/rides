@@ -37,9 +37,7 @@ export const getUsers = async (
           membershipStatus: true,
         },
         where: or(
-          // @ts-expect-error col type string
           like(lower(users.name), `%${query.toLowerCase()}%`),
-          // @ts-expect-error col type string
           like(lower(users.email), `%${query.toLowerCase()}%`),
         ),
         orderBy: [asc(users.name)],

@@ -24,7 +24,7 @@
     "analyze:browser": "BUNDLE_ANALYZE=browser next build"
   },
   "dependencies": {
-    "@auth/drizzle-adapter": "^1.7.4",
+    "@auth/drizzle-adapter": "^1.8.0",
     "@auth0/nextjs-auth0": "^3.5.0",
     "@headlessui/react": "^2.2.0",
     "@hookform/resolvers": "^3.9.1",
@@ -35,7 +35,7 @@
     "copy-to-clipboard": "^3.3.3",
     "daisyui": "^4.12.23",
     "dayjs": "^1.11.13",
-    "drizzle-orm": "^0.32.0",
+    "drizzle-orm": "^0.41.0",
     "jotai": "^2.11.0",
     "lucide-react": "^0.469.0",
     "markdown-it": "^14.1.0",
@@ -73,8 +73,8 @@
     "@typescript-eslint/parser": "^8.18.2",
     "autoprefixer": "^10.4.20",
     "dotenv": "^16.4.7",
-    "drizzle-dbml-generator": "^0.7.0",
-    "drizzle-kit": "^0.23.0",
+    "drizzle-dbml-generator": "^0.10.0",
+    "drizzle-kit": "^0.30.5",
     "eslint": "8.57.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-next": "15.1.3",
