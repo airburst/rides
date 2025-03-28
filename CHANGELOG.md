@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.7.0
+
+### Changed
+
+Updated Drizzle ORM schemas and connections
+
+- [x] drizzle.config.ts (casing: "snake_case")
+- [x] const db = drizzle( connection: "", casing: "snake_case")
+- [x] Remove snake case from schema files
+- [x] Update seed.ts
+- [x] Update pump.ts
+- [x] Updatearray syntax for table constraints
+- [x] Move scripts to bin folder
+- [x] Update Yarn to 4.7.0
+
 ## 3.6.1 - 2025-03-15
 
 ### Fixed

@@ -4,17 +4,17 @@ import { createTable } from "./create-table";
 import users from "./user";
 
 const memberships = createTable("membership", {
-  system: text("system").notNull().default("RiderHQ"),
-  memberId: text("member_id").primaryKey().notNull(),
-  userId: text("user_id").notNull(),
-  handle: text("handle").notNull(),
-  isUser: boolean("is_user").notNull(),
-  firstnames: text("firstnames").notNull(),
-  lastname: text("lastname").notNull(),
-  email: text("email").notNull(),
-  expires: text("expires"),
-  isVerified: boolean("is_verified"),
-  isGuest: boolean("is_guest"),
+  system: text().notNull().default("RiderHQ"),
+  memberId: text().primaryKey().notNull(),
+  userId: text().notNull(),
+  handle: text().notNull(),
+  isUser: boolean().notNull(),
+  firstnames: text().notNull(),
+  lastname: text().notNull(),
+  email: text().notNull(),
+  expires: text(),
+  isVerified: boolean(),
+  isGuest: boolean(),
 });
 
 export const membershipRelations = relations(memberships, ({ one }) => ({

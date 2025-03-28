@@ -1,7 +1,6 @@
 import { config } from "dotenv";
 // import { drizzle } from "drizzle-orm/node-postgres";
 import { drizzle } from "drizzle-orm/postgres-js";
-import postgres from "postgres";
 import * as schema from "./schema";
 import * as seeds from "./seeds";
 
@@ -15,8 +14,10 @@ if (!process.env.DB_SEEDING) {
 }
 
 const main = async () => {
-  const client = postgres(process.env.DATABASE_URL!);
-  const db = drizzle(client, { schema });
+  const db = drizzle(process.env.DATABASE_URL!, {
+    schema,
+    casing: "snake_case",
+  });
 
   console.log("Cleaning tables");
 

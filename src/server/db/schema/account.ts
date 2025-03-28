@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { index, integer, primaryKey, text, varchar } from "drizzle-orm/pg-core";
+import * as t from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 import { createTable } from "./create-table";
 import users from "./user";
@@ -7,30 +7,31 @@ import users from "./user";
 const accounts = createTable(
   "accounts",
   {
-    userId: varchar("user_id", { length: 255 })
+    userId: t
+      .varchar({ length: 255 })
       .notNull()
       .references(() => users.id),
-    type: varchar("type", { length: 255 })
-      .$type<AdapterAccount["type"]>()
+    type: t.varchar({ length: 255 }).$type<AdapterAccount["type"]>().notNull(),
+    provider: t.varchar({ length: 255 }).notNull(),
+    providerAccountId: t
+      .varchar({
+        length: 255,
+      })
       .notNull(),
-    provider: varchar("provider", { length: 255 }).notNull(),
-    providerAccountId: varchar("provider_account_id", {
-      length: 255,
-    }).notNull(),
-    refresh_token: text("refresh_token"),
-    access_token: text("access_token"),
-    expires_at: integer("expires_at"),
-    token_type: varchar("token_type", { length: 255 }),
-    scope: varchar("scope", { length: 255 }),
-    id_token: text("id_token"),
-    session_state: varchar("session_state", { length: 255 }),
+    refresh_token: t.text(),
+    access_token: t.text(),
+    expires_at: t.integer(),
+    token_type: t.varchar({ length: 255 }),
+    scope: t.varchar({ length: 255 }),
+    id_token: t.text(),
+    session_state: t.varchar({ length: 255 }),
   },
-  (account) => ({
-    compoundKey: primaryKey({
-      columns: [account.provider, account.providerAccountId],
+  (table) => [
+    t.primaryKey({
+      columns: [table.provider, table.providerAccountId],
     }),
-    userIdIdx: index("account_userId_idx").on(account.userId),
-  }),
+    t.index("account_userId_idx").on(table.userId),
+  ],
 );
 
 export const accountRelations = relations(accounts, ({ one }) => ({

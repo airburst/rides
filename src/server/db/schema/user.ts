@@ -1,37 +1,39 @@
 import { relations } from "drizzle-orm";
-import { json, pgEnum, text, timestamp, varchar } from "drizzle-orm/pg-core";
-
+import * as t from "drizzle-orm/pg-core";
 import accounts from "./account";
 import { createTable } from "./create-table";
 import memberships from "./membership";
 import sessions from "./session";
 import userOnRides from "./usersOnRide";
 
-export const roleEnum = pgEnum("role", ["USER", "LEADER", "ADMIN"]);
+export const roleEnum = t.pgEnum("role", ["USER", "LEADER", "ADMIN"]);
 
 const users = createTable("users", {
-  id: text("id")
+  id: t
+    .text()
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  name: varchar("name", { length: 255 }),
-  email: varchar("email", { length: 255 }).notNull(),
-  emailVerified: timestamp("email_verified", {
-    precision: 3,
-    withTimezone: true,
-  }).defaultNow(),
-  image: text("image"),
-  mobile: varchar("mobile", { length: 255 }),
-  emergency: varchar("emergency", { length: 255 }),
-  role: roleEnum("role").default("USER"),
-  preferences: json("preferences").default({ units: "km" }),
-  membershipId: text("membership_id"),
-  membershipStatus: varchar("membership_status", { length: 255 }).default(
-    "NOT_MEMBER",
-  ),
-  createdAt: timestamp("created_at", { precision: 3, mode: "string" })
+  name: t.varchar({ length: 255 }),
+  email: t.varchar({ length: 255 }).notNull(),
+  emailVerified: t
+    .timestamp({
+      precision: 3,
+      withTimezone: true,
+    })
+    .defaultNow(),
+  image: t.text(),
+  mobile: t.varchar({ length: 255 }),
+  emergency: t.varchar({ length: 255 }),
+  role: roleEnum().default("USER"),
+  preferences: t.json().default({ units: "km" }),
+  membershipId: t.text(),
+  membershipStatus: t.varchar({ length: 255 }).default("NOT_MEMBER"),
+  createdAt: t
+    .timestamp({ precision: 3, mode: "string" })
     .defaultNow()
     .notNull(),
-  updatedAt: timestamp("updated_at", { precision: 3, mode: "string" })
+  updatedAt: t
+    .timestamp({ precision: 3, mode: "string" })
     .defaultNow()
     .notNull(),
 });

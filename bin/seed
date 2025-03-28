@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+yarn startdb
+yarn db:generate
+yarn db:push
+yarn db:seed
+yarn dev

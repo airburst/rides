@@ -1,17 +1,19 @@
 import { config } from "dotenv";
 import { sql } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/postgres-js";
-import postgres from "postgres";
 import * as schema from "./schema";
 
 config();
 
 const main = async () => {
-  const sourceClient = postgres(process.env.SOURCE_URL!);
-  const sourceDb = drizzle(sourceClient);
-
-  const client = postgres(process.env.DATABASE_URL!);
-  const db = drizzle(client, { schema });
+  const sourceDb = drizzle(process.env.SOURCE_URL!, {
+    schema,
+    casing: "snake_case",
+  });
+  const db = drizzle(process.env.DATABASE_URL!, {
+    schema,
+    casing: "snake_case",
+  });
 
   console.log("Cleaning tables");
 
@@ -88,7 +90,7 @@ where expires > NOW()`);
   console.log("Sessions migrated", sessionsData.length);
 
   // Rides --------------------------------------------------//
-  // const ridesData = await sourceDb.execute(sql`SELECT * from "bcc_rides"`);
+  // const ridesData = await db.execute(sql`SELECT * from "bcc_rides"`);
   const ridesData = await sourceDb.execute(sql`SELECT
   id,
   name,

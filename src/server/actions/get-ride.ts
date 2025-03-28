@@ -25,6 +25,13 @@ export const getRide = async (
       where: and(eq(rides.id, id), eq(rides.deleted, false)),
     });
 
+    if (!result) {
+      return {
+        ride: null,
+        error: new Error(`Ride with id ${id} not found`),
+      };
+    }
+
     return {
       ride: formatRideData(result as unknown as Ride) as Ride,
     };

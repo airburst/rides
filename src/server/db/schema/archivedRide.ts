@@ -1,12 +1,5 @@
 import { relations } from "drizzle-orm";
-import {
-  boolean,
-  index,
-  integer,
-  text,
-  timestamp,
-  varchar,
-} from "drizzle-orm/pg-core";
+import * as t from "drizzle-orm/pg-core";
 
 import archivedUserOnRides from "./archivedUsersOnRide";
 import { createTable } from "./create-table";
@@ -14,31 +7,33 @@ import { createTable } from "./create-table";
 const archivedRides = createTable(
   "archived_rides",
   {
-    id: text("id")
+    id: t
+      .text()
       .primaryKey()
       .$defaultFn(() => crypto.randomUUID()),
-    name: varchar("name", { length: 255 }).notNull(),
-    rideGroup: varchar("ride_group", { length: 255 }),
-    rideDate: timestamp("ride_date", {
-      precision: 3,
-      mode: "string",
-    }).notNull(),
-    destination: varchar("destination", { length: 255 }),
-    distance: integer("distance"),
-    meetPoint: varchar("meet_point", { length: 255 }),
-    route: varchar("route", { length: 255 }),
-    leader: varchar("leader", { length: 255 }),
-    notes: text("notes"),
-    rideLimit: integer("ride_limit").notNull().default(-1),
-    deleted: boolean("deleted").notNull().default(false),
-    cancelled: boolean("cancelled").notNull().default(false),
-    createdAt: timestamp("created_at", { precision: 3, mode: "string" })
+    name: t.varchar({ length: 255 }).notNull(),
+    rideGroup: t.varchar({ length: 255 }),
+    rideDate: t
+      .timestamp({
+        precision: 3,
+        mode: "string",
+      })
+      .notNull(),
+    destination: t.varchar({ length: 255 }),
+    distance: t.integer(),
+    meetPoint: t.varchar({ length: 255 }),
+    route: t.varchar({ length: 255 }),
+    leader: t.varchar({ length: 255 }),
+    notes: t.text(),
+    rideLimit: t.integer().notNull().default(-1),
+    deleted: t.boolean().notNull().default(false),
+    cancelled: t.boolean().notNull().default(false),
+    createdAt: t
+      .timestamp({ precision: 3, mode: "string" })
       .defaultNow()
       .notNull(),
   },
-  (ride) => ({
-    rideIndex: index().on(ride.name),
-  }),
+  (table) => [t.index().on(table.name)],
 );
 
 export const archivedRideRelations = relations(archivedRides, ({ many }) => ({

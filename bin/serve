@@ -1,8 +1,7 @@
-./start-database.sh
+#!/usr/bin/env bash
 
 yarn startdb
 yarn db:generate
 yarn db:push
 yarn db:pump
-# yarn db:seed
 yarn dev
