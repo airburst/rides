@@ -11,7 +11,7 @@ https://orm.drizzle.team/docs/connect-overview
 - [x] After each change, gen a migration until no changes
 - [x] pump.ts
 - [ ] createTable ??
-- [ ] Move scripts to bin folder
+- [x] Move scripts to bin folder
 - [ ] Update Yarn
 
 ## Linting
