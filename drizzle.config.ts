@@ -10,10 +10,4 @@ export default defineConfig({
     url: env.DATABASE_URL,
   },
   casing: "snake_case",
-  // tablesFilter: ["bcc3_*"],
-  // migrations: {
-  //   prefix: "timestamp",
-  //   table: "__drizzle_migrations__",
-  //   schema: "public",
-  // },
 });

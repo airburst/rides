@@ -1,13 +1,5 @@
 import { relations } from "drizzle-orm";
-import {
-  boolean,
-  index,
-  integer,
-  text,
-  timestamp,
-  varchar,
-} from "drizzle-orm/pg-core";
-
+import * as t from "drizzle-orm/pg-core";
 import { createTable } from "./create-table";
 import repeatingRides from "./repeatingRide";
 import userOnRides from "./usersOnRide";
@@ -15,35 +7,38 @@ import userOnRides from "./usersOnRide";
 const rides = createTable(
   "rides",
   {
-    id: text()
+    id: t
+      .text()
       .primaryKey()
       .$defaultFn(() => crypto.randomUUID()),
-    name: varchar({ length: 255 }).notNull(),
-    rideGroup: varchar({ length: 255 }),
-    rideDate: timestamp({
-      precision: 3,
-      mode: "string",
-    }).notNull(),
-    destination: varchar({ length: 255 }),
-    distance: integer(),
-    meetPoint: varchar({ length: 255 }),
-    route: varchar({ length: 255 }),
-    leader: varchar({ length: 255 }),
-    notes: text(),
-    rideLimit: integer().notNull().default(-1),
-    deleted: boolean().notNull().default(false),
-    cancelled: boolean().notNull().default(false),
-    scheduleId: text(),
-    createdAt: timestamp({ precision: 3, mode: "string" })
+    name: t.varchar({ length: 255 }).notNull(),
+    rideGroup: t.varchar({ length: 255 }),
+    rideDate: t
+      .timestamp({
+        precision: 3,
+        mode: "string",
+      })
+      .notNull(),
+    destination: t.varchar({ length: 255 }),
+    distance: t.integer(),
+    meetPoint: t.varchar({ length: 255 }),
+    route: t.varchar({ length: 255 }),
+    leader: t.varchar({ length: 255 }),
+    notes: t.text(),
+    rideLimit: t.integer().notNull().default(-1),
+    deleted: t.boolean().notNull().default(false),
+    cancelled: t.boolean().notNull().default(false),
+    scheduleId: t.text(),
+    createdAt: t
+      .timestamp({ precision: 3, mode: "string" })
       .defaultNow()
       .notNull(),
-    updatedAt: timestamp({ precision: 3, mode: "string" })
+    updatedAt: t
+      .timestamp({ precision: 3, mode: "string" })
       .defaultNow()
       .notNull(),
   },
-  (ride) => ({
-    rideIndex: index().on(ride.name),
-  }),
+  (table) => [t.index().on(table.name)],
 );
 
 export const rideRelations = relations(rides, ({ one, many }) => ({

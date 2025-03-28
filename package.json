@@ -1,6 +1,6 @@
 {
   "name": "bcc3",
-  "version": "3.6.1",
+  "version": "3.7.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -102,7 +102,7 @@
   "ct3aMetadata": {
     "initVersion": "7.34.0"
   },
-  "packageManager": "yarn@4.5.3",
+  "packageManager": "yarn@4.7.0",
   "resolutions": {
     "@types/react": "19.0.2",
     "@types/react-dom": "19.0.2"

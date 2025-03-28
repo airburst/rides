@@ -1,6 +1,5 @@
-import { primaryKey, text, timestamp, varchar } from "drizzle-orm/pg-core";
-
 import { relations } from "drizzle-orm";
+import * as t from "drizzle-orm/pg-core";
 import { createTable } from "./create-table";
 import rides from "./ride";
 import users from "./user";
@@ -8,18 +7,21 @@ import users from "./user";
 const userOnRides = createTable(
   "users_on_rides",
   {
-    userId: varchar({ length: 255 })
+    userId: t
+      .varchar({ length: 255 })
       .notNull()
       .references(() => users.id),
-    rideId: varchar({ length: 255 })
+    rideId: t
+      .varchar({ length: 255 })
       .notNull()
       .references(() => rides.id),
-    notes: text(),
-    createdAt: timestamp({ precision: 3, mode: "string" })
+    notes: t.text(),
+    createdAt: t
+      .timestamp({ precision: 3, mode: "string" })
       .defaultNow()
       .notNull(),
   },
-  (pk) => ({ pk: primaryKey({ columns: [pk.userId, pk.rideId] }) }),
+  (table) => [t.primaryKey({ columns: [table.userId, table.rideId] })],
 );
 
 export const userOnRidesRelations = relations(userOnRides, ({ one }) => ({
