@@ -16,7 +16,7 @@
     "test": "jest",
     "lint": "next lint",
     "start": "next start",
-    "startdb": "./start-database.sh",
+    "startdb": "./bin/start-database",
     "check-types": "tsc --noEmit --incremental --emitDeclarationOnly false --pretty",
     "prepare": "husky",
     "analyze": "ANALYZE=true next build",

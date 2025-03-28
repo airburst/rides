@@ -6,7 +6,7 @@ import { deleteRide } from "@/server/actions/delete-ride";
 import { isCancelledAtom } from "@/store";
 import { type Role } from "@/types";
 import { useAtom } from "jotai";
-import { Menu } from 'lucide-react';
+import { Menu } from "lucide-react";
 import { signIn, signOut } from "next-auth/react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -22,7 +22,7 @@ export type MenuProps = {
 
 const UserMenu = ({ role, isAuthenticated }: MenuProps) => {
   const router = useRouter();
-  const pathname = usePathname()
+  const pathname = usePathname();
   const params = useParams();
   const rideId = flattenQuery(params.id);
   const [isCancelled] = useAtom(isCancelledAtom);
@@ -32,7 +32,6 @@ const UserMenu = ({ role, isAuthenticated }: MenuProps) => {
 
   // Derive rideId or repeatingRideId from the pathname
   const repeatingRideId = pathname.includes("repeating") ? rideId : undefined;
-
 
   const closeMenu = () => {
     setShow(false);
@@ -48,7 +47,6 @@ const UserMenu = ({ role, isAuthenticated }: MenuProps) => {
     }
   };
 
-
   const handleSignout = async () => {
     await signOut({ callbackUrl: "http://localhost:3000" });
     closeMenu();
@@ -63,9 +61,9 @@ const UserMenu = ({ role, isAuthenticated }: MenuProps) => {
     const results = await cancelRide(rideId);
 
     if (results.success) {
-      toast.success("Ride has been cancelled.")
-      closeMenu();
       router.back();
+      toast.success("Ride has been cancelled.");
+      closeMenu();
       cb(true);
     } else {
       cb(false);
@@ -76,9 +74,9 @@ const UserMenu = ({ role, isAuthenticated }: MenuProps) => {
     const results = await deleteRide(rideId);
 
     if (results.success) {
-      toast.success("Ride has been deleted.")
-      closeMenu();
       router.back();
+      toast.success("Ride has been deleted.");
+      closeMenu();
       cb(true);
     } else {
       cb(false);
@@ -87,31 +85,43 @@ const UserMenu = ({ role, isAuthenticated }: MenuProps) => {
 
   const confirmCancel = () => {
     setShowConfirmCancel(true);
-    setShow(false)
-  }
+    setShow(false);
+  };
   const confirmDelete = () => {
     setShowConfirmDelete(true);
-    setShow(false)
-  }
+    setShow(false);
+  };
 
   return (
     <>
-      <div className="drawer drawer-end drawer-auto-gutter">
-        <input id="my-drawer" type="checkbox" className="drawer-toggle" checked={show} readOnly />
+      <div className="drawer-auto-gutter drawer drawer-end">
+        <input
+          id="my-drawer"
+          type="checkbox"
+          className="drawer-toggle"
+          checked={show}
+          readOnly
+        />
         <div className="drawer-content">
           <div className="h-10 cursor-pointer rounded p-1 text-3xl">
             <button
               type="button"
               onClick={toggleMenu}
               onKeyDown={toggleMenu}
-              aria-label="open menu">
-              <Menu className="fill-white w-8 h-8" />
+              aria-label="open menu"
+            >
+              <Menu className="h-8 w-8 fill-white" />
             </button>
           </div>
         </div>
 
         <div className="drawer-side">
-          <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay" onClick={closeMenu}></label>
+          <label
+            htmlFor="my-drawer"
+            aria-label="close sidebar"
+            className="drawer-overlay"
+            onClick={closeMenu}
+          ></label>
           <MenuContent
             role={role}
             isAuthenticated={isAuthenticated}

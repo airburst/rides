@@ -9,16 +9,18 @@ https://orm.drizzle.team/docs/connect-overview
 - [x] Remove snake case from schema files
 - [x] seed.ts
 - [x] After each change, gen a migration until no changes
-- [ ] pump.ts
+- [x] pump.ts
 - [ ] createTable ??
 - [ ] Move scripts to bin folder
 - [ ] Update Yarn
 
-- What would MySQL look like?
-
 ## Linting
 
 - Update eslint to v9
+
+## Jotai
+
+https://github.com/pmndrs/jotai/discussions/2044
 
 ## Tailwind and UX
 

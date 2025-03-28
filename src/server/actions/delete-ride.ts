@@ -23,10 +23,7 @@ export const deleteRide = async (
   }
 
   try {
-    await db
-      .update(rides)
-      .set({ deleted: true })
-      .where(eq(rides.id, rideId));
+    await db.update(rides).set({ deleted: true }).where(eq(rides.id, rideId));
 
     revalidatePath("/ride/[...id]", "page");
 
@@ -34,6 +31,7 @@ export const deleteRide = async (
       success: true,
     };
   } catch (error) {
+    console.log("🚀 ~ delete-ride.ts:", error);
     return {
       success: false,
       error: `Unable to delete ride id ${rideId}`,
