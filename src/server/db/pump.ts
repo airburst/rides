@@ -6,6 +6,10 @@ import * as schema from "./schema";
 config();
 
 const main = async () => {
+  const sourceDb = drizzle(process.env.SOURCE_URL!, {
+    schema,
+    casing: "snake_case",
+  });
   const db = drizzle(process.env.DATABASE_URL!, {
     schema,
     casing: "snake_case",
@@ -30,7 +34,7 @@ const main = async () => {
   console.log("Data migration started");
 
   // Users --------------------------------------------------//
-  const usersData = await db.execute(sql`select
+  const usersData = await sourceDb.execute(sql`select
   id,
   name,
   email,
@@ -48,7 +52,7 @@ from "bcc_users"`);
   console.log("Users migrated", usersData.length);
 
   // Accounts --------------------------------------------------//
-  const accountsData = await db.execute(
+  const accountsData = await sourceDb.execute(
     // sql`SELECT * from "bcc_accounts"`,
     sql`SELECT
   user_id as "userId",
@@ -69,7 +73,7 @@ from "bcc_accounts"`,
   console.log("Accounts migrated", accountsData.length);
 
   // Sessions --------------------------------------------------//
-  const sessionsData = await db.execute(sql`select
+  const sessionsData = await sourceDb.execute(sql`select
   user_id as "userId",
   session_token as "sessionToken",
   expires
@@ -87,7 +91,7 @@ where expires > NOW()`);
 
   // Rides --------------------------------------------------//
   // const ridesData = await db.execute(sql`SELECT * from "bcc_rides"`);
-  const ridesData = await db.execute(sql`SELECT
+  const ridesData = await sourceDb.execute(sql`SELECT
   id,
   name,
   ride_group as "rideGroup",
@@ -110,7 +114,7 @@ from "bcc_rides"`);
   console.log("Rides migrated", ridesData.length);
 
   // Users on rides  ---------------------------------------------//
-  const uorData = await db.execute(sql`SELECT
+  const uorData = await sourceDb.execute(sql`SELECT
   user_id as "userId",
   ride_id as "rideId",
   notes,
@@ -121,7 +125,7 @@ from "bcc_users_on_rides"`);
   console.log("Users on rides migrated", uorData.length);
 
   // Repeating rides  ---------------------------------------------//
-  const repeatingRidesData = await db.execute(
+  const repeatingRidesData = await sourceDb.execute(
     sql`SELECT * from "bcc_repeating_rides"`,
   );
   //@ts-expect-error data typing
@@ -129,7 +133,7 @@ from "bcc_users_on_rides"`);
   console.log("Repeating rides migrated", repeatingRidesData.length);
 
   // Archived Rides ---------------------------------------------//
-  const archivedRidesData = await db.execute(
+  const archivedRidesData = await sourceDb.execute(
     sql`SELECT
   id,
   name,
@@ -152,7 +156,7 @@ from "bcc_archived_rides"`,
   console.log("Archived rides migrated", archivedRidesData.length);
 
   // Users on rides  ---------------------------------------------//
-  const archivedUorData = await db.execute(sql`SELECT
+  const archivedUorData = await sourceDb.execute(sql`SELECT
   user_id as "userId",
   ride_id as "rideId",
   notes,

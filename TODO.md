@@ -8,9 +8,11 @@ https://orm.drizzle.team/docs/connect-overview
 - [x] const db = drizzle( connection: "", casing: "snake_case")
 - [x] Remove snake case from schema files
 - [x] seed.ts
+- [x] After each change, gen a migration until no changes
 - [ ] pump.ts
 - [ ] createTable ??
-- [ ] After each change, gen a migration until no changes
+- [ ] Move scripts to bin folder
+- [ ] Update Yarn
 
 - What would MySQL look like?
 
