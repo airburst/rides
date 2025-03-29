@@ -49,6 +49,7 @@ export const getRides = async (
       ) as RideList[],
     };
   } catch (error) {
+    console.error("💢 get-rides", error);
     return {
       rides: [],
       error: new Error("Unable to fetch rides"),

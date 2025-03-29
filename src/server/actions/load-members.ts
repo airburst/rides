@@ -20,9 +20,10 @@ export const loadMembers = async (members: Member[]): Promise<FormState> => {
       message: "Ride added",
     };
   } catch (error) {
+    console.error("💢 load-members", error);
     return {
       success: false,
-      message: `Unable to add ride`,
+      message: `Unable to load members`,
     };
   }
 };

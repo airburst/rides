@@ -38,6 +38,7 @@ export const updateMessage = async (
       success: true,
     };
   } catch (error) {
+    console.error("💢 update-message", error);
     return {
       success: false,
       error: `Unable to update message`,

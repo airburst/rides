@@ -21,6 +21,7 @@ export const getRepeatingRide = async (
       ride: repeatingRideFromDb(result as RepeatingRideDb),
     };
   } catch (error) {
+    console.error("💢 get-repeating-ride", error);
     return {
       ride: null,
       error: new Error("Unable to fetch rides"),

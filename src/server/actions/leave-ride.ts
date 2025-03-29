@@ -8,7 +8,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { canUseAction } from "../auth";
 
-const joinSchema = z.object({
+export const joinSchema = z.object({
   userId: z.string(),
   rideId: z.string(),
 });
@@ -44,6 +44,7 @@ export const leaveRide = async ({
       success: true,
     };
   } catch (error) {
+    console.error("💢 leave-ride", error);
     return {
       success: false,
       error: `Unable to remove rider from ride id ${rideId}`,

@@ -56,7 +56,7 @@ export const archiveRides = async (date: string) => {
       movedRiders: movedRiders.length,
     };
   } catch (error) {
-    console.error("🚀 ~ archiveRides ~ error:", error);
+    console.error("💢 archive-rides", error);
     return {
       success: false,
       message: `Unable to archive rides`,

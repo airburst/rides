@@ -32,7 +32,7 @@ export const generateRidesFromClient = async (
       message: `Generated ${createdRides} rides`,
     };
   } catch (error) {
-    console.log("🚀 ~ error:", error);
+    console.error("💢 generate-rides-from-client", error);
     return {
       success: false,
       message: `Unable to generate rides`,

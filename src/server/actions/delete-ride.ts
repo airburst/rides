@@ -31,7 +31,7 @@ export const deleteRide = async (
       success: true,
     };
   } catch (error) {
-    console.log("🚀 ~ delete-ride.ts:", error);
+    console.error("💢 delete-ride", error);
     return {
       success: false,
       error: `Unable to delete ride id ${rideId}`,

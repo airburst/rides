@@ -40,7 +40,7 @@ export const joinRide = async ({
       success: true,
     };
   } catch (error) {
-    console.error(error);
+    console.error("💢 join-ride", error);
     return {
       success: false,
       error: `Unable to add rider to ride id ${rideId}`,

@@ -27,14 +27,14 @@ export const getRideByShortId = async (
           },
         },
       },
-      where: and(like((rides.id), `%${shortId}`), eq(rides.deleted, false)),
+      where: and(like(rides.id, `%${shortId}`), eq(rides.deleted, false)),
     });
 
     return {
       ride: formatRideData(result as unknown as Ride) as Ride,
     };
   } catch (error) {
-    console.log("🚀 ~ error:", error)
+    console.error("💢 get-ride-by-shortid", error);
     return {
       ride: null,
       error: new Error(`Unable to fetch ride`),

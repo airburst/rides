@@ -40,6 +40,7 @@ export const addRepeatingRide = async (data: FormData) => {
       message: "Repeating ride added",
     };
   } catch (error) {
+    console.error("💢 add-repeating-ride", error);
     return {
       success: false,
       message: `Unable to add repeating ride`,
