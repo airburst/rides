@@ -5,15 +5,12 @@ import { db } from "@/server/db";
 import { userOnRides } from "@/server/db/schema";
 import { and, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-import { z } from "zod";
 import { canUseAction } from "../auth";
 
-const joinSchema = z.object({
-  userId: z.string(),
-  rideId: z.string(),
-});
-
-type JoinType = z.infer<typeof joinSchema>;
+type JoinType = {
+  userId: string;
+  rideId: string;
+};
 
 export const leaveRide = async ({
   rideId,
@@ -44,6 +41,7 @@ export const leaveRide = async ({
       success: true,
     };
   } catch (error) {
+    console.error("💢 leave-ride", error);
     return {
       success: false,
       error: `Unable to remove rider from ride id ${rideId}`,

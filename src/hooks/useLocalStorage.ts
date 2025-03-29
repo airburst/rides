@@ -18,6 +18,7 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
       // Parse stored json or if none return initialValue
       return item ? (JSON.parse(item) as T) : initialValue;
     } catch (error) {
+      console.error("💢 useLocalStorage", error);
       return initialValue;
     }
   });

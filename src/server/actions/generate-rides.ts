@@ -41,7 +41,7 @@ export const generateRides = async (
       message: "Rides generated",
     };
   } catch (error) {
-    console.log("🚀 ~ error:", error);
+    console.error("💢 generate-rides", error);
     return {
       success: false,
       message: `Unable to generate rides`,

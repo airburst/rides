@@ -51,6 +51,7 @@ export const updateRide = async (data: FormData): Promise<FormState> => {
       message: "Ride updated",
     };
   } catch (error) {
+    console.error("💢 update-ride", error);
     return {
       success: false,
       message: `Unable to update ride`,

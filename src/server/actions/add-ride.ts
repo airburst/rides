@@ -34,6 +34,7 @@ export const addRide = async (data: FormData): Promise<FormState> => {
       message: "Ride added",
     };
   } catch (error) {
+    console.error("💢 add-ride", error);
     return {
       success: false,
       message: `Unable to add ride`,

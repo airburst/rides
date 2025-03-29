@@ -59,6 +59,7 @@ export const deleteRepeatingRide = async (
       deletedRideCount,
     };
   } catch (error) {
+    console.error("💢 delete-repeating-ride", error);
     return {
       success: false,
       error: `Unable to delete ride id ${repeatingRideId}`,

@@ -21,6 +21,7 @@ export const getRepeatingRides = async (): Promise<{
       rides: result.map(({ createdAt, ...ride }) => repeatingRideFromDb(ride)),
     };
   } catch (error) {
+    console.error("💢 get-repeating-rides", error);
     return {
       rides: [],
       error: new Error("Unable to fetch rides"),

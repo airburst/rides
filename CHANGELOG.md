@@ -5,7 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 3.7.0
+## 3.7.1 - 2025-03-29
+
+### Updated
+
+- Updated all dependencies, including NextJS and React
+- Fixed linting issues in server actions
+
+## 3.7.0 - 2025-03-28
 
 ### Changed
 

@@ -30,7 +30,7 @@ export async function POST(
   const { date, scheduleId } = body;
 
   if (authorization === `Bearer ${process.env.API_KEY}`) {
-    const generateFromDate = date || getNextMonth();
+    const generateFromDate = date ?? getNextMonth();
     const rides = await getRidesFromTemplates({
       scheduleId,
       date: generateFromDate,

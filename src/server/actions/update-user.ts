@@ -66,7 +66,7 @@ export const updateUser = async (
       id: result?.[0]?.id ?? null,
     };
   } catch (error) {
-    console.log("🚀 ~ error:", error);
+    console.error("💢 update-user", error);
     return {
       id: null,
       error: `Unable to update user id ${id}`,

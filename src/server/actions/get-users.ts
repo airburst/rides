@@ -61,7 +61,7 @@ export const getUsers = async (
       users: result as unknown as User[],
     };
   } catch (error) {
-    console.log("🚀 ~ error:", error);
+    console.error("💢 get-users", error);
     return {
       users: [],
       error: `Unable to fetch users`,

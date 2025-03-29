@@ -12,7 +12,10 @@ export type FormState = {
 };
 
 // Expects image to be a base64 string
-export async function updateAvatar(id: string, image: string): Promise<FormState> {
+export async function updateAvatar(
+  id: string,
+  image: string,
+): Promise<FormState> {
   try {
     const parts = image.split(";");
     const mimeType = parts[0]?.split(":")[1];
@@ -21,17 +24,16 @@ export async function updateAvatar(id: string, image: string): Promise<FormState
 
     // Resize the image to 40x40 pixels
     const resizedBase64 = await sharp(img)
-    .resize(40,40, {fit: "cover"})
-    .toBuffer()
-    .then(resizedImageBuffer => {
-      const resizedImageData = resizedImageBuffer.toString("base64");
-      return `data:${mimeType};base64,${resizedImageData}`;
-    }).catch(error => {
-      console.error("Error resizing image", error);
-      return null;
-    });
-    console.log("🚀 ~ updateAvatar ~ resizedBase64:", resizedBase64);
-
+      .resize(40, 40, { fit: "cover" })
+      .toBuffer()
+      .then((resizedImageBuffer) => {
+        const resizedImageData = resizedImageBuffer.toString("base64");
+        return `data:${mimeType};base64,${resizedImageData}`;
+      })
+      .catch((error) => {
+        console.error("Error resizing image", error);
+        return null;
+      });
     if (!resizedBase64) {
       return { message: "Unable to resize image", success: false };
     }

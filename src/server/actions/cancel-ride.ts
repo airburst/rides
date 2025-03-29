@@ -31,6 +31,7 @@ export const cancelRide = async (
       success: true,
     };
   } catch (error) {
+    console.error("💢 cancel-ride", error);
     return {
       success: false,
       error: `Unable to cancel ride id ${rideId}`,

@@ -32,7 +32,7 @@ export const getUser = async (
       user: result as unknown as User,
     };
   } catch (error) {
-    console.log("🚀 ~ error:", error);
+    console.error("💢 get-user", error);
     return {
       user: null,
       error: `Unable to fetch ride id ${id}`,

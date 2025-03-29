@@ -41,11 +41,11 @@ export const updateRepeatingRide = async (data: FormData) => {
 
   try {
     const rideId = id;
-    const result =  await db
-    .update(repeatingRides)
-    .set(cleanUndefinedKeys(values))
-    .where(eq(repeatingRides.id, rideId))
-    .returning({ repeatingRideId: repeatingRides.id });
+    const result = await db
+      .update(repeatingRides)
+      .set(cleanUndefinedKeys(values))
+      .where(eq(repeatingRides.id, rideId))
+      .returning({ repeatingRideId: repeatingRides.id });
 
     revalidatePath(`/repeating-ride/${rideId}`, "page");
     revalidatePath(`/repeating-rides`, "page");
@@ -56,6 +56,7 @@ export const updateRepeatingRide = async (data: FormData) => {
       message: "Repeating ride updated",
     };
   } catch (error) {
+    console.error("💢 update-repeating-ride", error);
     return {
       success: false,
       message: `Unable to update repeating ride`,
