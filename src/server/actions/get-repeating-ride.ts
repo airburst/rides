@@ -17,6 +17,13 @@ export const getRepeatingRide = async (
       where: eq(repeatingRides.id, id),
     });
 
+    if (!result) {
+      return {
+        ride: null,
+        error: new Error(`Repeating ride with id ${id} not found`),
+      };
+    }
+
     return {
       ride: repeatingRideFromDb(result as RepeatingRideDb),
     };
