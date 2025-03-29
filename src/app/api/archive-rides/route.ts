@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { archiveRides } from "@/server/actions/archive-rides";
 import { getNow } from "@utils/dates";
 import { headers } from "next/headers";

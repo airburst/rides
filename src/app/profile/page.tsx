@@ -6,14 +6,18 @@ import { getServerAuthSession } from "@/server/auth";
 import { type Metadata } from "next";
 import dynamic from "next/dynamic";
 
-const UserProfileForm = dynamic(() => import("@/components/forms/UserProfileForm"));
+const UserProfileForm = dynamic(
+  () => import("@/components/forms/UserProfileForm"),
+);
 
 export const metadata: Metadata = {
   title: `${env.NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`,
   description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} User Profile Page`,
-}
+};
 
-export default async function ProfilePage(props: { params: Promise<{ id: string }> }) {
+export default async function ProfilePage(props: {
+  params: Promise<{ id: string }>;
+}) {
   const params = await props.params;
   const { id } = params;
   const session = await getServerAuthSession();
@@ -26,7 +30,7 @@ export default async function ProfilePage(props: { params: Promise<{ id: string 
           <div className="flex h-64 w-full items-center justify-center text-2xl">
             Unable to find user details
           </div>
-          <div className="flex mb-16 flex-row justify-between px-2 pt-8 sm:px-0">
+          <div className="mb-16 flex flex-row justify-between px-2 pt-8 sm:px-0">
             <BackButton />
           </div>
         </>
@@ -37,14 +41,16 @@ export default async function ProfilePage(props: { params: Promise<{ id: string 
   const { user, error } = await getUser(userId);
 
   if (error ?? !user) {
-    return <MainContent>
-      <div>{error}</div>
-    </MainContent>
+    return (
+      <MainContent>
+        <div>{error}</div>
+      </MainContent>
+    );
   }
 
   return (
     <MainContent>
       <UserProfileForm user={user} />
     </MainContent>
-  )
-};
+  );
+}

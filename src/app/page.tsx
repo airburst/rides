@@ -1,6 +1,5 @@
 import { MainContent } from "@/components/Layout/MainContent";
 import { type RidesListProps } from "@/components/RidesList";
-// import Snow from "@/components/Snow/Snow";
 import { UnregisterServiceWorkers } from "@/components/UnregisterServiceWorkers";
 import { env } from "@/env";
 import type { Metadata } from "next";
@@ -18,7 +17,6 @@ export const metadata: Metadata = {
 export default async function HomePage() {
   return (
     <>
-      {/* <Snow /> */}
       <MainContent>
         <RidesList />
       </MainContent>

@@ -1,4 +1,3 @@
-/* eslint-disable no-restricted-syntax */
 import {
   type FilterQuery,
   type Group,
@@ -76,7 +75,6 @@ export const groupRides = (
 ): Group[] => {
   // data can be an empty object when db connection is unavailable
   if (!Array.isArray(data)) {
-    // eslint-disable-next-line no-console
     console.log("Database error");
   }
   // Group rides by date

@@ -1,7 +1,11 @@
 "use client";
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import { useEffect, useState } from "react";
-import { type FieldErrors, type UseFormRegister, type UseFormSetValue, type UseFormWatch } from "react-hook-form";
+import {
+  type FieldErrors,
+  type UseFormRegister,
+  type UseFormSetValue,
+  type UseFormWatch,
+} from "react-hook-form";
 import {
   getDay,
   getNow,
@@ -42,7 +46,8 @@ const RepeatingRideForm = ({
   const monthDay = defaultValues?.bymonthday ?? getDay(date);
   const dayOfWeek = defaultValues?.byweekday ?? rruleDay(date);
   const watchTime = watch("time");
-  const time = defaultValues?.winterStartTime ?? watchTime ?? defaultValues?.time;
+  const time =
+    defaultValues?.winterStartTime ?? watchTime ?? defaultValues?.time;
   const watchFreq = watch("freq");
   const freq = watchFreq ? +watchFreq : defaultValues?.freq;
   const watchMonth = watch("freq");
@@ -85,7 +90,7 @@ const RepeatingRideForm = ({
   const isMonthly = freq === 1;
   const isWeekly = freq === 2;
   const daysArray = Array.from(Array(rruleDaysInMonth(month ?? 1)).keys()).map(
-    (n) => n + 1
+    (n) => n + 1,
   );
 
   if (isEditMode || !repeats) {
@@ -110,7 +115,7 @@ const RepeatingRideForm = ({
           </select>
         </div>
 
-        <div className="col-span-2 md:col-span-1 form-control w-full">
+        <div className="form-control col-span-2 w-full md:col-span-1">
           <label htmlFor="freq">Frequency</label>
           <select
             id="freq"
@@ -125,7 +130,7 @@ const RepeatingRideForm = ({
         </div>
 
         {isWeekly && (
-          <div className="col-span-3 md:col-span-1 form-control w-full">
+          <div className="form-control col-span-3 w-full md:col-span-1">
             <label htmlFor="byweekday">On</label>
             <select
               id="byweekday"
@@ -146,7 +151,7 @@ const RepeatingRideForm = ({
         )}
 
         {isMonthly && (
-          <div className="form-control w-full col-span-3 md:col-span-1">
+          <div className="form-control col-span-3 w-full md:col-span-1">
             <label htmlFor="repeat-type">Repeat type</label>
             <select
               id="repeat-type"
@@ -200,7 +205,7 @@ const RepeatingRideForm = ({
                 </select>
               </div>
 
-              <div className="col-span-2 form-control w-full">
+              <div className="form-control col-span-2 w-full">
                 <label htmlFor="byweekday-month">Day of week</label>
                 <select
                   id="byweekday-month"
@@ -224,7 +229,7 @@ const RepeatingRideForm = ({
       )}
       {isYearly && <div>TODO</div>}
 
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
         <div className="flex flex-col gap-4 md:gap-8">
           <label htmlFor="startDate" className="flex flex-col gap-1">
             Start Date *

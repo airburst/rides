@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc.js";
 import { formatDate } from "./dates";

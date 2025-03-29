@@ -46,7 +46,6 @@ export const formatUser = (
   notes?: string | null,
   isAuth = false,
 ) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { id, name, email, image, mobile, emergency, role } = user;
   const preferences = getPreferences(user);
 
@@ -96,7 +95,6 @@ export const formatRideData = (
   preferences?: Preferences,
   // isAuth = false,
 ): Ride | RideList => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { rideDate, users, distance, ...rest } = ride;
   const { day, time } = getRideDateAndTime(new Date(rideDate).toISOString());
   const units = (preferences ?? DEFAULT_PREFERENCES)?.units;

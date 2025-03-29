@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 "use client";
 
 import { DEFAULT_WEEKS_TO_SHOW } from "@/constants";
@@ -13,9 +12,11 @@ export const FilterButton = () => {
   // Get reactive data from atom
   const [showFilterMenu, setShowFilterMenu] = useAtom(showFilterAtom);
   const [filterQuery] = useAtom(filterQueryAtom);
-  const hasFiltersApplied = !!(filterQuery.onlyJoined
-    || filterQuery.q
-    || filterQuery.weeksAhead !== DEFAULT_WEEKS_TO_SHOW);
+  const hasFiltersApplied = !!(
+    filterQuery.onlyJoined ||
+    filterQuery.q ||
+    filterQuery.weeksAhead !== DEFAULT_WEEKS_TO_SHOW
+  );
 
   const toggle = () => setShowFilterMenu(!showFilterMenu);
 
@@ -31,11 +32,11 @@ export const FilterButton = () => {
         className="flex items-center rounded p-1 text-3xl"
       >
         {hasFiltersApplied ? (
-          <FilterX className="fill-white w-6 h-6" />
+          <FilterX className="h-6 w-6 fill-white" />
         ) : (
-          <Filter className="fill-white w-6 h-6" />
+          <Filter className="h-6 w-6 fill-white" />
         )}
       </button>
     </>
-  )
-}
+  );
+};

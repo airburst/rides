@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.7.2 - 2025-03-29
+
+### Updated
+
+- Updated eslint to v9
+- Updated all linting rules and fixed raised issues
+
 ## 3.7.1 - 2025-03-29
 
 ### Updated

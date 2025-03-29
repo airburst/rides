@@ -47,7 +47,7 @@ const Viewer = ({ markdown, title }: ViewerProps) => {
         <div
           id="ride-notes"
           className={notesClass}
-          // eslint-disable-next-line react/no-danger
+           
           dangerouslySetInnerHTML={{ __html: displayText }}
         />
         {isLong && (

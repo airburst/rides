@@ -170,5 +170,5 @@ from "bcc_archived_users_on_rides"`);
   process.exit(0);
 };
 
-// eslint-disable-next-line @typescript-eslint/no-floating-promises
+ 
 main();

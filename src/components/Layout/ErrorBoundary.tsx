@@ -1,5 +1,5 @@
 "use client";
-/* eslint-disable no-console */
+
 import { CircleAlert } from "lucide-react";
 import { Component, type ErrorInfo, type ReactNode } from "react";
 
@@ -17,7 +17,7 @@ export class ErrorBoundary extends Component<Props, State> {
     this.state = { hasError: false };
   }
 
-  public static getDerivedStateFromError(_: Error): State {
+  public static getDerivedStateFromError(): State {
     // Update state so the next render will show the fallback UI.
     return { hasError: true };
   }
@@ -27,24 +27,22 @@ export class ErrorBoundary extends Component<Props, State> {
   }
 
   public render() {
-    // eslint-disable-next-line react/destructuring-assignment
     if (this.state.hasError) {
       return (
-        <div className="flex flex-col text-neutral-800 justify-center">
+        <div className="flex flex-col justify-center text-neutral-800">
           <div className="flex h-64 items-center justify-center">
-            <CircleAlert className="text-error w-24 h-24" />
+            <CircleAlert className="h-24 w-24 text-error" />
           </div>
           <div className="flex items-center p-4 text-center text-2xl text-neutral-700">
             Sorry.. the app is experiencing problems
           </div>
-          <div className="flex items-center p-4 justify-center text-2xl text-neutral-700">
+          <div className="flex items-center justify-center p-4 text-2xl text-neutral-700">
             Please try again later
           </div>
         </div>
       );
     }
 
-    // eslint-disable-next-line react/destructuring-assignment
     return this.props.children;
   }
 }

@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+ 
 "use client";
 
 import { addRepeatingRide } from "@/server/actions/add-repeating-ride";

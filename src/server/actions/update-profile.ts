@@ -13,7 +13,7 @@ export async function updateProfile(data: FormData): Promise<FormState> {
   const formData = Object.fromEntries(data);
   // Handle known JSON fields
   if (formData.preferences) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-base-to-string
+     
     formData.preferences = JSON.parse(formData.preferences.toString());
   }
   const parsed = userProfileFormSchema.safeParse(formData);

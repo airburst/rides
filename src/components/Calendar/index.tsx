@@ -4,7 +4,7 @@ import {
   flattenQuery,
   getMonthDateRange,
   getNow,
-  mapRidesToDate
+  mapRidesToDate,
 } from "../../../shared/utils";
 import { type RideList } from "../../types";
 import { MainContent } from "../Layout/MainContent";
@@ -16,7 +16,6 @@ export type CalendarProps = {
   rides?: RideList[];
 };
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const Calendar: React.FC<CalendarProps> = async ({ date }: CalendarProps) => {
   const monthDate = date ? flattenQuery(date) : getNow();
   const { start, end } = getMonthDateRange(monthDate);
@@ -27,9 +26,11 @@ const Calendar: React.FC<CalendarProps> = async ({ date }: CalendarProps) => {
   const { rides, error } = await getRides(start, end);
 
   if (error) {
-    return <MainContent>
-      <div>{error.message}</div>
-    </MainContent>
+    return (
+      <MainContent>
+        <div>{error.message}</div>
+      </MainContent>
+    );
   }
 
   // Match rides to dates
@@ -44,27 +45,30 @@ const Calendar: React.FC<CalendarProps> = async ({ date }: CalendarProps) => {
         <HeadingGroup />
       </div>
 
-      <div className={`h-full grid grid-cols-7 grid-rows-${rowCount} auto-rows-fr gap-[1px] bg-base-300`} >
-        {daysWithRides.map(({ type, day, rides: mappedRides, date: calDate }) =>
-          type === "historic" ? (
-            <OutsideDay
-              key={`historic-${calDate}`}
-              day={day}
-              date={calDate}
-              rides={mappedRides}
-            />
-          ) : (
-            <Day
-              key={`cal-${calDate}`}
-              day={day}
-              date={calDate}
-              rides={mappedRides}
-            />
-          )
+      <div
+        className={`grid h-full grid-cols-7 grid-rows-${rowCount} auto-rows-fr gap-[1px] bg-base-300`}
+      >
+        {daysWithRides.map(
+          ({ type, day, rides: mappedRides, date: calDate }) =>
+            type === "historic" ? (
+              <OutsideDay
+                key={`historic-${calDate}`}
+                day={day}
+                date={calDate}
+                rides={mappedRides}
+              />
+            ) : (
+              <Day
+                key={`cal-${calDate}`}
+                day={day}
+                date={calDate}
+                rides={mappedRides}
+              />
+            ),
         )}
-      </div >
+      </div>
     </>
   );
 };
 
-export default Calendar
+export default Calendar;

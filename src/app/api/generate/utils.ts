@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { generateRides } from "@/server/actions/generate-rides";
 import { getRepeatingRide } from "@/server/actions/get-repeating-ride";
 import { getRepeatingRides } from "@/server/actions/get-repeating-rides";

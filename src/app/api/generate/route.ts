@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { getNextMonth } from "@utils/dates";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";

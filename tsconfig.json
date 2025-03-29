@@ -40,7 +40,8 @@
     "**/*.cjs",
     "**/*.js",
     ".next/types/**/*.ts",
-    "build/types/**/*.ts"
+    "build/types/**/*.ts",
+    "eslint.config.mjs"
   ],
   "exclude": ["node_modules", "build", "jest.config.cjs"]
 }

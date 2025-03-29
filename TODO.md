@@ -1,9 +1,5 @@
 # TODO List
 
-## Linting
-
-- Update eslint to v9
-
 ## Jotai
 
 https://github.com/pmndrs/jotai/discussions/2044

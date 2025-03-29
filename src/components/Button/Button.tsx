@@ -1,4 +1,3 @@
-/* eslint-disable react/button-has-type */
 import clsx from "clsx";
 import { forwardRef, type ReactNode } from "react";
 
@@ -39,7 +38,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       warning,
       error,
     },
-    ref
+    ref,
   ) => {
     const classes = clsx(
       "btn h-full",
@@ -52,7 +51,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       { "btn-error": error },
       { "btn-link": link },
       { "btn-disabled": disabled },
-      className
+      className,
     );
 
     const upperText = text?.toUpperCase();
@@ -69,12 +68,12 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       >
         {loading ? (
           <span className="loading loading-spinner"></span>
-        )
-          : buttonContent
-        }
+        ) : (
+          buttonContent
+        )}
       </button>
     );
-  }
+  },
 );
 
 Button.displayName = "Button";

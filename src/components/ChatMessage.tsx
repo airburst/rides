@@ -7,10 +7,10 @@ export const ChatMessage: React.FC<RideNote> = ({
   rideNotes,
   image,
 }: RideNote) => (
-  <div className="flex chat chat-start pl-2">
+  <div className="chat chat-start flex pl-2">
     {image && (
-      <div className="chat-image avatar placeholder">
-        <div className="bg-neutral text-neutral-content rounded-full w-10">
+      <div className="avatar placeholder chat-image">
+        <div className="w-10 rounded-full bg-neutral text-neutral-content">
           <img alt="Tailwind CSS chat bubble component" src={image} />
         </div>
       </div>
@@ -18,8 +18,7 @@ export const ChatMessage: React.FC<RideNote> = ({
     <div className="flex w-full flex-col">
       <div className="chat-header">{name}</div>
       <div
-        className="chat-bubble text-neutral-700 leading-snug break-words"
-        // eslint-disable-next-line react/no-danger
+        className="chat-bubble break-words leading-snug text-neutral-700"
         dangerouslySetInnerHTML={{ __html: makeClickableUrl(rideNotes ?? "") }}
       />
     </div>

@@ -43,7 +43,7 @@ export const RideMessages = ({
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   const onSubmit: SubmitHandler<FormValues> = async ({ notes }) => {
     if (rideId && userId) {
       setWaiting(true);
