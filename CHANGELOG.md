@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.7.3 - 2025-04-02
+
+### Updated
+
+- Changed cron jobs to run after 2am on the first of each month, to avoid any isses with daylight savings.
+
 ## 3.7.2 - 2025-03-29
 
 ### Updated
