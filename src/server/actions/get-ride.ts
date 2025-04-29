@@ -20,6 +20,7 @@ export const getRide = async (
           with: {
             user: true,
           },
+          orderBy: (user, { asc }) => [asc(user.createdAt)],
         },
       },
       where: and(eq(rides.id, id), eq(rides.deleted, false)),

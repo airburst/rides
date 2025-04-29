@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.8.0 - 2025-04-29
+
+### Added
+
+- Riders are sorted in the order that they join a ride
+
 ## 3.7.3 - 2025-04-02
 
 ### Updated
