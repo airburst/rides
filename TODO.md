@@ -7,7 +7,7 @@ https://github.com/pmndrs/jotai/discussions/2044
 ## Bugs
 
 - Generator API does not create all rides
-- Update Daisy and Tailwind ?
+- Update Daisy and Tailwind? https://github.com/vercel/next-view-transition-example/blob/main/package.json
 - Add repeating ride broken
 - After adding a RRide, update the list view
 
