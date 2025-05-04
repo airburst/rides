@@ -126,7 +126,21 @@ from "bcc_users_on_rides"`);
 
   // Repeating rides  ---------------------------------------------//
   const repeatingRidesData = await sourceDb.execute(
-    sql`SELECT * from "bcc_repeating_rides"`,
+    sql`SELECT
+    id,
+    name,
+    schedule,
+    winter_start_time as "winterStartTime",
+    ride_group as "rideGroup",
+    destination,
+    distance,
+    meet_point as "meetPoint",
+    route,
+    leader,
+    notes,
+    ride_limit as "rideLimit",
+    created_at as "createdAt"
+  from "bcc_repeating_rides"`,
   );
   //@ts-expect-error data typing
   await db.insert(schema.repeatingRides).values(repeatingRidesData);
@@ -170,5 +184,4 @@ from "bcc_archived_users_on_rides"`);
   process.exit(0);
 };
 
- 
 main();
