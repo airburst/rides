@@ -6,6 +6,7 @@ import { db } from "@/server/db";
 import { repeatingRides } from "@/server/db/schema";
 import { makeRepeatingRide } from "@utils/forms";
 import { repeatingRideToDb } from "@utils/repeatingRides";
+import { revalidatePath } from "next/cache";
 import { canUseAction } from "../auth";
 
 export const addRepeatingRide = async (data: FormData) => {
@@ -33,6 +34,8 @@ export const addRepeatingRide = async (data: FormData) => {
       .insert(repeatingRides)
       .values(values)
       .returning({ repeatingRideId: repeatingRides.id });
+
+    revalidatePath("/repeating-rides", "page");
 
     return {
       success: true,
