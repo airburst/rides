@@ -4,16 +4,12 @@
 
 https://github.com/pmndrs/jotai/discussions/2044
 
-## Tailwind and UX
+## Bugs
 
-- Replace DaisyUI with ShadCN
-  - Button
-  - Modal
-  - Chat-bubble
-  - Switch
-  - Form inputs ?
-  - Badges ?
-- Update Tailwind to V4
+- Generator API does not create all rides
+- Update Daisy and Tailwind? https://github.com/vercel/next-view-transition-example/blob/main/package.json
+- Add repeating ride broken
+- After adding a RRide, update the list view
 
 ## NextJS
 
