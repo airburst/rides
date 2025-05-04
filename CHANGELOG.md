@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 3.8.1 - 2025-05-04
 
+### Fixed
+
+- Creating a Repeating Ride now shows the list of rides to generate again.
+- Added test coverage
+
+## 3.8.1 - 2025-05-04
+
 ### Updated
 
 - Uplifted all package dependencies apart from three, which involve breaking changes.

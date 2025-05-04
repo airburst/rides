@@ -1,4 +1,3 @@
- 
 "use client";
 
 import { addRepeatingRide } from "@/server/actions/add-repeating-ride";
@@ -72,6 +71,7 @@ const RideForm = ({
   const [repeats, setRepeats] = useState<boolean>(isRepeating ?? false);
   const [isPending, setIsPending] = useState(false);
   const [rideDateList, setRideDateList] = useState<string[]>([]);
+  console.log("🚀 ~ rideDateList:", rideDateList); // FIXME:
   const [scheduleId, setScheduleId] = useState<string | null>(null);
   const showRepeatingSwitch = isAdmin && (isNewRide || isRepeating);
   const [showCreate, setShowCreate] = useState<boolean>(false);
@@ -148,7 +148,6 @@ const RideForm = ({
           }
           setIsPending(false);
           toast.success(results.message);
-          router.back();
         }
       }
     } catch (err) {
@@ -167,6 +166,7 @@ const RideForm = ({
     if (scheduleId) {
       const date = getValues("rideDate");
       const results = await generateRidesFromClient(scheduleId, date);
+
       if (results.success) {
         toast.success(results.message);
         router.push("/");
