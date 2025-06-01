@@ -18,9 +18,11 @@ export const getNow = () => {
 
 // Determine whether a ride can be joined yet
 // Allow join and leave up to 12 hours after ride starts
-const JOIN_DELAY = 12; // 12 hours
-export const isJoinable = (date: string) => {
-  const latestChange = dayjs(date).add(JOIN_DELAY, "hour").toISOString();
+const JOIN_DELAY = 0; // 0 hours
+
+export const isJoinable = (date: string, time?: string): boolean => {
+  const isoDate = makeUtcDate(date, time ?? "00:00");
+  const latestChange = dayjs(isoDate).add(JOIN_DELAY, "hour").toISOString();
 
   return getNow() < latestChange;
 };

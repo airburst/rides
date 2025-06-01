@@ -36,7 +36,7 @@ export type RideDetailsProps = {
 
 const RideDetails = ({ ride, user, role }: RideDetailsProps) => {
   const [showNotesForm, setShowNotesForm] = useState<boolean>(false);
-  const { id, name, rideDate, day, cancelled, rideLimit, users } = ride;
+  const { id, name, rideDate, time, day, cancelled, rideLimit, users } = ride;
 
   // Set cancelled state so UserMenu can show or hide cancel action
   const [, setCancelled] = useAtom(isCancelledAtom);
@@ -44,7 +44,7 @@ const RideDetails = ({ ride, user, role }: RideDetailsProps) => {
   const userList = users?.map((u: { user: User }) => u.user);
   const isLeader = ["ADMIN", "LEADER"].includes(role ?? "");
   const isSpace = hasSpace(ride);
-  const canJoin = isJoinable(rideDate) && isSpace;
+  const canJoin = isJoinable(rideDate, time) && isSpace;
   const hasLimit = rideLimit && rideLimit > -1;
 
   // Optimistically add or remove user from "going" list
