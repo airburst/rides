@@ -18,6 +18,7 @@
   --color-base-100: #ffffff;
   --color-base-200: #f1f4fb;
   --color-base-300: #e4e8f6;
+  --color-base-content: #262626;
   --color-neutral: #e5e7eb;
   --color-neutral-content: #111827;
   --color-info: #3b82f6;
@@ -28,6 +29,31 @@
   --color-warning-content: #ffffff;
   --color-error: #dc2626;
   --color-error-content: #ffffff;
+}
+
+@plugin "daisyui/theme" {
+  name: "corsham";
+  prefersdark: false;
+  color-scheme: light;
+
+  --color-primary: "#00a4d1";
+  --color-primary-content: "#ffffff";
+  --color-secondary: "#4b277e";
+  --color-secondary-content: "#ffffff";
+  --color-accent: "#4b277e";
+  --color-accent-content: "#ffffff";
+  --color-neutral: "#333333";
+  --color-neutral-content: #111827;
+  --color-base-100: "#FFFFFF";
+  --color-base-200: "#f6f6f6";
+  --color-base-300: "#e6e6e6";
+  --color-info: "#3b82f6";
+  --color-info-content: "#ffffff";
+  --color-success: "#15803d";
+  --color-success-content: "#ffffff";
+  --color-warning: "#FBBD23";
+  --color-error: "#e22530";
+  --color-error-content: "#ffffff";
 }
 
 @theme inline {
