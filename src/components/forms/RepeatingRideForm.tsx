@@ -100,7 +100,7 @@ const RepeatingRideForm = ({
   return (
     <>
       <div className="grid grid-cols-3 gap-4">
-        <div className="form-control w-full">
+        <div className="w-full">
           <label htmlFor="interval">Every</label>
           <select
             id="interval"
@@ -115,7 +115,7 @@ const RepeatingRideForm = ({
           </select>
         </div>
 
-        <div className="form-control col-span-2 w-full md:col-span-1">
+        <div className="col-span-2 w-full md:col-span-1">
           <label htmlFor="freq">Frequency</label>
           <select
             id="freq"
@@ -130,7 +130,7 @@ const RepeatingRideForm = ({
         </div>
 
         {isWeekly && (
-          <div className="form-control col-span-3 w-full md:col-span-1">
+          <div className="col-span-3 w-full md:col-span-1">
             <label htmlFor="byweekday">On</label>
             <select
               id="byweekday"
@@ -151,7 +151,7 @@ const RepeatingRideForm = ({
         )}
 
         {isMonthly && (
-          <div className="form-control col-span-3 w-full md:col-span-1">
+          <div className="col-span-3 w-full md:col-span-1">
             <label htmlFor="repeat-type">Repeat type</label>
             <select
               id="repeat-type"
@@ -170,7 +170,7 @@ const RepeatingRideForm = ({
         <>
           {monthType === "byday" && (
             <div className="flex">
-              <div className="form-control w-full">
+              <div className="w-full">
                 <label htmlFor="bymonthday">Day</label>
                 <select
                   id="bymonthday"
@@ -189,7 +189,7 @@ const RepeatingRideForm = ({
           )}
           {monthType === "byweek" && (
             <div className="grid grid-cols-3 gap-4">
-              <div className="form-control w-full">
+              <div className="w-full">
                 <label htmlFor="bysetpos">Week</label>
                 <select
                   id="bysetpos"
@@ -205,7 +205,7 @@ const RepeatingRideForm = ({
                 </select>
               </div>
 
-              <div className="form-control col-span-2 w-full">
+              <div className="col-span-2 w-full">
                 <label htmlFor="byweekday-month">Day of week</label>
                 <select
                   id="byweekday-month"

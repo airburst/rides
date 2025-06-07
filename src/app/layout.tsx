@@ -7,9 +7,9 @@ import { Outfit } from "next/font/google";
 import { Toaster } from "sonner";
 
 const outfit = Outfit({
-  subsets: ["latin"],
-  weight: ["400", "700"],
   variable: "--font-outfit",
+  weight: ["400", "700"],
+  subsets: ["latin"],
   display: "swap",
 });
 
@@ -42,7 +42,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${outfit.variable}`} data-theme="club">
+    <html lang="en" className={`${outfit.variable}`}>
       <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />

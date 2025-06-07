@@ -3,26 +3,11 @@
 @plugin "@tailwindcss/forms";
 @plugin "@tailwindcss/typography";
 
-@layer base {
-  *,
-  ::after,
-  ::before,
-  ::backdrop,
-  ::file-selector-button {
-    border-color: var(--color-gray-200, currentcolor);
-  }
-}
-
-@utility drawer-auto-gutter {
-  html:has(& .drawer-toggle:checked) {
-    scrollbar-gutter: auto;
-  }
-}
-
-@utility drawer-toggle {
-  html:has(.drawer-auto-gutter &:checked) {
-    scrollbar-gutter: auto;
-  }
+/* Club theme */
+@theme inline {
+  --font-display: var(--font-outfit);
+  --font-main: var(--font-outfit);
+  --font-sans: var(--font-outfit);
 }
 
 @layer base {
@@ -34,6 +19,14 @@
 
   #__next {
     @apply w-screen;
+  }
+
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
   }
 }
 
@@ -81,6 +74,7 @@ svg {
 .btn {
   @apply rounded-sm;
   @apply text-base;
+  @apply py-2;
 }
 
 .alert {
@@ -98,7 +92,6 @@ svg {
 
 .ql-snow.ql-toolbar {
   display: flex;
-  /* flex-direction: column; */
   background: #f5f5f5;
   border-top-left-radius: 0.5em;
   border-top-right-radius: 0.5em;

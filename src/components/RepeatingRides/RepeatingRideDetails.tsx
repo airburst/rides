@@ -20,7 +20,7 @@ type RowProps = {
 };
 
 const Row = ({ children }: RowProps) => (
-  <div className="grid w-full grid-cols-[100px_1fr] items-center justify-between px-2 font-medium md:grid-cols-[220px_1fr] md:justify-start md:gap-4 gap-2">
+  <div className="grid w-full grid-cols-[100px_1fr] items-center justify-between gap-2 px-2 font-medium md:grid-cols-[220px_1fr] md:justify-start md:gap-4">
     {children}
   </div>
 );
@@ -58,15 +58,16 @@ const RepeatingRideDetails = ({ ride }: RepeatingRideDetailsProps) => {
     const results = await deleteRepeatingRide(id!, deleteAllRides);
 
     if (results.success) {
-      const message = results.deletedRideCount && results.deletedRideCount > 0
-        ? `Repeating ride and ${results.deletedRideCount} future rides have been deleted.`
-        : "Repeating ride has been deleted.";
-      toast.success(message)
+      const message =
+        results.deletedRideCount && results.deletedRideCount > 0
+          ? `Repeating ride and ${results.deletedRideCount} future rides have been deleted.`
+          : "Repeating ride has been deleted.";
+      toast.success(message);
       hideConfirm();
       router.back();
       cb(true);
     } else {
-      toast.error("Unable to delete repeating ride. Please try again.")
+      toast.error("Unable to delete repeating ride. Please try again.");
       cb(false);
     }
   };
@@ -76,15 +77,15 @@ const RepeatingRideDetails = ({ ride }: RepeatingRideDetailsProps) => {
 
   return (
     <>
-      <div className="flex w-full flex-row items-center justify-center bg-primary p-2 font-bold uppercase tracking-wide text-white sm:rounded mb-2">
+      <div className="bg-primary mb-2 flex w-full flex-row items-center justify-center p-2 font-bold tracking-wide text-white uppercase sm:rounded">
         Repeating Ride Details
       </div>
 
-      <div className="flex w-full flex-col gap-2 px-2 sm:px-0 mb-4">
+      <div className="mb-4 flex w-full flex-col gap-2 px-2 sm:px-0">
         <div className="relative flex w-full flex-col gap-2 rounded bg-white py-2 shadow-md">
           <Row>
             <div>Name</div>
-            <div className="text-xl font-bold tracking-wide text-neutral-700 truncate">
+            <div className="truncate text-xl font-bold tracking-wide text-neutral-700">
               {name}
             </div>
           </Row>
@@ -127,7 +128,7 @@ const RepeatingRideDetails = ({ ride }: RepeatingRideDetailsProps) => {
           {route && (
             <Row>
               <a
-                className="col-span-2 text-primary underline hover:text-primary-focus"
+                className="text-primary hover:text-primary-focus col-span-2 underline"
                 href={route}
                 target="_blank"
                 rel="noreferrer"
@@ -138,9 +139,7 @@ const RepeatingRideDetails = ({ ride }: RepeatingRideDetailsProps) => {
           )}
         </div>
 
-        {notes && (
-          <Viewer markdown={notes} title="Notes" />
-        )}
+        {notes && <Viewer markdown={notes} title="Notes" />}
 
         <div className="flex w-full flex-col gap-2 rounded bg-white py-2 shadow-md">
           <div className="px-2 text-xl font-bold tracking-wide text-neutral-700">
@@ -174,7 +173,7 @@ const RepeatingRideDetails = ({ ride }: RepeatingRideDetailsProps) => {
         </div>
       </div>
 
-      <div className="justify-self-start grid grid-cols-4 w-full gap-2 md:gap-4 px-2 sm:p-0">
+      <div className="grid w-full grid-cols-4 gap-2 justify-self-start px-2 sm:p-0 md:gap-4">
         <BackButton noIcon />
         <Button secondary onClick={goToEdit}>
           EDIT
@@ -194,7 +193,7 @@ const RepeatingRideDetails = ({ ride }: RepeatingRideDetailsProps) => {
         onYes={(callback) => handleDelete(callback)}
       >
         <div>
-          <div className="form-control">
+          <div className="">
             <label htmlFor="cascade" className="label cursor-pointer">
               <span className="label-text">
                 Also delete or cancel every future ride created from this
@@ -209,7 +208,7 @@ const RepeatingRideDetails = ({ ride }: RepeatingRideDetailsProps) => {
               />
             </label>
           </div>
-          <div className="form-control">
+          <div className="">
             <label htmlFor="no-cascade" className="label cursor-pointer">
               <span className="label-text">
                 Only delete the schedule and keep all of the rides
@@ -227,6 +226,6 @@ const RepeatingRideDetails = ({ ride }: RepeatingRideDetailsProps) => {
       </ConfirmWithContent>
     </>
   );
-}
+};
 
 export default RepeatingRideDetails;

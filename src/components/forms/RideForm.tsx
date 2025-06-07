@@ -179,7 +179,7 @@ const RideForm = ({
   return (
     <>
       <form
-        className="form-control relative mb-4 grid w-full grid-cols-1 gap-4 p-2 text-neutral-800"
+        className="relative mb-4 grid w-full grid-cols-1 gap-4 p-2 text-neutral-800"
         onSubmit={
           repeats ? handleSubmit(createRepeating) : handleSubmit(createRide)
         }

@@ -69,7 +69,7 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
   return (
     <>
       <form
-        className="form-control relative w-full text-neutral-800"
+        className="relative w-full text-neutral-800"
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="bg-primary flex w-full flex-row items-center justify-center p-2 font-bold tracking-wide text-white uppercase sm:rounded">
@@ -208,7 +208,7 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
         </div>
         <div className="grid grid-cols-1 gap-4 p-2">
           <div className="grid grid-cols-1 gap-4 md:gap-8">
-            <label className="form-control w-full">
+            <label className="w-full">
               <div className="label">Units</div>
               <select
                 id="units"
