@@ -31,7 +31,7 @@
   --color-error-content: #ffffff;
 }
 
-@plugin "daisyui/theme" {
+/* @plugin "daisyui/theme" {
   name: "corsham";
   prefersdark: false;
   color-scheme: light;
@@ -54,7 +54,7 @@
   --color-warning: "#FBBD23";
   --color-error: "#e22530";
   --color-error-content: "#ffffff";
-}
+} */
 
 @theme inline {
   --font-display: var(--font-outfit);
