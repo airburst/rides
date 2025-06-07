@@ -1,4 +1,3 @@
- 
 "use client";
 
 import { cancelRide } from "@/server/actions/cancel-ride";
@@ -103,12 +102,13 @@ const UserMenu = ({ role, isAuthenticated }: MenuProps) => {
           readOnly
         />
         <div className="drawer-content">
-          <div className="h-10 cursor-pointer rounded p-1 text-3xl">
+          <div className="h-10rounded p-1 text-3xl">
             <button
               type="button"
               onClick={toggleMenu}
               onKeyDown={toggleMenu}
               aria-label="open menu"
+              className="cursor-pointer"
             >
               <Menu className="h-8 w-8 fill-white" />
             </button>

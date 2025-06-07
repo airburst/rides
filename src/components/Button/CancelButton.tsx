@@ -7,7 +7,7 @@ export const CancelButton = ({ ...props }) => {
 
   return (
     <button
-      className="btn btn-neutral"
+      className="btn btn-neutral h-full"
       type="button"
       onClick={() => router.back()}
       {...props}

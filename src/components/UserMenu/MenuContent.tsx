@@ -1,9 +1,22 @@
- 
 "use client";
 
 import { type Role } from "@/types";
 import copy from "copy-to-clipboard";
-import { Calendar, CircleAlert, Copy, Link, LogIn, LogOut, Pencil, Plus, Repeat, Settings, Trash2, Users, X } from 'lucide-react';
+import {
+  Calendar,
+  CircleAlert,
+  Copy,
+  Link,
+  LogIn,
+  LogOut,
+  Pencil,
+  Plus,
+  Repeat,
+  Settings,
+  Trash2,
+  Users,
+  X,
+} from "lucide-react";
 import { flattenQuery } from "shared/utils";
 import pkg from "../../../package.json";
 import { MenuEntry } from "./MenuEntry";
@@ -21,10 +34,21 @@ type MenuContentProps = {
   isCancelled?: boolean;
 };
 
-export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout, closeMenu, rideId, repeatingRideId, confirmCancel, confirmDelete, isCancelled }: MenuContentProps) => {
+export const MenuContent = ({
+  role,
+  isAuthenticated,
+  handleSignin,
+  handleSignout,
+  closeMenu,
+  rideId,
+  repeatingRideId,
+  confirmCancel,
+  confirmDelete,
+  isCancelled,
+}: MenuContentProps) => {
   const isLeader = role && ["ADMIN", "LEADER"].includes(role);
   const isAdmin = role === "ADMIN";
-   
+
   const showEditAndDelete = isLeader && (repeatingRideId || rideId);
   const editRideUrl = repeatingRideId
     ? `/repeating-rides/edit/${repeatingRideId}`
@@ -38,24 +62,26 @@ export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout
     const url = [...parts.slice(0, 3), "r", shortId].join("/");
     copy(url);
     return true;
-  }
+  };
 
   return (
-    <div className="w-80 sm:w-96 min-h-full bg-dark-100 px-2">
-      <div className="h-16 sm:h-24 sm:pl-2 flex flex-col items-end sm:items-start justify-center cursor-pointer rounded text-3xl">
+    <div className="min-h-full w-80 bg-neutral-900 px-2 sm:w-96">
+      <div className="flex h-16 flex-col items-end justify-center rounded text-3xl sm:h-24 sm:items-start sm:pl-2">
         <button
           type="button"
           onClick={closeMenu}
           onKeyDown={closeMenu}
-          aria-label="open menu">
-          <X className="w-8 h-8" />
+          aria-label="open menu"
+          className="w-full cursor-pointer"
+        >
+          <X className="h-8 w-8" />
         </button>
       </div>
 
-      <ul className="menu text-base-300 text-xl p-0">
+      <ul className="menu text-base-300 p-0 text-xl">
         {!isAuthenticated && (
           <MenuEntry label="Log in" onClick={handleSignin}>
-            <LogIn className="w-6 h-6" />
+            <LogIn className="h-6 w-6" />
           </MenuEntry>
         )}
 
@@ -65,7 +91,7 @@ export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout
 
         {isLeader && (
           <MenuEntry label="Add Ride" href="/ride/new" onClick={closeMenu}>
-            <Plus className="w-6 h-6" />
+            <Plus className="h-6 w-6" />
           </MenuEntry>
         )}
 
@@ -75,27 +101,25 @@ export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout
             href={`/ride/copy/${flattenQuery(rideId)}`}
             onClick={closeMenu}
           >
-            <Copy className="w-6 h-6" />
+            <Copy className="h-6 w-6" />
           </MenuEntry>
         )}
 
         {showEditAndDelete && (
           <>
-            <MenuEntry
-              label="Edit Ride"
-              href={editRideUrl}
-              onClick={closeMenu}
-            >
-              <Pencil className="w-6 h-6" />
+            <MenuEntry label="Edit Ride" href={editRideUrl} onClick={closeMenu}>
+              <Pencil className="h-6 w-6" />
             </MenuEntry>
-            {!isCancelled && <MenuEntry label="Cancel Ride" onClick={confirmCancel}>
-              <CircleAlert className="w-6 h-6" />
-            </MenuEntry>}
+            {!isCancelled && (
+              <MenuEntry label="Cancel Ride" onClick={confirmCancel}>
+                <CircleAlert className="h-6 w-6" />
+              </MenuEntry>
+            )}
             <MenuEntry label="Delete Ride" onClick={confirmDelete}>
-              <Trash2 className="w-6 h-6" />
+              <Trash2 className="h-6 w-6" />
             </MenuEntry>
             <MenuEntry label="Copy Ride Link" onClick={copyLink}>
-              <Link className="w-6 h-6" />
+              <Link className="h-6 w-6" />
             </MenuEntry>
           </>
         )}
@@ -103,14 +127,14 @@ export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout
         {isAdmin && (
           <>
             <MenuEntry label="Manage Users" href="/users" onClick={closeMenu}>
-              <Users className="w-6 h-6" />
+              <Users className="h-6 w-6" />
             </MenuEntry>
             <MenuEntry
               label="Repeating Rides"
               href="/repeating-rides"
               onClick={closeMenu}
             >
-              <Repeat className="w-6 h-6" />
+              <Repeat className="h-6 w-6" />
             </MenuEntry>
           </>
         )}
@@ -118,16 +142,20 @@ export const MenuContent = ({ role, isAuthenticated, handleSignin, handleSignout
         {isAuthenticated && (
           <>
             <MenuEntry label="Settings" href="/profile" onClick={closeMenu}>
-              <Settings className="w-6 h-6" />
+              <Settings className="h-6 w-6" />
             </MenuEntry>
-            <MenuEntry className="text-error" label="Log out" onClick={handleSignout}>
+            <MenuEntry
+              className="text-error"
+              label="Log out"
+              onClick={handleSignout}
+            >
               <LogOut className="fill-error" />
             </MenuEntry>
           </>
         )}
       </ul>
 
-      <div className="flex h-6 items-center justify-center text-md text-neutral-400 mt-4">
+      <div className="text-md mt-4 flex h-6 items-center justify-center text-neutral-400">
         Version {pkg.version}
       </div>
     </div>

@@ -26,7 +26,6 @@ export const metadata: Metadata = {
       sizes: "32x32",
       url: "/static/favicon-32x32.png",
     },
-    // apple: [{ url: "/icons/apple-touch-icon.png", sizes: "180x180" }],
   ],
   appleWebApp: {
     capable: true,
@@ -42,7 +41,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${outfit.variable}`}>
+    <html lang="en" className={`${outfit.variable}`} data-theme="bcc">
       <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
