@@ -45,14 +45,14 @@ export const Confirm = ({
   };
 
   return (
-    <Dialog open={open} onClose={doClose} className="relative z-10">
+    <Dialog open={open} onClose={doClose} className="relative z-10 text-lg">
       {/* Background */}
       <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
       <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
         <DialogPanel className="motion-preset-slide-up max-w-lg space-y-4 rounded-md bg-white p-4">
           <DialogTitle>{heading}</DialogTitle>
           <Description>{children}</Description>
-          <div className="mt-4 flex h-10 flex-row gap-4">
+          <div className="mt-4 flex flex-row gap-4">
             <Button
               data-autofocus
               className="min-w-24"

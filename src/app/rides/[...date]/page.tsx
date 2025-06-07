@@ -27,7 +27,7 @@ export default async function RidesOnDate(props: {
         <RidesList date={date} />
 
         <div className="my-4 flex w-full flex-col gap-2 md:gap-4">
-          <div className="m-2 flex h-10 flex-row justify-between gap-4 sm:mx-0 md:justify-start">
+          <div className="m-2 flex flex-row justify-between gap-4 sm:mx-0 md:justify-start">
             <BackButton />
             {isLeader && isInFuture && (
               <Link href={`/ride/new/${date}`} prefetch={true}>

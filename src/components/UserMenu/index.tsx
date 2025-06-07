@@ -102,7 +102,7 @@ const UserMenu = ({ role, isAuthenticated }: MenuProps) => {
           readOnly
         />
         <div className="drawer-content">
-          <div className="h-10rounded p-1 text-3xl">
+          <div className="rounded p-1 text-3xl">
             <button
               type="button"
               onClick={toggleMenu}

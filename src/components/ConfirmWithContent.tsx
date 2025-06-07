@@ -47,7 +47,7 @@ export const ConfirmWithContent = ({
   };
 
   return (
-    <Dialog open={open} onClose={doClose} className="relative z-10">
+    <Dialog open={open} onClose={doClose} className="relative z-10 text-lg">
       {/* Background */}
       <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
       <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
@@ -55,7 +55,7 @@ export const ConfirmWithContent = ({
           <DialogTitle>{heading}</DialogTitle>
           {description && <Description>{description}</Description>}
           {children}
-          <div className="mt-4 flex h-10 flex-row gap-4">
+          <div className="mt-4 flex flex-row gap-4">
             <Button
               data-autofocus
               className="min-w-24"

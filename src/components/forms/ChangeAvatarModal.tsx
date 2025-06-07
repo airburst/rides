@@ -29,7 +29,7 @@ const ChangeAvatarModal = ({ open, onClose, user }: ChangeAvatarModalProps) => {
           <div>
             <ImageUpload user={user} onClose={onClose} />
           </div>
-          <div className="mt-4 flex h-10 flex-row gap-4">
+          <div className="mt-4 flex flex-row gap-4">
             <Button className="min-w-24" onClick={onClose}>
               <span>CANCEL</span>
             </Button>

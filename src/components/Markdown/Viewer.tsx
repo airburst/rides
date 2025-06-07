@@ -47,7 +47,6 @@ const Viewer = ({ markdown, title }: ViewerProps) => {
         <div
           id="ride-notes"
           className={notesClass}
-           
           dangerouslySetInnerHTML={{ __html: displayText }}
         />
         {isLong && (

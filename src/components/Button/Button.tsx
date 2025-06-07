@@ -41,7 +41,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     ref,
   ) => {
     const classes = clsx(
-      "btn h-full",
+      "btn min-h-16 h-full",
       { "btn-primary": primary },
       { "btn-secondary": secondary },
       { "btn-accent": accent },
@@ -67,7 +67,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled}
       >
         {loading ? (
-          <span className="loading loading-spinner"></span>
+          <span className="loading loading-spinner h-full"></span>
         ) : (
           buttonContent
         )}
