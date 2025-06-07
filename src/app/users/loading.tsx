@@ -8,60 +8,60 @@ type RowProps = {
 };
 
 const Heading = ({ children }: RowProps) => (
-  <div className="flex w-full flex-row items-center justify-center bg-primary p-2 font-bold uppercase tracking-wide text-white sm:rounded">
+  <div className="bg-primary flex w-full flex-row items-center justify-center p-2 font-bold tracking-wide text-white uppercase sm:rounded">
     {children}
   </div>
 );
 
 const LoadingUsers = () => {
-  return <MainContent>
-    <>
-      <div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 px-2 sm:px-0">
+  return (
+    <MainContent>
+      <>
+        <div className="grid w-full grid-cols-1 gap-2 px-2 sm:px-0 md:grid-cols-2 md:gap-4 lg:grid-cols-3"></div>
+        <div className="flex w-full flex-col gap-2">
+          <Heading>
+            <div>Manage Users</div>
+          </Heading>
 
-      </div>
-      <div className="flex w-full flex-col gap-2">
-        <Heading>
-          <div>Manage Users</div>
-        </Heading>
+          <div className="w-full px-2 sm:px-0">
+            <input
+              type="text"
+              id="search"
+              name="search"
+              className="input input-lg my-2 w-full"
+              placeholder="Search by name or email"
+            />
+          </div>
 
-        <div className="w-full px-2 sm:px-0">
-          <input
-            type="text"
-            id="search"
-            name="search"
-            className="input input-bordered input-lg w-full my-2"
-            placeholder="Search by name or email"
-          />
+          <div className="grid w-full grid-cols-1 gap-2 px-2 sm:px-0 md:grid-cols-2 md:gap-4 lg:grid-cols-3">
+            <div className="box-border flex w-full flex-col gap-2 rounded-lg bg-white p-4 shadow-md">
+              <Skeleton className="w-64" />
+              <Skeleton className="w-48" />
+              <Skeleton className="bg-accent h-6 w-24" />
+            </div>
+            <div className="box-border flex w-full flex-col gap-2 rounded-lg bg-white p-4 shadow-md">
+              <Skeleton className="w-64" />
+              <Skeleton className="w-48" />
+            </div>
+            <div className="box-border flex w-full flex-col gap-2 rounded-lg bg-white p-4 shadow-md">
+              <Skeleton className="w-64" />
+              <Skeleton className="w-48" />
+              <Skeleton className="bg-accent h-6 w-24" />
+            </div>
+            <div className="box-border flex w-full flex-col gap-2 rounded-lg bg-white p-4 shadow-md">
+              <Skeleton className="w-64" />
+              <Skeleton className="w-48" />
+            </div>
+            <div className="box-border flex w-full flex-col gap-2 rounded-lg bg-white p-4 shadow-md">
+              <Skeleton className="w-64" />
+              <Skeleton className="w-48" />
+              <Skeleton className="bg-accent h-6 w-24" />
+            </div>
+          </div>
         </div>
-
-        <div className="grid w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-4 px-2 sm:px-0">
-          <div className="flex w-full flex-col gap-2 box-border rounded-lg bg-white p-4 shadow-md">
-            <Skeleton className="w-64" />
-            <Skeleton className="w-48" />
-            <Skeleton className="w-24 h-6 bg-accent" />
-          </div>
-          <div className="flex w-full flex-col gap-2 box-border rounded-lg bg-white p-4 shadow-md">
-            <Skeleton className="w-64" />
-            <Skeleton className="w-48" />
-          </div>
-          <div className="flex w-full flex-col gap-2 box-border rounded-lg bg-white p-4 shadow-md">
-            <Skeleton className="w-64" />
-            <Skeleton className="w-48" />
-            <Skeleton className="w-24 h-6 bg-accent" />
-          </div>
-          <div className="flex w-full flex-col gap-2 box-border rounded-lg bg-white p-4 shadow-md">
-            <Skeleton className="w-64" />
-            <Skeleton className="w-48" />
-          </div>
-          <div className="flex w-full flex-col gap-2 box-border rounded-lg bg-white p-4 shadow-md">
-            <Skeleton className="w-64" />
-            <Skeleton className="w-48" />
-            <Skeleton className="w-24 h-6 bg-accent" />
-          </div>
-        </div>
-      </div>
-    </>
-  </MainContent>;
+      </>
+    </MainContent>
+  );
 };
 
 export default LoadingUsers;

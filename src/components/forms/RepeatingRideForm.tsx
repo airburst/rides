@@ -104,7 +104,7 @@ const RepeatingRideForm = ({
           <label htmlFor="interval">Every</label>
           <select
             id="interval"
-            className="select select-bordered text-lg font-normal"
+            className="select w-full text-lg font-normal"
             defaultValue={defaultValues?.interval}
             {...register("interval")}
           >
@@ -120,7 +120,7 @@ const RepeatingRideForm = ({
           <select
             id="freq"
             aria-label="Repeating schedule freqency"
-            className="select select-bordered text-lg font-normal"
+            className="select w-full text-lg font-normal"
             defaultValue={defaultValues?.freq}
             {...register("freq")}
           >
@@ -135,7 +135,7 @@ const RepeatingRideForm = ({
             <select
               id="byweekday"
               aria-label="Repeating schedule freqency"
-              className="select select-bordered text-lg font-normal"
+              className="select w-full text-lg font-normal"
               defaultValue={defaultValues?.byweekday}
               {...register("byweekday")}
             >
@@ -155,7 +155,7 @@ const RepeatingRideForm = ({
             <label htmlFor="repeat-type">Repeat type</label>
             <select
               id="repeat-type"
-              className="select select-bordered text-lg font-normal"
+              className="select w-full text-lg font-normal"
               defaultValue={monthType}
               onChange={(e) => setMonthType(e.target.value)}
             >
@@ -174,7 +174,7 @@ const RepeatingRideForm = ({
                 <label htmlFor="bymonthday">Day</label>
                 <select
                   id="bymonthday"
-                  className="select select-bordered text-lg font-normal"
+                  className="select w-full text-lg font-normal"
                   defaultValue={monthDay}
                   {...register("bymonthday")}
                 >
@@ -193,7 +193,7 @@ const RepeatingRideForm = ({
                 <label htmlFor="bysetpos">Week</label>
                 <select
                   id="bysetpos"
-                  className="select select-bordered text-lg font-normal"
+                  className="select w-full text-lg font-normal"
                   defaultValue={defaultValues?.bysetpos ?? 1}
                   {...register("bysetpos")}
                 >
@@ -210,7 +210,7 @@ const RepeatingRideForm = ({
                 <select
                   id="byweekday-month"
                   aria-label="Repeating schedule freqency"
-                  className="select select-bordered text-lg font-normal"
+                  className="select w-full text-lg font-normal"
                   defaultValue={defaultValues?.byweekday}
                   {...register("byweekday")}
                 >
@@ -237,7 +237,7 @@ const RepeatingRideForm = ({
               id="startDate"
               type="date"
               min={today}
-              className="input input-bordered"
+              className="input w-full"
               defaultValue={date}
               {...register("startDate", {
                 required: true,
@@ -258,7 +258,7 @@ const RepeatingRideForm = ({
               type="date"
               defaultValue={defaultEndDate}
               min={minEndDate}
-              className="input input-bordered"
+              className="input w-full"
               {...register("endDate")}
             />
           </label>
@@ -270,7 +270,7 @@ const RepeatingRideForm = ({
             <input
               id="winterStartTime"
               type="time"
-              className="input input-bordered"
+              className="input w-full"
               defaultValue={defaultValues?.winterStartTime}
               {...register("winterStartTime")}
             />

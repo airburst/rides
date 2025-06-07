@@ -190,7 +190,7 @@ const RideForm = ({
             <input
               id="name"
               type="text"
-              className="input input-bordered"
+              className="input w-full"
               {...register("name")}
             />
             {errors.name && (
@@ -208,7 +208,7 @@ const RideForm = ({
               <input
                 id="rideGroup"
                 type="text"
-                className="input input-bordered"
+                className="input w-full"
                 {...register("rideGroup")}
               />
             </label>
@@ -218,7 +218,7 @@ const RideForm = ({
               Rider limit
               <select
                 id="rideLimit"
-                className="input input-bordered"
+                className="input w-full"
                 {...register("rideLimit")}
               >
                 <option value="-1">No limit</option>
@@ -240,7 +240,7 @@ const RideForm = ({
                 id="rideDate"
                 type="date"
                 min={today}
-                className="input input-bordered"
+                className="input w-full"
                 {...register("rideDate")}
               />
               {errors.rideDate && (
@@ -257,7 +257,7 @@ const RideForm = ({
               <input
                 id="time"
                 type="time"
-                className="input input-bordered"
+                className="input w-full"
                 {...register("time")}
               />
               {errors.time && (
@@ -275,7 +275,7 @@ const RideForm = ({
             <input
               id="meetPoint"
               type="text"
-              className="input input-bordered"
+              className="input w-full"
               {...register("meetPoint")}
             />
           </label>
@@ -287,7 +287,7 @@ const RideForm = ({
             <input
               id="distance"
               type="number"
-              className="input input-bordered"
+              className="input w-full"
               {...register("distance")}
             />
             {errors.distance && (
@@ -304,7 +304,7 @@ const RideForm = ({
             <input
               id="destination"
               type="text"
-              className="input input-bordered"
+              className="input w-full"
               {...register("destination")}
             />
           </label>
@@ -316,7 +316,7 @@ const RideForm = ({
             <input
               id="route"
               type="text"
-              className="input input-bordered"
+              className="input w-full"
               {...register("route")}
             />
           </label>
@@ -328,7 +328,7 @@ const RideForm = ({
             <input
               id="leader"
               type="text"
-              className="input input-bordered"
+              className="input w-full"
               {...register("leader")}
             />
           </label>

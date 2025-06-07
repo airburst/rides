@@ -33,7 +33,7 @@ const Viewer = ({ markdown, title }: ViewerProps) => {
     : `${html.slice(0, NOTES_SHOW_MORE_LENGTH)}${isLong ? "..." : ""}`;
   const notesClass = clsx("col-span-2", showAll ? "mb-4" : "mb-2");
   const showMoreClass =
-    "w-full h-[24px] flex justify-center absolute bottom-4 bg-gradient-to-t from-white";
+    "w-full h-[24px] flex justify-center absolute bottom-4 bg-linear-to-t from-white";
 
   return (
     <div className="flex w-full flex-col gap-2 rounded bg-white py-2 shadow-md">

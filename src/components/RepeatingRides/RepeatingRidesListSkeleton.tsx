@@ -10,7 +10,7 @@ const RepeatingRidesListSkeleton = ({
   numberOfCards = 5,
 }: RepeatingRidesListSkeletonProps) => (
   <div className="flex w-full flex-col items-start gap-2">
-    <div className="flex w-full justify-center bg-primary p-2 font-bold uppercase tracking-widest text-white sm:rounded">
+    <div className="bg-primary flex w-full justify-center p-2 font-bold tracking-widest text-white uppercase sm:rounded">
       <div>Manage Repeating Rides</div>
     </div>
 
@@ -19,7 +19,7 @@ const RepeatingRidesListSkeleton = ({
         type="text"
         id="search"
         name="search"
-        className="input input-bordered input-lg w-full my-2"
+        className="input input-lg my-2 w-full"
         placeholder="Search by name or email"
       />
     </div>

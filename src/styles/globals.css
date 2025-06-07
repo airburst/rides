@@ -1,23 +1,39 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "daisyui";
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/typography";
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@utility drawer-auto-gutter {
+  html:has(& .drawer-toggle:checked) {
+    scrollbar-gutter: auto;
+  }
+}
+
+@utility drawer-toggle {
+  html:has(.drawer-auto-gutter &:checked) {
+    scrollbar-gutter: auto;
+  }
+}
 
 @layer base {
   body {
     @apply flex;
     @apply min-h-screen;
     @apply m-0;
-    @apply bg-base-200;
   }
 
   #__next {
     @apply w-screen;
-  }
-}
-
-@layer components {
-  html:has(.drawer-auto-gutter .drawer-toggle:checked) {
-    scrollbar-gutter: auto;
   }
 }
 
@@ -63,12 +79,12 @@ svg {
 
 /* DaisyUI overrides */
 .btn {
-  @apply rounded;
+  @apply rounded-sm;
   @apply text-base;
 }
 
 .alert {
-  @apply rounded;
+  @apply rounded-sm;
 }
 
 /* Markdown editor overrides */
