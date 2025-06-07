@@ -29,7 +29,7 @@ export const FilterButton = () => {
         onClick={toggle}
         title="Filter results"
         aria-label="Filter results"
-        className="flex items-center rounded p-1 text-3xl"
+        className="flex cursor-pointer items-center rounded p-1 text-3xl"
       >
         {hasFiltersApplied ? (
           <FilterX className="h-6 w-6 fill-white" />

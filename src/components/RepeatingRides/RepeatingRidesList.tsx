@@ -28,10 +28,10 @@ const RepeatingRidesList = ({ repeatingRides }: RepeatingRidesListProps) => {
 
   const filteredRides = searchText
     ? repeatingRides.filter(({ name, rideGroup, textRule }) =>
-      `${name}${rideGroup}${textRule}`
-        .toLowerCase()
-        .includes(searchText.toLowerCase())
-    )
+        `${name}${rideGroup}${textRule}`
+          .toLowerCase()
+          .includes(searchText.toLowerCase()),
+      )
     : repeatingRides;
 
   return (
@@ -41,19 +41,19 @@ const RepeatingRidesList = ({ repeatingRides }: RepeatingRidesListProps) => {
           type="text"
           id="search"
           name="search"
-          className="input input-bordered input-lg w-full mb-4"
+          className="input input-lg mb-4 w-full"
           placeholder="Search by ride name, group or day"
           onChange={handleSearch}
         />
       </div>
 
-      <div className="grid w-full grid-cols-1 gap-2 md:gap-2 px-2 sm:px-0">
+      <div className="grid w-full grid-cols-1 gap-2 px-2 sm:px-0 md:gap-2">
         {filteredRides.map((ride) => (
           <RepeatingRideCard key={ride.id} ride={ride} />
         ))}
       </div>
     </>
   );
-}
+};
 
 export default RepeatingRidesList;

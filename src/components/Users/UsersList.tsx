@@ -63,7 +63,7 @@ const UsersList = ({ users }: UsersListProps) => {
           type="text"
           id="search"
           name="search"
-          className="input input-lg input-bordered w-full"
+          className="input input-lg w-full"
           placeholder="Search by name or email"
           onChange={handleSearch}
         />
@@ -75,7 +75,7 @@ const UsersList = ({ users }: UsersListProps) => {
           <span className="w-32 lg:w-auto">Role</span>
           <select
             id="role"
-            className="input input-bordered flex-1 md:w-32"
+            className="input flex-1 md:w-32"
             defaultValue={roleFilter}
             onChange={handleRoleSelected}
           >
@@ -93,7 +93,7 @@ const UsersList = ({ users }: UsersListProps) => {
           <span className="w-32 lg:w-auto">Membership</span>
           <select
             id="membershipStatus"
-            className="input input-bordered flex-1 md:w-32"
+            className="input flex-1 md:w-32"
             defaultValue={statusFilter}
             onChange={handleMembershipStatusSelected}
           >

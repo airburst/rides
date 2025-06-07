@@ -27,7 +27,7 @@ export default async function RideCalendar() {
 
   return (
     <FullPageContent>
-      <div className="flex h-[calc(100svh_-_64px)] w-full flex-col md:h-[calc(100svh_-_96px)]">
+      <div className="flex h-[calc(100svh-64px)] w-full flex-col md:h-[calc(100svh-96px)]">
         <div className="flex w-full flex-col gap-2 bg-white">
           <div className="flex w-full flex-row items-center justify-between p-2 font-bold uppercase tracking-wider text-neutral-700">
             <Link

@@ -21,7 +21,7 @@ const CalendarSkeleton: React.FC<CalendarSkeletonProps> = async ({ date }: Calen
         <HeadingGroup />
       </div>
 
-      <div className={`h-full grid grid-cols-7 grid-rows-${rowCount} gap-[1px] bg-base-300`} >
+      <div className={`h-full grid grid-cols-7 grid-rows-${rowCount} gap-px bg-base-300`} >
         {calGrid.map(({ type, day, date: calDate }) =>
           type === "historic" ? (
             <OutsideDay

@@ -7,14 +7,14 @@ type MembershipIconProps = {
 export const MembershipIcon = ({ membershipStatus }: MembershipIconProps) => {
   switch (membershipStatus) {
     case "MEMBER":
-      return <ShieldCheck className="h-6 w-6 text-secondary" />;
+      return <ShieldCheck className="text-secondary" />;
     case "EXPIRED":
-      return <ShieldAlert className="h-6 w-6 text-error" />;
+      return <ShieldAlert className="text-error" />;
     case "OTHER_CLUB":
-      return <Handshake className="h-6 w-6 text-primary" />;
+      return <Handshake className="text-primary" />;
     default:
       // "NOT_MEMBER":
       return null;
-    // return <ShieldOff className="h-6 w-6 text-error" />;
+    // return <ShieldOff className="text-error" />;
   }
 };

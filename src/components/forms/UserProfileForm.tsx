@@ -69,10 +69,10 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
   return (
     <>
       <form
-        className="form-control relative w-full text-neutral-800"
+        className="relative w-full text-neutral-800"
         onSubmit={handleSubmit(onSubmit)}
       >
-        <div className="flex w-full flex-row items-center justify-center bg-primary p-2 font-bold uppercase tracking-wide text-white sm:rounded">
+        <div className="bg-primary flex w-full flex-row items-center justify-center p-2 font-bold tracking-wide text-white uppercase sm:rounded">
           Profile
         </div>
 
@@ -85,7 +85,7 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
               <input
                 id="name"
                 type="text"
-                className="input input-bordered"
+                className="input"
                 {...register("name")}
               />
               {errors.name && (
@@ -101,7 +101,7 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
               <input
                 id="mobile"
                 type="text"
-                className="input input-bordered"
+                className="input"
                 {...register("mobile")}
               />
               {errors.mobile && (
@@ -117,7 +117,7 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
               <input
                 id="emergency"
                 type="text"
-                className="input input-bordered"
+                className="input"
                 {...register("emergency")}
               />
               {errors.emergency && (
@@ -157,7 +157,7 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
                   Role
                   <select
                     id="role"
-                    className="input input-bordered"
+                    className="input"
                     defaultValue={defaultValues?.role ?? ""}
                     {...register("role")}
                   >
@@ -178,7 +178,7 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
                   </div>
                   <input
                     id="membershipId"
-                    className="input input-bordered"
+                    className="input"
                     placeholder="E.g. gm_r3nqcaa"
                     defaultValue={defaultValues?.membershipId ?? ""}
                     {...register("membershipId")}
@@ -188,7 +188,7 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
                   Membership Status
                   <select
                     id="membershipStatus"
-                    className="input input-bordered"
+                    className="input"
                     defaultValue={defaultValues?.membershipStatus ?? ""}
                     {...register("membershipStatus")}
                   >
@@ -203,12 +203,12 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
           )}
         </div>
 
-        <div className="mt-4 flex w-screen flex-row items-center justify-center bg-primary p-2 font-bold uppercase tracking-wide text-white sm:rounded md:mx-0 md:w-full">
+        <div className="bg-primary mt-4 flex w-screen flex-row items-center justify-center p-2 font-bold tracking-wide text-white uppercase sm:rounded md:mx-0 md:w-full">
           Preferences
         </div>
         <div className="grid grid-cols-1 gap-4 p-2">
           <div className="grid grid-cols-1 gap-4 md:gap-8">
-            <label className="form-control w-full">
+            <label className="w-full">
               <div className="label">Units</div>
               <select
                 id="units"
