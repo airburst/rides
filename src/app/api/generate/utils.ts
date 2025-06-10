@@ -58,18 +58,17 @@ export const createRides = async (rideSet: RideSet[]) => {
     },
   );
 
-  const results = await Promise.all(resultPromises);
   // Execute each transaction promise sequentially
-  // const results = [];
-  // for (const promise of resultPromises) {
-  //   try {
-  //       const result = await promise;
-  //       results.push(result)
-  //       console.log("🚀 ~ createRides:", result)
-  //   } catch (error) {
-  //       console.log(error);
-  //   }
-  // }
+  const results = [];
+  for (const promise of resultPromises) {
+    try {
+      const result = await promise;
+      results.push(result);
+      console.log("🚀 ~ createRides:", result);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return results;
 };

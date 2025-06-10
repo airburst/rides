@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.9.1 - 2025-06-07
+
+### Fixed
+
+- Fixed an issue where generate-rides cron job did not insert all rides for the following month, and needed a manual re-run. This change removes the Promise.all race condition on database inserts.
+
 ## 3.9.0 - 2025-06-07
 
 ### Updated
