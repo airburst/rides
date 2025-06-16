@@ -1,1 +1,1 @@
-docker stop bcc3-postgres && docker rm bcc3-postgres
+container stop bcc3-postgres && container rm bcc3-postgres
