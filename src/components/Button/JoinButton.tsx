@@ -13,7 +13,6 @@ type Props = ButtonProps & {
   rideId: string;
   userId: string;
   going?: boolean;
-  toggleGoing?: () => void; // Keep for compatibility but not used
 };
 
 export const JoinButton: React.FC<Props> = ({

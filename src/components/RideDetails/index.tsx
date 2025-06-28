@@ -60,10 +60,6 @@ const RideDetails = ({ ride, user, role }: RideDetailsProps) => {
   // Use global optimistic updates directly instead of layering with useOptimistic
   const optimisticRidersList = globalOptimisticUserList;
 
-  const toggleGoing = () => {
-    // We don't need local optimistic state anymore since global state handles it
-  };
-
   const hasRiders = optimisticRidersList.length > 0;
   const isGoing =
     optimisticRidersList && user
@@ -135,7 +131,6 @@ const RideDetails = ({ ride, user, role }: RideDetailsProps) => {
                 ariaLabel={`Join ${name} ride`}
                 rideId={id!}
                 userId={user?.id}
-                toggleGoing={toggleGoing}
               />
             )}
           </div>
