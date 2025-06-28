@@ -34,8 +34,6 @@ export const leaveRide = async ({
       .where(
         and(eq(userOnRides.rideId, rideId), eq(userOnRides.userId, userId)),
       );
-    // Remove revalidatePath to prevent layout shifts - using optimistic updates instead
-    // revalidatePath("/ride/[...id]", "page");
 
     return {
       success: true,

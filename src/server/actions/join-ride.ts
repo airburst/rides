@@ -33,8 +33,6 @@ export const joinRide = async ({
 
   try {
     await db.insert(userOnRides).values({ rideId, userId });
-    // Remove revalidatePath to prevent layout shifts - using optimistic updates instead
-    // revalidatePath("/ride/[...id]", "page");
 
     return {
       success: true,
