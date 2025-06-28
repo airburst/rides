@@ -1,6 +1,11 @@
 "use client";
+import {
+  getOptimisticMembershipAtom,
+  getOptimisticRiderCountAtom,
+} from "@/store";
 import { formatDistance } from "@utils/rides";
 import clsx from "clsx";
+import { useAtom } from "jotai";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { type RideList, type User } from "../../types";
@@ -24,6 +29,9 @@ export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
     : `${convertedDistance}`;
   const router = useRouter();
 
+  const [getOptimisticMembership] = useAtom(getOptimisticMembershipAtom);
+  const [getOptimisticRiderCount] = useAtom(getOptimisticRiderCountAtom);
+
   const onPress = () => router.push(`/ride/${id}`);
 
   if (!id) {
@@ -31,8 +39,27 @@ export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
   }
 
   const isCancelled = ride.cancelled ?? false;
-  const isGoing = user ? users?.map((u) => u.userId).includes(user.id) : false;
-  const riderCount = users?.length ?? 0;
+
+  // Get original membership status
+  const originalIsGoing = user
+    ? users?.map((u) => u.userId).includes(user.id)
+    : false;
+
+  // Apply optimistic updates to membership status
+  const isGoing = user
+    ? getOptimisticMembership(id, user.id, originalIsGoing ?? false)
+    : false;
+
+  // Get original rider count
+  const originalRiderCount = users?.length ?? 0;
+
+  // Apply optimistic updates to rider count
+  const riderCount = getOptimisticRiderCount(
+    id,
+    originalRiderCount,
+    users?.map((u) => u.userId) ?? [],
+  );
+
   const hasLimit = rideLimit && rideLimit > -1;
   const ridersLabel = hasLimit ? `${riderCount}/${rideLimit}` : riderCount;
 

@@ -4,7 +4,6 @@ import { NOT_AUTHORISED } from "@/constants";
 import { db } from "@/server/db";
 import { userOnRides } from "@/server/db/schema";
 import { and, eq } from "drizzle-orm";
-import { revalidatePath } from "next/cache";
 import { canUseAction } from "../auth";
 
 type JoinType = {
@@ -35,7 +34,8 @@ export const leaveRide = async ({
       .where(
         and(eq(userOnRides.rideId, rideId), eq(userOnRides.userId, userId)),
       );
-    revalidatePath("/ride/[...id]", "page");
+    // Remove revalidatePath to prevent layout shifts - using optimistic updates instead
+    // revalidatePath("/ride/[...id]", "page");
 
     return {
       success: true,
