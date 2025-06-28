@@ -1,4 +1,5 @@
 import { Header } from "@/components/Header/Header";
+import { OptimisticProvider } from "@/components/OptimisticProvider";
 import { env } from "@/env";
 import "@/styles/globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -56,6 +57,7 @@ export default async function RootLayout({
       <body>
         <Header />
         {children}
+        <OptimisticProvider />
         <Toaster position="bottom-center" richColors />
         <SpeedInsights />
       </body>

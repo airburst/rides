@@ -1,14 +1,12 @@
 "use client";
-import { isCancelledAtom } from "@/store";
+import {
+  getOptimisticRiderListAtom,
+  isCancelledAtom,
+  optimisticRideUpdatesAtom,
+} from "@/store";
 import { useAtom } from "jotai";
 import { MessageSquare } from "lucide-react";
-import {
-  startTransition,
-  useEffect,
-  useOptimistic,
-  useState,
-  type JSX,
-} from "react";
+import { useEffect, useState, type JSX } from "react";
 import { hasSpace, isJoinable } from "../../../shared/utils";
 import { type Ride, type User } from "../../types";
 import { Badge } from "../Badge";
@@ -22,7 +20,7 @@ type RowProps = {
 };
 
 const Heading = ({ children }: RowProps) => (
-  <div className="flex w-full flex-row items-center justify-center bg-primary p-2 font-bold uppercase tracking-wide text-white sm:rounded">
+  <div className="bg-primary flex w-full flex-row items-center justify-center p-2 font-bold tracking-wide text-white uppercase sm:rounded">
     {children}
   </div>
 );
@@ -40,6 +38,10 @@ const RideDetails = ({ ride, user, role }: RideDetailsProps) => {
 
   // Set cancelled state so UserMenu can show or hide cancel action
   const [, setCancelled] = useAtom(isCancelledAtom);
+  const [getOptimisticRiderList] = useAtom(getOptimisticRiderListAtom);
+  // Subscribe to optimistic updates to trigger re-renders when they change
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_optimisticUpdates] = useAtom(optimisticRideUpdatesAtom);
 
   const userList = users?.map((u: { user: User }) => u.user);
   const isLeader = ["ADMIN", "LEADER"].includes(role ?? "");
@@ -47,25 +49,16 @@ const RideDetails = ({ ride, user, role }: RideDetailsProps) => {
   const canJoin = isJoinable(rideDate, time) && isSpace;
   const hasLimit = rideLimit && rideLimit > -1;
 
-  // Optimistically add or remove user from "going" list
-  const [optimisticRidersList, setOptimisticRidersList] = useOptimistic(
+  // Apply global optimistic updates to the user list
+  // This will automatically re-render when optimisticUpdates changes
+  const globalOptimisticUserList = getOptimisticRiderList(
+    id!,
     userList ?? [],
-    (state, newValue: User) => {
-      // Remove user from list if already in list
-      if (state.map((u) => u.id).includes(newValue.id)) {
-        return state.filter((u) => u.id !== newValue.id);
-      }
-      return [...state, newValue];
-    },
+    user,
   );
 
-  const toggleGoing = () => {
-    if (user) {
-      startTransition(() => {
-        setOptimisticRidersList(user);
-      });
-    }
-  };
+  // Use global optimistic updates directly instead of layering with useOptimistic
+  const optimisticRidersList = globalOptimisticUserList;
 
   const hasRiders = optimisticRidersList.length > 0;
   const isGoing =
@@ -122,10 +115,10 @@ const RideDetails = ({ ride, user, role }: RideDetailsProps) => {
             isLeader={isLeader}
           />
           <div className="mb-16 grid grid-cols-3 gap-2 p-2 sm:px-0 md:max-w-[460px] md:gap-4">
-            <BackButton className="pe-[4px] ps-[4px]" />
+            <BackButton className="ps-[4px] pe-[4px]" />
 
             {isGoing && (
-              <Button accent className="pe-[4px] ps-[4px]" onClick={openNotes}>
+              <Button accent className="ps-[4px] pe-[4px]" onClick={openNotes}>
                 <MessageSquare className="h-6 w-6" />
                 NOTE
               </Button>
@@ -133,12 +126,11 @@ const RideDetails = ({ ride, user, role }: RideDetailsProps) => {
 
             {user && (canJoin || isGoing) && (
               <JoinButton
-                className="pe-[4px] ps-[4px]"
+                className="ps-[4px] pe-[4px]"
                 going={isGoing}
                 ariaLabel={`Join ${name} ride`}
                 rideId={id!}
                 userId={user?.id}
-                toggleGoing={toggleGoing}
               />
             )}
           </div>
