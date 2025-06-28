@@ -13,14 +13,13 @@ type Props = ButtonProps & {
   rideId: string;
   userId: string;
   going?: boolean;
-  toggleGoing?: () => void;
+  toggleGoing?: () => void; // Keep for compatibility but not used
 };
 
 export const JoinButton: React.FC<Props> = ({
   going,
   rideId,
   userId,
-  toggleGoing,
   ...props
 }: Props) => {
   const [, addOptimisticUpdate] = useAtom(addOptimisticRideUpdateAtom);
@@ -30,23 +29,15 @@ export const JoinButton: React.FC<Props> = ({
     // Optimistically update global state
     addOptimisticUpdate({ rideId, userId, action: "join" });
 
-    // Also call local toggle for immediate UI feedback
-    toggleGoing?.();
-
     try {
       const result = await joinRide({ rideId, userId });
-      if (result.success) {
-        // Remove optimistic update since server action succeeded
-        removeOptimisticUpdate({ rideId, userId });
-      } else {
+      if (!result.success) {
         // Revert optimistic update on failure
-        addOptimisticUpdate({ rideId, userId, action: "leave" });
-        toggleGoing?.(); // Revert local state too
+        removeOptimisticUpdate({ rideId, userId });
       }
     } catch {
       // Revert optimistic update on error
-      addOptimisticUpdate({ rideId, userId, action: "leave" });
-      toggleGoing?.(); // Revert local state too
+      removeOptimisticUpdate({ rideId, userId });
     }
   };
 
@@ -54,23 +45,15 @@ export const JoinButton: React.FC<Props> = ({
     // Optimistically update global state
     addOptimisticUpdate({ rideId, userId, action: "leave" });
 
-    // Also call local toggle for immediate UI feedback
-    toggleGoing?.();
-
     try {
       const result = await leaveRide({ rideId, userId });
-      if (result.success) {
-        // Remove optimistic update since server action succeeded
-        removeOptimisticUpdate({ rideId, userId });
-      } else {
+      if (!result.success) {
         // Revert optimistic update on failure
-        addOptimisticUpdate({ rideId, userId, action: "join" });
-        toggleGoing?.(); // Revert local state too
+        removeOptimisticUpdate({ rideId, userId });
       }
     } catch {
       // Revert optimistic update on error
-      addOptimisticUpdate({ rideId, userId, action: "join" });
-      toggleGoing?.(); // Revert local state too
+      removeOptimisticUpdate({ rideId, userId });
     }
   };
 

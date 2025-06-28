@@ -27,7 +27,8 @@ export const addOptimisticRideUpdateAtom = atom(
       (u) => !(u.rideId === update.rideId && u.userId === update.userId),
     );
 
-    set(optimisticRideUpdatesAtom, [...filteredUpdates, newUpdate]);
+    const newUpdates = [...filteredUpdates, newUpdate];
+    set(optimisticRideUpdatesAtom, newUpdates);
   },
 );
 

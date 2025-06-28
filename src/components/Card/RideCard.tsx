@@ -2,6 +2,7 @@
 import {
   getOptimisticMembershipAtom,
   getOptimisticRiderCountAtom,
+  optimisticRideUpdatesAtom,
 } from "@/store";
 import { formatDistance } from "@utils/rides";
 import clsx from "clsx";
@@ -31,6 +32,9 @@ export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
 
   const [getOptimisticMembership] = useAtom(getOptimisticMembershipAtom);
   const [getOptimisticRiderCount] = useAtom(getOptimisticRiderCountAtom);
+  // Subscribe to optimistic updates to trigger re-renders when they change
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_optimisticUpdates] = useAtom(optimisticRideUpdatesAtom);
 
   const onPress = () => router.push(`/ride/${id}`);
 

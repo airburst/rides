@@ -1,14 +1,12 @@
 "use client";
-import { getOptimisticRiderListAtom, isCancelledAtom } from "@/store";
+import {
+  getOptimisticRiderListAtom,
+  isCancelledAtom,
+  optimisticRideUpdatesAtom,
+} from "@/store";
 import { useAtom } from "jotai";
 import { MessageSquare } from "lucide-react";
-import {
-  startTransition,
-  useEffect,
-  useOptimistic,
-  useState,
-  type JSX,
-} from "react";
+import { useEffect, useState, type JSX } from "react";
 import { hasSpace, isJoinable } from "../../../shared/utils";
 import { type Ride, type User } from "../../types";
 import { Badge } from "../Badge";
@@ -41,6 +39,9 @@ const RideDetails = ({ ride, user, role }: RideDetailsProps) => {
   // Set cancelled state so UserMenu can show or hide cancel action
   const [, setCancelled] = useAtom(isCancelledAtom);
   const [getOptimisticRiderList] = useAtom(getOptimisticRiderListAtom);
+  // Subscribe to optimistic updates to trigger re-renders when they change
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_optimisticUpdates] = useAtom(optimisticRideUpdatesAtom);
 
   const userList = users?.map((u: { user: User }) => u.user);
   const isLeader = ["ADMIN", "LEADER"].includes(role ?? "");
@@ -48,31 +49,19 @@ const RideDetails = ({ ride, user, role }: RideDetailsProps) => {
   const canJoin = isJoinable(rideDate, time) && isSpace;
   const hasLimit = rideLimit && rideLimit > -1;
 
-  // First apply global optimistic updates to the user list
+  // Apply global optimistic updates to the user list
+  // This will automatically re-render when optimisticUpdates changes
   const globalOptimisticUserList = getOptimisticRiderList(
     id!,
     userList ?? [],
     user,
   );
 
-  // Then apply local optimistic updates on top of global updates
-  const [optimisticRidersList, setOptimisticRidersList] = useOptimistic(
-    globalOptimisticUserList,
-    (state, newValue: User) => {
-      // Remove user from list if already in list
-      if (state.map((u) => u.id).includes(newValue.id)) {
-        return state.filter((u) => u.id !== newValue.id);
-      }
-      return [...state, newValue];
-    },
-  );
+  // Use global optimistic updates directly instead of layering with useOptimistic
+  const optimisticRidersList = globalOptimisticUserList;
 
   const toggleGoing = () => {
-    if (user) {
-      startTransition(() => {
-        setOptimisticRidersList(user);
-      });
-    }
+    // We don't need local optimistic state anymore since global state handles it
   };
 
   const hasRiders = optimisticRidersList.length > 0;
