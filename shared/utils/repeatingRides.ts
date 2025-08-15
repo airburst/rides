@@ -194,7 +194,26 @@ export const makeRidesInPeriod = (
   const start = date ? new Date(date) : new Date();
   const nextMonth = getNextMonth(date);
   const end = new Date(nextMonth);
-  const rideDates = RRule.fromString(schedule).between(start, end);
+
+  // Create a temporary RRule with DTSTART set to beginning of target period
+  // to ensure we capture all possible occurrences, regardless of current DTSTART
+  const originalRRule = RRule.fromString(schedule);
+  const tempRRule = new RRule({
+    ...originalRRule.options,
+    dtstart: new Date(start.getFullYear(), start.getMonth(), 1), // First day of target month
+  });
+
+  // Get all occurrences in an extended period to account for edge cases
+  const bufferStart = new Date(start);
+  bufferStart.setDate(bufferStart.getDate() - 7); // Start 1 week earlier
+
+  const bufferEnd = new Date(end);
+  bufferEnd.setDate(bufferEnd.getDate() + 7); // End 1 week later
+
+  const allDates = tempRRule.between(bufferStart, bufferEnd);
+
+  // Filter to only include dates in the actual target period
+  const rideDates = allDates.filter((date) => date >= start && date < end);
 
   // Update timings if winterStartTime is set
   const rides =

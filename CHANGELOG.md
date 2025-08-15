@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.10.1 - 2025-08-15
+
+### Fixed
+
+- Fixed the ride generation bug where an incomplete set of rides was created each month.
+
+The issue was that makeRidesInPeriod used the RRule's current DTSTART to generate rides, but updateRRuleStartDate modified this DTSTART after each generation. This meant subsequent runs could generate different results for the same date range, causing rides to be split across multiple runs instead of all being created at once.
+
+1. Fixed makeRidesInPeriod in shared/utils/repeatingRides.ts
+Before: Used the RRule's current DTSTART, which could be inconsistent
+After: Creates a temporary RRule with DTSTART set to the beginning of the target month
+Uses an extended buffer period (±1 week) to capture all possible occurrences
+Filters results to only include rides within the actual target period
+
+2. Added duplicate prevention in generateRides
+Before: No duplicate checking - could create duplicate rides if run multiple times
+After: Checks for existing rides based on scheduleId and rideDate
+Filters out duplicates before insertion
+Only creates truly new rides
+
+3. Added test coverage
+
 ## 3.10.0 - 2025-06-28
 
 ### Updated
