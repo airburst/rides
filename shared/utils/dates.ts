@@ -152,10 +152,24 @@ export const getFormRideDateAndTime = (
 export const getMonth = () => dayjs().month();
 
 export const getLastMonth = (date?: string) =>
-  utcDate(date).subtract(1, "month").set("date", 1).toISOString();
+  utcDate(date)
+    .subtract(1, "month")
+    .set("date", 1)
+    .set("hours", 0)
+    .set("minutes", 0)
+    .set("seconds", 0)
+    .set("milliseconds", 0)
+    .toISOString();
 
 export const getNextMonth = (date?: string) =>
-  utcDate(date).add(1, "month").set("date", 1).toISOString();
+  utcDate(date)
+    .add(1, "month")
+    .set("date", 1)
+    .set("hours", 0)
+    .set("minutes", 0)
+    .set("seconds", 0)
+    .set("milliseconds", 0)
+    .toISOString();
 
 export const firstDayOfMonth = (date?: string) =>
   date ? dayjs(date).startOf("month").day() : dayjs().startOf("month").day();
