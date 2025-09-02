@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import Link from "next/link";
-import { type ReactNode } from "react";
+import type { ReactNode } from "react";
 
 type MenuEntryProps = {
   label: string;

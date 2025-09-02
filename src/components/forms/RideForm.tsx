@@ -23,7 +23,7 @@ import {
   repeatingRideToDb,
 } from "../../../shared/utils";
 import { RIDER_LIMIT_OPTIONS } from "../../constants";
-import { type Preferences } from "../../types";
+import type { Preferences } from "../../types";
 import { Button } from "../Button";
 import { CancelButton } from "../Button/CancelButton";
 import { ConfirmWithContent } from "../ConfirmWithContent";

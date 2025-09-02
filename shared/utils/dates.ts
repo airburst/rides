@@ -223,7 +223,7 @@ export const getMonthDateRange = (date: string) => {
 };
 
 export const getDateInWeeks = (weeks: string): string => {
-  const weeksNumber = parseInt(weeks, 10);
+  const weeksNumber = Number.parseInt(weeks, 10);
 
   // Check for 'forever' code (-1) and return long future date
   if (weeksNumber === -1) {

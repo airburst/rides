@@ -1,4 +1,4 @@
-import { type Member, type MemberData } from "./types";
+import type { Member, MemberData } from "./types";
 
 export const transformMember = (data: MemberData): Member => ({
   memberId: data.id,

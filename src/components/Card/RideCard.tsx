@@ -9,7 +9,7 @@ import clsx from "clsx";
 import { useAtom } from "jotai";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { type RideList, type User } from "../../types";
+import type { RideList, User } from "../../types";
 import { Cancelled } from "../RideDetails/Cancelled";
 import { BasicCard } from "./BasicCard";
 

@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { RRule } from "rrule";
-import {
-  type RepeatingRide,
-  type RepeatingRideDb,
-  type TemplateRide,
+import type {
+  RepeatingRide,
+  RepeatingRideDb,
+  TemplateRide,
 } from "src/types";
 import { getNextMonth, isWinter } from "./dates";
 import { getScalarValue } from "./general";

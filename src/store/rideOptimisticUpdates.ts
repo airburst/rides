@@ -47,7 +47,7 @@ export const removeOptimisticRideUpdateAtom = atom(
 // Atom to clean up old optimistic updates (called periodically)
 export const cleanupOptimisticUpdatesAtom = atom(
   null,
-  (get, set, maxAgeMs: number = 30000) => {
+  (get, set, maxAgeMs = 30000) => {
     // Default: 30 seconds
     const updates = get(optimisticRideUpdatesAtom);
     const now = Date.now();

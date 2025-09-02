@@ -1,9 +1,9 @@
 import { DEFAULT_PREFERENCES } from "../../src/constants";
-import {
-  type Preferences,
-  type Ride,
-  type RideList,
-  type User,
+import type {
+  Preferences,
+  Ride,
+  RideList,
+  User,
 } from "../../src/types";
 import { getRideDateAndTime } from "./dates";
 import { getPreferences } from "./preferences";
@@ -77,7 +77,7 @@ export const convertDistance = (
   let d = distance ?? 0;
 
   if (typeof d === "string") {
-    d = parseFloat(d ?? 0);
+    d = Number.parseFloat(d ?? 0);
   }
   return units !== DEFAULT_PREFERENCES.units ? convertToMiles(d ?? 0) : d;
 };

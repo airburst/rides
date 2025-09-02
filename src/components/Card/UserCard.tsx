@@ -1,5 +1,5 @@
 "use client";
-import { type User } from "@/types";
+import type { User } from "@/types";
 import clsx from "clsx";
 import { useRouter } from "next/navigation";
 import { MembershipIcon } from "../MembershipIcon";

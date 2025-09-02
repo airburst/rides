@@ -1,10 +1,10 @@
 import { MainContent } from "@/components/Layout/MainContent";
-import { type RideFormProps } from "@/components/forms/RideForm";
+import type { RideFormProps } from "@/components/forms/RideForm";
 import { env } from "@/env";
 import { canUseAction, getServerAuthSession } from "@/server/auth";
 import { formatFormDate, rruleDay } from "@utils/dates";
 import { formatUserName } from "@utils/rides";
-import { type Metadata } from "next";
+import type { Metadata } from "next";
 
 import dynamic from "next/dynamic";
 

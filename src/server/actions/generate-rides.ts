@@ -2,7 +2,7 @@
 
 import { db } from "@/server/db";
 import { repeatingRides, rides } from "@/server/db/schema";
-import { type TemplateRide } from "@/types";
+import type { TemplateRide } from "@/types";
 import { eq } from "drizzle-orm";
 /**
  * NOTE: This action is designed to be called from an API

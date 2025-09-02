@@ -1,7 +1,7 @@
 import { generateRides } from "@/server/actions/generate-rides";
 import { getRepeatingRide } from "@/server/actions/get-repeating-ride";
 import { getRepeatingRides } from "@/server/actions/get-repeating-rides";
-import { type RepeatingRideDb, type RideSet } from "@/types";
+import type { RepeatingRideDb, RideSet } from "@/types";
 import {
   makeRidesInPeriod,
   repeatingRideToDb,

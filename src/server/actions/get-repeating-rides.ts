@@ -2,7 +2,7 @@
 
 import { db } from "@/server/db";
 import { repeatingRides } from "@/server/db/schema";
-import { type RepeatingRide } from "@/types";
+import type { RepeatingRide } from "@/types";
 import { repeatingRideFromDb } from "@utils/repeatingRides";
 import { asc, desc } from "drizzle-orm";
 // import { revalidatePath } from "next/cache";

@@ -3,7 +3,7 @@ import { OptimisticProvider } from "@/components/OptimisticProvider";
 import { env } from "@/env";
 import "@/styles/globals.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { type Metadata } from "next";
+import type { Metadata } from "next";
 import { Outfit } from "next/font/google";
 import { Toaster } from "sonner";
 

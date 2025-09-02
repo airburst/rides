@@ -6,7 +6,7 @@ import { db } from "@/server/db";
 import { rides } from "@/server/db/schema";
 import { revalidatePath } from "next/cache";
 import { canUseAction } from "../auth";
-import { type FormState } from "./update-profile";
+import type { FormState } from "./update-profile";
 
 export const addRide = async (data: FormData): Promise<FormState> => {
   const formData = Object.fromEntries(data);

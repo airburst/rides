@@ -3,7 +3,7 @@
 import { cancelRide } from "@/server/actions/cancel-ride";
 import { deleteRide } from "@/server/actions/delete-ride";
 import { isCancelledAtom } from "@/store";
-import { type Role } from "@/types";
+import type { Role } from "@/types";
 import { useAtom } from "jotai";
 import { Menu } from "lucide-react";
 import { signIn, signOut } from "next-auth/react";

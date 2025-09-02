@@ -3,7 +3,7 @@
 import { NOT_AUTHORISED } from "@/constants";
 import { db } from "@/server/db";
 import { lower, users } from "@/server/db/schema";
-import { type User } from "@/types";
+import type { User } from "@/types";
 import { asc, like, or } from "drizzle-orm";
 import { canUseAction } from "../auth";
 

@@ -2,7 +2,7 @@
 
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { filterQueryAtom, showFilterAtom } from "@/store";
-import { type FilterQuery, type RideList, type User } from "@/types";
+import type { FilterQuery, RideList, User } from "@/types";
 import { makeFilterData } from "@utils/rides";
 import { groupRides } from "@utils/transformRideData";
 import { useAtom } from "jotai";

@@ -1,6 +1,6 @@
 "use server";
 
-import { type GenerateApiResponse } from "@/app/api/generate/route";
+import type { GenerateApiResponse } from "@/app/api/generate/route";
 import { env } from "@/env";
 
 /**

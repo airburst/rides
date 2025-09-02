@@ -6,7 +6,7 @@ import {
   getNow,
   mapRidesToDate,
 } from "../../../shared/utils";
-import { type RideList } from "../../types";
+import type { RideList } from "../../types";
 import { MainContent } from "../Layout/MainContent";
 import { Day, OutsideDay } from "./Day";
 import { HeadingGroup } from "./Heading";

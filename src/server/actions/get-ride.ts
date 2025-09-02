@@ -2,7 +2,7 @@
 
 import { db } from "@/server/db";
 import { rides } from "@/server/db/schema";
-import { type Ride } from "@/types";
+import type { Ride } from "@/types";
 import { formatRideData } from "@utils/rides";
 import { and, eq } from "drizzle-orm";
 

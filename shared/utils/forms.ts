@@ -1,5 +1,5 @@
-import { type RideFormSchema } from "@/components/forms/formSchemas";
-import { type RepeatingRide, type RideFormValues } from "src/types";
+import type { RideFormSchema } from "@/components/forms/formSchemas";
+import type { RepeatingRide, RideFormValues } from "src/types";
 import { makeUtcDate } from "./dates";
 
 export const flattenArrayNumber = (

@@ -1,6 +1,6 @@
 import { BackButton, Button } from "@/components/Button";
 import { MainContent } from "@/components/Layout/MainContent";
-import { type RidesListProps } from "@/components/RidesList";
+import type { RidesListProps } from "@/components/RidesList";
 import { canUseAction } from "@/server/auth";
 import { getNow } from "@utils/dates";
 import { flattenQuery } from "@utils/general";

@@ -2,7 +2,7 @@
 import { DEFAULT_WEEKS_TO_SHOW } from "@/constants";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { filterQueryAtom } from "@/store";
-import { type FilterQuery } from "@/types";
+import type { FilterQuery } from "@/types";
 import {
   Combobox,
   ComboboxButton,

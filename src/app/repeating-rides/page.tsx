@@ -2,7 +2,7 @@ import { MainContent } from "@/components/Layout/MainContent";
 import { env } from "@/env";
 import { getRepeatingRides } from "@/server/actions/get-repeating-rides";
 import { canUseAction } from "@/server/auth";
-import { type Metadata } from "next";
+import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
 

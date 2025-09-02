@@ -1,0 +1,64 @@
+{
+  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
+  "organizeImports": {
+    "enabled": true
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "style": {
+        "useConst": "error",
+        "noNonNullAssertion": "off",
+        "noUselessElse": "off",
+        "useSelfClosingElements": "warn",
+        "noUnusedTemplateLiteral": "warn",
+        "useTemplate": "warn"
+      },
+      "complexity": {
+        "noForEach": "off",
+        "noUselessFragments": "warn"
+      },
+      "suspicious": {
+        "noExplicitAny": "warn",
+        "noImplicitAnyLet": "warn"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "warn"
+      },
+      "correctness": {
+        "noUnknownProperty": "off",
+        "useExhaustiveDependencies": "warn"
+      },
+      "a11y": {
+        "useSemanticElements": "warn",
+        "useKeyWithClickEvents": "warn",
+        "noLabelWithoutControl": "warn"
+      }
+    }
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "semicolons": "always"
+    }
+  },
+  "files": {
+    "include": ["src/**/*", "shared/**/*", "drizzle.config.ts"],
+    "ignore": [
+      "node_modules",
+      "dist",
+      "build",
+      ".next",
+      "coverage",
+      "*.min.*",
+      "**/*.css"
+    ]
+  }
+}

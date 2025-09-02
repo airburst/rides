@@ -1,5 +1,5 @@
 import { Button } from "@/components/Button";
-import { type CalendarProps } from "@/components/Calendar";
+import type { CalendarProps } from "@/components/Calendar";
 import { FullPageContent } from "@/components/Layout/FullPageContent";
 import { env } from "@/env";
 import {
@@ -9,7 +9,7 @@ import {
   getNow,
 } from "@utils/dates";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { type Metadata } from "next";
+import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 

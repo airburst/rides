@@ -1,6 +1,6 @@
 import { relations } from "drizzle-orm";
 import * as t from "drizzle-orm/pg-core";
-import { type AdapterAccount } from "next-auth/adapters";
+import type { AdapterAccount } from "next-auth/adapters";
 import { createTable } from "./create-table";
 import users from "./user";
 

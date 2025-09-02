@@ -8,7 +8,7 @@ import { useAtom } from "jotai";
 import { MessageSquare } from "lucide-react";
 import { useEffect, useState, type JSX } from "react";
 import { hasSpace, isJoinable } from "../../../shared/utils";
-import { type Ride, type User } from "../../types";
+import type { Ride, User } from "../../types";
 import { Badge } from "../Badge";
 import { BackButton, Button, JoinButton } from "../Button";
 import { RideInfo } from "./RideInfo";

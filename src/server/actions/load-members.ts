@@ -1,9 +1,9 @@
 "use server";
 
-import { type Member } from "@/app/api/riderhq/types";
+import type { Member } from "@/app/api/riderhq/types";
 import { db } from "@/server/db";
 import { memberships } from "@/server/db/schema";
-import { type FormState } from "./update-profile";
+import type { FormState } from "./update-profile";
 
 export const loadMembers = async (members: Member[]): Promise<FormState> => {
   try {
