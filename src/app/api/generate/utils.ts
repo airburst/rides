@@ -64,7 +64,6 @@ export const createRides = async (rideSet: RideSet[]) => {
     try {
       const result = await promise;
       results.push(result);
-      console.log("🚀 ~ createRides:", result);
     } catch (error) {
       console.log(error);
     }
