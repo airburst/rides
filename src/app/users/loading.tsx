@@ -1,6 +1,5 @@
 import { MainContent } from "@/components/Layout/MainContent";
 import { Skeleton } from "@/components/Skeleton";
-
 import type { JSX } from "react";
 
 type RowProps = {

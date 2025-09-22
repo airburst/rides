@@ -1,8 +1,6 @@
 {
-  "$schema": "https://biomejs.dev/schemas/1.9.4/schema.json",
-  "organizeImports": {
-    "enabled": true
-  },
+  "$schema": "https://biomejs.dev/schemas/2.0.6/schema.json",
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "linter": {
     "enabled": true,
     "rules": {
@@ -13,11 +11,18 @@
         "noUselessElse": "off",
         "useSelfClosingElements": "warn",
         "noUnusedTemplateLiteral": "warn",
-        "useTemplate": "warn"
+        "useTemplate": "warn",
+        "noParameterAssign": "error",
+        "useAsConstAssertion": "error",
+        "useDefaultParameterLast": "error",
+        "useEnumInitializers": "error",
+        "useSingleVarDeclarator": "error",
+        "useNumberNamespace": "error",
+        "noInferrableTypes": "error"
       },
       "complexity": {
         "noForEach": "off",
-        "noUselessFragments": "warn"
+        "noUselessFragments": "off"
       },
       "suspicious": {
         "noExplicitAny": "warn",
@@ -50,15 +55,17 @@
     }
   },
   "files": {
-    "include": ["src/**/*", "shared/**/*", "drizzle.config.ts"],
-    "ignore": [
-      "node_modules",
-      "dist",
-      "build",
-      ".next",
-      "coverage",
-      "*.min.*",
-      "**/*.css"
+    "includes": [
+      "**/src/**/*",
+      "**/shared/**/*",
+      "**/drizzle.config.ts",
+      "!**/node_modules",
+      "!**/dist",
+      "!**/build",
+      "!**/.next",
+      "!**/coverage",
+      "!**/*.min.*",
+      "!**/*.css"
     ]
   }
 }

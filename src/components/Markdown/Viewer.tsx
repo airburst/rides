@@ -47,7 +47,7 @@ const Viewer = ({ markdown, title }: ViewerProps) => {
         <div
           id="ride-notes"
           className={notesClass}
-          // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: safe-inject
           dangerouslySetInnerHTML={{ __html: displayText }}
         />
         {isLong && (

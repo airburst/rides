@@ -391,7 +391,6 @@ const RideForm = ({
         heading="Do you want to create rides on the following dates using this schedule?"
         onYes={(callback) => handleYes(callback)}
       >
-        {/* biome-ignore lint/complexity/noUselessFragments: <explanation> */}
         <>
           {rideDateList.map((date) => (
             <div key={date}>{date}</div>

@@ -75,7 +75,7 @@ const RideDetails = ({ ride, user, role }: RideDetailsProps) => {
   const openNotes = () => setShowNotesForm(true);
   const closeNotes = () => setShowNotesForm(false);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  // biome-ignore lint/correctness/useExhaustiveDependencies: dont-rerun
   useEffect(() => {
     setCancelled(cancelled ?? false);
   }, []);

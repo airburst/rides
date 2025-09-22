@@ -11,6 +11,7 @@ export const ChatMessage: React.FC<RideNote> = ({
     {image && (
       <div className="avatar placeholder chat-image">
         <div className="bg-neutral text-neutral-content w-10 rounded-full">
+          {/** biome-ignore lint/performance/noImgElement: need-dimensions */}
           <img alt="Tailwind CSS chat bubble component" src={image} />
         </div>
       </div>
@@ -19,7 +20,7 @@ export const ChatMessage: React.FC<RideNote> = ({
       <div className="chat-header">{name}</div>
       <div
         className="chat-bubble leading-snug break-words text-neutral-700"
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
+        // biome-ignore lint/security/noDangerouslySetInnerHtml: safe-injection
         dangerouslySetInnerHTML={{ __html: makeClickableUrl(rideNotes ?? "") }}
       />
     </div>

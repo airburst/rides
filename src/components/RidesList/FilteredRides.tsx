@@ -38,15 +38,9 @@ export const FilteredRides = ({ rides, user }: Props) => {
     <>
       <div className="grid w-full grid-cols-1 gap-4 md:gap-8">
         {ridesFound ? (
-          <>
-            {groupedRides.map((group) => (
-              <RideGroup
-                key={Object.keys(group)[0]}
-                group={group}
-                user={user}
-              />
-            ))}
-          </>
+          groupedRides.map((group) => (
+            <RideGroup key={Object.keys(group)[0]} group={group} user={user} />
+          ))
         ) : (
           <div className="flex h-full items-center p-8 pt-32 text-2xl">
             No planned rides

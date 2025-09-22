@@ -18,8 +18,8 @@ export const Skeleton = ({
     className,
   );
   return (
+    // biome-ignore lint/a11y/useSemanticElements: its-ok
     <div
-      // biome-ignore lint/a11y/useSemanticElements: <explanation>
       role="status"
       className="flex w-full max-w-sm animate-pulse items-center"
     >
