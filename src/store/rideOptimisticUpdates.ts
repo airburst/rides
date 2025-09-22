@@ -37,32 +37,25 @@ export const removeOptimisticRideUpdateAtom = atom(
   null,
   (get, set, { rideId, userId }: { rideId: string; userId: string }) => {
     const updates = get(optimisticRideUpdatesAtom);
-    const filteredUpdates = updates.filter(
-      (u) => !(u.rideId === rideId && u.userId === userId),
-    );
+    const filteredUpdates = updates.filter((u) => !(u.rideId === rideId && u.userId === userId));
     set(optimisticRideUpdatesAtom, filteredUpdates);
   },
 );
 
 // Atom to clean up old optimistic updates (called periodically)
-export const cleanupOptimisticUpdatesAtom = atom(
-  null,
-  (get, set, maxAgeMs = 30000) => {
-    // Default: 30 seconds
-    const updates = get(optimisticRideUpdatesAtom);
-    const now = Date.now();
-    const validUpdates = updates.filter((u) => now - u.timestamp < maxAgeMs);
-    set(optimisticRideUpdatesAtom, validUpdates);
-  },
-);
+export const cleanupOptimisticUpdatesAtom = atom(null, (get, set, maxAgeMs = 30000) => {
+  // Default: 30 seconds
+  const updates = get(optimisticRideUpdatesAtom);
+  const now = Date.now();
+  const validUpdates = updates.filter((u) => now - u.timestamp < (maxAgeMs as number));
+  set(optimisticRideUpdatesAtom, validUpdates);
+});
 
 // Helper atom to get optimistic membership status for a ride and user
 export const getOptimisticMembershipAtom = atom(
   (get) => (rideId: string, userId: string, originalStatus: boolean) => {
     const updates = get(optimisticRideUpdatesAtom);
-    const relevantUpdate = updates.find(
-      (u) => u.rideId === rideId && u.userId === userId,
-    );
+    const relevantUpdate = updates.find((u) => u.rideId === rideId && u.userId === userId);
 
     if (!relevantUpdate) {
       return originalStatus;
@@ -110,11 +103,7 @@ export const getOptimisticRiderListAtom = atom(
       rideUpdates.forEach((update) => {
         const userIndex = users.findIndex((u) => u.id === update.userId);
 
-        if (
-          update.action === "join" &&
-          userIndex === -1 &&
-          currentUser?.id === update.userId
-        ) {
+        if (update.action === "join" && userIndex === -1 && currentUser?.id === update.userId) {
           // Add the current user to the list
           users.push(currentUser);
         } else if (update.action === "leave" && userIndex !== -1) {
