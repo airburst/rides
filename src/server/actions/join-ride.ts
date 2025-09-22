@@ -1,10 +1,10 @@
-"use server";
+'use server';
 
-import { NOT_AUTHORISED } from "@/constants";
-import { db } from "@/server/db";
-import { userOnRides } from "@/server/db/schema";
-import { z } from "zod";
-import { canUseAction } from "../auth";
+import { NOT_AUTHORISED } from '@/constants';
+import { db } from '@/server/db';
+import { userOnRides } from '@/server/db/schema';
+import { z } from 'zod';
+import { canUseAction } from '../auth';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const joinSchema = z.object({
@@ -22,7 +22,7 @@ export const joinRide = async ({
   error?: string;
 }> => {
   // A user can only add themselves; a leader or admin can add other riders
-  const isAuthorised = await canUseAction("LEADER", userId);
+  const isAuthorised = await canUseAction('LEADER', userId);
 
   if (!isAuthorised) {
     return {
@@ -38,7 +38,7 @@ export const joinRide = async ({
       success: true,
     };
   } catch (error) {
-    console.error("💢 join-ride", error);
+    console.error('💢 join-ride', error);
     return {
       success: false,
       error: `Unable to add rider to ride id ${rideId}`,

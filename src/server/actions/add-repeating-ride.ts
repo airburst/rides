@@ -46,7 +46,7 @@ export const addRepeatingRide = async (data: FormData) => {
     console.error("💢 add-repeating-ride", error);
     return {
       success: false,
-      message: `Unable to add repeating ride`,
+      message: "Unable to add repeating ride",
     };
   }
 };

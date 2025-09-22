@@ -31,9 +31,7 @@ export const leaveRide = async ({
   try {
     await db
       .delete(userOnRides)
-      .where(
-        and(eq(userOnRides.rideId, rideId), eq(userOnRides.userId, userId)),
-      );
+      .where(and(eq(userOnRides.rideId, rideId), eq(userOnRides.userId, userId)));
 
     return {
       success: true,

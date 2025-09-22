@@ -35,7 +35,7 @@ export const updateRepeatingRide = async (data: FormData) => {
   if (!id) {
     return {
       success: false,
-      message: `Repeating ride id is missing`,
+      message: "Repeating ride id is missing",
     };
   }
 
@@ -48,7 +48,7 @@ export const updateRepeatingRide = async (data: FormData) => {
       .returning({ repeatingRideId: repeatingRides.id });
 
     revalidatePath(`/repeating-ride/${rideId}`, "page");
-    revalidatePath(`/repeating-rides`, "page");
+    revalidatePath("/repeating-rides", "page");
 
     return {
       success: true,
@@ -59,7 +59,7 @@ export const updateRepeatingRide = async (data: FormData) => {
     console.error("💢 update-repeating-ride", error);
     return {
       success: false,
-      message: `Unable to update repeating ride`,
+      message: "Unable to update repeating ride",
     };
   }
 };

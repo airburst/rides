@@ -9,7 +9,7 @@ import { redirect } from "next/navigation";
 const UsersList = dynamic(() => import("@/components/Users/UsersList"));
 
 export const metadata: Metadata = {
-  title: `Manage Users`,
+  title: "Manage Users",
   description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} - Users`,
 };
 
@@ -37,7 +37,7 @@ export default async function Users() {
     <MainContent>
       <>
         <div className="w-full text-neutral-800">
-          <div className="mb-4 flex w-full flex-row items-center justify-center bg-primary p-2 font-bold uppercase tracking-wide text-white sm:rounded">
+          <div className="bg-primary mb-4 flex w-full flex-row items-center justify-center p-2 font-bold tracking-wide text-white uppercase sm:rounded">
             Manage Users
           </div>
         </div>

@@ -121,7 +121,8 @@ const UserMenu = ({ role, isAuthenticated }: MenuProps) => {
             aria-label="close sidebar"
             className="drawer-overlay"
             onClick={closeMenu}
-          ></label>
+            onKeyDown={closeMenu}
+          />
           <MenuContent
             role={role}
             isAuthenticated={isAuthenticated}

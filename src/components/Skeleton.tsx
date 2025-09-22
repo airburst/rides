@@ -1,20 +1,29 @@
-import { twMerge } from 'tailwind-merge';
+import { twMerge } from "tailwind-merge";
 
 type SkeletonProps = {
   height?: number;
   width?: number;
   className?: string;
-}
+};
 
-export const Skeleton = ({ height = 4, width = 48, className }: SkeletonProps) => {
-  const classes = twMerge("bg-gray-200 rounded-full",
+export const Skeleton = ({
+  height = 4,
+  width = 48,
+  className,
+}: SkeletonProps) => {
+  const classes = twMerge(
+    "bg-gray-200 rounded-full",
     `h-${height}`,
     `w-${width}`,
     className,
-  )
+  );
   return (
-    <div role="status" className="max-w-sm animate-pulse flex items-center w-full">
-      <div className={classes}></div>
+    <div
+      // biome-ignore lint/a11y/useSemanticElements: <explanation>
+      role="status"
+      className="flex w-full max-w-sm animate-pulse items-center"
+    >
+      <div className={classes} />
     </div>
   );
-}
+};

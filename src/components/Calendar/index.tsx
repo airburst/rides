@@ -41,12 +41,12 @@ const Calendar: React.FC<CalendarProps> = async ({ date }: CalendarProps) => {
 
   return (
     <>
-      <div className={`grid grid-cols-7 gap-0`}>
+      <div className={"grid grid-cols-7 gap-0"}>
         <HeadingGroup />
       </div>
 
       <div
-        className={`grid h-full grid-cols-7 grid-rows-${rowCount} auto-rows-fr gap-px bg-base-300`}
+        className={`grid h-full grid-cols-7 grid-rows-${rowCount} bg-base-300 auto-rows-fr gap-px`}
       >
         {daysWithRides.map(
           ({ type, day, rides: mappedRides, date: calDate }) =>

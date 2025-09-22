@@ -32,7 +32,7 @@ export const updateRide = async (data: FormData): Promise<FormState> => {
     if (!id) {
       return {
         success: false,
-        message: `Ride id is missing`,
+        message: "Ride id is missing",
       };
     }
 
@@ -54,7 +54,7 @@ export const updateRide = async (data: FormData): Promise<FormState> => {
     console.error("💢 update-ride", error);
     return {
       success: false,
-      message: `Unable to update ride`,
+      message: "Unable to update ride",
     };
   }
 };

@@ -6,7 +6,7 @@ import {
 } from "@/store";
 import { useAtom } from "jotai";
 import { MessageSquare } from "lucide-react";
-import { useEffect, useState, type JSX } from "react";
+import { type JSX, useEffect, useState } from "react";
 import { hasSpace, isJoinable } from "../../../shared/utils";
 import type { Ride, User } from "../../types";
 import { Badge } from "../Badge";
@@ -75,9 +75,9 @@ const RideDetails = ({ ride, user, role }: RideDetailsProps) => {
   const openNotes = () => setShowNotesForm(true);
   const closeNotes = () => setShowNotesForm(false);
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     setCancelled(cancelled ?? false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

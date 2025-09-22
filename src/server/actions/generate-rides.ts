@@ -44,7 +44,7 @@ export const generateRides = async (
     console.error("💢 generate-rides", error);
     return {
       success: false,
-      message: `Unable to generate rides`,
+      message: "Unable to generate rides",
     };
   }
 };

@@ -1,11 +1,11 @@
-"use server";
+'use server';
 
-import { NOT_AUTHORISED } from "@/constants";
-import { db } from "@/server/db";
-import { lower, users } from "@/server/db/schema";
-import type { User } from "@/types";
-import { asc, like, or } from "drizzle-orm";
-import { canUseAction } from "../auth";
+import { NOT_AUTHORISED } from '@/constants';
+import { db } from '@/server/db';
+import { lower, users } from '@/server/db/schema';
+import type { User } from '@/types';
+import { asc, like, or } from 'drizzle-orm';
+import { canUseAction } from '../auth';
 
 export const getUsers = async (
   query?: string,
@@ -14,8 +14,8 @@ export const getUsers = async (
   error?: string;
 }> => {
   // Admin only
-  const isAuthorised = await canUseAction("ADMIN");
-  let result;
+  const isAuthorised = await canUseAction('ADMIN');
+  let result: unknown;
 
   if (!isAuthorised) {
     return {
@@ -61,10 +61,10 @@ export const getUsers = async (
       users: result as unknown as User[],
     };
   } catch (error) {
-    console.error("💢 get-users", error);
+    console.error('💢 get-users', error);
     return {
       users: [],
-      error: `Unable to fetch users`,
+      error: 'Unable to fetch users',
     };
   }
 };

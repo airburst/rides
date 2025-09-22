@@ -34,21 +34,14 @@ export const deleteRepeatingRide = async (
         const count = await tx
           .update(rides)
           .set({ deleted: true })
-          .where(
-            and(
-              eq(rides.scheduleId, repeatingRideId),
-              gt(rides.rideDate, getNow()),
-            ),
-          )
+          .where(and(eq(rides.scheduleId, repeatingRideId), gt(rides.rideDate, getNow())))
           .returning({ id: rides.id });
 
         deletedRideCount = count.length;
       }
 
       // Delete the repeating ride
-      await tx
-        .delete(repeatingRides)
-        .where(eq(repeatingRides.id, repeatingRideId));
+      await tx.delete(repeatingRides).where(eq(repeatingRides.id, repeatingRideId));
     });
 
     revalidatePath("/", "page");

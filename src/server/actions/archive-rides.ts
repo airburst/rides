@@ -2,12 +2,7 @@
 
 import { db } from "@/server/db";
 import { eq, lt, sql } from "drizzle-orm";
-import {
-  archivedRides,
-  archivedUserOnRides,
-  rides,
-  userOnRides,
-} from "../db/schema";
+import { archivedRides, archivedUserOnRides, rides, userOnRides } from "../db/schema";
 
 export const archiveRides = async (date: string) => {
   let movedRides = [];
@@ -15,10 +10,7 @@ export const archiveRides = async (date: string) => {
 
   try {
     await db.transaction(async (tx) => {
-      movedRides = await tx
-        .select()
-        .from(rides)
-        .where(lt(rides.rideDate, date));
+      movedRides = await tx.select().from(rides).where(lt(rides.rideDate, date));
 
       movedRiders = await tx
         .select({
@@ -59,7 +51,7 @@ export const archiveRides = async (date: string) => {
     console.error("💢 archive-rides", error);
     return {
       success: false,
-      message: `Unable to archive rides`,
+      message: "Unable to archive rides",
     };
   }
 };

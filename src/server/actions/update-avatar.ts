@@ -12,10 +12,7 @@ export type FormState = {
 };
 
 // Expects image to be a base64 string
-export async function updateAvatar(
-  id: string,
-  image: string,
-): Promise<FormState> {
+export async function updateAvatar(id: string, image: string): Promise<FormState> {
   try {
     const parts = image.split(";");
     const mimeType = parts[0]?.split(":")[1];

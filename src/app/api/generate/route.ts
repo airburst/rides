@@ -1,7 +1,7 @@
-import { getNextMonth } from "@utils/dates";
-import { headers } from "next/headers";
-import { NextResponse } from "next/server";
-import { createRides, getRidesFromTemplates } from "./utils";
+import { getNextMonth } from '@utils/dates';
+import { headers } from 'next/headers';
+import { NextResponse } from 'next/server';
+import { createRides, getRidesFromTemplates } from './utils';
 
 /**
  * This API is designed to be hit by a scheduled workflow
@@ -20,11 +20,9 @@ export type GenerateApiResponse = {
   }[];
 };
 
-export async function POST(
-  request: Request,
-): Promise<NextResponse<GenerateApiResponse>> {
+export async function POST(request: Request): Promise<NextResponse<GenerateApiResponse>> {
   const headersList = await headers();
-  const authorization = headersList.get("authorization");
+  const authorization = headersList.get('authorization');
   const body = await request.json();
   const { date, scheduleId } = body;
 
@@ -34,7 +32,7 @@ export async function POST(
       scheduleId,
       date: generateFromDate,
     });
-    console.log("🚀 ~ rides:", rides);
+    console.log('🚀 ~ rides:', rides);
     const results = await createRides(rides);
     const totalErrors = results.filter((r) => r.error).length;
 
@@ -50,7 +48,7 @@ export async function POST(
     return NextResponse.json(
       {
         success: false,
-        message: "Unauthorized",
+        message: 'Unauthorized',
       },
       { status: 401 },
     );

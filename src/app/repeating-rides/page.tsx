@@ -6,12 +6,14 @@ import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
 
-const RepeatingRidesList = dynamic(() => import("@/components/RepeatingRides/RepeatingRidesList"));
+const RepeatingRidesList = dynamic(
+  () => import("@/components/RepeatingRides/RepeatingRidesList"),
+);
 
 export const metadata: Metadata = {
-  title: `Manage Repeating Rides`,
+  title: "Manage Repeating Rides",
   description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} - Repeating Rides`,
-}
+};
 
 export default async function RepeatingRides() {
   const isAdmin = await canUseAction("ADMIN");
@@ -37,7 +39,7 @@ export default async function RepeatingRides() {
     <MainContent>
       <>
         <div className="w-full text-neutral-800">
-          <div className="flex w-full flex-row items-center justify-center bg-primary p-2 font-bold uppercase tracking-wide text-white sm:rounded mb-4">
+          <div className="bg-primary mb-4 flex w-full flex-row items-center justify-center p-2 font-bold tracking-wide text-white uppercase sm:rounded">
             Manage Repeating Rides
           </div>
         </div>
