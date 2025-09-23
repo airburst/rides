@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # Run this script - `./bin/start-database`
 
+container system start
+
 DB_CONTAINER_NAME="bcc3-postgres"
 
 if ! [ -x "$(command -v container)" ]; then
