@@ -154,18 +154,11 @@ export type RideSet = {
 };
 
 export const makeRidesInPeriod = (template: RepeatingRideDb, date?: string): RideSet => {
-  // FIXME:
-  console.log("🚀 ~ ", `${template.name}-${template.rideGroup}: ${template.schedule}`);
   const { id, schedule } = template;
   const start = date ? new Date(date) : new Date();
   const nextMonth = getNextMonth(date);
   const end = new Date(nextMonth);
-
-  console.log("🚀 ~", { start, end });
-
   const rideDates = RRule.fromString(schedule).between(start, end);
-
-  console.log("🚀 ~ rideDates:", rideDates);
 
   // Update timings if winterStartTime is set
   const rides =
