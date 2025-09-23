@@ -1,5 +1,5 @@
 import { ChatMessage } from "@components/ChatMessage";
-import { type RideNote } from "src/types";
+import type { RideNote } from "src/types";
 
 type Props = {
   riderNotes?: RideNote[];

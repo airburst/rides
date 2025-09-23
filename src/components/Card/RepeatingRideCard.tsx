@@ -3,7 +3,7 @@ import { getNow } from "@utils/dates";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { BasicCard } from ".";
-import { type RepeatingRide } from "../../types";
+import type { RepeatingRide } from "../../types";
 
 type Props = {
   ride: RepeatingRide;

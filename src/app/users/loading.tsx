@@ -1,6 +1,5 @@
 import { MainContent } from "@/components/Layout/MainContent";
 import { Skeleton } from "@/components/Skeleton";
-
 import type { JSX } from "react";
 
 type RowProps = {
@@ -17,7 +16,7 @@ const LoadingUsers = () => {
   return (
     <MainContent>
       <>
-        <div className="grid w-full grid-cols-1 gap-2 px-2 sm:px-0 md:grid-cols-2 md:gap-4 lg:grid-cols-3"></div>
+        <div className="grid w-full grid-cols-1 gap-2 px-2 sm:px-0 md:grid-cols-2 md:gap-4 lg:grid-cols-3" />
         <div className="flex w-full flex-col gap-2">
           <Heading>
             <div>Manage Users</div>

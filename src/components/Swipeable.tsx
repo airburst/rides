@@ -8,6 +8,7 @@ export const Swipable = ({ onPress }: SwipableProps) => {
   const [isSwiping, setSwiping] = useState(false);
 
   return (
+    // biome-ignore lint/a11y/noStaticElementInteractions: its-ok
     <div
       role="presentation"
       className="h-64 w-full bg-red-500"

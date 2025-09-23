@@ -32,7 +32,7 @@ export default async function seed(db: db) {
     const daysInAdvance = index > 17 ? 7 : 0;
     const day = getDay(ride.name);
     const date = findNextDay(day, daysInAdvance);
-    const rideDate = date.split("T")[0] + "T" + getTimeFromDate(ride.rideDate);
+    const rideDate = `${date.split("T")[0]}T${getTimeFromDate(ride.rideDate)}`;
 
     return {
       ...ride,

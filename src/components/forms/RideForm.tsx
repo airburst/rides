@@ -3,6 +3,7 @@
 import { addRepeatingRide } from "@/server/actions/add-repeating-ride";
 import { addRide } from "@/server/actions/add-ride";
 import { generateRidesFromClient } from "@/server/actions/generate-rides-from-client";
+import type { FormState } from "@/server/actions/update-profile";
 import { updateRepeatingRide } from "@/server/actions/update-repeating-ride";
 import { updateRide } from "@/server/actions/update-ride";
 import { Switch } from "@headlessui/react";
@@ -23,11 +24,11 @@ import {
   repeatingRideToDb,
 } from "../../../shared/utils";
 import { RIDER_LIMIT_OPTIONS } from "../../constants";
-import { type Preferences } from "../../types";
+import type { Preferences } from "../../types";
 import { Button } from "../Button";
 import { CancelButton } from "../Button/CancelButton";
 import { ConfirmWithContent } from "../ConfirmWithContent";
-import { rideFormSchema, type RideFormSchema } from "./formSchemas";
+import { type RideFormSchema, rideFormSchema } from "./formSchemas";
 
 const RepeatingRideForm = dynamic(() => import("./RepeatingRideForm"));
 const Editor = dynamic(
@@ -99,7 +100,8 @@ const RideForm = ({
     const rideDate = makeUtcDate(data.rideDate, data.time);
     const formData = convertObjectToFormData({ ...data, rideDate });
 
-    let result;
+    let result: FormState;
+
     if (data.id) {
       result = await updateRide(formData);
     } else {
@@ -335,7 +337,9 @@ const RideForm = ({
         </div>
 
         <div className="flex flex-col">
-          <label className="flex flex-col">Notes</label>
+          <label className="flex flex-col" htmlFor="notes">
+            Notes
+          </label>
           <Editor
             initialValue={defaultValues?.notes}
             onChange={handleNotesChange}

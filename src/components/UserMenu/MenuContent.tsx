@@ -1,6 +1,6 @@
 "use client";
 
-import { type Role } from "@/types";
+import type { Role } from "@/types";
 import copy from "copy-to-clipboard";
 import {
   Calendar,

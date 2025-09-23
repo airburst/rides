@@ -1,10 +1,10 @@
 "use client";
 import { useEffect, useState } from "react";
-import {
-  type FieldErrors,
-  type UseFormRegister,
-  type UseFormSetValue,
-  type UseFormWatch,
+import type {
+  FieldErrors,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
 } from "react-hook-form";
 import {
   getDay,
@@ -12,7 +12,7 @@ import {
   rruleDay,
   rruleDaysInMonth,
 } from "../../../shared/utils";
-import { type RideFormSchema } from "./formSchemas";
+import type { RideFormSchema } from "./formSchemas";
 
 const today = getNow().split("T")[0] ?? "";
 

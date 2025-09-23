@@ -1,5 +1,5 @@
 "use client";
-import { useId, useState, type ReactNode } from "react";
+import { type ReactNode, useId, useState } from "react";
 
 type Props = {
   id?: string;
@@ -16,6 +16,7 @@ export const BasicCard: React.FC<Props> = ({
   const ssrId = useId();
 
   return (
+    // biome-ignore lint/a11y/noStaticElementInteractions: interactive-wrapper
     <div
       id={id ?? ssrId}
       role="presentation"

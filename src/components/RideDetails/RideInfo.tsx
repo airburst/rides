@@ -1,7 +1,7 @@
 import Viewer from "@/components/Markdown/Viewer";
 import { makeClickableUrl } from "@utils/makeClickableUrl";
 import { formatDistance } from "@utils/rides";
-import { type Ride, type User } from "../../types";
+import type { Ride, User } from "../../types";
 import { CancelledBanner } from "./Cancelled";
 import { Messages } from "./Messages";
 import { Row } from "./Row";

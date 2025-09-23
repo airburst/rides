@@ -1,8 +1,8 @@
-import {
-  type FilterQuery,
-  type Group,
-  type RideList,
-  type User,
+import type {
+  FilterQuery,
+  Group,
+  RideList,
+  User,
 } from "../../src/types";
 import { formatDate, getNextNWeeks } from "./dates";
 

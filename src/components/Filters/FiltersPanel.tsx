@@ -2,7 +2,7 @@
 import { DEFAULT_WEEKS_TO_SHOW } from "@/constants";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { filterQueryAtom } from "@/store";
-import { type FilterQuery } from "@/types";
+import type { FilterQuery } from "@/types";
 import {
   Combobox,
   ComboboxButton,
@@ -15,7 +15,7 @@ import {
 import clsx from "clsx";
 import { useAtom } from "jotai";
 import { Check, ChevronDown, X } from "lucide-react";
-import { Fragment, useRef, useState, type ChangeEvent } from "react";
+import { type ChangeEvent, Fragment, useRef, useState } from "react";
 import useOnClickOutside from "use-onclickoutside";
 import { Button } from "../Button";
 
@@ -69,9 +69,9 @@ export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
     setFilterAtomAndStorage({ ...filterQuery, weeksAhead: val });
   };
 
-  const handleSelected = (q: string) => {
-    setFilterAtomAndStorage({ ...filterQuery, q });
-    setSearch(q);
+  const handleSelected = (q: string | null) => {
+    setFilterAtomAndStorage({ ...filterQuery, q: q ?? "" });
+    setSearch(q ?? "");
   };
 
   const reset = () => {
@@ -107,7 +107,7 @@ export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
       leaveFrom="-translate-y-0"
       leaveTo="-translate-y-full"
     >
-      <div className="h-82 fixed left-0 top-0 z-30 w-full bg-neutral-800 text-white shadow-xl">
+      <div className="fixed top-0 left-0 z-30 h-82 w-full bg-neutral-800 text-white shadow-xl">
         <div className="container mx-auto flex w-full flex-col p-4 md:px-4 lg:max-w-[1024px]">
           <div className="flex flex-row justify-between">
             <div className="text-3xl">Filters</div>
@@ -125,9 +125,9 @@ export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
           <div className="mt-2 flex flex-col gap-4 md:gap-8">
             <Combobox value={search} onChange={handleSelected}>
               <div className="relative z-20 mt-1">
-                <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
+                <div className="focus-visible:ring-opacity-75 relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-teal-300 sm:text-sm">
                   <ComboboxInput
-                    className="w-full border-none py-2 pl-3 pr-10 leading-5 text-gray-700 focus:ring-0"
+                    className="w-full border-none py-2 pr-10 pl-3 leading-5 text-gray-700 focus:ring-0"
                     placeholder="Search ride details"
                     // @ts-expect-error - ComboboxInput expects a string
                     displayValue={(item) => item}
@@ -143,9 +143,9 @@ export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
                   leaveFrom="opacity-100"
                   leaveTo="opacity-0"
                 >
-                  <ComboboxOptions className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                  <ComboboxOptions className="ring-opacity-5 absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black focus:outline-none">
                     {filteredData.length === 0 && search !== "" ? (
-                      <div className="relative cursor-default select-none px-4 py-2 text-gray-700">
+                      <div className="relative cursor-default px-4 py-2 text-gray-700 select-none">
                         Nothing found.
                       </div>
                     ) : (
@@ -153,7 +153,7 @@ export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
                         <ComboboxOption
                           key={person}
                           className={({ active }) =>
-                            `relative cursor-default select-none py-2 pl-10 pr-4 ${
+                            `relative cursor-default py-2 pr-4 pl-10 select-none ${
                               active
                                 ? "bg-teal-600 text-white"
                                 : "text-gray-900"
