@@ -1,4 +1,4 @@
-import type { RideFormProps } from "@/components/forms/RideForm";
+import { type RideFormProps } from "@/components/forms/RideForm";
 import { MainContent } from "@/components/Layout/MainContent";
 import { getRepeatingRide } from "@/server/actions/get-repeating-ride";
 import { canUseAction } from "@/server/auth";

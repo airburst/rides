@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import type { User } from "../../types";
+import { type User } from "../../types";
 import { Button } from "../Button";
 import { CancelButton } from "../Button/CancelButton";
 import { MembershipIcon } from "../MembershipIcon";

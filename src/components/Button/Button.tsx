@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { type ReactNode, forwardRef } from "react";
+import { forwardRef, type ReactNode } from "react";
 
 export interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   type?: "button" | "submit" | "reset";
@@ -67,7 +67,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={disabled}
       >
         {loading ? (
-          <span className="loading loading-spinner h-full" />
+          <span className="loading loading-spinner h-full"></span>
         ) : (
           buttonContent
         )}

@@ -6,7 +6,7 @@ import {
   getNow,
   mapRidesToDate,
 } from "../../../shared/utils";
-import type { RideList } from "../../types";
+import { type RideList } from "../../types";
 import { MainContent } from "../Layout/MainContent";
 import { Day, OutsideDay } from "./Day";
 import { HeadingGroup } from "./Heading";
@@ -41,12 +41,12 @@ const Calendar: React.FC<CalendarProps> = async ({ date }: CalendarProps) => {
 
   return (
     <>
-      <div className={"grid grid-cols-7 gap-0"}>
+      <div className={`grid grid-cols-7 gap-0`}>
         <HeadingGroup />
       </div>
 
       <div
-        className={`grid h-full grid-cols-7 grid-rows-${rowCount} bg-base-300 auto-rows-fr gap-px`}
+        className={`grid h-full grid-cols-7 grid-rows-${rowCount} auto-rows-fr gap-px bg-base-300`}
       >
         {daysWithRides.map(
           ({ type, day, rides: mappedRides, date: calDate }) =>

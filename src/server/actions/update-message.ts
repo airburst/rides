@@ -29,7 +29,9 @@ export const updateMessage = async (
     await db
       .update(userOnRides)
       .set({ notes })
-      .where(and(eq(userOnRides.rideId, rideId), eq(userOnRides.userId, userId)));
+      .where(
+        and(eq(userOnRides.rideId, rideId), eq(userOnRides.userId, userId)),
+      );
     revalidatePath("/ride/[...id]", "page");
 
     return {
@@ -39,7 +41,7 @@ export const updateMessage = async (
     console.error("💢 update-message", error);
     return {
       success: false,
-      error: "Unable to update message",
+      error: `Unable to update message`,
     };
   }
 };

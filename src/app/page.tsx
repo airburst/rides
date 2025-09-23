@@ -1,5 +1,5 @@
 import { MainContent } from "@/components/Layout/MainContent";
-import type { RidesListProps } from "@/components/RidesList";
+import { type RidesListProps } from "@/components/RidesList";
 import { UnregisterServiceWorkers } from "@/components/UnregisterServiceWorkers";
 import { env } from "@/env";
 import type { Metadata } from "next";

@@ -20,7 +20,9 @@ export type GenerateApiResponse = {
   }[];
 };
 
-export async function POST(request: Request): Promise<NextResponse<GenerateApiResponse>> {
+export async function POST(
+  request: Request,
+): Promise<NextResponse<GenerateApiResponse>> {
   const headersList = await headers();
   const authorization = headersList.get("authorization");
   const body = await request.json();

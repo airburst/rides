@@ -1,10 +1,10 @@
-/** biome-ignore-all lint/correctness/noUnusedVariables: destructuring */
-
-import type { RideFormSchema } from "@/components/forms/formSchemas";
-import type { RepeatingRide, RideFormValues } from "src/types";
+import { type RideFormSchema } from "@/components/forms/formSchemas";
+import { type RepeatingRide, type RideFormValues } from "src/types";
 import { makeUtcDate } from "./dates";
 
-export const flattenArrayNumber = (value?: number[] | number | null): number | undefined => {
+export const flattenArrayNumber = (
+  value?: number[] | number | null,
+): number | undefined => {
   if (!value) {
     return undefined;
   }

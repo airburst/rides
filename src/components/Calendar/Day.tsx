@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getNow } from "../../../shared/utils";
-import type { RideList } from "../../types";
+import { type RideList } from "../../types";
 import { RoundBadge } from "../Badge";
 
 type Props = {

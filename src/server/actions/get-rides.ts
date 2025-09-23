@@ -3,7 +3,7 @@
 import { FOREVER } from "@/constants";
 import { db } from "@/server/db";
 import { rides } from "@/server/db/schema";
-import type { RideList } from "@/types";
+import { type RideList } from "@/types";
 import { getNow } from "@utils/dates";
 import { formatRideData } from "@utils/rides";
 import { and, asc, desc, eq, gte, lte } from "drizzle-orm";

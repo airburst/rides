@@ -1,3 +1,3 @@
-yarn lint
-yarn check-types
-yarn test
+npm run lint
+npm run check-types
+npm run test

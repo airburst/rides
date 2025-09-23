@@ -43,11 +43,15 @@ const td = new Turndown();
 // Add custom style rules
 td.addRule("underline", {
   filter: ["u"],
-  replacement: (content) => `<u>${content}</u>`,
+  replacement: function (content) {
+    return "<u>" + content + "</u>";
+  },
 });
 td.addRule("strikethrough", {
   filter: ["s"],
-  replacement: (content) => `~~${content}~~`,
+  replacement: function (content) {
+    return "~~" + content + "~~";
+  },
 });
 
 export type EditorProps = {

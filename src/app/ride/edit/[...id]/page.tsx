@@ -1,10 +1,10 @@
-import type { RideFormProps } from "@/components/forms/RideForm";
+import { type RideFormProps } from "@/components/forms/RideForm";
 import { MainContent } from "@/components/Layout/MainContent";
 import { env } from "@/env";
 import { getRide } from "@/server/actions/get-ride";
 import { canUseAction } from "@/server/auth";
 import { flattenQuery } from "@utils/general";
-import type { Metadata } from "next";
+import { type Metadata } from "next";
 import dynamic from "next/dynamic";
 
 const RideForm = dynamic<RideFormProps>(
