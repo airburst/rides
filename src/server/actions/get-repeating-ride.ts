@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/server/db";
-import type { RepeatingRide, RepeatingRideDb } from "@/types";
+import { type RepeatingRide, type RepeatingRideDb } from "@/types";
 import { repeatingRideFromDb } from "@utils/repeatingRides";
 import { eq } from "drizzle-orm";
 import { repeatingRides } from "../db/schema";

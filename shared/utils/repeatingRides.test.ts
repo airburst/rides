@@ -1,5 +1,5 @@
 import { RRule } from "rrule";
-import type { RepeatingRide, RepeatingRideDb } from "src/types";
+import { RepeatingRide, RepeatingRideDb } from "src/types";
 import { isWinter } from "./dates";
 import {
   changeToWinterTime,

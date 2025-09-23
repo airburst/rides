@@ -1,6 +1,6 @@
 "use client";
 import { deleteRepeatingRide } from "@/server/actions/delete-repeating-ride";
-import type { RepeatingRide } from "@/types";
+import { type RepeatingRide } from "@/types";
 import { formatDate, formatTime } from "@utils/dates";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";

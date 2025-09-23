@@ -3,7 +3,7 @@ import { MainContent } from "@/components/Layout/MainContent";
 import { env } from "@/env";
 import { getRide } from "@/server/actions/get-ride";
 import { getServerAuthSession } from "@/server/auth";
-import type { Metadata } from "next";
+import { type Metadata } from "next";
 import dynamic from "next/dynamic";
 
 const RideDetails = dynamic(() => import("@/components/RideDetails"));

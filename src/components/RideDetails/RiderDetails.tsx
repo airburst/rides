@@ -4,7 +4,7 @@ import { onlyNumbers } from "@utils/general";
 import clsx from "clsx";
 import { Phone } from "lucide-react";
 import { useState } from "react";
-import type { User } from "../../types";
+import { type User } from "../../types";
 import { MembershipIcon } from "../MembershipIcon";
 
 type Props = {

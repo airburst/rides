@@ -23,18 +23,20 @@ export const FilterButton = () => {
   if (!shouldShowFilterButton) return null;
 
   return (
-    <button
-      type="button"
-      onClick={toggle}
-      title="Filter results"
-      aria-label="Filter results"
-      className="flex cursor-pointer items-center rounded p-1 text-3xl"
-    >
-      {hasFiltersApplied ? (
-        <FilterX className="h-6 w-6 fill-white" />
-      ) : (
-        <Filter className="h-6 w-6 fill-white" />
-      )}
-    </button>
+    <>
+      <button
+        type="button"
+        onClick={toggle}
+        title="Filter results"
+        aria-label="Filter results"
+        className="flex cursor-pointer items-center rounded p-1 text-3xl"
+      >
+        {hasFiltersApplied ? (
+          <FilterX className="h-6 w-6 fill-white" />
+        ) : (
+          <Filter className="h-6 w-6 fill-white" />
+        )}
+      </button>
+    </>
   );
 };

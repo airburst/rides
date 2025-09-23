@@ -2,7 +2,7 @@
 
 import { MAX_FILE_SIZE_IN_BYTES } from '@/constants';
 import { updateAvatar } from '@/server/actions/update-avatar';
-import type { User } from '@/types';
+import { type User } from '@/types';
 import { Upload } from 'lucide-react';
 import Image from 'next/image';
 import { type MouseEvent, useRef, useState } from 'react';

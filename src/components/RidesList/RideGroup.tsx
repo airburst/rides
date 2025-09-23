@@ -1,6 +1,6 @@
 import { ungroupRides } from "@utils/transformRideData";
 import Link from "next/link";
-import type { Group, User } from "../../types";
+import { type Group, type User } from "../../types";
 import { RideCard } from "../Card/RideCard";
 
 type Props = {

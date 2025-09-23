@@ -3,7 +3,7 @@ import { loadMembers } from "@/server/actions/load-members";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
 import { convertMembers } from "./convertMembers";
-import type { Member, MemberData } from "./types";
+import { type Member, type MemberData } from "./types";
 
 const { RIDERHQ_URL, RIDERHQ_ACCOUNT_ID, RIDERHQ_PRIVATE_KEY } = env;
 const Authorization = `Basic ${Buffer.from(

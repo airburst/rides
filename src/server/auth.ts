@@ -4,7 +4,7 @@ import {
   type DefaultSession,
   type NextAuthOptions,
 } from "next-auth";
-import type { Adapter } from "next-auth/adapters";
+import { type Adapter } from "next-auth/adapters";
 import Auth0Provider from "next-auth/providers/auth0";
 
 import { env } from "@/env";
@@ -15,7 +15,7 @@ import {
   users,
   verificationTokens,
 } from "@/server/db/schema/index";
-import type { Preferences, Role, User } from "@/types";
+import { type Preferences, type Role, type User } from "@/types";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`

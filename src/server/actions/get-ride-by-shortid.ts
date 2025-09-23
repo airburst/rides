@@ -1,10 +1,10 @@
-'use server';
+"use server";
 
-import { db } from '@/server/db';
-import { rides } from '@/server/db/schema';
-import type { Ride } from '@/types';
-import { formatRideData } from '@utils/rides';
-import { and, eq, like } from 'drizzle-orm';
+import { db } from "@/server/db";
+import { rides } from "@/server/db/schema";
+import { type Ride } from "@/types";
+import { formatRideData } from "@utils/rides";
+import { and, eq, like } from "drizzle-orm";
 
 /**
  * This is a hacky way to enable short urls for rides.
@@ -34,10 +34,10 @@ export const getRideByShortId = async (
       ride: formatRideData(result as unknown as Ride) as Ride,
     };
   } catch (error) {
-    console.error('💢 get-ride-by-shortid', error);
+    console.error("💢 get-ride-by-shortid", error);
     return {
       ride: null,
-      error: new Error('Unable to fetch ride'),
+      error: new Error(`Unable to fetch ride`),
     };
   }
 };

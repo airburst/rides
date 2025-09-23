@@ -1,6 +1,6 @@
 "use client";
 
-import type { User } from "@/types";
+import { type User } from "@/types";
 import Link from "next/link";
 import { useState, type ChangeEvent } from "react";
 import { UserCard } from "../Card";
