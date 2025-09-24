@@ -7,14 +7,18 @@ import { type Metadata } from "next";
 import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
 
-const UserProfileForm = dynamic(() => import("@/components/forms/UserProfileForm"));
+const UserProfileForm = dynamic(
+  () => import("@/components/forms/UserProfileForm"),
+);
 
 export const metadata: Metadata = {
   title: `${env.NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`,
   description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} User Profile Page`,
-}
+};
 
-export default async function UserPage(props: { params: Promise<{ id: string }> }) {
+export default async function UserPage(props: {
+  params: Promise<{ id: string }>;
+}) {
   const params = await props.params;
   const { id } = params;
   const isAdmin = await canUseAction("ADMIN");
@@ -42,14 +46,16 @@ export default async function UserPage(props: { params: Promise<{ id: string }> 
   const { user, error } = await getUser(id);
 
   if (error ?? !user) {
-    return <MainContent>
-      <div>{error}</div>
-    </MainContent>
+    return (
+      <MainContent>
+        <div>{error}</div>
+      </MainContent>
+    );
   }
 
   return (
     <MainContent>
       <UserProfileForm user={user} isAdmin={isAdmin} />
     </MainContent>
-  )
-};
+  );
+}

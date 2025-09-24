@@ -13,7 +13,6 @@ export async function updateProfile(data: FormData): Promise<FormState> {
   const formData = Object.fromEntries(data);
   // Handle known JSON fields
   if (formData.preferences) {
-     
     formData.preferences = JSON.parse(formData.preferences.toString());
   }
   const parsed = userProfileFormSchema.safeParse(formData);

@@ -12,7 +12,7 @@ export const getScalarValue = (
   }
 
   if (Array.isArray(value)) {
-    return value.length === 0 ? null : Number(value[0]) ?? null;
+    return value.length === 0 ? null : (Number(value[0]) ?? null);
   }
 
   return value;
@@ -50,7 +50,9 @@ export const convertObjectToFormData = (data: FormDataType): FormData => {
   return formData;
 };
 
-export const cleanUndefinedKeys = (data: Record<string, unknown>): Record<string, unknown> => {
+export const cleanUndefinedKeys = (
+  data: Record<string, unknown>,
+): Record<string, unknown> => {
   const cleaned = { ...data };
 
   Object.keys(cleaned).forEach((key) => {
@@ -61,7 +63,6 @@ export const cleanUndefinedKeys = (data: Record<string, unknown>): Record<string
 
   return cleaned;
 };
-
 
 export const onlyNumbers = (value: string): string =>
   value.replace(/\D+/g, "").replace(/\s+/g, "");

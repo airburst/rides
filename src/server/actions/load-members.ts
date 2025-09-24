@@ -9,7 +9,6 @@ export const loadMembers = async (members: Member[]): Promise<FormState> => {
   try {
     // Truncate and fill the table within a transaction
     await db.transaction(async (tx) => {
-       
       await tx.delete(memberships);
       // @ts-expect-error - insert is not yet typed
       await tx.insert(memberships).values(members);

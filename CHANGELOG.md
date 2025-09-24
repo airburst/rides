@@ -126,7 +126,6 @@ Updated Drizzle ORM schemas and connections
 ### Added
 
 - Added new membership statuses and icons to database schema as follows:
-
   - Member = sheild with tick (same as current)
   - Non-member = empty (same as current)
   - Expired = shield with exclamation, in red

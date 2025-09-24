@@ -1,18 +1,18 @@
 "use client";
 
-import { MAX_FILE_SIZE_IN_BYTES } from '@/constants';
-import { updateAvatar } from '@/server/actions/update-avatar';
-import { type User } from '@/types';
-import { Upload } from 'lucide-react';
-import Image from 'next/image';
-import { type MouseEvent, useRef, useState } from 'react';
-import { toast } from 'sonner';
-import { Button } from './Button';
+import { MAX_FILE_SIZE_IN_BYTES } from "@/constants";
+import { updateAvatar } from "@/server/actions/update-avatar";
+import { type User } from "@/types";
+import { Upload } from "lucide-react";
+import Image from "next/image";
+import { type MouseEvent, useRef, useState } from "react";
+import { toast } from "sonner";
+import { Button } from "./Button";
 
 export type ImageUploadProps = {
   user: User;
   onClose: () => void;
-}
+};
 
 const ImageUpload = ({ user, onClose }: ImageUploadProps) => {
   const [avatarURL, setAvatarURL] = useState(user.image!);
@@ -23,7 +23,7 @@ const ImageUpload = ({ user, onClose }: ImageUploadProps) => {
   const handleImageUpload = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
     fileUploadRef?.current?.click();
-  }
+  };
 
   const uploadImageDisplay = async () => {
     try {
@@ -43,7 +43,7 @@ const ImageUpload = ({ user, onClose }: ImageUploadProps) => {
           toast.success("Changed profile image");
           setIsUploading(false);
           onClose();
-        }
+        };
 
         setIsUploading(true);
         reader.readAsDataURL(uploadedFile!);
@@ -54,23 +54,31 @@ const ImageUpload = ({ user, onClose }: ImageUploadProps) => {
       setIsUploading(false);
       setAvatarURL(user.image!);
     }
-  }
+  };
 
   return (
     <div className="flex flex-row gap-8 items-center">
       <div className="avatar">
         <div className="w-[40px] h-[40px] rounded-full">
-          <Image className="text-neutral-500" src={avatarURL} width={40} height={40} alt="Avatar" />
+          <Image
+            className="text-neutral-500"
+            src={avatarURL}
+            width={40}
+            height={40}
+            alt="Avatar"
+          />
         </div>
       </div>
 
-      <form id="form" encType='multipart/form-data'>
-        <Button accent
+      <form id="form" encType="multipart/form-data">
+        <Button
+          accent
           className="min-w-32"
           type="submit"
           disabled={isUploading}
           loading={isUploading}
-          onClick={handleImageUpload}>
+          onClick={handleImageUpload}
+        >
           <Upload className="w-6 h-6" />
           UPLOAD
         </Button>
@@ -79,10 +87,11 @@ const ImageUpload = ({ user, onClose }: ImageUploadProps) => {
           id="file"
           ref={fileUploadRef}
           onChange={uploadImageDisplay}
-          hidden />
+          hidden
+        />
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default ImageUpload
+export default ImageUpload;

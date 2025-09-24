@@ -1,5 +1,5 @@
 export type RideWithGpsMapProps = {
-  url?: string | null
+  url?: string | null;
   units?: "km" | "miles";
 };
 
@@ -11,7 +11,7 @@ const RideWithGpsMap = ({ url, units = "km" }: RideWithGpsMapProps) => {
   }
 
   const routeId = url.split("/").pop();
-  console.log("🚀 ~ RideWithGpsMap ~ routeId:", routeId)
+  console.log("🚀 ~ RideWithGpsMap ~ routeId:", routeId);
   const isMetric = units === "km";
 
   const mapSource = `https://ridewithgps.com/embeds?type=route&id=${routeId}&metricUnits=${isMetric}&sampleGraph=true`;
@@ -23,6 +23,6 @@ const RideWithGpsMap = ({ url, units = "km" }: RideWithGpsMapProps) => {
       src={mapSource}
     />
   );
-}
+};
 
 export default RideWithGpsMap;
