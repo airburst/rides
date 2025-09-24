@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.10.2 - 2025-09-24
+
+### Updated
+
+- Updated prettier to use experimental OXC plugin for speed
+- Applied prettier formatting to all files
+- Bumped all minor package dependencies
+
 ## 3.10.1 - 2025-09-23
 
 ### Updated
