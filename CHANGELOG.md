@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.10.2 - 2025-09-24
+
+### Updated
+
+- Updated prettier to use experimental OXC plugin for speed
+- Applied prettier formatting to all files
+- Bumped all minor package dependencies
+
 ## 3.10.1 - 2025-09-23
 
 ### Updated
@@ -126,7 +134,6 @@ Updated Drizzle ORM schemas and connections
 ### Added
 
 - Added new membership statuses and icons to database schema as follows:
-
   - Member = sheild with tick (same as current)
   - Non-member = empty (same as current)
   - Expired = shield with exclamation, in red

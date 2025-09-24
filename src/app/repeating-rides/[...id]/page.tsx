@@ -4,9 +4,13 @@ import { canUseAction } from "@/server/auth";
 import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
 
-const RepeatingRideDetails = dynamic(() => import("@/components/RepeatingRides/RepeatingRideDetails"));
+const RepeatingRideDetails = dynamic(
+  () => import("@/components/RepeatingRides/RepeatingRideDetails"),
+);
 
-export default async function RepeatingRide(props: { params: Promise<{ id: string }> }) {
+export default async function RepeatingRide(props: {
+  params: Promise<{ id: string }>;
+}) {
   const params = await props.params;
   const { id } = params;
   const isLeader = await canUseAction("LEADER");

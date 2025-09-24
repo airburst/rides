@@ -7,14 +7,18 @@ import { formatUserName } from "@utils/rides";
 import { type Metadata } from "next";
 import dynamic from "next/dynamic";
 
-const RideForm = dynamic<RideFormProps>(() => import("@/components/forms/RideForm"));
+const RideForm = dynamic<RideFormProps>(
+  () => import("@/components/forms/RideForm"),
+);
 
 export const metadata: Metadata = {
   title: `${env.NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`,
   description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} User Profile Page`,
-}
+};
 
-export default async function NewRidePageWithDate(props: { params: Promise<{ date?: string }> }) {
+export default async function NewRidePageWithDate(props: {
+  params: Promise<{ date?: string }>;
+}) {
   const params = await props.params;
   const session = await getServerAuthSession();
   const user = session?.user;
@@ -50,7 +54,8 @@ export default async function NewRidePageWithDate(props: { params: Promise<{ dat
       <RideForm
         isRepeating={false}
         defaultValues={defaultValues}
-        isAdmin={!!isAdmin} />
+        isAdmin={!!isAdmin}
+      />
     </MainContent>
-  )
-};
+  );
+}

@@ -8,9 +8,13 @@ import { flattenQuery } from "@utils/general";
 import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
 
-const RideForm = dynamic<RideFormProps>(() => import("@/components/forms/RideForm"));
+const RideForm = dynamic<RideFormProps>(
+  () => import("@/components/forms/RideForm"),
+);
 
-export default async function EditRepeatingRide(props: { params: Promise<{ id: string }> }) {
+export default async function EditRepeatingRide(props: {
+  params: Promise<{ id: string }>;
+}) {
   const params = await props.params;
   const { id } = params;
   const isAdmin = await canUseAction("LEADER");
@@ -34,7 +38,9 @@ export default async function EditRepeatingRide(props: { params: Promise<{ id: s
     );
   }
 
-  const { rideDate, startDate, time } = getFormRideDateAndTime(repeatingRide.startDate);
+  const { rideDate, startDate, time } = getFormRideDateAndTime(
+    repeatingRide.startDate,
+  );
 
   const defaultValues = {
     id: flattenQuery(id),
@@ -63,10 +69,7 @@ export default async function EditRepeatingRide(props: { params: Promise<{ id: s
 
   return (
     <MainContent>
-      <RideForm
-        defaultValues={defaultValues}
-        isRepeating
-        isAdmin={!!isAdmin} />
+      <RideForm defaultValues={defaultValues} isRepeating isAdmin={!!isAdmin} />
     </MainContent>
-  )
+  );
 }

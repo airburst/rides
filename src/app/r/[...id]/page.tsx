@@ -11,9 +11,11 @@ const RideDetails = dynamic(() => import("@/components/RideDetails"));
 export const metadata: Metadata = {
   title: `${env.NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`,
   description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} Ride Details`,
-}
+};
 
-export default async function ShortIdPage(props: { params: Promise<{ id: string }> }) {
+export default async function ShortIdPage(props: {
+  params: Promise<{ id: string }>;
+}) {
   const params = await props.params;
   const { id } = params;
   const session = await getServerAuthSession();
@@ -37,14 +39,16 @@ export default async function ShortIdPage(props: { params: Promise<{ id: string 
   const { ride, error } = await getRideByShortId(id);
 
   if (error) {
-    return <MainContent>
-      <div>{error.message}</div>
-    </MainContent>
+    return (
+      <MainContent>
+        <div>{error.message}</div>
+      </MainContent>
+    );
   }
 
   return (
     <MainContent>
       <RideDetails ride={ride!} user={user} role={user?.role} />
     </MainContent>
-  )
-};
+  );
+}

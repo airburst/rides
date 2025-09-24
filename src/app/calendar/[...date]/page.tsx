@@ -21,11 +21,9 @@ export const metadata: Metadata = {
   description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} Ride Calendar`,
 };
 
-export default async function RideCalendar(
-  props: {
-    params: Promise<{ date: string }>;
-  }
-) {
+export default async function RideCalendar(props: {
+  params: Promise<{ date: string }>;
+}) {
   const params = await props.params;
   const { date } = params;
   const monthDate = date ? flattenQuery(date) : getNow();

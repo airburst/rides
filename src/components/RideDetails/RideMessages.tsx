@@ -43,7 +43,6 @@ export const RideMessages = ({
     }
   };
 
-   
   const onSubmit: SubmitHandler<FormValues> = async ({ notes }) => {
     if (rideId && userId) {
       setWaiting(true);

@@ -13,7 +13,7 @@ export const Badge = ({ text, style = "unready", small }: Props) => {
     { "bg-primary": style === "ready" },
     { "bg-slate-500": style === "past" },
     { "badge-md": !small },
-    { "badge-sm": small }
+    { "badge-sm": small },
   );
 
   return <div className={classes}>{text}</div>;
@@ -24,7 +24,7 @@ export const RoundBadge = ({ text, style = "unready" }: Props) => {
     "badge badge-lg text-white w-10 h-10 lg:text-xl rounded-full",
     { "bg-red-500": style === "unready" },
     { "bg-primary": style === "ready" },
-    { "bg-slate-500": style === "past" }
+    { "bg-slate-500": style === "past" },
   );
 
   return (

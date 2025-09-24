@@ -11,7 +11,7 @@ const UserMenu = dynamic(() => import("../UserMenu"));
 const { NEXT_PUBLIC_CLUB_SHORT_NAME } = env;
 
 export const Header = async () => {
-  const session = await getServerAuthSession()
+  const session = await getServerAuthSession();
   const user = session?.user;
   const isAuthenticated = !!user;
   const role = user?.role;
@@ -38,10 +38,7 @@ export const Header = async () => {
 
         <div className="flex items-center gap-4">
           {isAuthenticated && <FilterButton />}
-          <UserMenu
-            isAuthenticated={isAuthenticated}
-            role={role}
-          />
+          <UserMenu isAuthenticated={isAuthenticated} role={role} />
         </div>
       </div>
     </div>
