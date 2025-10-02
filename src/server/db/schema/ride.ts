@@ -38,7 +38,11 @@ const rides = createTable(
       .defaultNow()
       .notNull(),
   },
-  (table) => [t.index().on(table.name)],
+  (table) => [
+    t.index().on(table.name),
+    t.index("idx_rides_date_deleted").on(table.rideDate, table.deleted),
+    t.index("idx_rides_schedule_deleted").on(table.scheduleId, table.deleted),
+  ],
 );
 
 export const rideRelations = relations(rides, ({ one, many }) => ({

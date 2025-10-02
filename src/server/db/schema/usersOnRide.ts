@@ -21,7 +21,12 @@ const userOnRides = createTable(
       .defaultNow()
       .notNull(),
   },
-  (table) => [t.primaryKey({ columns: [table.userId, table.rideId] })],
+  (table) => [
+    t.primaryKey({ columns: [table.userId, table.rideId] }),
+    t
+      .index("idx_users_on_rides_ride_created")
+      .on(table.rideId, table.createdAt),
+  ],
 );
 
 export const userOnRidesRelations = relations(userOnRides, ({ one }) => ({

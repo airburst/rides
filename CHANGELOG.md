@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 3.11.0 - 2025-10-02
+
+### Added
+
+- Added database indexes to improve query performance:
+  - `idx_rides_date_deleted` - Optimizes date range queries with deleted filter
+  - `idx_rides_schedule_deleted` - Improves schedule-based queries for repeating ride generation
+  - `idx_users_name_lower` - Case-insensitive search on user names
+  - `idx_users_email_lower` - Case-insensitive search on user emails
+  - `idx_users_membership_id` - Partial index for membership queries
+  - `idx_users_on_rides_ride_created` - Optimizes queries ordering riders by join time
+
 ## 3.10.2 - 2025-09-24
 
 ### Updated
