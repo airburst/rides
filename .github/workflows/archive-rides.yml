@@ -1,7 +1,7 @@
 name: Archive Rides
 on:
   schedule:
-    # At 02:05 and 03:05 on the 1st day of each month
+    # At 02:00 on the 1st day of each month
     #       +------------ minute (0 - 59)
     #       | +---------- hour (0 - 23)
     #       | | +-------- day of month (1 - 31)
@@ -9,8 +9,7 @@ on:
     #       | | | | +---- day of week (0 - 7) (Sunday=0 or 7)
     #       | | | | |
     #       * * * * *
-    - cron: 5 2 1 * *
-    - cron: 5 3 1 * *
+    - cron: 0 2 1 * *
   workflow_dispatch:
 
 jobs:
