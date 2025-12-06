@@ -12,7 +12,7 @@ export const getScalarValue = (
   }
 
   if (Array.isArray(value)) {
-    return value.length === 0 ? null : (Number(value[0]) ?? null);
+    return value.length === 0 ? null : Number(value[0]);
   }
 
   return value;

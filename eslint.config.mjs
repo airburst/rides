@@ -1,24 +1,22 @@
-import { FlatCompat } from "@eslint/eslintrc";
 import js from "@eslint/js";
-
-const compat = new FlatCompat({
-  // import.meta.dirname is available after Node.js v20.11.0
-  baseDirectory: import.meta.dirname,
-  recommendedConfig: js.configs.recommended,
-});
+import tseslint from "@typescript-eslint/eslint-plugin";
+import tsParser from "@typescript-eslint/parser";
+import nextConfig from "eslint-config-next";
+import drizzle from "eslint-plugin-drizzle";
+import globals from "globals";
 
 const eslintConfig = [
-  ...compat.config({
-    extends: [
-      "eslint:recommended",
-      "next",
-      "next/core-web-vitals",
-      "plugin:drizzle/recommended",
-      "plugin:@typescript-eslint/recommended",
-      "eslint-config-next",
-    ],
+  js.configs.recommended,
+  ...nextConfig,
+  {
+    plugins: {
+      drizzle,
+      "@typescript-eslint": tseslint,
+    },
     rules: {
       "prefer-const": "error",
+      "no-unused-vars": "off", // Use TypeScript's version instead
+      "react/react-in-jsx-scope": "off", // Not needed with React 17+ JSX transform
       // Drizzle
       "drizzle/enforce-delete-with-where": [
         "error",
@@ -33,14 +31,28 @@ const eslintConfig = [
         },
       ],
     },
-  }),
+  },
+  // Jest test files
   {
-    files: ["*.ts", "*.tsx"],
-    parser: "@typescript-eslint/parser",
-    parserOptions: {
-      project: "./tsconfig.json",
-      tsconfigRootDir: "./",
-      sourceType: "module",
+    files: ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"],
+    languageOptions: {
+      globals: {
+        ...globals.jest,
+      },
+    },
+  },
+  {
+    files: ["**/*.ts", "**/*.tsx"],
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: {
+        project: "./tsconfig.json",
+        tsconfigRootDir: import.meta.dirname,
+        sourceType: "module",
+      },
+      globals: {
+        React: "readonly",
+      },
     },
     rules: {
       "@typescript-eslint/array-type": "off",

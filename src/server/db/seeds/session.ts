@@ -1,8 +1,8 @@
-import type db from "..";
+import type { Db } from "..";
 import { sessions } from "../schema";
 import data from "./data/session.json";
 
-export default async function seed(db: db) {
+export default async function seed(db: Db) {
   // Change date strings to Date objects
   const dataToInsert = data.map((session) => {
     const { expires, ...rest } = session;

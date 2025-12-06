@@ -1,6 +1,6 @@
 import { DAYS } from "@/constants";
 import { findNextDay } from "@utils/dates";
-import type db from "..";
+import type { Db } from "..";
 import { rides } from "../schema";
 import rideData from "./data/rides.json";
 
@@ -26,7 +26,7 @@ const getTimeFromDate = (date: string) => {
   return parts[1];
 };
 
-export default async function seed(db: db) {
+export default async function seed(db: Db) {
   // Set a future ride date for each type of ride
   const ridesWithFutureDates = rideData.map((ride, index) => {
     const daysInAdvance = index > 17 ? 7 : 0;
