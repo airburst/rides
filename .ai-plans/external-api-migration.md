@@ -68,18 +68,19 @@ https://your-app.vercel.app
 
 **Frontend (.env.local):**
 ```bash
-NEXT_PUBLIC_AUTH0_DOMAIN=your-tenant.auth0.com
-NEXT_PUBLIC_AUTH0_CLIENT_ID=spa_client_id_here
+NEXT_PUBLIC_AUTH0_DOMAIN=dev-k448qmxf.eu.auth0.com
+NEXT_PUBLIC_AUTH0_CLIENT_ID=4CNBh9ukIntfvzUQG8y1XD3qeohn174r
 NEXT_PUBLIC_AUTH0_AUDIENCE=https://api.bcc-rides.com
 NEXT_PUBLIC_API_URL=https://api.your-domain.com
 ```
 
 **API (Oracle Cloud VM .env):**
 ```bash
-AUTH0_DOMAIN=your-tenant.auth0.com
+AUTH0_DOMAIN=dev-k448qmxf.eu.auth0.com
 AUTH0_AUDIENCE=https://api.bcc-rides.com
 DATABASE_URL=postgres://...
 PORT=3001
+NODE_ENV=production
 ```
 
 ### 0.4 User Mapping
@@ -88,10 +89,14 @@ Users authenticate with same Auth0 accounts. The `sub` claim in JWT maps to exis
 
 ```typescript
 // API: Look up user by Auth0 ID
-const auth0Id = c.get('user').sub  // e.g., "auth0|123456"
+const auth0Id = c.get('user').sub  // e.g., "auth0|65ec175a806157e2b7e6c59e"
 
-// Your users table likely has this via NextAuth's account linking
-// Check your accounts table for the provider_account_id field
+// Look up in accounts table by providerAccountId
+const account = await db.query.accounts.findFirst({
+  where: eq(accounts.providerAccountId, auth0Id),
+  with: { users: true },  // relation name from your schema
+})
+const user = account?.userss  // linked user record
 ```
 
 ---
@@ -227,17 +232,17 @@ export const authMiddleware = createMiddleware<{
     // Look up user by Auth0 ID
     const account = await db.query.accounts.findFirst({
       where: eq(accounts.providerAccountId, payload.sub as string),
-      with: { user: true },
+      with: { users: true },
     })
 
-    if (!account?.user) {
+    if (!account?.users) {
       return c.json({ error: 'User not found' }, 401)
     }
 
     c.set('user', {
-      id: account.user.id,
+      id: account.users.id,
       auth0Id: payload.sub as string,
-      role: account.user.role,
+      role: account.users.role,
     })
 
     await next()
@@ -259,14 +264,14 @@ export const optionalAuth = createMiddleware<{
 
       const account = await db.query.accounts.findFirst({
         where: eq(accounts.providerAccountId, payload.sub as string),
-        with: { user: true },
+        with: { users: true },
       })
 
-      if (account?.user) {
+      if (account?.users) {
         c.set('user', {
-          id: account.user.id,
+          id: account.users.id,
           auth0Id: payload.sub as string,
-          role: account.user.role,
+          role: account.users.role,
         })
       }
     } catch {
@@ -479,7 +484,7 @@ ridesRouter.get('/:id', optionalAuth, async (c) => {
     with: {
       users: {
         columns: { notes: true },
-        with: { user: true },
+        with: { users: true },
         orderBy: (user, { asc }) => [asc(user.createdAt)],
       },
     },
@@ -1059,10 +1064,10 @@ Convert remaining server components that fetch data to client components using h
 ## Migration Checklist
 
 ### Phase 0: Auth0 Setup
-- [ ] Create SPA application in Auth0 dashboard
-- [ ] Create/configure API in Auth0
-- [ ] Note client ID and audience
-- [ ] Configure callback URLs
+- [x] Create SPA application in Auth0 dashboard
+- [x] Create/configure API in Auth0
+- [x] Note client ID and audience
+- [x] Configure callback URLs
 
 ### Phase 1: API Foundation
 - [ ] Create `rides-api` repo
