@@ -96,7 +96,7 @@ const account = await db.query.accounts.findFirst({
   where: eq(accounts.providerAccountId, auth0Id),
   with: { users: true },  // relation name from your schema
 })
-const user = account?.userss  // linked user record
+const user = account?.users  // linked user record
 ```
 
 ---
