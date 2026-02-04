@@ -6,6 +6,9 @@ import { type Metadata } from "next";
 import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
 
+// ISR: Revalidate every 60 seconds
+export const revalidate = 60;
+
 const RepeatingRidesList = dynamic(
   () => import("@/components/RepeatingRides/RepeatingRidesList"),
 );

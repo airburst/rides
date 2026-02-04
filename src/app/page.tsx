@@ -5,6 +5,9 @@ import { env } from "@/env";
 import type { Metadata } from "next";
 import dynamic from "next/dynamic";
 
+// ISR: Revalidate every 30 seconds
+export const revalidate = 30;
+
 const RidesList = dynamic<RidesListProps>(
   () => import("@/components/RidesList"),
 );

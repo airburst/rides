@@ -8,6 +8,9 @@ import { Plus } from "lucide-react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 
+// ISR: Revalidate every 30 seconds
+export const revalidate = 30;
+
 const RidesList = dynamic<RidesListProps>(
   () => import("@/components/RidesList"),
 );

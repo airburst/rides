@@ -6,6 +6,9 @@ import { getServerAuthSession } from "@/server/auth";
 import { type Metadata } from "next";
 import dynamic from "next/dynamic";
 
+// ISR: Revalidate every 15 seconds
+export const revalidate = 15;
+
 const RideDetails = dynamic(() => import("@/components/RideDetails"));
 
 export const metadata: Metadata = {

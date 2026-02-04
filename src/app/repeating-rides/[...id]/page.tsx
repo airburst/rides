@@ -4,6 +4,9 @@ import { canUseAction } from "@/server/auth";
 import dynamic from "next/dynamic";
 import { redirect } from "next/navigation";
 
+// ISR: Revalidate every 60 seconds
+export const revalidate = 60;
+
 const RepeatingRideDetails = dynamic(
   () => import("@/components/RepeatingRides/RepeatingRideDetails"),
 );
