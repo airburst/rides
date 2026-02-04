@@ -28,13 +28,16 @@
 3. Configure:
 
 ### Basic Info
+
 - Name: `rides-api`
 - Compartment: (root)
 
 ### Placement
+
 - Availability Domain: AD-1 (or any available)
 
 ### Image and Shape
+
 - Click **Change Image**
 - Select **Oracle Linux 8** or **Canonical Ubuntu 22.04**
 - Click **Change Shape**
@@ -44,16 +47,19 @@
   - 1 GB RAM
 
 ### Networking
+
 - VCN: `rides-api-vcn`
 - Subnet: Public Subnet
 - Public IPv4 address: **Assign a public IPv4 address**
 
 ### Add SSH Keys
+
 - Select **Generate a key pair for me**
 - Click **Save Private Key** (download and keep safe!)
 - Or paste your existing public key
 
 ### Boot Volume
+
 - Keep defaults (50 GB)
 
 4. Click **Create**
@@ -70,11 +76,11 @@
 
 Add these rules:
 
-| Source CIDR | Protocol | Port | Description |
-|-------------|----------|------|-------------|
-| 0.0.0.0/0 | TCP | 22 | SSH (already exists) |
-| 0.0.0.0/0 | TCP | 80 | HTTP |
-| 0.0.0.0/0 | TCP | 443 | HTTPS |
+| Source CIDR | Protocol | Port | Description          |
+| ----------- | -------- | ---- | -------------------- |
+| 0.0.0.0/0   | TCP      | 22   | SSH (already exists) |
+| 0.0.0.0/0   | TCP      | 80   | HTTP                 |
+| 0.0.0.0/0   | TCP      | 443  | HTTPS                |
 
 Click **Add Ingress Rules** for each.
 
@@ -93,35 +99,6 @@ ssh -i ~/Downloads/ssh-key-*.key ubuntu@<PUBLIC_IP>
 
 ## Step 6: Configure Server
 
-### Oracle Linux 8
-
-```bash
-# Update system
-sudo dnf update -y
-
-# Install Node.js 20
-curl -fsSL https://rpm.nodesource.com/setup_20.x | sudo bash -
-sudo dnf install -y nodejs
-
-# Verify
-node --version  # Should be v20.x.x
-npm --version
-
-# Install PM2
-sudo npm install -g pm2
-
-# Install Git
-sudo dnf install -y git
-
-# Configure firewall
-sudo firewall-cmd --permanent --add-service=http
-sudo firewall-cmd --permanent --add-service=https
-sudo firewall-cmd --reload
-
-# Check firewall
-sudo firewall-cmd --list-all
-```
-
 ### Ubuntu 22.04
 
 ```bash
@@ -129,11 +106,11 @@ sudo firewall-cmd --list-all
 sudo apt update && sudo apt upgrade -y
 
 # Install Node.js 20
-curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+curl -fsSL https://deb.nodesource.com/setup_22.x | sudo -E bash -
 sudo apt install -y nodejs
 
 # Verify
-node --version  # Should be v20.x.x
+node --version  # Should be v22.x.x
 npm --version
 
 # Install PM2
@@ -143,6 +120,7 @@ sudo npm install -g pm2
 sudo apt install -y git
 
 # Configure firewall
+sudo apt install -y ufw
 sudo ufw allow OpenSSH
 sudo ufw allow http
 sudo ufw allow https
@@ -150,18 +128,6 @@ sudo ufw enable
 ```
 
 ## Step 7: Install Caddy (HTTPS)
-
-### Oracle Linux 8
-
-```bash
-# Add Caddy repo
-sudo dnf install -y 'dnf-command(copr)'
-sudo dnf copr enable @caddy/caddy -y
-sudo dnf install -y caddy
-
-# Enable Caddy
-sudo systemctl enable caddy
-```
 
 ### Ubuntu 22.04
 
@@ -182,11 +148,13 @@ sudo systemctl enable caddy
 ### Option A: Use your own domain
 
 1. Add DNS A record pointing to your VM's public IP:
+
    ```
    api.yourdomain.com → <PUBLIC_IP>
    ```
 
 2. Configure Caddy:
+
    ```bash
    sudo tee /etc/caddy/Caddyfile << 'EOF'
    api.yourdomain.com {
@@ -205,6 +173,7 @@ sudo systemctl enable caddy
 4. SSL/TLS mode: Full (strict)
 
 5. Configure Caddy for Cloudflare:
+
    ```bash
    sudo tee /etc/caddy/Caddyfile << 'EOF'
    :443 {
@@ -219,16 +188,19 @@ sudo systemctl enable caddy
 ### Option C: No domain (development only)
 
 Use public IP directly:
+
 ```
 NEXT_PUBLIC_API_URL=http://<PUBLIC_IP>:3001
 ```
 
 Note: Configure Hono to listen on 0.0.0.0:
+
 ```typescript
-serve({ fetch: app.fetch, port: 3001, hostname: '0.0.0.0' })
+serve({ fetch: app.fetch, port: 3001, hostname: "0.0.0.0" });
 ```
 
 And open port 3001 in security list and firewall:
+
 ```bash
 # Oracle Linux
 sudo firewall-cmd --permanent --add-port=3001/tcp
@@ -335,6 +307,7 @@ chmod +x ~/rides-api/deploy.sh
 ```
 
 Then deploy from local:
+
 ```bash
 ssh -i ~/path/to/key.pem opc@<PUBLIC_IP> 'bash ~/rides-api/deploy.sh'
 ```
@@ -342,22 +315,26 @@ ssh -i ~/path/to/key.pem opc@<PUBLIC_IP> 'bash ~/rides-api/deploy.sh'
 ## Troubleshooting
 
 ### Can't connect via SSH
+
 - Check security list has port 22 open
 - Check you're using correct username (opc or ubuntu)
 - Check key permissions: `chmod 400 key.pem`
 
 ### API not accessible externally
+
 - Check security list has port 443/3001 open
 - Check OS firewall: `sudo firewall-cmd --list-all` or `sudo ufw status`
 - Check PM2 is running: `pm2 status`
 - Check Caddy is running: `sudo systemctl status caddy`
 
 ### Database connection fails
+
 - Check DATABASE_URL is correct
 - Check Supabase allows connections from your VM IP
 - Try connecting manually: `psql $DATABASE_URL`
 
 ### SSL certificate errors
+
 - Wait a few minutes for Let's Encrypt to issue certificate
 - Check Caddy logs: `sudo journalctl -u caddy`
 - Ensure DNS is pointing to correct IP
