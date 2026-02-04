@@ -13,6 +13,9 @@ import { type Metadata } from "next";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 
+// ISR: Revalidate every 60 seconds
+export const revalidate = 60;
+
 const Calendar = dynamic<CalendarProps>(() => import("@/components/Calendar"));
 
 export const metadata: Metadata = {
