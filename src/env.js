@@ -42,10 +42,22 @@ export const env = createEnv({
     NEXT_PUBLIC_CLUB_LONG_NAME: z.string(),
     NEXT_PUBLIC_CLUB_SHORT_NAME: z.string(),
     NEXT_PUBLIC_REPO: z.string().url(),
-    NEXT_PUBLIC_AUTH0_DOMAIN: z.string(),
-    NEXT_PUBLIC_AUTH0_CLIENT_ID: z.string(),
-    NEXT_PUBLIC_AUTH0_AUDIENCE: z.string(),
-    NEXT_PUBLIC_API_URL: z.string().url(),
+    NEXT_PUBLIC_AUTH0_DOMAIN:
+      process.env.NODE_ENV === "test"
+        ? z.string().optional()
+        : z.string(),
+    NEXT_PUBLIC_AUTH0_CLIENT_ID:
+      process.env.NODE_ENV === "test"
+        ? z.string().optional()
+        : z.string(),
+    NEXT_PUBLIC_AUTH0_AUDIENCE:
+      process.env.NODE_ENV === "test"
+        ? z.string().optional()
+        : z.string(),
+    NEXT_PUBLIC_API_URL:
+      process.env.NODE_ENV === "test"
+        ? z.string().optional()
+        : z.string().url(),
   },
 
   /**
