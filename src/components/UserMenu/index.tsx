@@ -1,10 +1,9 @@
 "use client";
 
+import { useRide } from "@/hooks/useRides";
 import { useSession } from "@/hooks/useSession";
 import { cancelRide } from "@/server/actions/cancel-ride";
 import { deleteRide } from "@/server/actions/delete-ride";
-import { isCancelledAtom } from "@/store";
-import { useAtom } from "jotai";
 import { Menu } from "lucide-react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
@@ -20,7 +19,11 @@ const UserMenu = () => {
   const pathname = usePathname();
   const params = useParams();
   const rideId = flattenQuery(params.id);
-  const [isCancelled] = useAtom(isCancelledAtom);
+  
+  // Fetch ride data to check if cancelled
+  const { data: ride } = useRide(rideId || "");
+  const isCancelled = ride?.cancelled ?? false;
+  
   const [show, setShow] = useState<boolean>(false);
   const [showConfirmCancel, setShowConfirmCancel] = useState<boolean>(false);
   const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);

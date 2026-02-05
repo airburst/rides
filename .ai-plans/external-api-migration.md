@@ -1,11 +1,39 @@
 # External API Migration Plan
 
+## 🎯 Current Status (2026-02-05)
+
+**✅ Phase 0:** Auth0 SPA Setup - COMPLETE  
+**✅ Phase 1:** API Foundation - COMPLETE  
+**✅ Phase 2:** Read Endpoints - COMPLETE  
+**✅ Phase 3:** Frontend Migration (Core Features) - COMPLETE  
+**⏳ Phase 4:** Write Endpoints - PARTIAL (join/leave/notes done, CRUD pending)  
+**⏳ Phase 5:** Cleanup - PARTIAL (Jotai removed, server actions remain for admin features)
+
+### What's Working Now
+- ✅ Rides list with filters (client-side)
+- ✅ Ride details (client-side)
+- ✅ Join/Leave rides with optimistic updates
+- ✅ Ride notes/messages
+- ✅ Auth0 SPA authentication
+- ✅ **Jotai completely removed** - replaced with TanStack Query + React Context
+- ✅ React Query Devtools
+
+### What's Still Using Server Components/Actions
+- ⏳ Calendar view
+- ⏳ User profile editing
+- ⏳ Repeating rides management (admin)
+- ⏳ Ride create/edit/delete forms (LEADER+)
+
+---
+
 ## Decisions
+
 - **Replace Jotai** with TanStack Query for all state (including optimistic updates)
 - **Per-feature cutover** - migrate one feature at a time, both systems run in parallel
 - **Auth0 SPA** - create new SPA application in same Auth0 tenant, users keep accounts
 
 ## Stack
+
 - **Backend**: Hono + Drizzle + Supabase Postgres
 - **Frontend**: Next.js (static/CSR) + TanStack Query
 - **Hosting**: Oracle Cloud (free tier - 2 AMD VMs forever free)
@@ -41,18 +69,21 @@ New:
 4. Configure settings:
 
 **Allowed Callback URLs:**
+
 ```
 http://localhost:3000,
 https://your-app.vercel.app
 ```
 
 **Allowed Logout URLs:**
+
 ```
 http://localhost:3000,
 https://your-app.vercel.app
 ```
 
 **Allowed Web Origins:**
+
 ```
 http://localhost:3000,
 https://your-app.vercel.app
@@ -67,6 +98,7 @@ https://your-app.vercel.app
 ### 0.3 Environment Variables
 
 **Frontend (.env.local):**
+
 ```bash
 NEXT_PUBLIC_AUTH0_DOMAIN=dev-k448qmxf.eu.auth0.com
 NEXT_PUBLIC_AUTH0_CLIENT_ID=4CNBh9ukIntfvzUQG8y1XD3qeohn174r
@@ -75,6 +107,7 @@ NEXT_PUBLIC_API_URL=https://api.your-domain.com
 ```
 
 **API (Oracle Cloud VM .env):**
+
 ```bash
 AUTH0_DOMAIN=dev-k448qmxf.eu.auth0.com
 AUTH0_AUDIENCE=https://api.bcc-rides.com
@@ -89,14 +122,14 @@ Users authenticate with same Auth0 accounts. The `sub` claim in JWT maps to exis
 
 ```typescript
 // API: Look up user by Auth0 ID
-const auth0Id = c.get('user').sub  // e.g., "auth0|65ec175a806157e2b7e6c59e"
+const auth0Id = c.get("user").sub; // e.g., "auth0|65ec175a806157e2b7e6c59e"
 
 // Look up in accounts table by providerAccountId
 const account = await db.query.accounts.findFirst({
   where: eq(accounts.providerAccountId, auth0Id),
-  with: { users: true },  // relation name from your schema
-})
-const user = account?.users  // linked user record
+  with: { users: true }, // relation name from your schema
+});
+const user = account?.users; // linked user record
 ```
 
 ---
@@ -138,172 +171,174 @@ rides-api/
 
 ```typescript
 // src/index.ts
-import { Hono } from 'hono'
-import { cors } from 'hono/cors'
-import { logger } from 'hono/logger'
-import { serve } from '@hono/node-server'
-import { ridesRouter } from './routes/rides'
-import { usersRouter } from './routes/users'
+import { Hono } from "hono";
+import { cors } from "hono/cors";
+import { logger } from "hono/logger";
+import { serve } from "@hono/node-server";
+import { ridesRouter } from "./routes/rides";
+import { usersRouter } from "./routes/users";
 
-const app = new Hono()
+const app = new Hono();
 
 // Middleware
-app.use('*', logger())
-app.use('*', cors({
-  origin: [
-    'https://your-app.vercel.app',
-    'http://localhost:3000'
-  ],
-  credentials: true,
-}))
+app.use("*", logger());
+app.use(
+  "*",
+  cors({
+    origin: ["https://your-app.vercel.app", "http://localhost:3000"],
+    credentials: true,
+  }),
+);
 
 // Routes
-app.route('/rides', ridesRouter)
-app.route('/users', usersRouter)
+app.route("/rides", ridesRouter);
+app.route("/users", usersRouter);
 
 // Health check
-app.get('/health', (c) => c.json({ status: 'ok' }))
+app.get("/health", (c) => c.json({ status: "ok" }));
 
-const port = process.env.PORT ? parseInt(process.env.PORT) : 3001
-serve({ fetch: app.fetch, port })
-console.log(`Server running on port ${port}`)
+const port = process.env.PORT ? parseInt(process.env.PORT) : 3001;
+serve({ fetch: app.fetch, port });
+console.log(`Server running on port ${port}`);
 ```
 
 ### 1.4 Auth middleware (Auth0 JWT with JWKS)
 
 ```typescript
 // src/lib/auth0.ts
-import * as jose from 'jose'
+import * as jose from "jose";
 
-const AUTH0_DOMAIN = process.env.AUTH0_DOMAIN!
-const AUTH0_AUDIENCE = process.env.AUTH0_AUDIENCE!
+const AUTH0_DOMAIN = process.env.AUTH0_DOMAIN!;
+const AUTH0_AUDIENCE = process.env.AUTH0_AUDIENCE!;
 
 // Cache JWKS
-let jwks: jose.JWTVerifyGetKey | null = null
+let jwks: jose.JWTVerifyGetKey | null = null;
 
 async function getJwks() {
   if (!jwks) {
     jwks = jose.createRemoteJWKSet(
-      new URL(`https://${AUTH0_DOMAIN}/.well-known/jwks.json`)
-    )
+      new URL(`https://${AUTH0_DOMAIN}/.well-known/jwks.json`),
+    );
   }
-  return jwks
+  return jwks;
 }
 
 export async function verifyAuth0Token(token: string) {
-  const jwks = await getJwks()
+  const jwks = await getJwks();
 
   const { payload } = await jose.jwtVerify(token, jwks, {
     issuer: `https://${AUTH0_DOMAIN}/`,
     audience: AUTH0_AUDIENCE,
-  })
+  });
 
-  return payload
+  return payload;
 }
 ```
 
 ```typescript
 // src/middleware/auth.ts
-import { createMiddleware } from 'hono/factory'
-import { verifyAuth0Token } from '../lib/auth0'
-import { db } from '../db'
-import { accounts } from '../db/schema'
-import { eq } from 'drizzle-orm'
+import { createMiddleware } from "hono/factory";
+import { verifyAuth0Token } from "../lib/auth0";
+import { db } from "../db";
+import { accounts } from "../db/schema";
+import { eq } from "drizzle-orm";
 
 type AuthUser = {
-  id: string
-  auth0Id: string
-  role: string
-}
+  id: string;
+  auth0Id: string;
+  role: string;
+};
 
 // Required auth - returns 401 if not authenticated
 export const authMiddleware = createMiddleware<{
-  Variables: { user: AuthUser }
+  Variables: { user: AuthUser };
 }>(async (c, next) => {
-  const authHeader = c.req.header('Authorization')
-  if (!authHeader?.startsWith('Bearer ')) {
-    return c.json({ error: 'Unauthorized' }, 401)
+  const authHeader = c.req.header("Authorization");
+  if (!authHeader?.startsWith("Bearer ")) {
+    return c.json({ error: "Unauthorized" }, 401);
   }
 
-  const token = authHeader.slice(7)
+  const token = authHeader.slice(7);
   try {
-    const payload = await verifyAuth0Token(token)
+    const payload = await verifyAuth0Token(token);
 
     // Look up user by Auth0 ID
     const account = await db.query.accounts.findFirst({
       where: eq(accounts.providerAccountId, payload.sub as string),
       with: { users: true },
-    })
+    });
 
     if (!account?.users) {
-      return c.json({ error: 'User not found' }, 401)
+      return c.json({ error: "User not found" }, 401);
     }
 
-    c.set('user', {
+    c.set("user", {
       id: account.users.id,
       auth0Id: payload.sub as string,
       role: account.users.role,
-    })
+    });
 
-    await next()
+    await next();
   } catch (err) {
-    console.error('Auth error:', err)
-    return c.json({ error: 'Invalid token' }, 401)
+    console.error("Auth error:", err);
+    return c.json({ error: "Invalid token" }, 401);
   }
-})
+});
 
 // Optional auth - sets user if present, continues if not
 export const optionalAuth = createMiddleware<{
-  Variables: { user?: AuthUser }
+  Variables: { user?: AuthUser };
 }>(async (c, next) => {
-  const authHeader = c.req.header('Authorization')
-  if (authHeader?.startsWith('Bearer ')) {
+  const authHeader = c.req.header("Authorization");
+  if (authHeader?.startsWith("Bearer ")) {
     try {
-      const token = authHeader.slice(7)
-      const payload = await verifyAuth0Token(token)
+      const token = authHeader.slice(7);
+      const payload = await verifyAuth0Token(token);
 
       const account = await db.query.accounts.findFirst({
         where: eq(accounts.providerAccountId, payload.sub as string),
         with: { users: true },
-      })
+      });
 
       if (account?.users) {
-        c.set('user', {
+        c.set("user", {
           id: account.users.id,
           auth0Id: payload.sub as string,
           role: account.users.role,
-        })
+        });
       }
     } catch {
       // Ignore invalid tokens for optional auth
     }
   }
-  await next()
-})
+  await next();
+});
 
 // Role check helper
 export const requireRole = (...roles: string[]) => {
-  return createMiddleware<{ Variables: { user: AuthUser } }>(async (c, next) => {
-    const user = c.get('user')
-    if (!roles.includes(user.role)) {
-      return c.json({ error: 'Forbidden' }, 403)
-    }
-    await next()
-  })
-}
+  return createMiddleware<{ Variables: { user: AuthUser } }>(
+    async (c, next) => {
+      const user = c.get("user");
+      if (!roles.includes(user.role)) {
+        return c.json({ error: "Forbidden" }, 403);
+      }
+      await next();
+    },
+  );
+};
 ```
 
 ### 1.5 Database connection
 
 ```typescript
 // src/db/index.ts
-import { drizzle } from 'drizzle-orm/postgres-js'
-import postgres from 'postgres'
-import * as schema from './schema'
+import { drizzle } from "drizzle-orm/postgres-js";
+import postgres from "postgres";
+import * as schema from "./schema";
 
-const connectionString = process.env.DATABASE_URL!
-const client = postgres(connectionString)
-export const db = drizzle(client, { schema, casing: 'snake_case' })
+const connectionString = process.env.DATABASE_URL!;
+const client = postgres(connectionString);
+export const db = drizzle(client, { schema, casing: "snake_case" });
 ```
 
 ### 1.6 Deploy to Oracle Cloud
@@ -397,11 +432,13 @@ sudo systemctl start caddy
 #### 1.6.5 Alternative: Use Oracle Cloud public IP directly
 
 If you don't have a domain, use the public IP with HTTP:
+
 ```
 NEXT_PUBLIC_API_URL=http://<your-vm-ip>:3001
 ```
 
 Note: For production, HTTPS is recommended. You can:
+
 - Use a free domain from freenom.com or similar
 - Use Cloudflare for free SSL (proxy mode)
 - Use Let's Encrypt with Caddy (automatic)
@@ -409,6 +446,7 @@ Note: For production, HTTPS is recommended. You can:
 #### 1.6.6 Update deployment script
 
 Create `deploy.sh` on VM:
+
 ```bash
 #!/bin/bash
 cd ~/rides-api
@@ -419,6 +457,7 @@ pm2 restart rides-api
 ```
 
 Then deploy with:
+
 ```bash
 ssh opc@<your-vm-ip> 'bash ~/rides-api/deploy.sh'
 ```
@@ -428,6 +467,7 @@ ssh opc@<your-vm-ip> 'bash ~/rides-api/deploy.sh'
 ## Phase 2: Migrate Read Endpoints (Per-Feature)
 
 ### Feature order (migrate one at a time):
+
 1. **Rides list** (homepage) - highest traffic
 2. **Ride details** - second highest
 3. **Calendar** - moderate traffic
@@ -438,18 +478,18 @@ ssh opc@<your-vm-ip> 'bash ~/rides-api/deploy.sh'
 
 ```typescript
 // src/routes/rides.ts
-import { Hono } from 'hono'
-import { db } from '../db'
-import { rides, userOnRides } from '../db/schema'
-import { and, eq, gte, lte, asc, desc } from 'drizzle-orm'
-import { optionalAuth, authMiddleware, requireRole } from '../middleware/auth'
+import { Hono } from "hono";
+import { db } from "../db";
+import { rides, userOnRides } from "../db/schema";
+import { and, eq, gte, lte, asc, desc } from "drizzle-orm";
+import { optionalAuth, authMiddleware, requireRole } from "../middleware/auth";
 
-export const ridesRouter = new Hono()
+export const ridesRouter = new Hono();
 
 // GET /rides?start=2024-01-01&end=2024-12-31
-ridesRouter.get('/', optionalAuth, async (c) => {
-  const start = c.req.query('start') ?? new Date().toISOString().split('T')[0]
-  const end = c.req.query('end') ?? '2099-12-31'
+ridesRouter.get("/", optionalAuth, async (c) => {
+  const start = c.req.query("start") ?? new Date().toISOString().split("T")[0];
+  const end = c.req.query("end") ?? "2099-12-31";
 
   const result = await db.query.rides.findMany({
     columns: {
@@ -471,14 +511,14 @@ ridesRouter.get('/', optionalAuth, async (c) => {
       eq(rides.deleted, false),
     ),
     orderBy: [asc(rides.rideDate), asc(rides.name), desc(rides.distance)],
-  })
+  });
 
-  return c.json({ rides: result })
-})
+  return c.json({ rides: result });
+});
 
 // GET /rides/:id
-ridesRouter.get('/:id', optionalAuth, async (c) => {
-  const id = c.req.param('id')
+ridesRouter.get("/:id", optionalAuth, async (c) => {
+  const id = c.req.param("id");
 
   const result = await db.query.rides.findFirst({
     with: {
@@ -489,66 +529,68 @@ ridesRouter.get('/:id', optionalAuth, async (c) => {
       },
     },
     where: and(eq(rides.id, id), eq(rides.deleted, false)),
-  })
+  });
 
   if (!result) {
-    return c.json({ error: 'Ride not found' }, 404)
+    return c.json({ error: "Ride not found" }, 404);
   }
 
-  return c.json({ ride: result })
-})
+  return c.json({ ride: result });
+});
 
 // POST /rides/:id/join
-ridesRouter.post('/:id/join', authMiddleware, async (c) => {
-  const rideId = c.req.param('id')
-  const user = c.get('user')
-  const body = await c.req.json<{ userId?: string }>()
+ridesRouter.post("/:id/join", authMiddleware, async (c) => {
+  const rideId = c.req.param("id");
+  const user = c.get("user");
+  const body = await c.req.json<{ userId?: string }>();
 
   // Users can join themselves, leaders can add others
-  const targetUserId = body.userId ?? user.id
-  const isSelf = targetUserId === user.id
-  const isLeaderOrAdmin = ['LEADER', 'ADMIN'].includes(user.role)
+  const targetUserId = body.userId ?? user.id;
+  const isSelf = targetUserId === user.id;
+  const isLeaderOrAdmin = ["LEADER", "ADMIN"].includes(user.role);
 
   if (!isSelf && !isLeaderOrAdmin) {
-    return c.json({ error: 'Forbidden' }, 403)
+    return c.json({ error: "Forbidden" }, 403);
   }
 
   try {
-    await db.insert(userOnRides).values({ rideId, userId: targetUserId })
-    return c.json({ success: true })
+    await db.insert(userOnRides).values({ rideId, userId: targetUserId });
+    return c.json({ success: true });
   } catch (error) {
-    console.error('Join error:', error)
-    return c.json({ error: 'Failed to join ride' }, 500)
+    console.error("Join error:", error);
+    return c.json({ error: "Failed to join ride" }, 500);
   }
-})
+});
 
 // POST /rides/:id/leave
-ridesRouter.post('/:id/leave', authMiddleware, async (c) => {
-  const rideId = c.req.param('id')
-  const user = c.get('user')
-  const body = await c.req.json<{ userId?: string }>()
+ridesRouter.post("/:id/leave", authMiddleware, async (c) => {
+  const rideId = c.req.param("id");
+  const user = c.get("user");
+  const body = await c.req.json<{ userId?: string }>();
 
-  const targetUserId = body.userId ?? user.id
-  const isSelf = targetUserId === user.id
-  const isLeaderOrAdmin = ['LEADER', 'ADMIN'].includes(user.role)
+  const targetUserId = body.userId ?? user.id;
+  const isSelf = targetUserId === user.id;
+  const isLeaderOrAdmin = ["LEADER", "ADMIN"].includes(user.role);
 
   if (!isSelf && !isLeaderOrAdmin) {
-    return c.json({ error: 'Forbidden' }, 403)
+    return c.json({ error: "Forbidden" }, 403);
   }
 
   try {
-    await db.delete(userOnRides).where(
-      and(
-        eq(userOnRides.rideId, rideId),
-        eq(userOnRides.userId, targetUserId)
-      )
-    )
-    return c.json({ success: true })
+    await db
+      .delete(userOnRides)
+      .where(
+        and(
+          eq(userOnRides.rideId, rideId),
+          eq(userOnRides.userId, targetUserId),
+        ),
+      );
+    return c.json({ success: true });
   } catch (error) {
-    console.error('Leave error:', error)
-    return c.json({ error: 'Failed to leave ride' }, 500)
+    console.error("Leave error:", error);
+    return c.json({ error: "Failed to leave ride" }, 500);
   }
-})
+});
 ```
 
 ---
@@ -566,39 +608,43 @@ npm uninstall jotai  # After migration complete
 
 ```typescript
 // src/providers/index.tsx
-'use client'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { Auth0Provider } from '@auth0/auth0-react'
-import { useState } from 'react'
+"use client";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Auth0Provider } from "@auth0/auth0-react";
+import { useState } from "react";
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  const [queryClient] = useState(() => new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: 30 * 1000,      // Data fresh for 30s
-        gcTime: 5 * 60 * 1000,     // Cache for 5 min
-        refetchOnWindowFocus: false,
-      },
-    },
-  }))
+  const [queryClient] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            staleTime: 30 * 1000, // Data fresh for 30s
+            gcTime: 5 * 60 * 1000, // Cache for 5 min
+            refetchOnWindowFocus: false,
+          },
+        },
+      }),
+  );
 
   return (
     <Auth0Provider
       domain={process.env.NEXT_PUBLIC_AUTH0_DOMAIN!}
       clientId={process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID!}
       authorizationParams={{
-        redirect_uri: typeof window !== 'undefined' ? window.location.origin : '',
+        redirect_uri:
+          typeof window !== "undefined" ? window.location.origin : "",
         audience: process.env.NEXT_PUBLIC_AUTH0_AUDIENCE,
       }}
-      cacheLocation="localstorage"  // Persist auth across tabs
+      cacheLocation="localstorage" // Persist auth across tabs
     >
       <QueryClientProvider client={queryClient}>
         {children}
         <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </Auth0Provider>
-  )
+  );
 }
 ```
 
@@ -606,47 +652,49 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
 ```typescript
 // src/lib/api.ts
-'use client'
-import { useAuth0 } from '@auth0/auth0-react'
-import { useCallback } from 'react'
+"use client";
+import { useAuth0 } from "@auth0/auth0-react";
+import { useCallback } from "react";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL!
+const API_URL = process.env.NEXT_PUBLIC_API_URL!;
 
 export function useApiClient() {
-  const { getAccessTokenSilently, isAuthenticated } = useAuth0()
+  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
 
-  const fetchApi = useCallback(async <T>(
-    path: string,
-    options: RequestInit = {}
-  ): Promise<T> => {
-    const headers: HeadersInit = {
-      'Content-Type': 'application/json',
-      ...options.headers,
-    }
+  const fetchApi = useCallback(
+    async <T>(path: string, options: RequestInit = {}): Promise<T> => {
+      const headers: HeadersInit = {
+        "Content-Type": "application/json",
+        ...options.headers,
+      };
 
-    if (isAuthenticated) {
-      try {
-        const token = await getAccessTokenSilently()
-        headers['Authorization'] = `Bearer ${token}`
-      } catch (e) {
-        console.error('Failed to get token:', e)
+      if (isAuthenticated) {
+        try {
+          const token = await getAccessTokenSilently();
+          headers["Authorization"] = `Bearer ${token}`;
+        } catch (e) {
+          console.error("Failed to get token:", e);
+        }
       }
-    }
 
-    const res = await fetch(`${API_URL}${path}`, {
-      ...options,
-      headers,
-    })
+      const res = await fetch(`${API_URL}${path}`, {
+        ...options,
+        headers,
+      });
 
-    if (!res.ok) {
-      const error = await res.json().catch(() => ({ error: 'Unknown error' }))
-      throw new Error(error.error || `API error: ${res.status}`)
-    }
+      if (!res.ok) {
+        const error = await res
+          .json()
+          .catch(() => ({ error: "Unknown error" }));
+        throw new Error(error.error || `API error: ${res.status}`);
+      }
 
-    return res.json()
-  }, [getAccessTokenSilently, isAuthenticated])
+      return res.json();
+    },
+    [getAccessTokenSilently, isAuthenticated],
+  );
 
-  return { fetchApi }
+  return { fetchApi };
 }
 ```
 
@@ -654,202 +702,220 @@ export function useApiClient() {
 
 ```typescript
 // src/hooks/useRides.ts
-'use client'
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { useApiClient } from '@/lib/api'
-import { useAuth0 } from '@auth0/auth0-react'
-import type { RideList, Ride } from '@/types'
+"use client";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useApiClient } from "@/lib/api";
+import { useAuth0 } from "@auth0/auth0-react";
+import type { RideList, Ride } from "@/types";
 
 // Query keys
 export const rideKeys = {
-  all: ['rides'] as const,
-  lists: () => [...rideKeys.all, 'list'] as const,
-  list: (start?: string, end?: string) => [...rideKeys.lists(), { start, end }] as const,
-  details: () => [...rideKeys.all, 'detail'] as const,
+  all: ["rides"] as const,
+  lists: () => [...rideKeys.all, "list"] as const,
+  list: (start?: string, end?: string) =>
+    [...rideKeys.lists(), { start, end }] as const,
+  details: () => [...rideKeys.all, "detail"] as const,
   detail: (id: string) => [...rideKeys.details(), id] as const,
-}
+};
 
 // GET /rides
 export function useRides(start?: string, end?: string) {
-  const { fetchApi } = useApiClient()
-  const params = new URLSearchParams()
-  if (start) params.set('start', start)
-  if (end) params.set('end', end)
-  const query = params.toString() ? `?${params}` : ''
+  const { fetchApi } = useApiClient();
+  const params = new URLSearchParams();
+  if (start) params.set("start", start);
+  if (end) params.set("end", end);
+  const query = params.toString() ? `?${params}` : "";
 
   return useQuery({
     queryKey: rideKeys.list(start, end),
     queryFn: () => fetchApi<{ rides: RideList[] }>(`/rides${query}`),
-  })
+  });
 }
 
 // GET /rides/:id
 export function useRide(id: string) {
-  const { fetchApi } = useApiClient()
+  const { fetchApi } = useApiClient();
 
   return useQuery({
     queryKey: rideKeys.detail(id),
     queryFn: () => fetchApi<{ ride: Ride }>(`/rides/${id}`),
     enabled: !!id,
-  })
+  });
 }
 
 // POST /rides/:id/join - with optimistic update
 export function useJoinRide() {
-  const { fetchApi } = useApiClient()
-  const { user } = useAuth0()
-  const queryClient = useQueryClient()
+  const { fetchApi } = useApiClient();
+  const { user } = useAuth0();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: ({ rideId, userId }: { rideId: string; userId: string }) =>
       fetchApi(`/rides/${rideId}/join`, {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify({ userId }),
       }),
 
     // Optimistic update - runs before mutation
     onMutate: async ({ rideId, userId }) => {
       // Cancel outgoing refetches
-      await queryClient.cancelQueries({ queryKey: rideKeys.all })
+      await queryClient.cancelQueries({ queryKey: rideKeys.all });
 
       // Snapshot current state
-      const previousLists = queryClient.getQueriesData({ queryKey: rideKeys.lists() })
-      const previousDetail = queryClient.getQueryData(rideKeys.detail(rideId))
+      const previousLists = queryClient.getQueriesData({
+        queryKey: rideKeys.lists(),
+      });
+      const previousDetail = queryClient.getQueryData(rideKeys.detail(rideId));
 
       // Optimistically update all ride lists
       queryClient.setQueriesData(
         { queryKey: rideKeys.lists() },
         (old: { rides: RideList[] } | undefined) => {
-          if (!old) return old
+          if (!old) return old;
           return {
             ...old,
             rides: old.rides.map((ride) =>
               ride.id === rideId
                 ? { ...ride, users: [...(ride.users || []), { userId }] }
-                : ride
+                : ride,
             ),
-          }
-        }
-      )
+          };
+        },
+      );
 
       // Optimistically update ride detail if cached
       queryClient.setQueryData(
         rideKeys.detail(rideId),
         (old: { ride: Ride } | undefined) => {
-          if (!old) return old
+          if (!old) return old;
           return {
             ...old,
             ride: {
               ...old.ride,
               users: [...(old.ride.users || []), { userId, user }],
             },
-          }
-        }
-      )
+          };
+        },
+      );
 
-      return { previousLists, previousDetail, rideId }
+      return { previousLists, previousDetail, rideId };
     },
 
     // Rollback on error
     onError: (err, { rideId }, context) => {
       if (context?.previousLists) {
         context.previousLists.forEach(([queryKey, data]) => {
-          queryClient.setQueryData(queryKey, data)
-        })
+          queryClient.setQueryData(queryKey, data);
+        });
       }
       if (context?.previousDetail) {
-        queryClient.setQueryData(rideKeys.detail(rideId), context.previousDetail)
+        queryClient.setQueryData(
+          rideKeys.detail(rideId),
+          context.previousDetail,
+        );
       }
     },
 
     // Refetch after mutation settles
     onSettled: (_, __, { rideId }) => {
-      queryClient.invalidateQueries({ queryKey: rideKeys.lists() })
-      queryClient.invalidateQueries({ queryKey: rideKeys.detail(rideId) })
+      queryClient.invalidateQueries({ queryKey: rideKeys.lists() });
+      queryClient.invalidateQueries({ queryKey: rideKeys.detail(rideId) });
     },
-  })
+  });
 }
 
 // POST /rides/:id/leave - with optimistic update
 export function useLeaveRide() {
-  const { fetchApi } = useApiClient()
-  const queryClient = useQueryClient()
+  const { fetchApi } = useApiClient();
+  const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: ({ rideId, userId }: { rideId: string; userId: string }) =>
       fetchApi(`/rides/${rideId}/leave`, {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify({ userId }),
       }),
 
     onMutate: async ({ rideId, userId }) => {
-      await queryClient.cancelQueries({ queryKey: rideKeys.all })
+      await queryClient.cancelQueries({ queryKey: rideKeys.all });
 
-      const previousLists = queryClient.getQueriesData({ queryKey: rideKeys.lists() })
-      const previousDetail = queryClient.getQueryData(rideKeys.detail(rideId))
+      const previousLists = queryClient.getQueriesData({
+        queryKey: rideKeys.lists(),
+      });
+      const previousDetail = queryClient.getQueryData(rideKeys.detail(rideId));
 
       // Optimistically remove user from ride lists
       queryClient.setQueriesData(
         { queryKey: rideKeys.lists() },
         (old: { rides: RideList[] } | undefined) => {
-          if (!old) return old
+          if (!old) return old;
           return {
             ...old,
             rides: old.rides.map((ride) =>
               ride.id === rideId
-                ? { ...ride, users: ride.users?.filter((u) => u.userId !== userId) }
-                : ride
+                ? {
+                    ...ride,
+                    users: ride.users?.filter((u) => u.userId !== userId),
+                  }
+                : ride,
             ),
-          }
-        }
-      )
+          };
+        },
+      );
 
       // Optimistically remove from detail
       queryClient.setQueryData(
         rideKeys.detail(rideId),
         (old: { ride: Ride } | undefined) => {
-          if (!old) return old
+          if (!old) return old;
           return {
             ...old,
             ride: {
               ...old.ride,
               users: old.ride.users?.filter((u) => u.userId !== userId),
             },
-          }
-        }
-      )
+          };
+        },
+      );
 
-      return { previousLists, previousDetail, rideId }
+      return { previousLists, previousDetail, rideId };
     },
 
     onError: (err, { rideId }, context) => {
       if (context?.previousLists) {
         context.previousLists.forEach(([queryKey, data]) => {
-          queryClient.setQueryData(queryKey, data)
-        })
+          queryClient.setQueryData(queryKey, data);
+        });
       }
       if (context?.previousDetail) {
-        queryClient.setQueryData(rideKeys.detail(rideId), context.previousDetail)
+        queryClient.setQueryData(
+          rideKeys.detail(rideId),
+          context.previousDetail,
+        );
       }
     },
 
     onSettled: (_, __, { rideId }) => {
-      queryClient.invalidateQueries({ queryKey: rideKeys.lists() })
-      queryClient.invalidateQueries({ queryKey: rideKeys.detail(rideId) })
+      queryClient.invalidateQueries({ queryKey: rideKeys.lists() });
+      queryClient.invalidateQueries({ queryKey: rideKeys.detail(rideId) });
     },
-  })
+  });
 }
 ```
 
 ### 3.5 Convert JoinButton (replaces Jotai atoms)
 
 **Before (Jotai):**
+
 ```typescript
 // src/components/Button/JoinButton.tsx
-'use client'
+"use client";
 import { joinRide } from "@/server/actions/join-ride";
 import { leaveRide } from "@/server/actions/leave-ride";
-import { addOptimisticRideUpdateAtom, removeOptimisticRideUpdateAtom } from "@/store";
+import {
+  addOptimisticRideUpdateAtom,
+  removeOptimisticRideUpdateAtom,
+} from "@/store";
 import { useAtom } from "jotai";
 
 export const JoinButton = ({ going, rideId, userId }: Props) => {
@@ -862,13 +928,14 @@ export const JoinButton = ({ going, rideId, userId }: Props) => {
     if (!result.success) removeOptimisticUpdate({ rideId, userId });
   };
   // ...
-}
+};
 ```
 
 **After (TanStack Query):**
+
 ```typescript
 // src/components/Button/JoinButton.tsx
-'use client'
+"use client";
 import { useJoinRide, useLeaveRide } from "@/hooks/useRides";
 import { Plus, X } from "lucide-react";
 import { Button } from "./Button";
@@ -896,12 +963,12 @@ export const JoinButton = ({ going, rideId, userId }: Props) => {
   return going ? (
     <Button success onClick={handleLeave} disabled={isLoading}>
       <X className="h-6 w-6" />
-      {isLoading ? 'LEAVING...' : 'LEAVE'}
+      {isLoading ? "LEAVING..." : "LEAVE"}
     </Button>
   ) : (
     <Button error onClick={handleJoin} disabled={isLoading}>
       <Plus className="h-6 w-6" />
-      {isLoading ? 'JOINING...' : 'JOIN'}
+      {isLoading ? "JOINING..." : "JOIN"}
     </Button>
   );
 };
@@ -910,6 +977,7 @@ export const JoinButton = ({ going, rideId, userId }: Props) => {
 ### 3.6 Convert RideCard (remove Jotai subscription)
 
 **Before:**
+
 ```typescript
 const [getOptimisticMembership] = useAtom(getOptimisticMembershipAtom);
 const [getOptimisticRiderCount] = useAtom(getOptimisticRiderCountAtom);
@@ -921,18 +989,18 @@ const isGoing = user
 ```
 
 **After:**
+
 ```typescript
 // No Jotai imports needed - TanStack Query handles state
 // The ride data comes from useRides() which has optimistic updates built in
 
-const isGoing = user
-  ? users?.some((u) => u.userId === user.id)
-  : false;
+const isGoing = user ? users?.some((u) => u.userId === user.id) : false;
 ```
 
 ### 3.7 Convert RidesList component
 
 **Before (Server Component):**
+
 ```typescript
 import { getRides } from "@/server/actions/get-rides";
 import { getServerAuthSession } from "@/server/auth";
@@ -948,8 +1016,9 @@ const RidesList = async ({ date }: RidesListProps) => {
 ```
 
 **After (Client Component):**
+
 ```typescript
-'use client'
+"use client";
 import { useRides } from "@/hooks/useRides";
 import { useAuth0 } from "@auth0/auth0-react";
 import { getQueryDateRange } from "@utils/dates";
@@ -979,48 +1048,56 @@ export default RidesList;
 ## Phase 4: Migrate Write Endpoints
 
 ### Endpoints:
-| Endpoint | API Route | Hook |
-|----------|-----------|------|
-| Create ride | `POST /rides` | `useCreateRide()` |
-| Update ride | `PUT /rides/:id` | `useUpdateRide()` |
-| Delete ride | `DELETE /rides/:id` | `useDeleteRide()` |
+
+| Endpoint    | API Route                | Hook              |
+| ----------- | ------------------------ | ----------------- |
+| Create ride | `POST /rides`            | `useCreateRide()` |
+| Update ride | `PUT /rides/:id`         | `useUpdateRide()` |
+| Delete ride | `DELETE /rides/:id`      | `useDeleteRide()` |
 | Cancel ride | `POST /rides/:id/cancel` | `useCancelRide()` |
 
 ### Auth requirements:
-| Endpoint | Role |
-|----------|------|
+
+| Endpoint   | Role            |
+| ---------- | --------------- |
 | join/leave | Self or LEADER+ |
-| create | LEADER+ |
-| update | LEADER+ |
-| delete | ADMIN |
-| cancel | LEADER+ |
+| create     | LEADER+         |
+| update     | LEADER+         |
+| delete     | ADMIN           |
+| cancel     | LEADER+         |
 
 ---
 
 ## Phase 5: Cleanup
 
 ### 5.1 Remove Jotai
+
 ```bash
 npm uninstall jotai
 ```
 
 Delete files:
+
 - `src/store/index.ts`
 - `src/store/rideOptimisticUpdates.ts`
 
 ### 5.2 Remove server actions
+
 Delete `src/server/actions/` directory
 
 ### 5.3 Remove NextAuth
+
 ```bash
 npm uninstall next-auth @auth/drizzle-adapter
 ```
 
 Delete:
+
 - `src/app/api/auth/[...nextauth]/route.ts`
 - `src/server/auth.ts`
 
 ### 5.4 Update pages to client components
+
 Convert remaining server components that fetch data to client components using hooks.
 
 ---
@@ -1030,6 +1107,7 @@ Convert remaining server components that fetch data to client components using h
 ### Feature 1: Rides List (Homepage)
 
 **Steps:**
+
 1. Deploy API with `GET /rides` endpoint
 2. Create `useRides` hook
 3. Convert `RidesList` to client component
@@ -1041,6 +1119,7 @@ Convert remaining server components that fetch data to client components using h
 ### Feature 2: Join/Leave Ride
 
 **Steps:**
+
 1. Deploy API with `POST /rides/:id/join` and `/leave`
 2. Create `useJoinRide` and `useLeaveRide` hooks with optimistic updates
 3. Convert `JoinButton` to use new hooks
@@ -1051,6 +1130,7 @@ Convert remaining server components that fetch data to client components using h
 ### Feature 3: Ride Details
 
 **Steps:**
+
 1. Deploy API with `GET /rides/:id`
 2. Create `useRide` hook
 3. Convert ride details page to client component
@@ -1064,6 +1144,7 @@ Convert remaining server components that fetch data to client components using h
 ## Migration Checklist
 
 ### Phase 0: Auth0 Setup ✅
+
 - [x] Create SPA application in Auth0 dashboard
 - [x] Create/configure API in Auth0
 - [x] Note client ID and audience
@@ -1071,6 +1152,7 @@ Convert remaining server components that fetch data to client components using h
 - [x] Authorize SPA app to access API
 
 ### Phase 1: API Foundation ✅
+
 - [x] Create `rides-api` repo
 - [x] Setup Hono + Drizzle
 - [x] Copy DB schema from Next.js
@@ -1084,14 +1166,18 @@ Convert remaining server components that fetch data to client components using h
 - [x] Setup ESLint + Prettier
 
 ### Phase 2: Read Endpoints ✅
+
 - [x] `GET /rides`
 - [x] `GET /rides/:id`
 - [x] `GET /users/me`
 - [ ] `GET /repeating-rides` (admin) - not yet needed
 
-### Phase 3: Frontend (per feature)
+### Phase 3: Frontend (per feature) - CORE FEATURES COMPLETE ✅
+
+**Completed - Core User Features:**
+
 - [x] Install TanStack Query + Auth0 SPA SDK
-- [x] Create Providers wrapper
+- [x] Create Providers wrapper (Auth0Provider + QueryClientProvider + FilterProvider)
 - [x] Create API client with auth
 - [x] Create useSession hook
 - [x] **Feature 1:** Migrate RidesList to client-side
@@ -1099,12 +1185,23 @@ Convert remaining server components that fetch data to client components using h
 - [x] **Feature 3:** Migrate RideDetails to client-side
 - [x] **Feature 3b:** Migrate ride notes/messages
 - [x] Migrate Header to use Auth0 login/logout
-- [ ] **Feature 4:** Migrate Calendar
-- [ ] **Feature 5:** Migrate Profile
-- [ ] **Feature 6:** Migrate Repeating Rides (admin)
-- [ ] **Feature 7:** Migrate ride create/edit forms (LEADER+)
+- [x] **FULLY REMOVE JOTAI** - Replaced with TanStack Query + React Context
+  - [x] Removed `jotai` package dependency
+  - [x] Deleted `src/store/` directory (optimistic updates, filter atoms)
+  - [x] Deleted Jotai-related hooks (useOptimisticRideUpdates, useOptimisticCleanup)
+  - [x] Created FilterContext for UI state management
+  - [x] Migrated all components: RideCard, RidesListClient, FilteredRides, FilterButton, FiltersPanel
+- [x] Add React Query Devtools
+
+**Remaining - Admin/Power User Features (deferred):**
+
+- [ ] **Feature 4:** Migrate Calendar (still uses server components)
+- [ ] **Feature 5:** Migrate Profile (still uses server actions: getUser, updateUser)
+- [ ] **Feature 6:** Migrate Repeating Rides (still uses server actions)
+- [ ] **Feature 7:** Migrate ride create/edit forms (needs Phase 4 write endpoints first)
 
 ### Phase 4: Write Endpoints
+
 - [x] `POST /rides/:id/join`
 - [x] `POST /rides/:id/leave`
 - [x] `PATCH /rides/:id/notes`
@@ -1112,11 +1209,16 @@ Convert remaining server components that fetch data to client components using h
 - [ ] `PUT /rides/:id` - update ride
 - [ ] `DELETE /rides/:id` - delete ride
 - [ ] `POST /rides/:id/cancel` - cancel ride
+- [ ] `GET /calendar/:month` - calendar data
+- [ ] `GET /users/:id` - user profile
+- [ ] `PATCH /users/:id` - update user profile
+- [ ] Repeating rides endpoints
 
 ### Phase 5: Cleanup
-- [ ] Remove Jotai (partially done - still used for filter state)
-- [ ] Remove server actions (partially done - some still in use)
-- [ ] Remove NextAuth
+
+- [x] Remove Jotai ✅ **COMPLETE** - fully removed from codebase
+- [ ] Remove server actions (partially done - calendar, profile, repeating rides, ride forms still use them)
+- [ ] Remove NextAuth (still needed for Features 4-7)
 - [ ] Remove unused API routes
 - [ ] Update Vercel env vars
 - [ ] Final testing
@@ -1126,8 +1228,41 @@ Convert remaining server components that fetch data to client components using h
 
 ## Progress Log
 
-### 2026-02-05
-- Completed Phase 0, 1, and most of Phase 2-3
+### 2026-02-05 Evening - Phase 3 Core Complete ✅
+
+**Completed:**
+
+- ✅ **Jotai fully removed from codebase**
+  - Uninstalled `jotai` package
+  - Deleted entire `src/store/` directory
+  - Removed all Jotai atoms and hooks
+  - Created `FilterContext` for UI state (replaced `showFilterAtom`, `filterQueryAtom`)
+- ✅ **All core user features migrated to TanStack Query:**
+  - RidesList with optimistic updates
+  - RideDetails with optimistic updates
+  - Join/Leave with optimistic updates
+  - Ride notes/messages
+- ✅ **Components migrated:**
+  - RideCard (removed Jotai optimistic updates)
+  - RidesListClient (uses FilterContext)
+  - FilteredRides (uses FilterContext)
+  - FilterButton (uses FilterContext)
+  - FiltersPanel (uses FilterContext)
+  - RideDetailsClient (removed isCancelledAtom)
+  - UserMenu (gets ride state from TanStack Query)
+- ✅ **Build successful** - Application compiles with no errors
+- ✅ **React Query Devtools** added for debugging
+
+**Deferred to later:**
+
+- Calendar migration (needs `GET /calendar/:month` endpoint)
+- Profile migration (needs `GET/PATCH /users/:id` endpoints)
+- Repeating Rides migration (needs repeating rides endpoints)
+- Ride create/edit forms (needs Phase 4 write endpoints)
+
+### 2026-02-05 Earlier
+
+- Completed Phase 0, 1, and Phase 2
 - API live at https://api.fairhursts.net
 - Frontend migrated: rides list, ride details, join/leave, notes
 - Auth0 SPA login working
@@ -1139,12 +1274,12 @@ Convert remaining server components that fetch data to client components using h
 
 ## Estimated Effort
 
-| Phase | Effort |
-|-------|--------|
-| 0. Auth0 Setup | 30 min |
-| 1. API Foundation | 2-4 hours |
-| 2. Read Endpoints | 2-3 hours |
-| 3. Frontend Migration | 4-6 hours |
-| 4. Write Endpoints | 2-3 hours |
-| 5. Cleanup | 1-2 hours |
-| **Total** | **12-19 hours** |
+| Phase                 | Effort          |
+| --------------------- | --------------- |
+| 0. Auth0 Setup        | 30 min          |
+| 1. API Foundation     | 2-4 hours       |
+| 2. Read Endpoints     | 2-3 hours       |
+| 3. Frontend Migration | 4-6 hours       |
+| 4. Write Endpoints    | 2-3 hours       |
+| 5. Cleanup            | 1-2 hours       |
+| **Total**             | **12-19 hours** |

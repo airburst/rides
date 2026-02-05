@@ -1,16 +1,15 @@
 "use client";
 
+import { useFilter } from "@/contexts/FilterContext";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useRides } from "@/hooks/useRides";
 import { useSession } from "@/hooks/useSession";
-import { filterQueryAtom, showFilterAtom } from "@/store";
 import type { FilterQuery, User } from "@/types";
 import { getQueryDateRange } from "@utils/dates";
 import { makeFilterData } from "@utils/rides";
 import { groupRides } from "@utils/transformRideData";
-import { useAtom } from "jotai";
 import { usePathname } from "next/navigation";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FiltersPanel } from "../Filters";
 import { RideGroup } from "./RideGroup";
 
@@ -30,17 +29,15 @@ export function RidesListClient({ date }: Props) {
   );
   const { data: rides, isPending, error } = useRides(start, end);
 
-  const [showFilterMenu, setShowFilterMenu] = useAtom(showFilterAtom);
-  const [filterQuery, setFilterQuery] = useAtom(filterQueryAtom);
+  const { showFilterMenu, setShowFilterMenu } = useFilter();
+  const [filterQuery, setFilterQuery] = useState<FilterQuery>({});
   const [filters] = useLocalStorage<FilterQuery>("bcc-filters", {});
   const path = usePathname();
   const shouldApplyFilters = path === "/";
 
   useEffect(() => {
     setFilterQuery(filters);
-  }, [filters, setFilterQuery]);
-
-  const closeFilters = () => setShowFilterMenu(false);
+  }, [filters]);
 
   // Only show spinner on initial load (no cached data)
   if (isPending && !rides) {
@@ -91,7 +88,9 @@ export function RidesListClient({ date }: Props) {
       <FiltersPanel
         data={makeFilterData(rides ?? [])}
         isShowing={showFilterMenu}
-        closeHandler={closeFilters}
+        closeHandler={() => setShowFilterMenu(false)}
+        filterQuery={filterQuery}
+        setFilterQuery={setFilterQuery}
       />
     </>
   );

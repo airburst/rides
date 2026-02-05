@@ -1,13 +1,11 @@
 "use client";
 import { useRide } from "@/hooks/useRides";
 import { useSession } from "@/hooks/useSession";
-import { isCancelledAtom } from "@/store";
 import type { Ride, User } from "@/types";
 import { formatRideData, hasSpace } from "@utils/rides";
 import { isJoinable } from "@utils/dates";
-import { useAtom } from "jotai";
 import { MessageSquare } from "lucide-react";
-import { useEffect, useState, type JSX } from "react";
+import { useState, type JSX } from "react";
 import { Badge } from "../Badge";
 import { BackButton, Button, JoinButton } from "../Button";
 import { RideInfo } from "./RideInfo";
@@ -35,13 +33,6 @@ export function RideDetailsClient({ id }: Props) {
 
   const { data: ride, isPending, error } = useRide(id);
   const [showNotesForm, setShowNotesForm] = useState<boolean>(false);
-  const [, setCancelled] = useAtom(isCancelledAtom);
-
-  useEffect(() => {
-    if (ride) {
-      setCancelled(ride.cancelled ?? false);
-    }
-  }, [ride, setCancelled]);
 
   // Only show spinner on initial load (no cached data)
   if (isPending && !ride) {

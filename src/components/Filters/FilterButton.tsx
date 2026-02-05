@@ -1,17 +1,18 @@
 "use client";
 
 import { DEFAULT_WEEKS_TO_SHOW } from "@/constants";
-import { filterQueryAtom, showFilterAtom } from "@/store";
-import { useAtom } from "jotai";
+import { useFilter } from "@/contexts/FilterContext";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { type FilterQuery } from "@/types";
 import { Filter, FilterX } from "lucide-react";
 import { usePathname } from "next/navigation";
 
 export const FilterButton = () => {
   const path = usePathname();
   const shouldShowFilterButton = path === "/";
-  // Get reactive data from atom
-  const [showFilterMenu, setShowFilterMenu] = useAtom(showFilterAtom);
-  const [filterQuery] = useAtom(filterQueryAtom);
+  const { showFilterMenu, setShowFilterMenu } = useFilter();
+  const [filterQuery] = useLocalStorage<FilterQuery>("bcc-filters", {});
+  
   const hasFiltersApplied = !!(
     filterQuery.onlyJoined ||
     filterQuery.q ||
