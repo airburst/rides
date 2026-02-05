@@ -16,7 +16,7 @@ import clsx from "clsx";
 import { useAtom } from "jotai";
 import { Check, ChevronDown, X } from "lucide-react";
 import { Fragment, useRef, useState, type ChangeEvent } from "react";
-import useOnClickOutside from "use-onclickoutside";
+import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { Button } from "../Button";
 
 type Props = {

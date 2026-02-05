@@ -1,15 +1,8 @@
 import { BackButton } from "@/components/Button";
 import { MainContent } from "@/components/Layout/MainContent";
+import { RideDetailsClient } from "@/components/RideDetails/RideDetailsClient";
 import { env } from "@/env";
-import { getRide } from "@/server/actions/get-ride";
-import { getServerAuthSession } from "@/server/auth";
 import { type Metadata } from "next";
-import dynamic from "next/dynamic";
-
-// ISR: Revalidate every 15 seconds
-export const revalidate = 15;
-
-const RideDetails = dynamic(() => import("@/components/RideDetails"));
 
 export const metadata: Metadata = {
   title: `${env.NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`,
@@ -17,12 +10,10 @@ export const metadata: Metadata = {
 };
 
 export default async function RideDetailsPage(props: {
-  params: Promise<{ id: string }>;
+  params: Promise<{ id: string[] }>;
 }) {
   const params = await props.params;
-  const { id } = params;
-  const session = await getServerAuthSession();
-  const user = session?.user;
+  const id = params.id?.[0];
 
   if (!id) {
     return (
@@ -31,7 +22,7 @@ export default async function RideDetailsPage(props: {
           <div className="flex h-64 w-full items-center justify-center text-2xl">
             This ride is no longer available
           </div>
-          <div className="flex mb-16 flex-row justify-between px-2 pt-8 sm:px-0">
+          <div className="mb-16 flex flex-row justify-between px-2 pt-8 sm:px-0">
             <BackButton />
           </div>
         </>
@@ -39,19 +30,9 @@ export default async function RideDetailsPage(props: {
     );
   }
 
-  const { ride, error } = await getRide(id);
-
-  if (error) {
-    return (
-      <MainContent>
-        <div>{error.message}</div>
-      </MainContent>
-    );
-  }
-
   return (
     <MainContent>
-      <RideDetails ride={ride!} user={user} role={user?.role} />
+      <RideDetailsClient id={id} />
     </MainContent>
   );
 }
