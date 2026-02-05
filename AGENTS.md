@@ -15,10 +15,12 @@ This is a Next.js application for a cycling club ride planner. It uses:
 ## Architecture (Migration in Progress)
 
 **Migrated Features (Client-side):**
+
 - Rides list, details, join/leave, notes → TanStack Query + external API
 - Auth → Auth0 SPA SDK
 
 **Pending Migration (Server-side):**
+
 - Calendar, Profile, Repeating Rides, Ride Forms → still use server actions
 
 ## State Management
