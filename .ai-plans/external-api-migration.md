@@ -1063,57 +1063,77 @@ Convert remaining server components that fetch data to client components using h
 
 ## Migration Checklist
 
-### Phase 0: Auth0 Setup
+### Phase 0: Auth0 Setup ✅
 - [x] Create SPA application in Auth0 dashboard
 - [x] Create/configure API in Auth0
 - [x] Note client ID and audience
 - [x] Configure callback URLs
+- [x] Authorize SPA app to access API
 
-### Phase 1: API Foundation
-- [ ] Create `rides-api` repo
-- [ ] Setup Hono + Drizzle
-- [ ] Copy DB schema from Next.js
-- [ ] Implement Auth0 JWT middleware with JWKS
-- [ ] Add user lookup by Auth0 ID
-- [ ] Setup Oracle Cloud VM (Node.js, PM2, firewall)
-- [ ] Deploy API to Oracle Cloud
-- [ ] Setup HTTPS (Caddy + domain or Cloudflare)
-- [ ] Verify DB connection
-- [ ] Test auth flow
+### Phase 1: API Foundation ✅
+- [x] Create `rides-api` repo
+- [x] Setup Hono + Drizzle
+- [x] Copy DB schema from Next.js
+- [x] Implement Auth0 JWT middleware with JWKS
+- [x] Add user lookup by Auth0 ID
+- [x] Setup Oracle Cloud VM (Node.js, PM2, firewall)
+- [x] Deploy API to Oracle Cloud
+- [x] Setup HTTPS (Caddy + domain: api.fairhursts.net)
+- [x] Verify DB connection
+- [x] Test auth flow
+- [x] Setup ESLint + Prettier
 
-### Phase 2: Read Endpoints
-- [ ] `GET /rides`
-- [ ] `GET /rides/:id`
-- [ ] `GET /users/me`
-- [ ] `GET /repeating-rides` (admin)
+### Phase 2: Read Endpoints ✅
+- [x] `GET /rides`
+- [x] `GET /rides/:id`
+- [x] `GET /users/me`
+- [ ] `GET /repeating-rides` (admin) - not yet needed
 
 ### Phase 3: Frontend (per feature)
-- [ ] Install TanStack Query + Auth0 SPA SDK
-- [ ] Create Providers wrapper
-- [ ] Create API client with auth
-- [ ] **Feature 1:** Migrate RidesList
-- [ ] **Feature 2:** Migrate Join/Leave + remove Jotai
-- [ ] **Feature 3:** Migrate RideDetails
+- [x] Install TanStack Query + Auth0 SPA SDK
+- [x] Create Providers wrapper
+- [x] Create API client with auth
+- [x] Create useSession hook
+- [x] **Feature 1:** Migrate RidesList to client-side
+- [x] **Feature 2:** Migrate Join/Leave with TanStack Query optimistic updates
+- [x] **Feature 3:** Migrate RideDetails to client-side
+- [x] **Feature 3b:** Migrate ride notes/messages
+- [x] Migrate Header to use Auth0 login/logout
 - [ ] **Feature 4:** Migrate Calendar
 - [ ] **Feature 5:** Migrate Profile
-- [ ] **Feature 6:** Migrate Repeating Rides
+- [ ] **Feature 6:** Migrate Repeating Rides (admin)
+- [ ] **Feature 7:** Migrate ride create/edit forms (LEADER+)
 
 ### Phase 4: Write Endpoints
-- [ ] `POST /rides/:id/join`
-- [ ] `POST /rides/:id/leave`
-- [ ] `POST /rides`
-- [ ] `PUT /rides/:id`
-- [ ] `DELETE /rides/:id`
-- [ ] `POST /rides/:id/cancel`
+- [x] `POST /rides/:id/join`
+- [x] `POST /rides/:id/leave`
+- [x] `PATCH /rides/:id/notes`
+- [ ] `POST /rides` - create ride
+- [ ] `PUT /rides/:id` - update ride
+- [ ] `DELETE /rides/:id` - delete ride
+- [ ] `POST /rides/:id/cancel` - cancel ride
 
 ### Phase 5: Cleanup
-- [ ] Remove Jotai
-- [ ] Remove server actions
+- [ ] Remove Jotai (partially done - still used for filter state)
+- [ ] Remove server actions (partially done - some still in use)
 - [ ] Remove NextAuth
 - [ ] Remove unused API routes
-- [ ] Update env vars
+- [ ] Update Vercel env vars
 - [ ] Final testing
-- [ ] Monitor Vercel usage (should drop to ~0 functions)
+- [ ] Monitor Vercel usage (should drop significantly)
+
+---
+
+## Progress Log
+
+### 2026-02-05
+- Completed Phase 0, 1, and most of Phase 2-3
+- API live at https://api.fairhursts.net
+- Frontend migrated: rides list, ride details, join/leave, notes
+- Auth0 SPA login working
+- Known issues:
+  - Dev mode slower with `--webpack` flag (Turbopack has font issue)
+  - Some features still use server actions (calendar, profile, repeating rides, ride forms)
 
 ---
 
