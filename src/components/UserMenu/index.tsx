@@ -1,12 +1,11 @@
 "use client";
 
+import { useSession } from "@/hooks/useSession";
 import { cancelRide } from "@/server/actions/cancel-ride";
 import { deleteRide } from "@/server/actions/delete-ride";
 import { isCancelledAtom } from "@/store";
-import { type Role } from "@/types";
 import { useAtom } from "jotai";
 import { Menu } from "lucide-react";
-import { signIn, signOut } from "next-auth/react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { flattenQuery } from "shared/utils";
@@ -14,12 +13,9 @@ import { toast } from "sonner";
 import { Confirm } from "../Confirm";
 import { MenuContent } from "./MenuContent";
 
-export type MenuProps = {
-  role?: Role;
-  isAuthenticated: boolean;
-};
-
-const UserMenu = ({ role, isAuthenticated }: MenuProps) => {
+const UserMenu = () => {
+  const { session, isAuthenticated, login, logout } = useSession();
+  const role = session?.user?.role;
   const router = useRouter();
   const pathname = usePathname();
   const params = useParams();
@@ -46,13 +42,13 @@ const UserMenu = ({ role, isAuthenticated }: MenuProps) => {
     }
   };
 
-  const handleSignout = async () => {
-    await signOut({ callbackUrl: "http://localhost:3000" });
+  const handleSignout = () => {
+    logout();
     closeMenu();
   };
 
-  const handleSignin = async () => {
-    await signIn("auth0");
+  const handleSignin = () => {
+    void login();
     closeMenu();
   };
 

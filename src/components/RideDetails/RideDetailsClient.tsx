@@ -3,7 +3,8 @@ import { useRide } from "@/hooks/useRides";
 import { useSession } from "@/hooks/useSession";
 import { isCancelledAtom } from "@/store";
 import type { Ride, User } from "@/types";
-import { hasSpace, isJoinable } from "@utils/index";
+import { formatRideData, hasSpace } from "@utils/rides";
+import { isJoinable } from "@utils/dates";
 import { useAtom } from "jotai";
 import { MessageSquare } from "lucide-react";
 import { useEffect, useState, type JSX } from "react";
@@ -63,11 +64,13 @@ export function RideDetailsClient({ id }: Props) {
     );
   }
 
-  const { name, rideDate, time, day, cancelled, rideLimit, users } = ride;
+  // Format ride data to extract day/time from rideDate
+  const formattedRide = formatRideData(ride) as Ride;
+  const { name, rideDate, time, day, cancelled, rideLimit, users } = formattedRide;
 
   const userList = users?.map((u: { user: User }) => u.user) ?? [];
   const isLeader = ["ADMIN", "LEADER"].includes(role ?? "");
-  const isSpace = hasSpace(ride);
+  const isSpace = hasSpace(formattedRide);
   const canJoin = isJoinable(rideDate, time) && isSpace;
   const hasLimit = rideLimit && rideLimit > -1;
 
@@ -88,7 +91,7 @@ export function RideDetailsClient({ id }: Props) {
         <div>{day}</div>
       </Heading>
 
-      <RideInfo ride={ride} user={user} />
+      <RideInfo ride={formattedRide} user={user} />
 
       {cancelled ? (
         <div className="mb-16 flex flex-row justify-between px-2 pt-2 sm:px-0 md:justify-start md:gap-4">
