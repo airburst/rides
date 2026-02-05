@@ -1,13 +1,13 @@
 import { MainContent } from "@/components/Layout/MainContent";
 import { getRepeatingRide } from "@/server/actions/get-repeating-ride";
 import { canUseAction } from "@/server/auth";
-import dynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 import { redirect } from "next/navigation";
 
 // ISR: Revalidate every 60 seconds
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
-const RepeatingRideDetails = dynamic(
+const RepeatingRideDetails = dynamicImport(
   () => import("@/components/RepeatingRides/RepeatingRideDetails"),
 );
 

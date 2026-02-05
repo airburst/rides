@@ -10,13 +10,13 @@ import {
 } from "@utils/dates";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { type Metadata } from "next";
-import dynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 import Link from "next/link";
 
-// ISR: Revalidate every 60 seconds
-export const revalidate = 60;
+// Force dynamic rendering - calendar needs database access
+export const dynamic = 'force-dynamic';
 
-const Calendar = dynamic<CalendarProps>(() => import("@/components/Calendar"));
+const Calendar = dynamicImport<CalendarProps>(() => import("@/components/Calendar"));
 
 export const metadata: Metadata = {
   title: `${env.NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`,

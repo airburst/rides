@@ -5,13 +5,13 @@ import { canUseAction } from "@/server/auth";
 import { getNow } from "@utils/dates";
 import { flattenQuery } from "@utils/general";
 import { Plus } from "lucide-react";
-import dynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 import Link from "next/link";
 
-// ISR: Revalidate every 30 seconds
-export const revalidate = 30;
+// Force dynamic rendering - uses client-side data fetching
+export const dynamic = 'force-dynamic';
 
-const RidesList = dynamic<RidesListProps>(
+const RidesList = dynamicImport<RidesListProps>(
   () => import("@/components/RidesList"),
 );
 
