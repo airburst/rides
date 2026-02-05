@@ -9,8 +9,12 @@ type RideResponse = { ride: Ride };
 export function useRides(start?: string, end?: string) {
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
 
+  // Use date-only keys for stable caching (ignore time component)
+  const startDate = start?.split("T")[0];
+  const endDate = end?.split("T")[0];
+
   return useQuery({
-    queryKey: ["rides", start, end],
+    queryKey: ["rides", startDate, endDate],
     queryFn: async () => {
       let token: string | undefined;
       if (isAuthenticated) {

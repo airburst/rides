@@ -10,7 +10,7 @@ import { makeFilterData } from "@utils/rides";
 import { groupRides } from "@utils/transformRideData";
 import { useAtom } from "jotai";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { FiltersPanel } from "../Filters";
 import { RideGroup } from "./RideGroup";
 
@@ -23,8 +23,12 @@ export function RidesListClient({ date }: Props) {
   // Cast to User - only id is needed for filtering
   const user = session?.user as User | undefined;
 
-  const { start, end } = getQueryDateRange({ start: date, end: date });
-  const { data: rides, isLoading, error } = useRides(start, end);
+  // Memoize date range to prevent query key changes on re-render
+  const { start, end } = useMemo(
+    () => getQueryDateRange({ start: date, end: date }),
+    [date],
+  );
+  const { data: rides, isPending, error } = useRides(start, end);
 
   const [showFilterMenu, setShowFilterMenu] = useAtom(showFilterAtom);
   const [filterQuery, setFilterQuery] = useAtom(filterQueryAtom);
@@ -38,7 +42,8 @@ export function RidesListClient({ date }: Props) {
 
   const closeFilters = () => setShowFilterMenu(false);
 
-  if (isLoading) {
+  // Only show spinner on initial load (no cached data)
+  if (isPending && !rides) {
     return (
       <div className="grid w-full grid-cols-1 gap-4 md:gap-8">
         <div className="flex h-full items-center justify-center p-8 pt-32">

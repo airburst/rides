@@ -33,7 +33,7 @@ export function RideDetailsClient({ id }: Props) {
   const user = session?.user as User | undefined;
   const role = user?.role;
 
-  const { data: ride, isLoading, error } = useRide(id);
+  const { data: ride, isPending, error } = useRide(id);
   const [showNotesForm, setShowNotesForm] = useState<boolean>(false);
   const [, setCancelled] = useAtom(isCancelledAtom);
 
@@ -43,7 +43,8 @@ export function RideDetailsClient({ id }: Props) {
     }
   }, [ride, setCancelled]);
 
-  if (isLoading) {
+  // Only show spinner on initial load (no cached data)
+  if (isPending && !ride) {
     return (
       <div className="flex h-64 w-full items-center justify-center">
         <span className="loading loading-spinner loading-lg" />
