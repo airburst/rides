@@ -1,3 +1,4 @@
+// TODO: REMOVE - Migrated to rides-api POST /archive
 import { archiveRides } from "@/server/actions/archive-rides";
 import { getNow } from "@utils/dates";
 import { headers } from "next/headers";

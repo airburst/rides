@@ -1,3 +1,4 @@
+// TODO: REMOVE - Migrated to rides-api POST /generate
 import { getNextMonth } from "@utils/dates";
 import { headers } from "next/headers";
 import { NextResponse } from "next/server";
