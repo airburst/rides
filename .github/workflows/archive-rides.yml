@@ -20,7 +20,7 @@ jobs:
         run: |
           curl \
           --request POST \
-          --url "https://bcc-rides.vercel.app/api/archive-rides" \
+          --url "https://api.fairhursts.net/archive" \
           --data '{}' \
           --header "Content-Type: application/json" \
           --header "Authorization: Bearer ${{ secrets.API_KEY }}"

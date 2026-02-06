@@ -8,6 +8,7 @@ jobs:
     steps:
       - name: Fetch latest RiderHQ membership info
         run: |
-          curl --request GET \
-          --url "https://bcc-rides.vercel.app/api/riderhq" \
+          curl \
+          --request POST \
+          --url "https://api.fairhursts.net/riderhq" \
           --header "Authorization: Bearer ${{ secrets.API_KEY }}"

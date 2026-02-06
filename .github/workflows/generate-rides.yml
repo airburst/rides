@@ -20,7 +20,7 @@ jobs:
         run: |
           curl \
           --request POST \
-          --url "https://bcc-rides.vercel.app/api/generate" \
+          --url "https://api.fairhursts.net/generate" \
           --data '{}' \
           --header "Content-Type: application/json" \
           --header "Authorization: Bearer ${{ secrets.API_KEY }}"
