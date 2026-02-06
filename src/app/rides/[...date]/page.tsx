@@ -2,7 +2,7 @@
 
 import { BackButton, Button } from "@/components/Button";
 import { MainContent } from "@/components/Layout/MainContent";
-import { type RidesListProps } from "@/components/RidesList";
+import { type RidesListClientProps } from "@/components/RidesList/RidesListClient";
 import { useSession } from "@/hooks/useSession";
 import { getNow } from "@utils/dates";
 import { flattenQuery } from "@utils/general";
@@ -11,8 +11,9 @@ import dynamicImport from "next/dynamic";
 import Link from "next/link";
 import { use } from "react";
 
-const RidesList = dynamicImport<RidesListProps>(
-  () => import("@/components/RidesList"),
+const RidesList = dynamicImport<RidesListClientProps>(
+  () =>
+    import("@/components/RidesList/RidesListClient").then((m) => m.RidesListClient),
 );
 
 export default function RidesOnDate(props: {

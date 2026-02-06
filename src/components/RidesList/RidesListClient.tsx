@@ -14,11 +14,11 @@ import { FiltersPanel } from "../Filters";
 import { RideGroup } from "./RideGroup";
 import RidesListSkeleton from "./RidesListSkeleton";
 
-type Props = {
+export type RidesListClientProps = {
   date?: string;
 };
 
-export function RidesListClient({ date }: Props) {
+export function RidesListClient({ date }: RidesListClientProps) {
   const { session } = useSession();
   // Cast to User - only id is needed for filtering
   const user = session?.user as User | undefined;
