@@ -27,9 +27,6 @@ export const env = createEnv({
     AUTH0_CLIENT_ID: z.string().optional(),
     AUTH0_CLIENT_SECRET: z.string().optional(),
     AUTH0_ISSUER: z.string().optional(),
-    RIDERHQ_URL: z.string(),
-    RIDERHQ_ACCOUNT_ID: z.string(),
-    RIDERHQ_PRIVATE_KEY: z.string(),
     API_KEY: z.string(),
   },
 
@@ -81,9 +78,6 @@ export const env = createEnv({
     AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
     AUTH0_CLIENT_SECRET: process.env.AUTH0_CLIENT_SECRET,
     AUTH0_ISSUER: process.env.AUTH0_ISSUER,
-    RIDERHQ_URL: process.env.RIDERHQ_URL,
-    RIDERHQ_ACCOUNT_ID: process.env.RIDERHQ_ACCOUNT_ID,
-    RIDERHQ_PRIVATE_KEY: process.env.RIDERHQ_PRIVATE_KEY,
     API_KEY: process.env.API_KEY,
   },
   /**
