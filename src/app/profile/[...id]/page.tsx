@@ -1,31 +1,46 @@
+"use client";
+
 import { BackButton } from "@/components/Button";
 import { MainContent } from "@/components/Layout/MainContent";
-import { env } from "@/env";
-import { getUser } from "@/server/actions/get-user";
-import { canUseAction } from "@/server/auth";
-import { type Metadata } from "next";
+import { useSession } from "@/hooks/useSession";
+import { useUser } from "@/hooks/users";
+import { flattenQuery } from "@utils/general";
 import dynamic from "next/dynamic";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { use, useEffect } from "react";
 
 const UserProfileForm = dynamic(
   () => import("@/components/forms/UserProfileForm"),
 );
 
-export const metadata: Metadata = {
-  title: `${env.NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`,
-  description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} User Profile Page`,
-};
+export default function UserPage(props: { params: Promise<{ id: string }> }) {
+  const params = use(props.params);
+  const id = flattenQuery(params.id);
+  const router = useRouter();
+  const { session, isLoading: authLoading } = useSession();
+  const isAdmin = session?.user?.role === "ADMIN";
 
-export default async function UserPage(props: {
-  params: Promise<{ id: string }>;
-}) {
-  const params = await props.params;
-  const { id } = params;
-  const isAdmin = await canUseAction("ADMIN");
+  const { data: user, isLoading, error } = useUser(id ?? "");
 
-  // Redirect if not admin
+  // Redirect non-admins
+  useEffect(() => {
+    if (!authLoading && !isAdmin) {
+      router.replace("/");
+    }
+  }, [authLoading, isAdmin, router]);
+
+  if (authLoading || isLoading) {
+    return (
+      <MainContent>
+        <div className="flex h-64 w-full items-center justify-center">
+          <span className="loading loading-spinner loading-lg" />
+        </div>
+      </MainContent>
+    );
+  }
+
   if (!isAdmin) {
-    redirect("/");
+    return null; // Will redirect
   }
 
   if (!id) {
@@ -35,7 +50,7 @@ export default async function UserPage(props: {
           <div className="flex h-64 w-full items-center justify-center text-2xl">
             Unable to find user details
           </div>
-          <div className="flex mb-16 flex-row justify-between px-2 pt-8 sm:px-0">
+          <div className="mb-16 flex flex-row justify-between px-2 pt-8 sm:px-0">
             <BackButton />
           </div>
         </>
@@ -43,12 +58,12 @@ export default async function UserPage(props: {
     );
   }
 
-  const { user, error } = await getUser(id);
-
-  if (error ?? !user) {
+  if (error || !user) {
     return (
       <MainContent>
-        <div>{error}</div>
+        <div className="flex h-64 w-full items-center justify-center text-2xl">
+          Unable to load user
+        </div>
       </MainContent>
     );
   }
