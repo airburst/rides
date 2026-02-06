@@ -47,12 +47,13 @@ export default function CopyRidePage(props: {
     );
   }
 
-  // Extract time from rideDate
-  const rideDateTime = ride.rideDate ? new Date(ride.rideDate) : null;
+  // Extract date and time from rideDate (format: "2026-02-09 10:30:00" or ISO)
+  const rideDateStr = ride.rideDate?.replace(" ", "T") ?? "";
+  const rideDateTime = rideDateStr ? new Date(rideDateStr) : null;
   const time = rideDateTime
-    ? `${String(rideDateTime.getHours()).padStart(2, "0")}:${String(rideDateTime.getMinutes()).padStart(2, "0")}`
+    ? `${String(rideDateTime.getUTCHours()).padStart(2, "0")}:${String(rideDateTime.getUTCMinutes()).padStart(2, "0")}`
     : "";
-  const rideDate = ride.rideDate?.split("T")[0] ?? "";
+  const rideDate = rideDateStr.split("T")[0] ?? "";
 
   // Copy does NOT include id - creates a new ride
   const defaultValues = {
