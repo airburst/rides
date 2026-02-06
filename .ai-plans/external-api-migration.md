@@ -29,6 +29,36 @@
 - ⏳ Remove NextAuth (after testing complete)
 - ⏳ Merge feature/external-api branch to main
 
+### Cleanup - Can Be Removed from rides app
+Database now owned by rides-api. These can be deleted:
+
+**Database & Schema:**
+- `src/server/db/` - entire folder (schema, seeds, pump.ts, index.ts)
+- `drizzle/` - migrations folder
+- `drizzle.config.ts`
+
+**Server Actions (no longer used):**
+- `src/server/actions/` - check for any remaining files
+
+**Bin Scripts (moved to rides-api):**
+- `bin/start-database`
+- `bin/serve` - update to just run `yarn dev`
+- `bin/seed` - remove (use rides-api)
+- `bin/stop` - remove (use rides-api)
+
+**Dependencies to remove:**
+- `drizzle-kit` (dev)
+- `drizzle-orm` - check if still needed for types
+- `postgres` or `@neondatabase/serverless` - DB drivers
+
+**Env vars no longer needed:**
+- `DATABASE_URL` - frontend doesn't access DB
+- `SOURCE_URL` - for pumping data (now in rides-api)
+
+**Keep:**
+- NextAuth (until fully tested with Auth0)
+- Short URL redirect page (server component, no auth)
+
 ---
 
 ## Decisions
