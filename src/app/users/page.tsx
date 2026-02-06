@@ -1,33 +1,47 @@
+"use client";
+
 import { MainContent } from "@/components/Layout/MainContent";
-import { env } from "@/env";
-import { getUsers } from "@/server/actions/get-users";
-import { canUseAction } from "@/server/auth";
-import { type Metadata } from "next";
+import { useSession } from "@/hooks/useSession";
+import { useUsers } from "@/hooks/users";
 import dynamic from "next/dynamic";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const UsersList = dynamic(() => import("@/components/Users/UsersList"));
 
-export const metadata: Metadata = {
-  title: `Manage Users`,
-  description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} - Users`,
-};
+export default function Users() {
+  const router = useRouter();
+  const { session, isLoading: authLoading } = useSession();
+  const isAdmin = session?.user?.role === "ADMIN";
 
-export default async function Users() {
-  const isAdmin = await canUseAction("ADMIN");
+  const { data: users, isLoading, error } = useUsers();
 
-  // Redirect if not admin
-  if (!isAdmin) {
-    redirect("/");
+  // Redirect non-admins
+  useEffect(() => {
+    if (!authLoading && !isAdmin) {
+      router.replace("/");
+    }
+  }, [authLoading, isAdmin, router]);
+
+  if (authLoading || isLoading) {
+    return (
+      <MainContent>
+        <div className="flex h-64 w-full items-center justify-center">
+          <span className="loading loading-spinner loading-lg" />
+        </div>
+      </MainContent>
+    );
   }
 
-  const { users, error } = await getUsers();
+  if (!isAdmin) {
+    return null; // Will redirect
+  }
 
   if (error) {
     return (
       <div className="grid w-full grid-cols-1 gap-4 md:gap-8">
         <div className="flex h-full items-center p-8 pt-32 text-2xl">
-          Error loading rides
+          Error loading users
         </div>
       </div>
     );
@@ -41,7 +55,7 @@ export default async function Users() {
             Manage Users
           </div>
         </div>
-        <UsersList users={users} />
+        <UsersList users={users ?? []} />
       </>
     </MainContent>
   );
