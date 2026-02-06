@@ -5,24 +5,28 @@
 **✅ Phase 0:** Auth0 SPA Setup - COMPLETE
 **✅ Phase 1:** API Foundation - COMPLETE
 **✅ Phase 2:** Read Endpoints - COMPLETE
-**✅ Phase 3:** Frontend Migration (Core Features) - COMPLETE
-**✅ Phase 4:** Write Endpoints - COMPLETE (join/leave/notes/CRUD all done)
-**⏳ Phase 5:** Cleanup - PARTIAL (Jotai removed, server actions remain for admin features)
+**✅ Phase 3:** Frontend Migration - COMPLETE
+**✅ Phase 4:** Write Endpoints - COMPLETE
+**✅ Phase 5:** Cleanup - NEARLY COMPLETE
 
 ### What's Working Now
-- ✅ Rides list with filters (client-side)
-- ✅ Ride details (client-side)
-- ✅ Join/Leave rides with optimistic updates
-- ✅ Ride notes/messages
+- ✅ All pages converted to client components
+- ✅ All CRUD operations use external API
+- ✅ Rides list, details, join/leave with optimistic updates
+- ✅ Ride create/edit/delete/cancel forms
+- ✅ Calendar view (client-side)
+- ✅ User profile editing
+- ✅ Repeating rides management (full CRUD + generate)
 - ✅ Auth0 SPA authentication
-- ✅ **Jotai completely removed** - replaced with TanStack Query + React Context
-- ✅ React Query Devtools
+- ✅ Jotai fully removed - replaced with TanStack Query + React Context
+- ✅ Cron job endpoints migrated to rides-api
 
-### What's Still Using Server Components/Actions
-- ⏳ Calendar view
-- ⏳ User profile editing
-- ⏳ Repeating rides management (admin)
-- ⏳ Ride create/edit/delete forms (LEADER+)
+### What's Still Pending
+- ⏳ Avatar upload (needs alternative to Next.js image processing)
+- ⏳ Short URL redirect page (server component - no auth needed, OK to keep)
+- ⏳ Update GitHub cron jobs to use new API URL
+- ⏳ Remove old Next.js API routes after cron jobs updated
+- ⏳ Remove NextAuth (after testing complete)
 
 ---
 
@@ -1170,11 +1174,12 @@ Convert remaining server components that fetch data to client components using h
 - [x] `GET /rides`
 - [x] `GET /rides/:id`
 - [x] `GET /users/me`
-- [ ] `GET /repeating-rides` (admin) - not yet needed
+- [x] `GET /users/:id`
+- [x] `GET /users` (admin)
+- [x] `GET /repeating-rides` (admin)
+- [x] `GET /repeating-rides/:id` (admin)
 
-### Phase 3: Frontend (per feature) - CORE FEATURES COMPLETE ✅
-
-**Completed - Core User Features:**
+### Phase 3: Frontend (per feature) ✅
 
 - [x] Install TanStack Query + Auth0 SPA SDK
 - [x] Create Providers wrapper (Auth0Provider + QueryClientProvider + FilterProvider)
@@ -1185,20 +1190,12 @@ Convert remaining server components that fetch data to client components using h
 - [x] **Feature 3:** Migrate RideDetails to client-side
 - [x] **Feature 3b:** Migrate ride notes/messages
 - [x] Migrate Header to use Auth0 login/logout
+- [x] **Feature 4:** Migrate Calendar to client-side
+- [x] **Feature 5:** Migrate Profile pages to client-side
+- [x] **Feature 6:** Migrate Repeating Rides (full CRUD)
+- [x] **Feature 7:** Migrate ride create/edit forms
 - [x] **FULLY REMOVE JOTAI** - Replaced with TanStack Query + React Context
-  - [x] Removed `jotai` package dependency
-  - [x] Deleted `src/store/` directory (optimistic updates, filter atoms)
-  - [x] Deleted Jotai-related hooks (useOptimisticRideUpdates, useOptimisticCleanup)
-  - [x] Created FilterContext for UI state management
-  - [x] Migrated all components: RideCard, RidesListClient, FilteredRides, FilterButton, FiltersPanel
 - [x] Add React Query Devtools
-
-**Remaining - Admin/Power User Features:**
-
-- [ ] **Feature 4:** Migrate Calendar (still uses server components)
-- [ ] **Feature 5:** Migrate Profile (still uses server actions: getUser, updateUser)
-- [ ] **Feature 6:** Migrate Repeating Rides (still uses server actions)
-- [x] **Feature 7:** Migrate ride create/edit forms to use new hooks ✅
 
 ### Phase 4: Write Endpoints ✅
 
@@ -1210,25 +1207,67 @@ Convert remaining server components that fetch data to client components using h
 - [x] `DELETE /rides/:id` - delete ride (soft delete)
 - [x] `POST /rides/:id/cancel` - cancel ride
 - [x] `POST /rides/:id/uncancel` - uncancel ride
-- [x] Frontend hooks: `useCreateRide`, `useUpdateRide`, `useDeleteRide`, `useCancelRide`, `useUncancelRide`
-- [ ] `GET /calendar/:month` - calendar data (deferred)
-- [ ] `GET /users/:id` - user profile (deferred)
-- [ ] `PATCH /users/:id` - update user profile (deferred)
-- [ ] Repeating rides endpoints (deferred)
+- [x] `PATCH /users/:id` - update user profile
+- [x] `POST /repeating-rides` - create repeating ride
+- [x] `PUT /repeating-rides/:id` - update repeating ride
+- [x] `DELETE /repeating-rides/:id` - delete repeating ride (with cascade option)
+- [x] `POST /generate` - generate rides from templates
+- [x] `POST /archive` - archive old rides (cron)
+- [x] `POST /riderhq` - sync members from RiderHQ (cron)
 
-### Phase 5: Cleanup
+### Phase 5: Cleanup ⏳
 
-- [x] Remove Jotai ✅ **COMPLETE** - fully removed from codebase
-- [ ] Remove server actions (partially done - calendar, profile, repeating rides, ride forms still use them)
-- [ ] Remove NextAuth (still needed for Features 4-7)
-- [ ] Remove unused API routes
-- [ ] Update Vercel env vars
+- [x] Remove Jotai ✅
+- [x] Remove old RidesList server component
+- [x] All pages converted to client components
+- [x] Cron endpoints migrated to rides-api
+- [x] Next.js API routes marked for removal
+- [ ] Update GitHub cron jobs to use `https://api.fairhursts.net`
+- [ ] Delete old Next.js API routes after cron jobs updated
+- [ ] Remove NextAuth (after full testing)
+- [ ] Avatar upload alternative (deferred)
 - [ ] Final testing
-- [ ] Monitor Vercel usage (should drop significantly)
+- [ ] Monitor Vercel usage
 
 ---
 
 ## Progress Log
+
+### 2026-02-06 (Afternoon) - Migration Nearly Complete ✅
+
+**All pages converted to client components:**
+- ✅ `/rides/[...date]` - uses RidesListClient
+- ✅ `/repeating-rides` - uses useRepeatingRides hook
+- ✅ `/repeating-rides/[...id]` - uses useRepeatingRide hook
+- ✅ `/repeating-rides/edit/[...id]` - uses useRepeatingRide + useUpdateRepeatingRide
+- ✅ `/repeating-rides/copy/[...id]` - uses useRepeatingRide + useCreateRepeatingRide
+- ✅ `/calendar` and `/calendar/[...date]` - uses useRides hook
+- ✅ `/profile`, `/profile/[...id]`, `/users` - already client components
+
+**New rides-api endpoints:**
+- ✅ `GET /repeating-rides` - list all templates (admin)
+- ✅ `GET /repeating-rides/:id` - get single template
+- ✅ `POST /repeating-rides` - create template
+- ✅ `PUT /repeating-rides/:id` - update template
+- ✅ `DELETE /repeating-rides/:id?cascade=true` - delete with optional cascade
+- ✅ `POST /generate` - generate rides from templates (API_KEY or ADMIN auth)
+- ✅ `POST /archive` - archive old rides (API_KEY auth)
+- ✅ `POST /riderhq` - sync members from RiderHQ (API_KEY auth)
+
+**New frontend hooks:**
+- ✅ `useRepeatingRides`, `useRepeatingRide`
+- ✅ `useCreateRepeatingRide`, `useUpdateRepeatingRide`, `useDeleteRepeatingRide`
+- ✅ `useGenerateRides`
+
+**Cleanup:**
+- ✅ Deleted old RidesList server component
+- ✅ Marked Next.js API routes for removal (TODO comments added)
+
+**Remaining:**
+- Update GitHub cron jobs to call `https://api.fairhursts.net`
+- Add env vars to Oracle Cloud VM: `API_KEY`, `RIDERHQ_*`
+- Delete old Next.js API routes after cron jobs verified
+- Avatar upload needs alternative solution
 
 ### 2026-02-06 - Ride Forms Migrated ✅
 
