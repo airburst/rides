@@ -16,7 +16,10 @@
       "Bash(npx tsc:*)",
       "Bash(git status:*)",
       "Bash(npm run check-types:*)",
-      "Bash(ssh:*)"
+      "Bash(ssh:*)",
+      "Bash(git restore:*)",
+      "Bash(node -e:*)",
+      "Bash(npm run deploy:*)"
     ]
   }
 }

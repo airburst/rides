@@ -1,34 +1,37 @@
+"use client";
+
 import { BackButton } from "@/components/Button";
 import { MainContent } from "@/components/Layout/MainContent";
-import { env } from "@/env";
-import { getUser } from "@/server/actions/get-user";
-import { getServerAuthSession } from "@/server/auth";
-import { type Metadata } from "next";
+import { useSession } from "@/hooks/useSession";
+import { useUser } from "@/hooks/users";
 import dynamic from "next/dynamic";
 
 const UserProfileForm = dynamic(
   () => import("@/components/forms/UserProfileForm"),
 );
 
-export const metadata: Metadata = {
-  title: `${env.NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`,
-  description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} User Profile Page`,
-};
+export default function ProfilePage() {
+  const { session, isLoading: authLoading } = useSession();
+  const userId = session?.user?.id;
 
-export default async function ProfilePage(props: {
-  params: Promise<{ id: string }>;
-}) {
-  const params = await props.params;
-  const { id } = params;
-  const session = await getServerAuthSession();
-  const userId = id ?? session?.user!.id;
+  const { data: user, isLoading, error } = useUser(userId ?? "");
+
+  if (authLoading || isLoading) {
+    return (
+      <MainContent>
+        <div className="flex h-64 w-full items-center justify-center">
+          <span className="loading loading-spinner loading-lg" />
+        </div>
+      </MainContent>
+    );
+  }
 
   if (!userId) {
     return (
       <MainContent>
         <>
           <div className="flex h-64 w-full items-center justify-center text-2xl">
-            Unable to find user details
+            Please sign in to view your profile
           </div>
           <div className="mb-16 flex flex-row justify-between px-2 pt-8 sm:px-0">
             <BackButton />
@@ -38,12 +41,12 @@ export default async function ProfilePage(props: {
     );
   }
 
-  const { user, error } = await getUser(userId);
-
-  if (error ?? !user) {
+  if (error || !user) {
     return (
       <MainContent>
-        <div>{error}</div>
+        <div className="flex h-64 w-full items-center justify-center text-2xl">
+          Unable to load profile
+        </div>
       </MainContent>
     );
   }

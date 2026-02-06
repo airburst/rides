@@ -1,8 +1,7 @@
 "use client";
 
-import { updateProfile } from "@/server/actions/update-profile";
+import { useUpdateUser } from "@/hooks/users";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { convertObjectToFormData } from "@utils/general";
 import { EditIcon } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -46,24 +45,36 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
     },
   });
   const router = useRouter();
-  const [isPending, setIsPending] = useState(false);
+  const updateMutation = useUpdateUser();
   const [showAvatarModalForm, setShowAvatarModalForm] = useState(false);
 
   const showAvatarModal = () => setShowAvatarModalForm(true);
   const hideAvatarModal = () => setShowAvatarModalForm(false);
 
-  const onSubmit = async (data: UserProfileFormSchema) => {
-    setIsPending(true);
-    const formData = convertObjectToFormData(data);
-    const result = await updateProfile(formData);
-
-    if (result.success) {
-      toast.success(result.message);
-      router.back();
-    } else {
-      toast.error(result.message);
-    }
-    setIsPending(false);
+  const onSubmit = (data: UserProfileFormSchema) => {
+    updateMutation.mutate(
+      {
+        id: data.id,
+        data: {
+          name: data.name,
+          mobile: data.mobile,
+          emergency: data.emergency,
+          preferences: data.preferences,
+          role: data.role,
+          membershipId: data.membershipId,
+          membershipStatus: data.membershipStatus,
+        },
+      },
+      {
+        onSuccess: () => {
+          toast.success("Profile updated successfully");
+          router.back();
+        },
+        onError: (error) => {
+          toast.error(error.message || "Failed to update profile");
+        },
+      },
+    );
   };
 
   return (
@@ -226,7 +237,7 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
             <Button
               primary
               type="submit"
-              loading={isPending}
+              loading={updateMutation.isPending}
               disabled={!isDirty}
             >
               SAVE
