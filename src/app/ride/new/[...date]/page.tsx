@@ -1,28 +1,24 @@
+"use client";
+
 import { type RideFormProps } from "@/components/forms/RideForm";
 import { MainContent } from "@/components/Layout/MainContent";
-import { env } from "@/env";
-import { canUseAction, getServerAuthSession } from "@/server/auth";
+import { useSession } from "@/hooks/useSession";
 import { formatFormDate, rruleDay } from "@utils/dates";
 import { formatUserName } from "@utils/rides";
-import { type Metadata } from "next";
 import dynamic from "next/dynamic";
+import { use } from "react";
 
 const RideForm = dynamic<RideFormProps>(
   () => import("@/components/forms/RideForm"),
 );
 
-export const metadata: Metadata = {
-  title: `${env.NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`,
-  description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} User Profile Page`,
-};
-
-export default async function NewRidePageWithDate(props: {
+export default function NewRidePageWithDate(props: {
   params: Promise<{ date?: string }>;
 }) {
-  const params = await props.params;
-  const session = await getServerAuthSession();
+  const params = use(props.params);
+  const { session } = useSession();
   const user = session?.user;
-  const isAdmin = await canUseAction("ADMIN");
+  const isAdmin = user?.role === "ADMIN";
   const dateString = params.date ?? "";
 
   const defaultValues = {
@@ -33,7 +29,7 @@ export default async function NewRidePageWithDate(props: {
     destination: "",
     meetPoint: "Brunel Square",
     distance: 0,
-    leader: formatUserName(user!.name),
+    leader: user?.name ? formatUserName(user.name) : "",
     route: "",
     notes: "",
     rideLimit: -1,
@@ -54,7 +50,7 @@ export default async function NewRidePageWithDate(props: {
       <RideForm
         isRepeating={false}
         defaultValues={defaultValues}
-        isAdmin={!!isAdmin}
+        isAdmin={isAdmin}
       />
     </MainContent>
   );
