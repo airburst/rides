@@ -1,12 +1,12 @@
 # External API Migration Plan
 
-## 🎯 Current Status (2026-02-05)
+## 🎯 Current Status (2026-02-06)
 
-**✅ Phase 0:** Auth0 SPA Setup - COMPLETE  
-**✅ Phase 1:** API Foundation - COMPLETE  
-**✅ Phase 2:** Read Endpoints - COMPLETE  
-**✅ Phase 3:** Frontend Migration (Core Features) - COMPLETE  
-**⏳ Phase 4:** Write Endpoints - PARTIAL (join/leave/notes done, CRUD pending)  
+**✅ Phase 0:** Auth0 SPA Setup - COMPLETE
+**✅ Phase 1:** API Foundation - COMPLETE
+**✅ Phase 2:** Read Endpoints - COMPLETE
+**✅ Phase 3:** Frontend Migration (Core Features) - COMPLETE
+**✅ Phase 4:** Write Endpoints - COMPLETE (join/leave/notes/CRUD all done)
 **⏳ Phase 5:** Cleanup - PARTIAL (Jotai removed, server actions remain for admin features)
 
 ### What's Working Now
@@ -1193,26 +1193,28 @@ Convert remaining server components that fetch data to client components using h
   - [x] Migrated all components: RideCard, RidesListClient, FilteredRides, FilterButton, FiltersPanel
 - [x] Add React Query Devtools
 
-**Remaining - Admin/Power User Features (deferred):**
+**Remaining - Admin/Power User Features:**
 
 - [ ] **Feature 4:** Migrate Calendar (still uses server components)
 - [ ] **Feature 5:** Migrate Profile (still uses server actions: getUser, updateUser)
 - [ ] **Feature 6:** Migrate Repeating Rides (still uses server actions)
-- [ ] **Feature 7:** Migrate ride create/edit forms (needs Phase 4 write endpoints first)
+- [ ] **Feature 7:** Migrate ride create/edit forms to use new hooks (Phase 4 endpoints ready!)
 
-### Phase 4: Write Endpoints
+### Phase 4: Write Endpoints ✅
 
 - [x] `POST /rides/:id/join`
 - [x] `POST /rides/:id/leave`
 - [x] `PATCH /rides/:id/notes`
-- [ ] `POST /rides` - create ride
-- [ ] `PUT /rides/:id` - update ride
-- [ ] `DELETE /rides/:id` - delete ride
-- [ ] `POST /rides/:id/cancel` - cancel ride
-- [ ] `GET /calendar/:month` - calendar data
-- [ ] `GET /users/:id` - user profile
-- [ ] `PATCH /users/:id` - update user profile
-- [ ] Repeating rides endpoints
+- [x] `POST /rides` - create ride
+- [x] `PUT /rides/:id` - update ride
+- [x] `DELETE /rides/:id` - delete ride (soft delete)
+- [x] `POST /rides/:id/cancel` - cancel ride
+- [x] `POST /rides/:id/uncancel` - uncancel ride
+- [x] Frontend hooks: `useCreateRide`, `useUpdateRide`, `useDeleteRide`, `useCancelRide`, `useUncancelRide`
+- [ ] `GET /calendar/:month` - calendar data (deferred)
+- [ ] `GET /users/:id` - user profile (deferred)
+- [ ] `PATCH /users/:id` - update user profile (deferred)
+- [ ] Repeating rides endpoints (deferred)
 
 ### Phase 5: Cleanup
 
@@ -1227,6 +1229,30 @@ Convert remaining server components that fetch data to client components using h
 ---
 
 ## Progress Log
+
+### 2026-02-06 - Phase 4 CRUD Endpoints Complete ✅
+
+**Completed:**
+
+- ✅ **rides-api CRUD endpoints:**
+  - `POST /rides` - create ride (LEADER/ADMIN)
+  - `PUT /rides/:id` - update ride (LEADER/ADMIN)
+  - `DELETE /rides/:id` - soft delete (LEADER/ADMIN)
+  - `POST /rides/:id/cancel` - cancel ride (LEADER/ADMIN)
+  - `POST /rides/:id/uncancel` - uncancel ride (LEADER/ADMIN)
+  - Added zod validation for all inputs
+- ✅ **Frontend hooks:**
+  - `useCreateRide()` - create mutation
+  - `useUpdateRide()` - update mutation
+  - `useDeleteRide()` - delete mutation with optimistic updates
+  - `useCancelRide()` - cancel mutation with optimistic updates
+  - `useUncancelRide()` - uncancel mutation with optimistic updates
+
+**Next steps:**
+
+- Migrate ride create/edit forms to use new hooks
+- Calendar/profile endpoints (lower priority)
+- Remove remaining server actions
 
 ### 2026-02-05 Evening - Phase 3 Core Complete ✅
 
