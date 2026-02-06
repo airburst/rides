@@ -1,4 +1,6 @@
-import { getRides } from "@/server/actions/get-rides";
+"use client";
+
+import { useRides } from "@/hooks/rides";
 import { generateCalendar } from "@utils/calendar";
 import {
   flattenQuery,
@@ -6,24 +8,32 @@ import {
   getNow,
   mapRidesToDate,
 } from "../../../shared/utils";
-import { type RideList } from "../../types";
 import { MainContent } from "../Layout/MainContent";
 import { Day, OutsideDay } from "./Day";
 import { HeadingGroup } from "./Heading";
 
 export type CalendarProps = {
   date: string;
-  rides?: RideList[];
 };
 
-const Calendar: React.FC<CalendarProps> = async ({ date }: CalendarProps) => {
+const Calendar: React.FC<CalendarProps> = ({ date }: CalendarProps) => {
   const monthDate = date ? flattenQuery(date) : getNow();
   const { start, end } = getMonthDateRange(monthDate);
   const calGrid = generateCalendar(monthDate);
   const rowCount = calGrid.length / 7;
 
   // Fetch rides for month
-  const { rides, error } = await getRides(start, end);
+  const { data, isLoading, error } = useRides(start, end);
+
+  if (isLoading) {
+    return (
+      <MainContent>
+        <div className="flex h-64 w-full items-center justify-center">
+          <span className="loading loading-spinner loading-lg" />
+        </div>
+      </MainContent>
+    );
+  }
 
   if (error) {
     return (
@@ -36,7 +46,7 @@ const Calendar: React.FC<CalendarProps> = async ({ date }: CalendarProps) => {
   // Match rides to dates
   const daysWithRides = calGrid.map((dt) => ({
     ...dt,
-    rides: mapRidesToDate(rides ?? [], dt.date),
+    rides: mapRidesToDate(data ?? [], dt.date),
   }));
 
   return (

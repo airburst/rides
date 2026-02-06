@@ -1,7 +1,8 @@
+"use client";
+
 import { Button } from "@/components/Button";
 import { type CalendarProps } from "@/components/Calendar";
 import { FullPageContent } from "@/components/Layout/FullPageContent";
-import { env } from "@/env";
 import {
   formatCalendarDate,
   getLastMonth,
@@ -10,24 +11,16 @@ import {
 } from "@utils/dates";
 import { flattenQuery } from "@utils/general";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { type Metadata } from "next";
 import dynamicImport from "next/dynamic";
 import Link from "next/link";
-
-// Force dynamic rendering - calendar needs database access
-export const dynamic = 'force-dynamic';
+import { use } from "react";
 
 const Calendar = dynamicImport<CalendarProps>(() => import("@/components/Calendar"));
 
-export const metadata: Metadata = {
-  title: `${env.NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`,
-  description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} Ride Calendar`,
-};
-
-export default async function RideCalendar(props: {
+export default function RideCalendar(props: {
   params: Promise<{ date: string }>;
 }) {
-  const params = await props.params;
+  const params = use(props.params);
   const { date } = params;
   const monthDate = date ? flattenQuery(date) : getNow();
   const nextMonth = getNextMonth(monthDate).split("T")[0];

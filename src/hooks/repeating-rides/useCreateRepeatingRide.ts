@@ -17,7 +17,7 @@ export function useCreateRepeatingRide() {
       return apiClient<CreateResponse>("/repeating-rides", {
         token,
         method: "POST",
-        body: dbRide,
+        body: JSON.stringify(dbRide),
       });
     },
     onSuccess: () => {

@@ -60,7 +60,7 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
           mobile: data.mobile,
           emergency: data.emergency,
           preferences: data.preferences,
-          role: data.role,
+          role: data.role as "USER" | "LEADER" | "ADMIN",
           membershipId: data.membershipId,
           membershipStatus: data.membershipStatus,
         },

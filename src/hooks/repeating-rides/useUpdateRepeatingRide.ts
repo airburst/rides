@@ -17,7 +17,7 @@ export function useUpdateRepeatingRide() {
       return apiClient<UpdateResponse>(`/repeating-rides/${ride.id}`, {
         token,
         method: "PUT",
-        body: dbRide,
+        body: JSON.stringify(dbRide),
       });
     },
     onSuccess: (_data, variables) => {
