@@ -7,7 +7,7 @@
 **✅ Phase 2:** Read Endpoints - COMPLETE
 **✅ Phase 3:** Frontend Migration - COMPLETE
 **✅ Phase 4:** Write Endpoints - COMPLETE
-**✅ Phase 5:** Cleanup - NEARLY COMPLETE
+**✅ Phase 5:** Cleanup - COMPLETE
 
 ### What's Working Now
 - ✅ All pages converted to client components
@@ -20,13 +20,14 @@
 - ✅ Auth0 SPA authentication
 - ✅ Jotai fully removed - replaced with TanStack Query + React Context
 - ✅ Cron job endpoints migrated to rides-api
+- ✅ GitHub cron workflows updated to use api.fairhursts.net
+- ✅ Old Next.js API routes removed (riderhq, generate, archive-rides)
 
 ### What's Still Pending
 - ⏳ Avatar upload (needs alternative to Next.js image processing)
 - ⏳ Short URL redirect page (server component - no auth needed, OK to keep)
-- ⏳ Update GitHub cron jobs to use new API URL
-- ⏳ Remove old Next.js API routes after cron jobs updated
 - ⏳ Remove NextAuth (after testing complete)
+- ⏳ Merge feature/external-api branch to main
 
 ---
 
@@ -1215,23 +1216,48 @@ Convert remaining server components that fetch data to client components using h
 - [x] `POST /archive` - archive old rides (cron)
 - [x] `POST /riderhq` - sync members from RiderHQ (cron)
 
-### Phase 5: Cleanup ⏳
+### Phase 5: Cleanup ✅
 
 - [x] Remove Jotai ✅
 - [x] Remove old RidesList server component
 - [x] All pages converted to client components
 - [x] Cron endpoints migrated to rides-api
-- [x] Next.js API routes marked for removal
-- [ ] Update GitHub cron jobs to use `https://api.fairhursts.net`
-- [ ] Delete old Next.js API routes after cron jobs updated
+- [x] Add env vars to Oracle Cloud VM (API_KEY, RIDERHQ_*)
+- [x] Update GitHub cron jobs to use `https://api.fairhursts.net`
+- [x] Delete old Next.js API routes (riderhq, generate, archive-rides)
+- [x] Update .env.example files
 - [ ] Remove NextAuth (after full testing)
 - [ ] Avatar upload alternative (deferred)
+- [ ] Merge feature/external-api to main
 - [ ] Final testing
 - [ ] Monitor Vercel usage
 
 ---
 
 ## Progress Log
+
+### 2026-02-06 (Evening) - Migration Complete ✅
+
+**Cron jobs migrated:**
+- ✅ Added env vars to Oracle Cloud VM (API_KEY, RIDERHQ_*)
+- ✅ Updated GitHub cron workflows to use `api.fairhursts.net`
+- ✅ Fixed RRule CommonJS import issue in rides-api
+- ✅ Tested membership workflow - working
+
+**Cleanup completed:**
+- ✅ Removed `src/app/api/riderhq/` (route, types, convertMembers)
+- ✅ Removed `src/app/api/generate/` (route, utils)
+- ✅ Removed `src/app/api/archive-rides/route.ts`
+- ✅ Removed `src/server/actions/load-members.ts`
+- ✅ Removed `src/server/actions/archive-rides.ts`
+- ✅ Removed `src/server/actions/generate-rides-from-client.ts`
+- ✅ Removed RIDERHQ env vars from rides app
+- ✅ Updated .env.example files in both repos
+
+**Remaining:**
+- Remove NextAuth after full testing
+- Avatar upload alternative (deferred)
+- Merge feature/external-api to main
 
 ### 2026-02-06 (Afternoon) - Migration Nearly Complete ✅
 
