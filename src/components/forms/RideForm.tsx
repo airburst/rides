@@ -1,9 +1,11 @@
 "use client";
 
+import {
+  useCreateRepeatingRide,
+  useUpdateRepeatingRide,
+} from "@/hooks/repeating-rides";
 import { useCreateRide, useUpdateRide } from "@/hooks/useRides";
-import { addRepeatingRide } from "@/server/actions/add-repeating-ride";
 import { generateRidesFromClient } from "@/server/actions/generate-rides-from-client";
-import { updateRepeatingRide } from "@/server/actions/update-repeating-ride";
 import { Switch } from "@headlessui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import clsx from "clsx";
@@ -13,7 +15,6 @@ import { memo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import {
-  convertObjectToFormData,
   formatDate,
   getNow,
   makeRepeatingRide,
@@ -73,10 +74,15 @@ const RideForm = ({
   const createMutation = useCreateRide();
   const updateMutation = useUpdateRide();
 
-  // Pending state for repeating rides (still uses server actions)
-  const [repeatingPending, setRepeatingPending] = useState(false);
+  // Mutations for repeating rides
+  const createRepeatingMutation = useCreateRepeatingRide();
+  const updateRepeatingMutation = useUpdateRepeatingRide();
+
   const isPending =
-    createMutation.isPending || updateMutation.isPending || repeatingPending;
+    createMutation.isPending ||
+    updateMutation.isPending ||
+    createRepeatingMutation.isPending ||
+    updateRepeatingMutation.isPending;
   const [rideDateList, setRideDateList] = useState<string[]>([]);
   const [scheduleId, setScheduleId] = useState<string | null>(null);
   const showRepeatingSwitch = isAdmin && (isNewRide || isRepeating);
@@ -143,22 +149,27 @@ const RideForm = ({
     }
   };
 
-  const createRepeating = async (data: RideFormSchema) => {
-    setRepeatingPending(true);
-    const formData = convertObjectToFormData(data);
+  const createRepeating = (data: RideFormSchema) => {
+    const payload = makeRepeatingRide(data);
 
-    try {
-      const payload = makeRepeatingRide(data);
-      if (data.id) {
-        const results = await updateRepeatingRide(formData);
-
-        setRepeatingPending(false);
-        toast.success(results.message);
-        router.back();
-      } else {
-        const results = await addRepeatingRide(formData);
-
-        if (results?.id) {
+    if (data.id) {
+      // Update existing repeating ride
+      updateRepeatingMutation.mutate(
+        { ...payload, id: data.id },
+        {
+          onSuccess: () => {
+            toast.success("Repeating ride updated successfully");
+            router.back();
+          },
+          onError: (error) => {
+            toast.error(error.message || "Failed to update repeating ride");
+          },
+        },
+      );
+    } else {
+      // Create new repeating ride
+      createRepeatingMutation.mutate(payload, {
+        onSuccess: (results) => {
           // Store schedule id to use in handleYes function
           setScheduleId(results.id);
           // Calculate rides list and ask to create them
@@ -173,12 +184,12 @@ const RideForm = ({
             setRideDateList(rideDates);
             show();
           }
-          setRepeatingPending(false);
-          toast.success(results.message);
-        }
-      }
-    } catch (err) {
-      console.error(err);
+          toast.success("Repeating ride created successfully");
+        },
+        onError: (error) => {
+          toast.error(error.message || "Failed to create repeating ride");
+        },
+      });
     }
   };
 
