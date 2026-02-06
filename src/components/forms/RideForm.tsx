@@ -2,10 +2,10 @@
 
 import {
   useCreateRepeatingRide,
+  useGenerateRides,
   useUpdateRepeatingRide,
 } from "@/hooks/repeating-rides";
 import { useCreateRide, useUpdateRide } from "@/hooks/useRides";
-import { generateRidesFromClient } from "@/server/actions/generate-rides-from-client";
 import { Switch } from "@headlessui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import clsx from "clsx";
@@ -77,12 +77,14 @@ const RideForm = ({
   // Mutations for repeating rides
   const createRepeatingMutation = useCreateRepeatingRide();
   const updateRepeatingMutation = useUpdateRepeatingRide();
+  const generateMutation = useGenerateRides();
 
   const isPending =
     createMutation.isPending ||
     updateMutation.isPending ||
     createRepeatingMutation.isPending ||
-    updateRepeatingMutation.isPending;
+    updateRepeatingMutation.isPending ||
+    generateMutation.isPending;
   const [rideDateList, setRideDateList] = useState<string[]>([]);
   const [scheduleId, setScheduleId] = useState<string | null>(null);
   const showRepeatingSwitch = isAdmin && (isNewRide || isRepeating);
@@ -198,20 +200,26 @@ const RideForm = ({
     router.push("/");
   };
 
-  const handleYes = async (cb: (flag: boolean) => void) => {
+  const handleYes = (cb: (flag: boolean) => void) => {
     hide();
 
     if (scheduleId) {
       const date = getValues("rideDate");
-      const results = await generateRidesFromClient(scheduleId, date);
-
-      if (results.success) {
-        toast.success(results.message);
-        router.push("/");
-        cb(true);
-      } else {
-        cb(false);
-      }
+      generateMutation.mutate(
+        { scheduleId, date },
+        {
+          onSuccess: (results) => {
+            const count = results.results?.[0]?.count ?? 0;
+            toast.success(`Generated ${count} rides`);
+            router.push("/");
+            cb(true);
+          },
+          onError: () => {
+            toast.error("Failed to generate rides");
+            cb(false);
+          },
+        },
+      );
     }
   };
 
