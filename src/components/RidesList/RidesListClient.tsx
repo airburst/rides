@@ -12,6 +12,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { FiltersPanel } from "../Filters";
 import { RideGroup } from "./RideGroup";
+import RidesListSkeleton from "./RidesListSkeleton";
 
 type Props = {
   date?: string;
@@ -39,13 +40,12 @@ export function RidesListClient({ date }: Props) {
     setFilterQuery(filters);
   }, [filters]);
 
-  // Only show spinner on initial load (no cached data)
+  // Show skeleton on initial load (no cached data)
   if (isPending && !rides) {
     return (
       <div className="grid w-full grid-cols-1 gap-4 md:gap-8">
-        <div className="flex h-full items-center justify-center p-8 pt-32">
-          <span className="loading loading-spinner loading-lg" />
-        </div>
+        <RidesListSkeleton numberOfCards={4} />
+        <RidesListSkeleton numberOfCards={3} />
       </div>
     );
   }
