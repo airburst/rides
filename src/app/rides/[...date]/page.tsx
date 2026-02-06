@@ -1,28 +1,30 @@
+"use client";
+
 import { BackButton, Button } from "@/components/Button";
 import { MainContent } from "@/components/Layout/MainContent";
 import { type RidesListProps } from "@/components/RidesList";
-import { canUseAction } from "@/server/auth";
+import { useSession } from "@/hooks/useSession";
 import { getNow } from "@utils/dates";
 import { flattenQuery } from "@utils/general";
 import { Plus } from "lucide-react";
 import dynamicImport from "next/dynamic";
 import Link from "next/link";
-
-// Force dynamic rendering - uses client-side data fetching
-export const dynamic = 'force-dynamic';
+import { use } from "react";
 
 const RidesList = dynamicImport<RidesListProps>(
   () => import("@/components/RidesList"),
 );
 
-export default async function RidesOnDate(props: {
+export default function RidesOnDate(props: {
   params: Promise<{ date: string }>;
 }) {
-  const params = await props.params;
+  const params = use(props.params);
   const { date } = params;
   const dateString = `${flattenQuery(date)}T01:00:00.000Z`;
   const isInFuture = dateString > getNow();
-  const isLeader = await canUseAction("LEADER");
+  const { session } = useSession();
+  const isLeader =
+    session?.user?.role === "LEADER" || session?.user?.role === "ADMIN";
 
   return (
     <MainContent>
