@@ -1198,7 +1198,7 @@ Convert remaining server components that fetch data to client components using h
 - [ ] **Feature 4:** Migrate Calendar (still uses server components)
 - [ ] **Feature 5:** Migrate Profile (still uses server actions: getUser, updateUser)
 - [ ] **Feature 6:** Migrate Repeating Rides (still uses server actions)
-- [ ] **Feature 7:** Migrate ride create/edit forms to use new hooks (Phase 4 endpoints ready!)
+- [x] **Feature 7:** Migrate ride create/edit forms to use new hooks ✅
 
 ### Phase 4: Write Endpoints ✅
 
@@ -1230,6 +1230,19 @@ Convert remaining server components that fetch data to client components using h
 
 ## Progress Log
 
+### 2026-02-06 - Ride Forms Migrated ✅
+
+**Completed:**
+
+- ✅ **RideForm** - uses `useCreateRide`/`useUpdateRide` for single rides
+- ✅ **UserMenu** - uses `useCancelRide`/`useDeleteRide` hooks
+- ✅ Refactored hooks into `src/hooks/rides/` folder (separate files)
+- ✅ Added `npm run deploy` script to rides-api
+
+**Still using server actions:**
+- Repeating rides (addRepeatingRide, updateRepeatingRide)
+- Calendar, Profile features
+
 ### 2026-02-06 - Phase 4 CRUD Endpoints Complete ✅
 
 **Completed:**
@@ -1247,12 +1260,6 @@ Convert remaining server components that fetch data to client components using h
   - `useDeleteRide()` - delete mutation with optimistic updates
   - `useCancelRide()` - cancel mutation with optimistic updates
   - `useUncancelRide()` - uncancel mutation with optimistic updates
-
-**Next steps:**
-
-- Migrate ride create/edit forms to use new hooks
-- Calendar/profile endpoints (lower priority)
-- Remove remaining server actions
 
 ### 2026-02-05 Evening - Phase 3 Core Complete ✅
 
