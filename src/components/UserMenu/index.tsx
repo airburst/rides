@@ -18,8 +18,13 @@ const UserMenu = () => {
   const params = useParams();
   const rideId = flattenQuery(params.id);
 
-  // Fetch ride data to check if cancelled
-  const { data: ride } = useRide(rideId || "");
+  // Derive rideId or repeatingRideId from the pathname
+  const isRepeatingRidePage = pathname.includes("repeating");
+  const isProfilePage = pathname.includes("profile");
+  const repeatingRideId = isRepeatingRidePage ? rideId : undefined;
+
+  // Fetch ride data to check if cancelled (only for regular ride pages)
+  const { data: ride } = useRide(!isRepeatingRidePage && !isProfilePage && rideId ? rideId : "");
   const isCancelled = ride?.cancelled ?? false;
 
   // Mutations
@@ -29,9 +34,6 @@ const UserMenu = () => {
   const [show, setShow] = useState<boolean>(false);
   const [showConfirmCancel, setShowConfirmCancel] = useState<boolean>(false);
   const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
-
-  // Derive rideId or repeatingRideId from the pathname
-  const repeatingRideId = pathname.includes("repeating") ? rideId : undefined;
 
   const closeMenu = () => {
     setShow(false);

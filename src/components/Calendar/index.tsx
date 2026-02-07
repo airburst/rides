@@ -25,16 +25,6 @@ const Calendar: React.FC<CalendarProps> = ({ date }: CalendarProps) => {
   // Fetch rides for month
   const { data, isLoading, error } = useRides(start, end);
 
-  if (isLoading) {
-    return (
-      <MainContent>
-        <div className="flex h-64 w-full items-center justify-center">
-          <span className="loading loading-spinner loading-lg" />
-        </div>
-      </MainContent>
-    );
-  }
-
   if (error) {
     return (
       <MainContent>
@@ -43,10 +33,10 @@ const Calendar: React.FC<CalendarProps> = ({ date }: CalendarProps) => {
     );
   }
 
-  // Match rides to dates
+  // Match rides to dates (empty array if still loading)
   const daysWithRides = calGrid.map((dt) => ({
     ...dt,
-    rides: mapRidesToDate(data ?? [], dt.date),
+    rides: isLoading ? [] : mapRidesToDate(data ?? [], dt.date),
   }));
 
   return (
