@@ -2,7 +2,6 @@ import { Header } from "@/components/Header/Header";
 import { Providers } from "@/components/Providers";
 import { env } from "@/env";
 import "@/styles/globals.css";
-import { SpeedInsights } from "@vercel/speed-insights/next";
 import { type Metadata } from "next";
 import { Outfit } from "next/font/google";
 import { Toaster } from "sonner";
@@ -59,7 +58,6 @@ export default async function RootLayout({
           <Header />
           {children}
           <Toaster position="bottom-center" richColors />
-          <SpeedInsights />
         </Providers>
       </body>
     </html>
