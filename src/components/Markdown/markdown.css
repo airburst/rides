@@ -3,7 +3,8 @@
   --markdown-bottom-margin: 0.8rem;
 }
 
-#ride-notes {
+#ride-notes,
+#markdown-preview {
   a {
     color: #24376e;
     text-decoration: underline;
@@ -35,5 +36,22 @@
     list-style-type: decimal;
     padding-left: 1.4rem;
     margin-bottom: var(--markdown-bottom-margin);
+  }
+
+  strong {
+    font-weight: 700;
+  }
+
+  em {
+    font-style: italic;
+  }
+
+  code {
+    background-color: #f3f4f6;
+    padding: 0.125rem 0.25rem;
+    border-radius: 0.25rem;
+    font-size: 0.875em;
+    color: #db2777;
+    font-family: ui-monospace, monospace;
   }
 }
