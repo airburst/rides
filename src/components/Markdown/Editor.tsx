@@ -1,9 +1,19 @@
 "use client";
+import dynamic from "next/dynamic";
 import markdownIt from "markdown-it";
 import "quill/dist/quill.snow.css";
 import { useState } from "react";
-import ReactQuill from "react-quill-new";
 import Turndown from "turndown";
+
+// Lazy load ReactQuill to reduce initial bundle size
+const ReactQuill = dynamic(() => import("react-quill-new"), {
+  ssr: false,
+  loading: () => (
+    <div className="flex h-32 items-center justify-center rounded border border-gray-300 bg-gray-50">
+      <span className="loading loading-spinner loading-sm" />
+    </div>
+  ),
+});
 
 // Configure Quill
 const modules = {
