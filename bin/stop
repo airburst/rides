@@ -1,1 +1,48 @@
-container stop bcc3-postgres && container rm bcc3-postgres
+#!/usr/bin/env bash
+
+set -e
+
+echo "🛑 Stopping rides services..."
+
+# Stop Docker containers used by rides-api
+echo ""
+echo "📦 Stopping Docker containers..."
+
+if docker ps -q -f name=bcc3-postgres > /dev/null 2>&1; then
+  docker stop bcc3-postgres && docker rm bcc3-postgres
+  echo "✅ Stopped and removed bcc3-postgres"
+else
+  echo "ℹ️  bcc3-postgres not running"
+fi
+
+if docker ps -q -f name=rides-redis > /dev/null 2>&1; then
+  docker stop rides-redis && docker rm rides-redis
+  echo "✅ Stopped and removed rides-redis"
+else
+  echo "ℹ️  rides-redis not running"
+fi
+
+# Stop any running Node/Bun processes for rides-api and Next.js
+echo ""
+echo "🔌 Stopping Node.js processes..."
+
+# Find and kill processes running on the API port (3001)
+API_PID=$(lsof -ti:3001 2>/dev/null || true)
+if [ -n "$API_PID" ]; then
+  kill $API_PID 2>/dev/null || true
+  echo "✅ Stopped process on port 3001 (rides-api)"
+else
+  echo "ℹ️  No process running on port 3001"
+fi
+
+# Find and kill processes running on the Next.js port (3000)
+NEXT_PID=$(lsof -ti:3000 2>/dev/null || true)
+if [ -n "$NEXT_PID" ]; then
+  kill $NEXT_PID 2>/dev/null || true
+  echo "✅ Stopped process on port 3000 (Next.js)"
+else
+  echo "ℹ️  No process running on port 3000"
+fi
+
+echo ""
+echo "✅ All services stopped"

@@ -1,9 +1,8 @@
 "use client";
 
-import { updateMessage } from "@/server/actions/update-message";
+import { useUpdateNotes } from "@/hooks/useRides";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import dynamic from "next/dynamic";
-import { useState } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
 import { type FormValues } from "../forms/RideMessagesForm";
 
@@ -24,7 +23,7 @@ export const RideMessages = ({
   showNotesForm,
   closeHandler,
 }: Props) => {
-  const [waiting, setWaiting] = useState(false);
+  const updateNotes = useUpdateNotes();
 
   const {
     register,
@@ -43,11 +42,9 @@ export const RideMessages = ({
     }
   };
 
-  const onSubmit: SubmitHandler<FormValues> = async ({ notes }) => {
+  const onSubmit: SubmitHandler<FormValues> = ({ notes }) => {
     if (rideId && userId) {
-      setWaiting(true);
-      await updateMessage(rideId, userId, notes ?? "");
-      setWaiting(false);
+      updateNotes.mutate({ rideId, userId, notes: notes ?? "" });
     }
     closeHandler();
   };
@@ -66,7 +63,7 @@ export const RideMessages = ({
             register={register}
             setValue={setValue}
             handleSubmit={handleSubmit(onSubmit)}
-            waiting={waiting}
+            waiting={updateNotes.isPending}
             closeHandler={closeHandler}
           />
         </DialogPanel>

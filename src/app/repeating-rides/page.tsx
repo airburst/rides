@@ -1,32 +1,43 @@
+"use client";
+
 import { MainContent } from "@/components/Layout/MainContent";
-import { env } from "@/env";
-import { getRepeatingRides } from "@/server/actions/get-repeating-rides";
-import { canUseAction } from "@/server/auth";
-import { type Metadata } from "next";
-import dynamic from "next/dynamic";
-import { redirect } from "next/navigation";
+import { useRepeatingRides } from "@/hooks/repeating-rides";
+import { useSession } from "@/hooks/useSession";
+import dynamicImport from "next/dynamic";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-// ISR: Revalidate every 60 seconds
-export const revalidate = 60;
-
-const RepeatingRidesList = dynamic(
+const RepeatingRidesList = dynamicImport(
   () => import("@/components/RepeatingRides/RepeatingRidesList"),
 );
 
-export const metadata: Metadata = {
-  title: `Manage Repeating Rides`,
-  description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} - Repeating Rides`,
-};
+export default function RepeatingRides() {
+  const router = useRouter();
+  const { session, isLoading: authLoading } = useSession();
+  const isAdmin = session?.user?.role === "ADMIN";
 
-export default async function RepeatingRides() {
-  const isAdmin = await canUseAction("ADMIN");
+  const { data: rides, isLoading, error } = useRepeatingRides();
 
-  // Redirect if not admin
-  if (!isAdmin) {
-    redirect("/");
+  // Redirect non-admins
+  useEffect(() => {
+    if (!authLoading && !isAdmin) {
+      router.replace("/");
+    }
+  }, [authLoading, isAdmin, router]);
+
+  if (authLoading || isLoading) {
+    return (
+      <MainContent>
+        <div className="flex h-64 w-full items-center justify-center">
+          <span className="loading loading-spinner loading-lg" />
+        </div>
+      </MainContent>
+    );
   }
 
-  const { rides, error } = await getRepeatingRides();
+  if (!isAdmin) {
+    return null; // Will redirect
+  }
 
   if (error) {
     return (
@@ -42,11 +53,11 @@ export default async function RepeatingRides() {
     <MainContent>
       <>
         <div className="w-full text-neutral-800">
-          <div className="flex w-full flex-row items-center justify-center bg-primary p-2 font-bold uppercase tracking-wide text-white sm:rounded mb-4">
+          <div className="mb-4 flex w-full flex-row items-center justify-center bg-primary p-2 font-bold uppercase tracking-wide text-white sm:rounded">
             Manage Repeating Rides
           </div>
         </div>
-        <RepeatingRidesList repeatingRides={rides} />
+        <RepeatingRidesList repeatingRides={rides ?? []} />
       </>
     </MainContent>
   );

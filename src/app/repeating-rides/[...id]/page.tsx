@@ -1,31 +1,51 @@
+"use client";
+
 import { MainContent } from "@/components/Layout/MainContent";
-import { getRepeatingRide } from "@/server/actions/get-repeating-ride";
-import { canUseAction } from "@/server/auth";
-import dynamic from "next/dynamic";
-import { redirect } from "next/navigation";
+import { useRepeatingRide } from "@/hooks/repeating-rides";
+import { useSession } from "@/hooks/useSession";
+import { flattenQuery } from "@utils/general";
+import dynamicImport from "next/dynamic";
+import { useRouter } from "next/navigation";
+import { use, useEffect } from "react";
 
-// ISR: Revalidate every 60 seconds
-export const revalidate = 60;
-
-const RepeatingRideDetails = dynamic(
+const RepeatingRideDetails = dynamicImport(
   () => import("@/components/RepeatingRides/RepeatingRideDetails"),
 );
 
-export default async function RepeatingRide(props: {
+export default function RepeatingRide(props: {
   params: Promise<{ id: string }>;
 }) {
-  const params = await props.params;
-  const { id } = params;
-  const isLeader = await canUseAction("LEADER");
+  const params = use(props.params);
+  const id = flattenQuery(params.id);
+  const router = useRouter();
+  const { session, isLoading: authLoading } = useSession();
+  const isLeader =
+    session?.user?.role === "LEADER" || session?.user?.role === "ADMIN";
 
-  // Redirect if not admin
-  if (!isLeader) {
-    redirect("/");
+  const { data: ride, isLoading, error } = useRepeatingRide(id ?? "");
+
+  // Redirect non-leaders
+  useEffect(() => {
+    if (!authLoading && !isLeader) {
+      router.replace("/");
+    }
+  }, [authLoading, isLeader, router]);
+
+  if (authLoading || isLoading) {
+    return (
+      <MainContent>
+        <div className="flex h-64 w-full items-center justify-center">
+          <span className="loading loading-spinner loading-lg" />
+        </div>
+      </MainContent>
+    );
   }
 
-  const { ride, error } = await getRepeatingRide(id);
+  if (!isLeader) {
+    return null; // Will redirect
+  }
 
-  if (error ?? !ride) {
+  if (error || !ride) {
     return (
       <MainContent>
         <div className="grid w-full grid-cols-1 gap-4 md:gap-8">

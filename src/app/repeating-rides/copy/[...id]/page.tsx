@@ -1,31 +1,54 @@
+"use client";
+
 import { type RideFormProps } from "@/components/forms/RideForm";
 import { MainContent } from "@/components/Layout/MainContent";
-import { getRepeatingRide } from "@/server/actions/get-repeating-ride";
-import { canUseAction } from "@/server/auth";
+import { useRepeatingRide } from "@/hooks/repeating-rides";
+import { useSession } from "@/hooks/useSession";
 import { formatFormDate, getNow } from "@utils/dates";
 import { flattenArrayNumber } from "@utils/forms";
+import { flattenQuery } from "@utils/general";
 import dynamic from "next/dynamic";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { use, useEffect } from "react";
 
 const RideForm = dynamic<RideFormProps>(
   () => import("@/components/forms/RideForm"),
 );
 
-export default async function CopyRepeatingRide(props: {
+export default function CopyRepeatingRide(props: {
   params: Promise<{ id: string }>;
 }) {
-  const params = await props.params;
-  const { id } = params;
-  const isAdmin = await canUseAction("LEADER");
+  const params = use(props.params);
+  const id = flattenQuery(params.id);
+  const router = useRouter();
+  const { session, isLoading: authLoading } = useSession();
+  const isAdmin = session?.user?.role === "ADMIN";
+  const isLeader = isAdmin || session?.user?.role === "LEADER";
 
-  // Redirect if not admin
-  if (!isAdmin) {
-    redirect("/");
+  const { data: repeatingRide, isLoading, error } = useRepeatingRide(id ?? "");
+
+  // Redirect non-leaders
+  useEffect(() => {
+    if (!authLoading && !isLeader) {
+      router.replace("/");
+    }
+  }, [authLoading, isLeader, router]);
+
+  if (authLoading || isLoading) {
+    return (
+      <MainContent>
+        <div className="flex h-64 w-full items-center justify-center">
+          <span className="loading loading-spinner loading-lg" />
+        </div>
+      </MainContent>
+    );
   }
 
-  const { ride: repeatingRide, error } = await getRepeatingRide(id);
+  if (!isLeader) {
+    return null; // Will redirect
+  }
 
-  if (error ?? !repeatingRide) {
+  if (error || !repeatingRide) {
     return (
       <MainContent>
         <div className="grid w-full grid-cols-1 gap-4 md:gap-8">
@@ -68,7 +91,7 @@ export default async function CopyRepeatingRide(props: {
 
   return (
     <MainContent>
-      <RideForm defaultValues={defaultValues} isRepeating isAdmin={!!isAdmin} />
+      <RideForm defaultValues={defaultValues} isRepeating isAdmin={isAdmin} />
     </MainContent>
   );
 }

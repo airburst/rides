@@ -1,12 +1,8 @@
 "use client";
 
-import { cancelRide } from "@/server/actions/cancel-ride";
-import { deleteRide } from "@/server/actions/delete-ride";
-import { isCancelledAtom } from "@/store";
-import { type Role } from "@/types";
-import { useAtom } from "jotai";
+import { useCancelRide, useDeleteRide, useRide } from "@/hooks/useRides";
+import { useSession } from "@/hooks/useSession";
 import { Menu } from "lucide-react";
-import { signIn, signOut } from "next-auth/react";
 import { useParams, usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { flattenQuery } from "shared/utils";
@@ -14,23 +10,30 @@ import { toast } from "sonner";
 import { Confirm } from "../Confirm";
 import { MenuContent } from "./MenuContent";
 
-export type MenuProps = {
-  role?: Role;
-  isAuthenticated: boolean;
-};
-
-const UserMenu = ({ role, isAuthenticated }: MenuProps) => {
+const UserMenu = () => {
+  const { session, isAuthenticated, login, logout } = useSession();
+  const role = session?.user?.role;
   const router = useRouter();
   const pathname = usePathname();
   const params = useParams();
   const rideId = flattenQuery(params.id);
-  const [isCancelled] = useAtom(isCancelledAtom);
+
+  // Derive rideId or repeatingRideId from the pathname
+  const isRepeatingRidePage = pathname.includes("repeating");
+  const isProfilePage = pathname.includes("profile");
+  const repeatingRideId = isRepeatingRidePage ? rideId : undefined;
+
+  // Fetch ride data to check if cancelled (only for regular ride pages)
+  const { data: ride } = useRide(!isRepeatingRidePage && !isProfilePage && rideId ? rideId : "");
+  const isCancelled = ride?.cancelled ?? false;
+
+  // Mutations
+  const cancelMutation = useCancelRide();
+  const deleteMutation = useDeleteRide();
+
   const [show, setShow] = useState<boolean>(false);
   const [showConfirmCancel, setShowConfirmCancel] = useState<boolean>(false);
   const [showConfirmDelete, setShowConfirmDelete] = useState<boolean>(false);
-
-  // Derive rideId or repeatingRideId from the pathname
-  const repeatingRideId = pathname.includes("repeating") ? rideId : undefined;
 
   const closeMenu = () => {
     setShow(false);
@@ -46,40 +49,48 @@ const UserMenu = ({ role, isAuthenticated }: MenuProps) => {
     }
   };
 
-  const handleSignout = async () => {
-    await signOut({ callbackUrl: "http://localhost:3000" });
+  const handleSignout = () => {
+    logout();
     closeMenu();
   };
 
-  const handleSignin = async () => {
-    await signIn("auth0");
+  const handleSignin = () => {
+    void login();
     closeMenu();
   };
 
-  const handleCancel = async (cb: (flag: boolean) => void) => {
-    const results = await cancelRide(rideId);
+  const handleCancel = (cb: (flag: boolean) => void) => {
+    if (!rideId) return cb(false);
 
-    if (results.success) {
-      router.back();
-      toast.success("Ride has been cancelled.");
-      closeMenu();
-      cb(true);
-    } else {
-      cb(false);
-    }
+    cancelMutation.mutate(rideId, {
+      onSuccess: () => {
+        router.back();
+        toast.success("Ride has been cancelled.");
+        closeMenu();
+        cb(true);
+      },
+      onError: () => {
+        toast.error("Failed to cancel ride.");
+        cb(false);
+      },
+    });
   };
 
-  const handleDelete = async (cb: (flag: boolean) => void) => {
-    const results = await deleteRide(rideId);
+  const handleDelete = (cb: (flag: boolean) => void) => {
+    if (!rideId) return cb(false);
 
-    if (results.success) {
-      router.back();
-      toast.success("Ride has been deleted.");
-      closeMenu();
-      cb(true);
-    } else {
-      cb(false);
-    }
+    deleteMutation.mutate(rideId, {
+      onSuccess: () => {
+        router.back();
+        toast.success("Ride has been deleted.");
+        closeMenu();
+        cb(true);
+      },
+      onError: () => {
+        toast.error("Failed to delete ride.");
+        cb(false);
+      },
+    });
   };
 
   const confirmCancel = () => {

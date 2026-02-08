@@ -1,12 +1,10 @@
 "use client";
 
 import { type Role } from "@/types";
-import copy from "copy-to-clipboard";
 import {
   Calendar,
   CircleAlert,
   Copy,
-  Link,
   LogIn,
   LogOut,
   Pencil,
@@ -53,16 +51,6 @@ export const MenuContent = ({
   const editRideUrl = repeatingRideId
     ? `/repeating-rides/edit/${repeatingRideId}`
     : `/ride/edit/${rideId}`;
-
-  // Make a short url with last 6 characters of ride id
-  const copyLink = () => {
-    const path = window.location.href;
-    const parts = path.split("/");
-    const shortId = parts.pop()?.slice(-6);
-    const url = [...parts.slice(0, 3), "r", shortId].join("/");
-    copy(url);
-    return true;
-  };
 
   return (
     <div className="min-h-full w-80 bg-neutral-900 px-2 sm:w-96">
@@ -117,9 +105,6 @@ export const MenuContent = ({
             )}
             <MenuEntry label="Delete Ride" onClick={confirmDelete}>
               <Trash2 className="h-6 w-6" />
-            </MenuEntry>
-            <MenuEntry label="Copy Ride Link" onClick={copyLink}>
-              <Link className="h-6 w-6" />
             </MenuEntry>
           </>
         )}

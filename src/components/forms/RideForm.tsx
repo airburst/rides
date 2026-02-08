@@ -1,10 +1,11 @@
 "use client";
 
-import { addRepeatingRide } from "@/server/actions/add-repeating-ride";
-import { addRide } from "@/server/actions/add-ride";
-import { generateRidesFromClient } from "@/server/actions/generate-rides-from-client";
-import { updateRepeatingRide } from "@/server/actions/update-repeating-ride";
-import { updateRide } from "@/server/actions/update-ride";
+import {
+  useCreateRepeatingRide,
+  useGenerateRides,
+  useUpdateRepeatingRide,
+} from "@/hooks/repeating-rides";
+import { useCreateRide, useUpdateRide } from "@/hooks/useRides";
 import { Switch } from "@headlessui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import clsx from "clsx";
@@ -14,7 +15,6 @@ import { memo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import {
-  convertObjectToFormData,
   formatDate,
   getNow,
   makeRepeatingRide,
@@ -69,7 +69,22 @@ const RideForm = ({
   const router = useRouter();
   const isNewRide = !defaultValues?.id;
   const [repeats, setRepeats] = useState<boolean>(isRepeating ?? false);
-  const [isPending, setIsPending] = useState(false);
+
+  // Mutations for single rides
+  const createMutation = useCreateRide();
+  const updateMutation = useUpdateRide();
+
+  // Mutations for repeating rides
+  const createRepeatingMutation = useCreateRepeatingRide();
+  const updateRepeatingMutation = useUpdateRepeatingRide();
+  const generateMutation = useGenerateRides();
+
+  const isPending =
+    createMutation.isPending ||
+    updateMutation.isPending ||
+    createRepeatingMutation.isPending ||
+    updateRepeatingMutation.isPending ||
+    generateMutation.isPending;
   const [rideDateList, setRideDateList] = useState<string[]>([]);
   const [scheduleId, setScheduleId] = useState<string | null>(null);
   const showRepeatingSwitch = isAdmin && (isNewRide || isRepeating);
@@ -94,43 +109,69 @@ const RideForm = ({
     setValue("notes", text);
   };
 
-  const createRide = async (data: RideFormSchema) => {
-    setIsPending(true);
+  const createRide = (data: RideFormSchema) => {
     const rideDate = makeUtcDate(data.rideDate, data.time);
-    const formData = convertObjectToFormData({ ...data, rideDate });
 
-    let result;
+    const rideData = {
+      name: data.name,
+      rideDate,
+      distance: Number(data.distance),
+      rideGroup: data.rideGroup || undefined,
+      destination: data.destination || undefined,
+      meetPoint: data.meetPoint || undefined,
+      route: data.route || undefined,
+      leader: data.leader || undefined,
+      notes: data.notes || undefined,
+      rideLimit: data.rideLimit ? Number(data.rideLimit) : -1,
+    };
+
     if (data.id) {
-      result = await updateRide(formData);
+      updateMutation.mutate(
+        { id: data.id, data: rideData },
+        {
+          onSuccess: () => {
+            toast.success("Ride updated successfully");
+            router.back();
+          },
+          onError: (error) => {
+            toast.error(error.message || "Failed to update ride");
+          },
+        },
+      );
     } else {
-      result = await addRide(formData);
-    }
-
-    setIsPending(false);
-    if (result.success) {
-      toast.success(result.message);
-      router.back();
-    } else {
-      toast.error(result.message);
+      createMutation.mutate(rideData, {
+        onSuccess: () => {
+          toast.success("Ride created successfully");
+          router.back();
+        },
+        onError: (error) => {
+          toast.error(error.message || "Failed to create ride");
+        },
+      });
     }
   };
 
-  const createRepeating = async (data: RideFormSchema) => {
-    setIsPending(true);
-    const formData = convertObjectToFormData(data);
+  const createRepeating = (data: RideFormSchema) => {
+    const payload = makeRepeatingRide(data);
 
-    try {
-      const payload = makeRepeatingRide(data);
-      if (data.id) {
-        const results = await updateRepeatingRide(formData);
-
-        setIsPending(false);
-        toast.success(results.message);
-        router.back();
-      } else {
-        const results = await addRepeatingRide(formData);
-
-        if (results?.id) {
+    if (data.id) {
+      // Update existing repeating ride
+      updateRepeatingMutation.mutate(
+        { ...payload, id: data.id },
+        {
+          onSuccess: () => {
+            toast.success("Repeating ride updated successfully");
+            router.back();
+          },
+          onError: (error) => {
+            toast.error(error.message || "Failed to update repeating ride");
+          },
+        },
+      );
+    } else {
+      // Create new repeating ride
+      createRepeatingMutation.mutate(payload, {
+        onSuccess: (results) => {
           // Store schedule id to use in handleYes function
           setScheduleId(results.id);
           // Calculate rides list and ask to create them
@@ -145,12 +186,12 @@ const RideForm = ({
             setRideDateList(rideDates);
             show();
           }
-          setIsPending(false);
-          toast.success(results.message);
-        }
-      }
-    } catch (err) {
-      console.error(err);
+          toast.success("Repeating ride created successfully");
+        },
+        onError: (error) => {
+          toast.error(error.message || "Failed to create repeating ride");
+        },
+      });
     }
   };
 
@@ -159,20 +200,26 @@ const RideForm = ({
     router.push("/");
   };
 
-  const handleYes = async (cb: (flag: boolean) => void) => {
+  const handleYes = (cb: (flag: boolean) => void) => {
     hide();
 
     if (scheduleId) {
       const date = getValues("rideDate");
-      const results = await generateRidesFromClient(scheduleId, date);
-
-      if (results.success) {
-        toast.success(results.message);
-        router.push("/");
-        cb(true);
-      } else {
-        cb(false);
-      }
+      generateMutation.mutate(
+        { scheduleId, date },
+        {
+          onSuccess: (results) => {
+            const count = results.results?.[0]?.count ?? 0;
+            toast.success(`Generated ${count} rides`);
+            router.push("/");
+            cb(true);
+          },
+          onError: () => {
+            toast.error("Failed to generate rides");
+            cb(false);
+          },
+        },
+      );
     }
   };
 

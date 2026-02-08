@@ -1,7 +1,6 @@
 "use client";
 import { DEFAULT_WEEKS_TO_SHOW } from "@/constants";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { filterQueryAtom } from "@/store";
 import { type FilterQuery } from "@/types";
 import {
   Combobox,
@@ -13,19 +12,26 @@ import {
   Transition,
 } from "@headlessui/react";
 import clsx from "clsx";
-import { useAtom } from "jotai";
 import { Check, ChevronDown, X } from "lucide-react";
 import { Fragment, useRef, useState, type ChangeEvent } from "react";
-import useOnClickOutside from "use-onclickoutside";
+import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { Button } from "../Button";
 
 type Props = {
   isShowing: boolean;
   closeHandler: () => void;
   data: (string | null | undefined)[];
+  filterQuery: FilterQuery;
+  setFilterQuery: (filter: FilterQuery) => void;
 };
 
-export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
+export const FiltersPanel = ({
+  isShowing,
+  closeHandler,
+  data,
+  filterQuery,
+  setFilterQuery,
+}: Props) => {
   const ref = useRef<HTMLElement>(null!);
   const [filters] = useLocalStorage<FilterQuery>("bcc-filters", {});
   const [onlyJoined, setOnlyJoined] = useState<boolean>(
@@ -35,17 +41,16 @@ export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
   const [weeksAhead, setWeeksAhead] = useState<string>(
     filters?.weeksAhead ?? DEFAULT_WEEKS_TO_SHOW,
   );
-  const [filterQuery, setFilterQuery] = useAtom(filterQueryAtom);
   const [, setFilters] = useLocalStorage<FilterQuery>("bcc-filters", {});
 
-  const setFilterAtomAndStorage = (filter: FilterQuery) => {
+  const setFilterQueryAndStorage = (filter: FilterQuery) => {
     setFilterQuery(filter);
     setFilters(filter);
   };
 
   const handleSwitchChange = () => {
     setOnlyJoined(!onlyJoined);
-    setFilterAtomAndStorage({
+    setFilterQueryAndStorage({
       ...filterQuery,
       onlyJoined: !filterQuery.onlyJoined,
     });
@@ -66,12 +71,12 @@ export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
   const handleWeeksChange = async (e: ChangeEvent<HTMLSelectElement>) => {
     const val = e.target.value;
     setWeeksAhead(val);
-    setFilterAtomAndStorage({ ...filterQuery, weeksAhead: val });
+    setFilterQueryAndStorage({ ...filterQuery, weeksAhead: val });
   };
 
   const handleSelected = (query: string | null) => {
     const q = query ?? "";
-    setFilterAtomAndStorage({ ...filterQuery, q });
+    setFilterQueryAndStorage({ ...filterQuery, q });
     setSearch(q);
   };
 
@@ -79,7 +84,7 @@ export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
     setOnlyJoined(false);
     setSearch("");
     setWeeksAhead(DEFAULT_WEEKS_TO_SHOW);
-    setFilterAtomAndStorage({
+    setFilterQueryAndStorage({
       onlyJoined: false,
       weeksAhead: DEFAULT_WEEKS_TO_SHOW,
     });

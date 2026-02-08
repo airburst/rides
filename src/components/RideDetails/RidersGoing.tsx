@@ -1,4 +1,4 @@
-import { signIn } from "next-auth/react";
+import { useAuth0 } from "@auth0/auth0-react";
 import { type User } from "../../types";
 import { RiderDetails } from "./RiderDetails";
 
@@ -10,8 +10,6 @@ type Props = {
   rideNotes?: string;
 };
 
-const handleSignIn = () => signIn("auth0");
-
 export const RidersGoing = ({
   user,
   users,
@@ -19,9 +17,13 @@ export const RidersGoing = ({
   isLeader,
   rideNotes,
 }: Props) => {
+  const { loginWithRedirect } = useAuth0();
+
   if (!hasRiders) {
     return null;
   }
+
+  const handleSignIn = () => void loginWithRedirect();
 
   return (
     <div className="flex w-full px-2 sm:px-0">

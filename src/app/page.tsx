@@ -1,27 +1,19 @@
 import { MainContent } from "@/components/Layout/MainContent";
-import { type RidesListProps } from "@/components/RidesList";
+import { RidesListClient } from "@/components/RidesList/RidesListClient";
 import { UnregisterServiceWorkers } from "@/components/UnregisterServiceWorkers";
 import { env } from "@/env";
 import type { Metadata } from "next";
-import dynamic from "next/dynamic";
-
-// ISR: Revalidate every 30 seconds
-export const revalidate = 30;
-
-const RidesList = dynamic<RidesListProps>(
-  () => import("@/components/RidesList"),
-);
 
 export const metadata: Metadata = {
   title: `${env.NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`,
   description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} Ride Planner`,
 };
 
-export default async function HomePage() {
+export default function HomePage() {
   return (
     <>
       <MainContent>
-        <RidesList />
+        <RidesListClient />
       </MainContent>
       <UnregisterServiceWorkers />
     </>

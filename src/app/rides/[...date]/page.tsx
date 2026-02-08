@@ -1,28 +1,31 @@
+"use client";
+
 import { BackButton, Button } from "@/components/Button";
 import { MainContent } from "@/components/Layout/MainContent";
-import { type RidesListProps } from "@/components/RidesList";
-import { canUseAction } from "@/server/auth";
+import { type RidesListClientProps } from "@/components/RidesList/RidesListClient";
+import { useSession } from "@/hooks/useSession";
 import { getNow } from "@utils/dates";
 import { flattenQuery } from "@utils/general";
 import { Plus } from "lucide-react";
-import dynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 import Link from "next/link";
+import { use } from "react";
 
-// ISR: Revalidate every 30 seconds
-export const revalidate = 30;
-
-const RidesList = dynamic<RidesListProps>(
-  () => import("@/components/RidesList"),
+const RidesList = dynamicImport<RidesListClientProps>(
+  () =>
+    import("@/components/RidesList/RidesListClient").then((m) => m.RidesListClient),
 );
 
-export default async function RidesOnDate(props: {
+export default function RidesOnDate(props: {
   params: Promise<{ date: string }>;
 }) {
-  const params = await props.params;
+  const params = use(props.params);
   const { date } = params;
   const dateString = `${flattenQuery(date)}T01:00:00.000Z`;
   const isInFuture = dateString > getNow();
-  const isLeader = await canUseAction("LEADER");
+  const { session } = useSession();
+  const isLeader =
+    session?.user?.role === "LEADER" || session?.user?.role === "ADMIN";
 
   return (
     <MainContent>

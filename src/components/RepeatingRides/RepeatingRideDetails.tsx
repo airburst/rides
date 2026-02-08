@@ -1,5 +1,5 @@
 "use client";
-import { deleteRepeatingRide } from "@/server/actions/delete-repeating-ride";
+import { useDeleteRepeatingRide } from "@/hooks/repeating-rides";
 import { type RepeatingRide } from "@/types";
 import { formatDate, formatTime } from "@utils/dates";
 import dynamic from "next/dynamic";
@@ -29,6 +29,7 @@ const RepeatingRideDetails = ({ ride }: RepeatingRideDetailsProps) => {
   const [showConfirmDelete, setShowDelete] = useState<boolean>(false);
   const [deleteAllRides, setDeleteAllRides] = useState<boolean>(true);
   const router = useRouter();
+  const deleteMutation = useDeleteRepeatingRide();
 
   const {
     id,
@@ -54,22 +55,26 @@ const RepeatingRideDetails = ({ ride }: RepeatingRideDetailsProps) => {
 
   const toggleDeleteAllRides = () => setDeleteAllRides(!deleteAllRides);
 
-  const handleDelete = async (cb: (flag: boolean) => void) => {
-    const results = await deleteRepeatingRide(id!, deleteAllRides);
-
-    if (results.success) {
-      const message =
-        results.deletedRideCount && results.deletedRideCount > 0
-          ? `Repeating ride and ${results.deletedRideCount} future rides have been deleted.`
-          : "Repeating ride has been deleted.";
-      toast.success(message);
-      hideConfirm();
-      router.back();
-      cb(true);
-    } else {
-      toast.error("Unable to delete repeating ride. Please try again.");
-      cb(false);
-    }
+  const handleDelete = (cb: (flag: boolean) => void) => {
+    deleteMutation.mutate(
+      { id: id!, cascade: deleteAllRides },
+      {
+        onSuccess: (results) => {
+          const message =
+            results.deletedRideCount && results.deletedRideCount > 0
+              ? `Repeating ride and ${results.deletedRideCount} future rides have been deleted.`
+              : "Repeating ride has been deleted.";
+          toast.success(message);
+          hideConfirm();
+          router.back();
+          cb(true);
+        },
+        onError: () => {
+          toast.error("Unable to delete repeating ride. Please try again.");
+          cb(false);
+        },
+      },
+    );
   };
 
   const showConfirm = () => setShowDelete(true);

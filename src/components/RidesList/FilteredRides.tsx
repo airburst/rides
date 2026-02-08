@@ -1,13 +1,12 @@
 "use client";
 
+import { useFilter } from "@/contexts/FilterContext";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { filterQueryAtom, showFilterAtom } from "@/store";
 import { type FilterQuery, type RideList, type User } from "@/types";
 import { makeFilterData } from "@utils/rides";
 import { groupRides } from "@utils/transformRideData";
-import { useAtom } from "jotai";
 import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { FiltersPanel } from "../Filters";
 import { RideGroup } from "./RideGroup";
 
@@ -17,15 +16,15 @@ type Props = {
 };
 
 export const FilteredRides = ({ rides, user }: Props) => {
-  const [showFilterMenu, setShowFilterMenu] = useAtom(showFilterAtom);
-  const [filterQuery, setFilterQuery] = useAtom(filterQueryAtom);
+  const { showFilterMenu, setShowFilterMenu } = useFilter();
+  const [filterQuery, setFilterQuery] = useState<FilterQuery>({});
   const [filters] = useLocalStorage<FilterQuery>("bcc-filters", {});
   const path = usePathname();
   const shouldApplyFilters = path === "/";
 
   useEffect(() => {
     setFilterQuery(filters);
-  }, [filters, setFilterQuery]);
+  }, [filters]);
 
   const closeFilters = () => setShowFilterMenu(false);
 
@@ -58,6 +57,8 @@ export const FilteredRides = ({ rides, user }: Props) => {
         data={makeFilterData(rides)}
         isShowing={showFilterMenu}
         closeHandler={closeFilters}
+        filterQuery={filterQuery}
+        setFilterQuery={setFilterQuery}
       />
     </>
   );

@@ -1,7 +1,8 @@
+"use client";
+
 import { Button } from "@/components/Button";
 import { type CalendarProps } from "@/components/Calendar";
 import { FullPageContent } from "@/components/Layout/FullPageContent";
-import { env } from "@/env";
 import {
   formatCalendarDate,
   getLastMonth,
@@ -9,21 +10,12 @@ import {
   getNow,
 } from "@utils/dates";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { type Metadata } from "next";
-import dynamic from "next/dynamic";
+import dynamicImport from "next/dynamic";
 import Link from "next/link";
 
-// ISR: Revalidate every 60 seconds
-export const revalidate = 60;
+const Calendar = dynamicImport<CalendarProps>(() => import("@/components/Calendar"));
 
-const Calendar = dynamic<CalendarProps>(() => import("@/components/Calendar"));
-
-export const metadata: Metadata = {
-  title: `${env.NEXT_PUBLIC_CLUB_SHORT_NAME} Rides`,
-  description: `${env.NEXT_PUBLIC_CLUB_LONG_NAME} Ride Calendar`,
-};
-
-export default async function RideCalendar() {
+export default function RideCalendar() {
   const monthDate = getNow();
   const nextMonth = getNextMonth(monthDate).split("T")[0];
   const lastMonth = getLastMonth(monthDate).split("T")[0];

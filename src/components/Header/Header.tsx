@@ -1,5 +1,6 @@
-import { env } from "@/env";
-import { getServerAuthSession } from "@/server/auth";
+"use client";
+
+import { useSession } from "@/hooks/useSession";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,13 +9,10 @@ import { FilterButton } from "../Filters";
 
 const UserMenu = dynamic(() => import("../UserMenu"));
 
-const { NEXT_PUBLIC_CLUB_SHORT_NAME } = env;
+const CLUB_SHORT_NAME = process.env.NEXT_PUBLIC_CLUB_SHORT_NAME;
 
-export const Header = async () => {
-  const session = await getServerAuthSession();
-  const user = session?.user;
-  const isAuthenticated = !!user;
-  const role = user?.role;
+export const Header = () => {
+  const { isAuthenticated } = useSession();
 
   return (
     <div className="fixed flex h-16 w-full items-center justify-center bg-primary text-white sm:h-24 z-20">
@@ -32,13 +30,13 @@ export const Header = async () => {
               src={Logo as string}
               alt="Bath Cycling Club Logo"
             />
-            {NEXT_PUBLIC_CLUB_SHORT_NAME} Rides
+            {CLUB_SHORT_NAME} Rides
           </Link>
         </div>
 
         <div className="flex items-center gap-4">
           {isAuthenticated && <FilterButton />}
-          <UserMenu isAuthenticated={isAuthenticated} role={role} />
+          <UserMenu />
         </div>
       </div>
     </div>
