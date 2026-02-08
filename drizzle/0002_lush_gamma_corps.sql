@@ -1,1 +1,0 @@
-ALTER TABLE "bcc_users" ADD COLUMN "is_member" boolean DEFAULT false;

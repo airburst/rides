@@ -1,1 +1,0 @@
-ALTER TABLE "bcc_users" ADD COLUMN "membership_status" varchar(255) DEFAULT 'NOT_MEMBER';

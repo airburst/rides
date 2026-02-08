@@ -7,17 +7,9 @@ export const env = createEnv({
    * isn't built with invalid env vars.
    */
   server: {
-    HOST_URL: z.string().url().optional(),
-    DATABASE_URL: z.string().url().optional(),
-    SOURCE_URL: z.string().url().optional(),
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
-    NEXTAUTH_SECRET: z.string().optional(),
-    NEXTAUTH_URL: z.string().url().optional(),
-    AUTH0_CLIENT_ID: z.string().optional(),
-    AUTH0_CLIENT_SECRET: z.string().optional(),
-    AUTH0_ISSUER: z.string().optional(),
   },
 
   /**
@@ -47,15 +39,7 @@ export const env = createEnv({
     NEXT_PUBLIC_AUTH0_CLIENT_ID: process.env.NEXT_PUBLIC_AUTH0_CLIENT_ID,
     NEXT_PUBLIC_AUTH0_AUDIENCE: process.env.NEXT_PUBLIC_AUTH0_AUDIENCE,
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
-    HOST_URL: process.env.HOST_URL,
-    DATABASE_URL: process.env.DATABASE_URL,
-    SOURCE_URL: process.env.SOURCE_URL,
     NODE_ENV: process.env.NODE_ENV,
-    NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
-    NEXTAUTH_URL: process.env.NEXTAUTH_URL,
-    AUTH0_CLIENT_ID: process.env.AUTH0_CLIENT_ID,
-    AUTH0_CLIENT_SECRET: process.env.AUTH0_CLIENT_SECRET,
-    AUTH0_ISSUER: process.env.AUTH0_ISSUER,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
