@@ -33,6 +33,7 @@ export function Providers({ children }: { children: ReactNode }) {
         audience: AUTH0_AUDIENCE,
       }}
       cacheLocation="localstorage"
+      useRefreshTokens={true} // Enables automatic token refresh - users stay logged in for ~30 days
     >
       <QueryClientProvider client={queryClient}>
         <FilterProvider>
