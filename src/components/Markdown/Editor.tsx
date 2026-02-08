@@ -1,16 +1,17 @@
 "use client";
 
-import markdownIt from "markdown-it";
-import { useState } from "react";
 import {
   Bold,
+  Code,
   Italic,
+  Link as LinkIcon,
   List,
   ListOrdered,
-  Link as LinkIcon,
   Quote,
-  Code,
 } from "lucide-react";
+import markdownIt from "markdown-it";
+import { useState } from "react";
+import "./markdown.css";
 
 const md = new markdownIt({
   html: true,
@@ -166,55 +167,12 @@ const MarkdownEditor = ({
           />
         </>
       ) : (
-        <div className="min-h-[12rem] p-4">
+        <div className="min-h-48 p-4">
           <div
             id="markdown-preview"
             className="text-gray-800"
             dangerouslySetInnerHTML={{ __html: md.render(value) }}
           />
-          <style jsx>{`
-            #markdown-preview :global(a) {
-              color: #24376e;
-              text-decoration: underline;
-            }
-            #markdown-preview :global(p) {
-              line-height: 1.6rem;
-              margin-bottom: 0.8rem;
-            }
-            #markdown-preview :global(blockquote) {
-              border-left: 0.25rem solid #e5e5e5;
-              background-color: #f5f5f5;
-              padding: 0.5rem 1rem;
-              margin-bottom: 0.8rem;
-            }
-            #markdown-preview :global(blockquote p) {
-              margin-bottom: 0;
-            }
-            #markdown-preview :global(ul) {
-              list-style-type: disc;
-              padding-left: 1.4rem;
-              margin-bottom: 0.8rem;
-            }
-            #markdown-preview :global(ol) {
-              list-style-type: decimal;
-              padding-left: 1.4rem;
-              margin-bottom: 0.8rem;
-            }
-            #markdown-preview :global(strong) {
-              font-weight: 700;
-            }
-            #markdown-preview :global(em) {
-              font-style: italic;
-            }
-            #markdown-preview :global(code) {
-              background-color: #f3f4f6;
-              padding: 0.125rem 0.25rem;
-              border-radius: 0.25rem;
-              font-size: 0.875em;
-              color: #db2777;
-              font-family: ui-monospace, monospace;
-            }
-          `}</style>
         </div>
       )}
 
