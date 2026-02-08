@@ -2,7 +2,6 @@ import js from "@eslint/js";
 import tseslint from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
 import nextConfig from "eslint-config-next";
-import drizzle from "eslint-plugin-drizzle";
 import globals from "globals";
 
 const eslintConfig = [
@@ -10,26 +9,12 @@ const eslintConfig = [
   ...nextConfig,
   {
     plugins: {
-      drizzle,
       "@typescript-eslint": tseslint,
     },
     rules: {
       "prefer-const": "error",
       "no-unused-vars": "off", // Use TypeScript's version instead
       "react/react-in-jsx-scope": "off", // Not needed with React 17+ JSX transform
-      // Drizzle
-      "drizzle/enforce-delete-with-where": [
-        "error",
-        {
-          drizzleObjectName: ["db", "ctx.db"],
-        },
-      ],
-      "drizzle/enforce-update-with-where": [
-        "error",
-        {
-          drizzleObjectName: ["db", "ctx.db"],
-        },
-      ],
     },
   },
   // Jest test files

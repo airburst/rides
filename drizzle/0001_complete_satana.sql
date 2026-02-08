@@ -1,1 +1,0 @@
-ALTER TABLE "bcc_users" ALTER COLUMN "image" SET DATA TYPE text;

@@ -1,7 +1,6 @@
 "use client";
 
 import { MAX_FILE_SIZE_IN_BYTES } from "@/constants";
-import { updateAvatar } from "@/server/actions/update-avatar";
 import { type User } from "@/types";
 import { Upload } from "lucide-react";
 import Image from "next/image";
@@ -39,8 +38,9 @@ const ImageUpload = ({ user, onClose }: ImageUploadProps) => {
 
         reader.onloadend = async () => {
           setAvatarURL(reader.result as string);
-          await updateAvatar(user.id, reader.result as string);
-          toast.success("Changed profile image");
+          console.log("Avatar upload requested for user:", user.id);
+          console.log("Note: Avatar upload not yet implemented with external API");
+          toast.info("Avatar upload not yet available");
           setIsUploading(false);
           onClose();
         };
