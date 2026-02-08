@@ -11,7 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import clsx from "clsx";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/navigation";
-import { memo, useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import {
@@ -27,18 +27,10 @@ import { type Preferences } from "../../types";
 import { Button } from "../Button";
 import { CancelButton } from "../Button/CancelButton";
 import { ConfirmWithContent } from "../ConfirmWithContent";
+import Editor from "../Markdown/Editor";
 import { rideFormSchema, type RideFormSchema } from "./formSchemas";
 
 const RepeatingRideForm = dynamic(() => import("./RepeatingRideForm"));
-const Editor = dynamic(
-  () =>
-    import("../Markdown/Editor").then((mod) => {
-      const Component = memo(mod.default);
-      return { default: Component };
-    }),
-  { ssr: false },
-);
-// const Editor = dynamic(() => import("../Markdown/Editor"), { ssr: false });
 
 const today = getNow().split("T")[0] ?? "";
 
