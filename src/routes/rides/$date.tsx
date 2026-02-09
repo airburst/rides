@@ -7,11 +7,10 @@ import { useSession } from "@/hooks/useSession";
 import { getNow } from "@utils/dates";
 import { Plus } from "lucide-react";
 
-const RidesList = lazy<React.ComponentType<RidesListClientProps>>(
-  () =>
-    import("@/components/RidesList/RidesListClient").then((m) => ({
-      default: m.RidesListClient,
-    })),
+const RidesList = lazy<React.ComponentType<RidesListClientProps>>(() =>
+  import("@/components/RidesList/RidesListClient").then((m) => ({
+    default: m.RidesListClient,
+  })),
 );
 
 export const Route = createFileRoute("/rides/$date")({

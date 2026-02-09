@@ -5,7 +5,13 @@ import globals from "globals";
 
 const eslintConfig = [
   {
-    ignores: ["dist/**", ".output/**", ".vinxi/**", ".next/**", "node_modules/**"],
+    ignores: [
+      "dist/**",
+      ".output/**",
+      ".vinxi/**",
+      ".next/**",
+      "node_modules/**",
+    ],
   },
   js.configs.recommended,
   {

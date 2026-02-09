@@ -48,10 +48,16 @@ const RepeatingRideDetails = ({ ride }: RepeatingRideDetailsProps) => {
   const time = formatTime(startDate);
 
   const goToCopy = () =>
-    void router.navigate({ to: "/repeating-rides/copy/$id", params: { id: id! } });
+    void router.navigate({
+      to: "/repeating-rides/copy/$id",
+      params: { id: id! },
+    });
 
   const goToEdit = () =>
-    void router.navigate({ to: "/repeating-rides/edit/$id", params: { id: id! } });
+    void router.navigate({
+      to: "/repeating-rides/edit/$id",
+      params: { id: id! },
+    });
 
   const toggleDeleteAllRides = () => setDeleteAllRides(!deleteAllRides);
 

@@ -36,7 +36,9 @@ const ImageUpload = ({ user, onClose }: ImageUploadProps) => {
         reader.onloadend = async () => {
           setAvatarURL(reader.result as string);
           console.log("Avatar upload requested for user:", user.id);
-          console.log("Note: Avatar upload not yet implemented with external API");
+          console.log(
+            "Note: Avatar upload not yet implemented with external API",
+          );
           toast.info("Avatar upload not yet available");
           setIsUploading(false);
           onClose();

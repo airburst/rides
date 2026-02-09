@@ -34,24 +34,26 @@ export function useSession() {
     enabled: isAuthenticated,
   });
 
-  const session = isAuthenticated && dbUser
-    ? {
-        user: {
-          id: dbUser.id,
-          name: dbUser.name ?? auth0User?.name,
-          email: dbUser.email ?? auth0User?.email,
-          image: dbUser.image ?? auth0User?.picture,
-          role: dbUser.role,
-          preferences: dbUser.preferences,
-        },
-      }
-    : null;
+  const session =
+    isAuthenticated && dbUser
+      ? {
+          user: {
+            id: dbUser.id,
+            name: dbUser.name ?? auth0User?.name,
+            email: dbUser.email ?? auth0User?.email,
+            image: dbUser.image ?? auth0User?.picture,
+            role: dbUser.role,
+            preferences: dbUser.preferences,
+          },
+        }
+      : null;
 
   return {
     session,
     isLoading: isAuthLoading || (isAuthenticated && isUserLoading),
     isAuthenticated,
     login: loginWithRedirect,
-    logout: () => logout({ logoutParams: { returnTo: window.location.origin } }),
+    logout: () =>
+      logout({ logoutParams: { returnTo: window.location.origin } }),
   };
 }

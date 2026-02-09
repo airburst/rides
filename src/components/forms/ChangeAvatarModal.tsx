@@ -21,9 +21,7 @@ const ChangeAvatarModal = ({ open, onClose, user }: ChangeAvatarModalProps) => {
         <Dialog.Backdrop className="fixed inset-0 z-10 bg-black/30" />
         <div className="fixed inset-0 z-10 flex w-screen items-center justify-center p-4">
           <Dialog.Popup className="motion-preset-slide-up max-w-lg space-y-4 rounded-md bg-white p-4">
-            <Dialog.Title className="text-xl">
-              Change Avatar Image
-            </Dialog.Title>
+            <Dialog.Title className="text-xl">Change Avatar Image</Dialog.Title>
             <Dialog.Description>
               Upload or take a picture of your choice, no larger than 4mb.
             </Dialog.Description>

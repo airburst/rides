@@ -35,11 +35,13 @@ Cycling club rides and events planner.
 ```
 
 **Multi-tenant notes:**
+
 - Add `tenantId` to scope users to organizations
 - `membershipId` becomes tenant-specific
 - Role hierarchy may need tenant-level customization
 
 **Local-first notes:**
+
 - User profile changes are low-conflict (single editor)
 - Sync user data on login, cache locally
 - `preferences` can be device-local until synced
@@ -67,11 +69,13 @@ Cycling club rides and events planner.
 ```
 
 **Multi-tenant notes:**
+
 - Add `tenantId` to scope rides
 - `scheduleId` reference must be tenant-scoped
 - Consider tenant-specific ride fields/customization
 
 **Local-first notes:**
+
 - Rides are primarily read-heavy, edited by leaders only
 - Conflict: same ride edited by two leaders → last-write-wins or merge
 - `cancelled`/`deleted` flags: use CRDT set (once true, stays true)
@@ -98,17 +102,20 @@ Cycling club rides and events planner.
 ```
 
 **RRule fields parsed from schedule:**
+
 - `freq`: WEEKLY | MONTHLY
 - `interval`: number
 - `byweekday`: MO, TU, WE, TH, FR, SA, SU (array)
 - `dtstart`: start datetime
 
 **Multi-tenant notes:**
+
 - Add `tenantId`
 - Templates are org-specific
 - Winter time logic may vary by tenant location
 
 **Local-first notes:**
+
 - Templates rarely change, good cache candidates
 - Generation happens server-side (not local)
 
@@ -126,10 +133,12 @@ Cycling club rides and events planner.
 ```
 
 **Multi-tenant notes:**
+
 - Implicitly scoped via ride's tenantId
 - Cross-tenant enrollment not allowed
 
 **Local-first notes:**
+
 - **High conflict potential**: multiple users joining same ride
 - Capacity check: `rideLimit` enforcement needs server authority
 - Strategy: optimistic local join → server validates → rollback if over capacity
@@ -155,11 +164,13 @@ Cycling club rides and events planner.
 ```
 
 **Multi-tenant notes:**
+
 - Each tenant may have different membership provider
 - `system` field allows multiple integrations
 - Tenant-specific API credentials
 
 **Local-first notes:**
+
 - Server-only sync (not replicated to clients)
 - Users see their own membership status cached in user record
 
@@ -170,9 +181,11 @@ Cycling club rides and events planner.
 Mirror schemas of `rides` and `users_on_rides` for historical data.
 
 **Multi-tenant notes:**
+
 - Archive tables need `tenantId` or partition by tenant
 
 **Local-first notes:**
+
 - Archives are read-only, no sync needed
 - Load on-demand for historical views
 
@@ -182,21 +195,23 @@ Mirror schemas of `rides` and `users_on_rides` for historical data.
 
 ### 1. Ride Management
 
-| Action | Permission | Description |
-|--------|------------|-------------|
-| View rides | Public | List/calendar/detail views |
-| Create ride | LEADER+ | Single ride with all fields |
-| Edit ride | LEADER+ | Update any ride field |
-| Delete ride | LEADER+ | Soft delete (sets `deleted=true`) |
-| Cancel ride | LEADER+ | Marks `cancelled=true`, ride still visible |
-| Copy ride | LEADER+ | Duplicate ride to new date |
+| Action      | Permission | Description                                |
+| ----------- | ---------- | ------------------------------------------ |
+| View rides  | Public     | List/calendar/detail views                 |
+| Create ride | LEADER+    | Single ride with all fields                |
+| Edit ride   | LEADER+    | Update any ride field                      |
+| Delete ride | LEADER+    | Soft delete (sets `deleted=true`)          |
+| Cancel ride | LEADER+    | Marks `cancelled=true`, ride still visible |
+| Copy ride   | LEADER+    | Duplicate ride to new date                 |
 
 **Business logic:**
+
 - Rides with `deleted=true` excluded from all queries
 - Cancelled rides shown with visual indicator
 - `rideLimit=-1` means unlimited capacity
 
 **Local-first notes:**
+
 - Read operations fully offline-capable
 - Write operations queue locally, sync when online
 - Conflict resolution: leader edits win, or merge non-conflicting fields
@@ -205,20 +220,22 @@ Mirror schemas of `rides` and `users_on_rides` for historical data.
 
 ### 2. Ride Enrollment
 
-| Action | Permission | Description |
-|--------|------------|-------------|
-| Join ride | USER+ (self) | Add self to ride |
-| Leave ride | USER+ (self) | Remove self from ride |
-| Add rider | LEADER+ | Add any user to ride |
-| Remove rider | LEADER+ | Remove any user from ride |
-| Update notes | USER+ (self) | Edit own rider notes |
+| Action       | Permission   | Description               |
+| ------------ | ------------ | ------------------------- |
+| Join ride    | USER+ (self) | Add self to ride          |
+| Leave ride   | USER+ (self) | Remove self from ride     |
+| Add rider    | LEADER+      | Add any user to ride      |
+| Remove rider | LEADER+      | Remove any user from ride |
+| Update notes | USER+ (self) | Edit own rider notes      |
 
 **Business logic:**
+
 - Capacity check: `participants.length < rideLimit` (unless -1)
 - `createdAt` used for waitlist ordering if over capacity
 - Notes are per-user-per-ride
 
 **Local-first notes:**
+
 - **Critical sync area**: enrollment changes must sync reliably
 - Optimistic UI: show join immediately, rollback on server rejection
 - Capacity enforcement: server is source of truth
@@ -228,15 +245,16 @@ Mirror schemas of `rides` and `users_on_rides` for historical data.
 
 ### 3. Repeating Ride Templates
 
-| Action | Permission | Description |
-|--------|------------|-------------|
-| View templates | LEADER+ | List all templates |
-| Create template | LEADER+ | New recurring schedule |
-| Edit template | LEADER+ | Modify schedule/details |
-| Delete template | ADMIN | Permanent delete |
-| Copy template | LEADER+ | Duplicate with modifications |
+| Action          | Permission | Description                  |
+| --------------- | ---------- | ---------------------------- |
+| View templates  | LEADER+    | List all templates           |
+| Create template | LEADER+    | New recurring schedule       |
+| Edit template   | LEADER+    | Modify schedule/details      |
+| Delete template | ADMIN      | Permanent delete             |
+| Copy template   | LEADER+    | Duplicate with modifications |
 
 **Business logic:**
+
 - RRule stored as string, parsed for editing
 - `winterStartTime` applied during generation for seasonal adjustment
 - Template changes don't affect already-generated rides
@@ -248,6 +266,7 @@ Mirror schemas of `rides` and `users_on_rides` for historical data.
 **Trigger:** Cron job on 1st of each month (runs twice at 02:05 and 02:10 UTC)
 
 **Process:**
+
 1. Fetch all repeating ride templates
 2. For each template, generate RRule occurrences for next month
 3. Check for existing rides on same dates (prevent duplicates)
@@ -255,10 +274,12 @@ Mirror schemas of `rides` and `users_on_rides` for historical data.
 5. Link via `scheduleId`
 
 **Multi-tenant notes:**
+
 - Must iterate all tenants or run per-tenant
 - Consider tenant timezone for "next month" calculation
 
 **Local-first notes:**
+
 - Server-only operation
 - Clients receive new rides via normal sync
 
@@ -272,6 +293,7 @@ Mirror schemas of `rides` and `users_on_rides` for historical data.
 - Click date → rides list for that day
 
 **Local-first notes:**
+
 - Calendar data cacheable by month
 - Pre-fetch adjacent months for smooth navigation
 
@@ -279,14 +301,15 @@ Mirror schemas of `rides` and `users_on_rides` for historical data.
 
 ### 6. User Profiles
 
-| Action | Permission | Description |
-|--------|------------|-------------|
-| View profile | Public | See user info (limited fields) |
-| Edit own profile | USER+ | Update name, contact, preferences |
-| Edit any profile | ADMIN | Full user editing |
-| Upload avatar | USER+ (self) | Profile image |
+| Action           | Permission   | Description                       |
+| ---------------- | ------------ | --------------------------------- |
+| View profile     | Public       | See user info (limited fields)    |
+| Edit own profile | USER+        | Update name, contact, preferences |
+| Edit any profile | ADMIN        | Full user editing                 |
+| Upload avatar    | USER+ (self) | Profile image                     |
 
 **Fields:**
+
 - Display: name, image
 - Contact: mobile, emergency contact
 - Preferences: distance units (km/miles)
@@ -302,6 +325,7 @@ Mirror schemas of `rides` and `users_on_rides` for historical data.
 - View membership status
 
 **Multi-tenant notes:**
+
 - Admin sees only tenant's users
 - Super-admin for cross-tenant management
 
@@ -312,15 +336,18 @@ Mirror schemas of `rides` and `users_on_rides` for historical data.
 **Trigger:** Cron job on 1st of each month at 02:00 UTC
 
 **Process:**
+
 1. Find rides before current month
 2. Copy to `archived_rides` table
 3. Copy enrollments to `archived_users_on_rides`
 4. Delete from live tables
 
 **Multi-tenant notes:**
+
 - Archive per-tenant or use tenant partition
 
 **Local-first notes:**
+
 - Clients can purge old local data after archive date
 
 ---
@@ -329,35 +356,35 @@ Mirror schemas of `rides` and `users_on_rides` for historical data.
 
 ### Public Pages
 
-| Route | Description |
-|-------|-------------|
-| `/` | Home - rides list |
-| `/rides/[...date]` | Rides on specific date |
-| `/calendar` | Calendar view (current month) |
-| `/calendar/[...date]` | Calendar at specific month |
-| `/ride/[...id]` | Ride details |
-| `/r/[...id]` | Short URL redirect to ride |
-| `/profile/[...id]` | View user profile |
+| Route                 | Description                   |
+| --------------------- | ----------------------------- |
+| `/`                   | Home - rides list             |
+| `/rides/[...date]`    | Rides on specific date        |
+| `/calendar`           | Calendar view (current month) |
+| `/calendar/[...date]` | Calendar at specific month    |
+| `/ride/[...id]`       | Ride details                  |
+| `/r/[...id]`          | Short URL redirect to ride    |
+| `/profile/[...id]`    | View user profile             |
 
 ### Authenticated Pages
 
-| Route | Permission | Description |
-|-------|------------|-------------|
-| `/profile` | USER+ | Own profile |
+| Route      | Permission | Description |
+| ---------- | ---------- | ----------- |
+| `/profile` | USER+      | Own profile |
 
 ### Admin Pages
 
-| Route | Permission | Description |
-|-------|------------|-------------|
-| `/ride/new` | LEADER+ | Create ride |
-| `/ride/new/[...date]` | LEADER+ | Create ride on date |
-| `/ride/edit/[...id]` | LEADER+ | Edit ride |
-| `/ride/copy/[...id]` | LEADER+ | Copy ride |
-| `/repeating-rides` | LEADER+ | Templates list |
-| `/repeating-rides/[...id]` | LEADER+ | Template details |
-| `/repeating-rides/edit/[...id]` | LEADER+ | Edit template |
-| `/repeating-rides/copy/[...id]` | LEADER+ | Copy template |
-| `/users` | ADMIN | User management |
+| Route                           | Permission | Description         |
+| ------------------------------- | ---------- | ------------------- |
+| `/ride/new`                     | LEADER+    | Create ride         |
+| `/ride/new/[...date]`           | LEADER+    | Create ride on date |
+| `/ride/edit/[...id]`            | LEADER+    | Edit ride           |
+| `/ride/copy/[...id]`            | LEADER+    | Copy ride           |
+| `/repeating-rides`              | LEADER+    | Templates list      |
+| `/repeating-rides/[...id]`      | LEADER+    | Template details    |
+| `/repeating-rides/edit/[...id]` | LEADER+    | Edit template       |
+| `/repeating-rides/copy/[...id]` | LEADER+    | Copy template       |
+| `/users`                        | ADMIN      | User management     |
 
 ---
 
@@ -370,14 +397,16 @@ Generate rides from repeating templates.
 **Auth:** Bearer token (API_KEY)
 
 **Body:**
+
 ```json
 {
-  "date": "2024-02-01",      // optional, defaults to next month
-  "scheduleId": "uuid"        // optional, generate single template
+  "date": "2024-02-01", // optional, defaults to next month
+  "scheduleId": "uuid" // optional, generate single template
 }
 ```
 
 **Multi-tenant notes:**
+
 - Add tenant context to request
 - Validate API key per tenant
 
@@ -390,9 +419,10 @@ Archive old rides to historical tables.
 **Auth:** Bearer token (API_KEY)
 
 **Body:**
+
 ```json
 {
-  "date": "2024-01-01"        // optional, archive before this date
+  "date": "2024-01-01" // optional, archive before this date
 }
 ```
 
@@ -405,11 +435,13 @@ Sync membership data from RiderHQ.
 **Auth:** Bearer token (API_KEY)
 
 **Process:**
+
 1. Fetch paginated member list from RiderHQ API
 2. Truncate existing membership table
 3. Insert fresh data
 
 **Multi-tenant notes:**
+
 - RiderHQ credentials per tenant
 - Don't truncate cross-tenant
 
@@ -419,11 +451,11 @@ Sync membership data from RiderHQ.
 
 ### Roles
 
-| Role | Level | Capabilities |
-|------|-------|--------------|
-| USER | 1 | View rides, join/leave, edit own profile |
-| LEADER | 2 | + Create/edit/delete rides, manage templates |
-| ADMIN | 3 | + User management, delete templates |
+| Role   | Level | Capabilities                                 |
+| ------ | ----- | -------------------------------------------- |
+| USER   | 1     | View rides, join/leave, edit own profile     |
+| LEADER | 2     | + Create/edit/delete rides, manage templates |
+| ADMIN  | 3     | + User management, delete templates          |
 
 ### Permission Check
 
@@ -435,6 +467,7 @@ canUseAction(requiredRole, allowedUserId?)
 ```
 
 **Multi-tenant notes:**
+
 - Roles scoped to tenant
 - Consider: tenant-admin vs super-admin
 - Cross-tenant actions need elevated permissions
@@ -450,6 +483,7 @@ canUseAction(requiredRole, allowedUserId?)
 - Profile data synced to users table
 
 **Multi-tenant notes:**
+
 - Single Auth0 tenant with org metadata, OR
 - Separate Auth0 tenants per org
 
@@ -460,6 +494,7 @@ canUseAction(requiredRole, allowedUserId?)
 - Periodic sync to verify member status
 
 **Multi-tenant notes:**
+
 - Each tenant configures own RiderHQ credentials
 - Abstract to support other membership systems
 
@@ -467,17 +502,19 @@ canUseAction(requiredRole, allowedUserId?)
 
 ## Background Jobs (Cron)
 
-| Job | Schedule | Action |
-|-----|----------|--------|
-| Archive rides | 1st of month, 02:00 UTC | Move old rides to archive |
-| Generate rides | 1st of month, 02:05 & 02:10 UTC | Create next month's rides |
-| Membership sync | Manual trigger | Refresh RiderHQ data |
+| Job             | Schedule                        | Action                    |
+| --------------- | ------------------------------- | ------------------------- |
+| Archive rides   | 1st of month, 02:00 UTC         | Move old rides to archive |
+| Generate rides  | 1st of month, 02:05 & 02:10 UTC | Create next month's rides |
+| Membership sync | Manual trigger                  | Refresh RiderHQ data      |
 
 **Multi-tenant notes:**
+
 - Jobs run for all tenants or queue per-tenant
 - Consider tenant timezone for scheduling
 
 **Local-first notes:**
+
 - All server-side, clients sync results
 
 ---
@@ -492,22 +529,22 @@ canUseAction(requiredRole, allowedUserId?)
 
 ### Conflict Resolution by Entity
 
-| Entity | Strategy |
-|--------|----------|
-| Rides | Last-write-wins with field-level merge |
-| Enrollments | CRDT set (add-wins), server validates capacity |
-| User profiles | Last-write-wins (single editor) |
-| Templates | Last-write-wins |
+| Entity        | Strategy                                       |
+| ------------- | ---------------------------------------------- |
+| Rides         | Last-write-wins with field-level merge         |
+| Enrollments   | CRDT set (add-wins), server validates capacity |
+| User profiles | Last-write-wins (single editor)                |
+| Templates     | Last-write-wins                                |
 
 ### Offline Capabilities
 
-| Feature | Offline Support |
-|---------|-----------------|
-| View rides | Full (cached) |
-| View calendar | Full (cached months) |
-| Join/leave ride | Queued, optimistic UI |
-| Create/edit ride | Queued (LEADER+) |
-| User management | Online only |
+| Feature          | Offline Support       |
+| ---------------- | --------------------- |
+| View rides       | Full (cached)         |
+| View calendar    | Full (cached months)  |
+| Join/leave ride  | Queued, optimistic UI |
+| Create/edit ride | Queued (LEADER+)      |
+| User management  | Online only           |
 
 ### Sync Considerations
 
@@ -522,6 +559,7 @@ canUseAction(requiredRole, allowedUserId?)
 ### Required Schema Changes
 
 Every table needs `tenantId`:
+
 - `users` - tenant membership
 - `rides` - tenant's rides
 - `repeating_rides` - tenant's templates
@@ -566,18 +604,21 @@ Every table needs `tenantId`:
 ### Ride Readiness Check
 
 Ride considered "ready" when:
+
 - `leader` is not "TBA" or empty
 - `route` is not "TBA" or empty
 
 ### Capacity Check
 
 ```typescript
-hasSpace(ride) = ride.rideLimit === -1 || ride.participants.length < ride.rideLimit
+hasSpace(ride) =
+  ride.rideLimit === -1 || ride.participants.length < ride.rideLimit;
 ```
 
 ### Winter Time Override
 
 During ride generation, if current month is in winter range:
+
 - Use `winterStartTime` instead of template's normal time
 - Applied per-template
 
@@ -589,5 +630,6 @@ During ride generation, if current month is in winter range:
 ### Duplicate Prevention
 
 During generation:
+
 - Compare `rideDate` (YYYY-MM-DD) against existing rides
 - Skip if ride already exists for that date + template

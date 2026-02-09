@@ -144,15 +144,13 @@ export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
                 ))}
               </div>
             )}
-            {showDropdown &&
-              filteredData.length === 0 &&
-              search !== "" && (
-                <div className="absolute mt-1 w-full rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5">
-                  <div className="relative cursor-default px-4 py-2 text-gray-700 select-none">
-                    Nothing found.
-                  </div>
+            {showDropdown && filteredData.length === 0 && search !== "" && (
+              <div className="absolute mt-1 w-full rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5">
+                <div className="relative cursor-default px-4 py-2 text-gray-700 select-none">
+                  Nothing found.
                 </div>
-              )}
+              </div>
+            )}
           </div>
         </div>
 

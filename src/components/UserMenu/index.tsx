@@ -14,7 +14,9 @@ const UserMenu = () => {
   const router = useRouter();
   const { pathname } = useLocation();
   const params = useParams({ strict: false });
-  const rideId = flattenQuery((params as Record<string, string | undefined>).id);
+  const rideId = flattenQuery(
+    (params as Record<string, string | undefined>).id,
+  );
 
   // Derive rideId or repeatingRideId from the pathname
   const isRepeatingRidePage = pathname.includes("repeating");
@@ -22,7 +24,9 @@ const UserMenu = () => {
   const repeatingRideId = isRepeatingRidePage ? rideId : undefined;
 
   // Fetch ride data to check if cancelled (only for regular ride pages)
-  const { data: ride } = useRide(!isRepeatingRidePage && !isProfilePage && rideId ? rideId : "");
+  const { data: ride } = useRide(
+    !isRepeatingRidePage && !isProfilePage && rideId ? rideId : "",
+  );
   const isCancelled = ride?.cancelled ?? false;
 
   // Mutations

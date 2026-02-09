@@ -27,7 +27,8 @@ export function Providers({ children }: { children: ReactNode }) {
       domain={AUTH0_DOMAIN}
       clientId={AUTH0_CLIENT_ID}
       authorizationParams={{
-        redirect_uri: typeof window !== "undefined" ? window.location.origin : "",
+        redirect_uri:
+          typeof window !== "undefined" ? window.location.origin : "",
         audience: AUTH0_AUDIENCE,
       }}
       cacheLocation="localstorage"

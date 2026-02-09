@@ -26,9 +26,7 @@ export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
 
   const isCancelled = ride.cancelled ?? false;
 
-  const isGoing = user
-    ? users?.map((u) => u.userId).includes(user.id)
-    : false;
+  const isGoing = user ? users?.map((u) => u.userId).includes(user.id) : false;
 
   const riderCount = users?.length ?? 0;
   const hasLimit = rideLimit && rideLimit > -1;
