@@ -12,8 +12,10 @@
 db.sqlite
 
 # tanstack/vite
+/dist/
 /.output/
 /.vinxi/
+/.tanstack/
 
 # production
 /build

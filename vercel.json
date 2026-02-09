@@ -1,6 +1,6 @@
 {
   "buildCommand": "bun run build",
-  "outputDirectory": ".output/public",
+  "outputDirectory": "dist/client",
   "framework": null,
   "rewrites": [
     { "source": "/((?!assets|static|manifest.json|favicon.ico).*)", "destination": "/_shell.html" }
