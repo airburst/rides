@@ -23,7 +23,7 @@ const {
 
 describe("repeatingRides", () => {
   describe("convertToRRule", () => {
-    it("should convert repeating ride to RRule string", () => {
+    it("should convert repeating ride to RRule string", async () => {
       const data: RepeatingRide = {
         name: "Test Ride",
         freq: RRule.WEEKLY,
@@ -33,7 +33,7 @@ describe("repeatingRides", () => {
         byweekday: [0, 2], // Monday and Wednesday
       };
 
-      const result = convertToRRule(data);
+      const result = await convertToRRule(data);
 
       expect(result).toContain("FREQ=WEEKLY");
       expect(result).toContain("INTERVAL=1");
@@ -44,26 +44,26 @@ describe("repeatingRides", () => {
   });
 
   describe("updateRRuleStartDate", () => {
-    it("should update the start date in an RRule string", () => {
+    it("should update the start date in an RRule string", async () => {
       const schedule =
         "FREQ=WEEKLY;DTSTART=20230101T100000Z;INTERVAL=1;BYDAY=MO,WE";
       const newStartDate = "2023-02-01T10:00:00.000Z";
 
-      const result = updateRRuleStartDate(schedule, newStartDate);
+      const result = await updateRRuleStartDate(schedule, newStartDate);
       expect(result).toContain("DTSTART:20230202T100000Z");
     });
 
-    it("should return original schedule if no startDate provided", () => {
+    it("should return original schedule if no startDate provided", async () => {
       const schedule =
         "FREQ=WEEKLY;DTSTART=20230101T100000Z;INTERVAL=1;BYDAY=MO,WE";
 
-      const result = updateRRuleStartDate(schedule);
+      const result = await updateRRuleStartDate(schedule);
       expect(result).toBe(schedule);
     });
   });
 
   describe("repeatingRideToDb", () => {
-    it("should convert a repeating ride to database format", () => {
+    it("should convert a repeating ride to database format", async () => {
       const ride: RepeatingRide = {
         id: "1",
         name: "Test Ride",
@@ -74,7 +74,7 @@ describe("repeatingRides", () => {
         byweekday: [0, 2],
       };
 
-      const result = repeatingRideToDb(ride);
+      const result = await repeatingRideToDb(ride);
       expect(result).toHaveProperty("schedule");
       expect(result).toHaveProperty("id", "1");
       expect(result).toHaveProperty("name", "Test Ride");
@@ -83,7 +83,7 @@ describe("repeatingRides", () => {
   });
 
   describe("repeatingRideFromDb", () => {
-    it("should convert a database ride to repeating ride format", () => {
+    it("should convert a database ride to repeating ride format", async () => {
       const dbRide: RepeatingRideDb = {
         id: "1",
         name: "Test Ride",
@@ -91,7 +91,7 @@ describe("repeatingRides", () => {
           "FREQ=WEEKLY;DTSTART=20230101T100000Z;UNTIL=20231231T100000Z;INTERVAL=1;BYDAY=MO,WE",
       };
 
-      const result = repeatingRideFromDb(dbRide);
+      const result = await repeatingRideFromDb(dbRide);
       expect(result).toHaveProperty("freq", RRule.WEEKLY);
       expect(result).toHaveProperty("interval", 1);
       expect(result).toHaveProperty("startDate", "2023-01-01T10:00:00.000Z");
@@ -178,7 +178,7 @@ describe("repeatingRides", () => {
   });
 
   describe("makeRidesInPeriod", () => {
-    it("should generate rides for the next month period", () => {
+    it("should generate rides for the next month period", async () => {
       const template: RepeatingRideDb = {
         id: "1",
         name: "Weekly Ride",
@@ -186,7 +186,7 @@ describe("repeatingRides", () => {
           "DTSTART:20250515T183000Z\nRRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=TH",
       };
 
-      const result = makeRidesInPeriod(template, "2025-05-15");
+      const result = await makeRidesInPeriod(template, "2025-05-15");
 
       expect(result).toHaveProperty("id", "1");
       expect(result).toHaveProperty("schedule", template.schedule);
@@ -210,7 +210,7 @@ describe("repeatingRides", () => {
       ]);
     });
 
-    it("should use provided date as start date", () => {
+    it("should use provided date as start date", async () => {
       const startDate = "2023-03-15T00:00:00.000Z";
 
       const template: RepeatingRideDb = {
@@ -219,12 +219,12 @@ describe("repeatingRides", () => {
         schedule: "DTSTART:20230101T100000Z\nRRULE:FREQ=WEEKLY;BYDAY=SU",
       };
 
-      const result = makeRidesInPeriod(template, startDate);
+      const result = await makeRidesInPeriod(template, startDate);
 
       expect(result.rides.length).toBeGreaterThan(0);
     });
 
-    it("should apply winter start times when specified", () => {
+    it("should apply winter start times when specified", async () => {
       mockIsWinter.mockReturnValue(true);
 
       const template: RepeatingRideDb = {
@@ -234,7 +234,10 @@ describe("repeatingRides", () => {
         winterStartTime: "09:30",
       };
 
-      const result = makeRidesInPeriod(template, "2023-01-01T00:00:00.000Z");
+      const result = await makeRidesInPeriod(
+        template,
+        "2023-01-01T00:00:00.000Z",
+      );
       expect(result.rides).toHaveLength(5); //5 Sundays in January 2023
       expect(result.rides?.[0]?.rideDate).toContain("09:30:00");
     });

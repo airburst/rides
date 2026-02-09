@@ -163,17 +163,16 @@ const RideForm = ({
           // Store schedule id to use in handleYes function
           setScheduleId(results.id);
           // Calculate rides list and ask to create them
-          const rideList = makeRidesInPeriod(
-            repeatingRideToDb(payload),
-            data.startDate,
-          );
-          const rideDates = rideList.rides.map(({ rideDate }) =>
-            formatDate(rideDate),
-          );
-          if (rideDates.length > 0) {
-            setRideDateList(rideDates);
-            show();
-          }
+          void repeatingRideToDb(payload).then(async (dbRide) => {
+            const rideList = await makeRidesInPeriod(dbRide, data.startDate);
+            const rideDates = rideList.rides.map(({ rideDate }) =>
+              formatDate(rideDate),
+            );
+            if (rideDates.length > 0) {
+              setRideDateList(rideDates);
+              show();
+            }
+          });
           toast.success("Repeating ride created successfully");
         },
         onError: (error) => {
