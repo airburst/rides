@@ -1,16 +1,13 @@
 import { DEFAULT_WEEKS_TO_SHOW } from "@/constants";
 import { useFilter } from "@/contexts/FilterContext";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { type FilterQuery } from "@/types";
 import { Filter, FilterX } from "lucide-react";
 import { useLocation } from "@tanstack/react-router";
 
 export const FilterButton = () => {
   const { pathname } = useLocation();
   const shouldShowFilterButton = pathname === "/";
-  const { showFilterMenu, setShowFilterMenu } = useFilter();
-  const [filterQuery] = useLocalStorage<FilterQuery>("bcc-filters", {});
-  
+  const { showFilterMenu, setShowFilterMenu, filterQuery } = useFilter();
+
   const hasFiltersApplied = !!(
     filterQuery.onlyJoined ||
     filterQuery.q ||

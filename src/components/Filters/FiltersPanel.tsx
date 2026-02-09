@@ -1,6 +1,5 @@
 import { DEFAULT_WEEKS_TO_SHOW } from "@/constants";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { type FilterQuery } from "@/types";
+import { useFilter } from "@/contexts/FilterContext";
 import clsx from "clsx";
 import { Check, ChevronDown, X } from "lucide-react";
 import { useRef, useState, type ChangeEvent } from "react";
@@ -11,37 +10,23 @@ type Props = {
   isShowing: boolean;
   closeHandler: () => void;
   data: (string | null | undefined)[];
-  filterQuery: FilterQuery;
-  setFilterQuery: (filter: FilterQuery) => void;
 };
 
-export const FiltersPanel = ({
-  isShowing,
-  closeHandler,
-  data,
-  filterQuery,
-  setFilterQuery,
-}: Props) => {
+export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
   const ref = useRef<HTMLElement>(null!);
-  const [filters] = useLocalStorage<FilterQuery>("bcc-filters", {});
+  const { filterQuery, setFilterQuery } = useFilter();
   const [onlyJoined, setOnlyJoined] = useState<boolean>(
-    filters?.onlyJoined ?? false,
+    filterQuery.onlyJoined ?? false,
   );
-  const [search, setSearch] = useState<string>(filters?.q ?? "");
+  const [search, setSearch] = useState<string>(filterQuery.q ?? "");
   const [weeksAhead, setWeeksAhead] = useState<string>(
-    filters?.weeksAhead ?? DEFAULT_WEEKS_TO_SHOW,
+    filterQuery.weeksAhead ?? DEFAULT_WEEKS_TO_SHOW,
   );
-  const [, setFilters] = useLocalStorage<FilterQuery>("bcc-filters", {});
   const [showDropdown, setShowDropdown] = useState(false);
-
-  const setFilterQueryAndStorage = (filter: FilterQuery) => {
-    setFilterQuery(filter);
-    setFilters(filter);
-  };
 
   const handleSwitchChange = () => {
     setOnlyJoined(!onlyJoined);
-    setFilterQueryAndStorage({
+    setFilterQuery({
       ...filterQuery,
       onlyJoined: !filterQuery.onlyJoined,
     });
@@ -63,12 +48,12 @@ export const FiltersPanel = ({
   const handleWeeksChange = async (e: ChangeEvent<HTMLSelectElement>) => {
     const val = e.target.value;
     setWeeksAhead(val);
-    setFilterQueryAndStorage({ ...filterQuery, weeksAhead: val });
+    setFilterQuery({ ...filterQuery, weeksAhead: val });
   };
 
   const handleSelected = (query: string | null) => {
     const q = query ?? "";
-    setFilterQueryAndStorage({ ...filterQuery, q });
+    setFilterQuery({ ...filterQuery, q });
     setSearch(q);
     setShowDropdown(false);
   };
@@ -77,7 +62,7 @@ export const FiltersPanel = ({
     setOnlyJoined(false);
     setSearch("");
     setWeeksAhead(DEFAULT_WEEKS_TO_SHOW);
-    setFilterQueryAndStorage({
+    setFilterQuery({
       onlyJoined: false,
       weeksAhead: DEFAULT_WEEKS_TO_SHOW,
     });
