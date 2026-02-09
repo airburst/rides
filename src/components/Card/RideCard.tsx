@@ -1,5 +1,4 @@
 import { formatDistance } from "@utils/rides";
-import { useNavigate } from "@tanstack/react-router";
 import clsx from "clsx";
 import { type RideList, type User } from "../../types";
 import { Cancelled } from "../RideDetails/Cancelled";
@@ -20,9 +19,6 @@ export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
   const details = destination
     ? `${destination} - ${convertedDistance}`
     : `${convertedDistance}`;
-  const navigate = useNavigate();
-
-  const onPress = () => void navigate({ to: "/ride/$id", params: { id: id! } });
 
   if (!id) {
     return null;
@@ -46,7 +42,7 @@ export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
   );
 
   return (
-    <BasicCard onPress={onPress}>
+    <BasicCard>
       <div className={cardClass}>
         <div className={titleClass}>
           {name}

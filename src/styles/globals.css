@@ -57,9 +57,9 @@
 } */
 
 @theme inline {
-  --font-display: var(--font-outfit);
-  --font-main: var(--font-outfit);
-  --font-sans: var(--font-outfit);
+  --font-display: "Outfit", sans-serif;
+  --font-main: "Outfit", sans-serif;
+  --font-sans: "Outfit", sans-serif;
   --text-xl: 1.4rem;
   --text-lg: 1.2rem;
   --text-base: 1.2rem;
