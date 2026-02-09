@@ -9,7 +9,7 @@ import { nitro } from "nitro/vite";
 const config = defineConfig({
   plugins: [
     devtools(),
-    nitro(),
+    nitro({ preset: "node-server" }),
     viteTsConfigPaths({
       projects: ["./tsconfig.json"],
     }),
