@@ -1,7 +1,16 @@
+import { describe, it, expect, beforeEach, mock } from "bun:test";
 import { RRule } from "rrule";
 import type { RepeatingRide, RepeatingRideDb } from "src/types";
-import { isWinter } from "./dates";
-import {
+
+const mockIsWinter = mock(() => false);
+
+mock.module("./dates", () => {
+  const actual = require("./dates");
+  return { ...actual, isWinter: mockIsWinter };
+});
+
+const { isWinter } = await import("./dates");
+const {
   changeToWinterTime,
   convertToRRule,
   generateRide,
@@ -9,16 +18,7 @@ import {
   repeatingRideFromDb,
   repeatingRideToDb,
   updateRRuleStartDate,
-} from "./repeatingRides";
-
-// Mock the isWinter function
-vi.mock("./dates", async () => {
-  const originalModule = await vi.importActual("./dates");
-  return {
-    ...originalModule,
-    isWinter: vi.fn(),
-  };
-});
+} = await import("./repeatingRides");
 
 describe("repeatingRides", () => {
   describe("convertToRRule", () => {
@@ -102,11 +102,11 @@ describe("repeatingRides", () => {
 
   describe("changeToWinterTime", () => {
     beforeEach(() => {
-      (isWinter as ReturnType<typeof vi.fn>).mockReset();
+      mockIsWinter.mockReset();
     });
 
     it("should change time if date is in winter", () => {
-      (isWinter as ReturnType<typeof vi.fn>).mockReturnValue(true);
+      mockIsWinter.mockReturnValue(true);
       const dateTime = new Date("2023-01-15T10:00:00.000Z");
       const winterStartTime = "09:30";
 
@@ -115,7 +115,7 @@ describe("repeatingRides", () => {
     });
 
     it("should not change time if date is not in winter", () => {
-      (isWinter as ReturnType<typeof vi.fn>).mockReturnValue(false);
+      mockIsWinter.mockReturnValue(false);
       const dateTime = new Date("2023-06-15T10:00:00.000Z");
       const winterStartTime = "09:30";
 
@@ -224,7 +224,7 @@ describe("repeatingRides", () => {
     });
 
     it("should apply winter start times when specified", () => {
-      (isWinter as ReturnType<typeof vi.fn>).mockReturnValue(true);
+      mockIsWinter.mockReturnValue(true);
 
       const template: RepeatingRideDb = {
         id: "1",

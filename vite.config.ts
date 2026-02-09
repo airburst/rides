@@ -1,4 +1,3 @@
-/// <reference types="vitest/config" />
 import { defineConfig } from "vite";
 import { devtools } from "@tanstack/devtools-vite";
 import { tanstackStart } from "@tanstack/react-start/plugin/vite";
@@ -18,10 +17,6 @@ const config = defineConfig({
     tanstackStart({ spa: { enabled: true } }),
     viteReact(),
   ],
-  test: {
-    environment: "jsdom",
-    globals: true,
-  },
 });
 
 export default config;

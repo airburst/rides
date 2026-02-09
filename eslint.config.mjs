@@ -27,7 +27,8 @@ const eslintConfig = [
       },
       globals: {
         ...globals.jest,
-        vi: "readonly",
+        mock: "readonly",
+        require: "readonly",
       },
     },
   },
