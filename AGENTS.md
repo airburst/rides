@@ -46,6 +46,23 @@ This is a Next.js application for a cycling club ride planner. It uses:
 src/
   app/          # Next.js App Router pages
   components/   # React components
+    forms/      # Form components (organized as folders for complex forms)
+      RideForm/
+        index.tsx              # Main RideForm component
+        RepeatingSection.tsx   # Repeating ride toggle section
+        RideConfirmationDialog.tsx
+      RepeatingRideForm/
+        index.tsx              # Main RepeatingRideForm component
+        MonthDaySelector.tsx
+        WeekSelector.tsx
+      UserProfileForm/
+        index.tsx
+        AvatarSection.tsx
+        AdminFields.tsx
+        PreferencesSection.tsx
+    ToggleSwitch.tsx  # Shared/reusable components live at components root
+    FormField.tsx
+    Row.tsx
   contexts/     # React contexts (FilterContext, etc.)
   hooks/        # Custom hooks (useRides, useSession, etc.)
   lib/          # Utilities (api.ts for API client)
@@ -61,9 +78,9 @@ src/
 
 ## Testing
 
-- Run `yarn test` before committing changes
-- Ensure TypeScript compiles: `yarn check-types`
-- Build must succeed: `yarn build`
+- Run `bun test` before committing changes
+- Ensure TypeScript compiles: `bun run check-types`
+- Build must succeed: `bun run build`
 - Auth0 env vars are optional in test environment
 
 ## Environment Variables

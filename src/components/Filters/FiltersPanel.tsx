@@ -1,10 +1,11 @@
-import { DEFAULT_WEEKS_TO_SHOW } from "@/constants";
 import { useFilter } from "@/contexts/FilterContext";
+import { useFilterState } from "@/hooks/useFilterState";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
-import clsx from "clsx";
-import { Check, ChevronDown, X } from "lucide-react";
-import { useRef, useState, type ChangeEvent } from "react";
+import { X } from "lucide-react";
+import { useCallback, useMemo, useRef } from "react";
 import { Button } from "../Button";
+import { ToggleSwitch } from "../ToggleSwitch";
+import { SearchDropdown } from "./SearchDropdown";
 
 type Props = {
   isShowing: boolean;
@@ -15,68 +16,32 @@ type Props = {
 export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
   const ref = useRef<HTMLElement>(null!);
   const { filterQuery, setFilterQuery } = useFilter();
-  const [onlyJoined, setOnlyJoined] = useState<boolean>(
-    filterQuery.onlyJoined ?? false,
-  );
-  const [search, setSearch] = useState<string>(filterQuery.q ?? "");
-  const [weeksAhead, setWeeksAhead] = useState<string>(
-    filterQuery.weeksAhead ?? DEFAULT_WEEKS_TO_SHOW,
-  );
-  const [showDropdown, setShowDropdown] = useState(false);
 
-  const handleSwitchChange = () => {
-    setOnlyJoined(!onlyJoined);
-    setFilterQuery({
-      ...filterQuery,
-      onlyJoined: !filterQuery.onlyJoined,
-    });
-  };
-  const switchClass = clsx(
-    "relative inline-flex h-6 w-11 items-center rounded-full",
-    onlyJoined ? "bg-green-600" : "bg-gray-200",
-  );
-  const toggleClass = clsx(
-    "inline-block h-4 w-4 transform rounded-full bg-white transition",
-    onlyJoined ? "translate-x-6" : "translate-x-1",
+  const {
+    onlyJoined,
+    search,
+    weeksAhead,
+    showDropdown,
+    handleSwitchChange,
+    handleSearchChange,
+    handleWeeksChange,
+    handleSelected,
+    reset,
+    filterData,
+    setShowDropdown,
+  } = useFilterState(filterQuery, setFilterQuery);
+
+  const filteredData = useMemo(() => filterData(data), [filterData, data]);
+
+  const toggleDropdown = useCallback(
+    () => setShowDropdown(!showDropdown),
+    [showDropdown, setShowDropdown],
   );
 
-  const handleSearchChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
-    setShowDropdown(true);
-  };
-
-  const handleWeeksChange = async (e: ChangeEvent<HTMLSelectElement>) => {
-    const val = e.target.value;
-    setWeeksAhead(val);
-    setFilterQuery({ ...filterQuery, weeksAhead: val });
-  };
-
-  const handleSelected = (query: string | null) => {
-    const q = query ?? "";
-    setFilterQuery({ ...filterQuery, q });
-    setSearch(q);
-    setShowDropdown(false);
-  };
-
-  const reset = () => {
-    setOnlyJoined(false);
-    setSearch("");
-    setWeeksAhead(DEFAULT_WEEKS_TO_SHOW);
-    setFilterQuery({
-      onlyJoined: false,
-      weeksAhead: DEFAULT_WEEKS_TO_SHOW,
-    });
-  };
-
-  const filteredData =
-    search === ""
-      ? data
-      : data.filter((item) =>
-          (item ?? "")
-            .toLowerCase()
-            .replace(/\s+/g, "")
-            .includes(search.toLowerCase().replace(/\s+/g, "")),
-        );
+  const handleFocus = useCallback(
+    () => setShowDropdown(true),
+    [setShowDropdown],
+  );
 
   useOnClickOutside(ref, closeHandler);
 
@@ -102,70 +67,25 @@ export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
         </div>
 
         <div className="mt-2 flex flex-col gap-4 md:gap-8">
-          <div className="relative z-20 mt-1">
-            <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus-within:ring-2 focus-within:ring-white focus-within:ring-offset-2 focus-within:ring-offset-teal-300 sm:text-sm">
-              <input
-                className="w-full border-none py-2 pr-10 pl-3 leading-5 text-gray-700 focus:ring-0 focus:outline-none"
-                placeholder="Search ride details"
-                value={search}
-                onChange={handleSearchChange}
-                onFocus={() => setShowDropdown(true)}
-              />
-              <button
-                type="button"
-                className="absolute inset-y-0 right-0 flex items-center pr-2 text-gray-700"
-                onClick={() => setShowDropdown(!showDropdown)}
-              >
-                <ChevronDown className="h-4 w-4 fill-neutral-700" />
-              </button>
-            </div>
-            {showDropdown && filteredData.length > 0 && (
-              <div className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none">
-                {filteredData.map((item) => (
-                  <button
-                    key={item}
-                    type="button"
-                    className="relative w-full cursor-default py-2 pr-4 pl-10 text-left text-gray-900 select-none hover:bg-teal-600 hover:text-white"
-                    onClick={() => handleSelected(item ?? "")}
-                  >
-                    <span
-                      className={`block truncate ${
-                        search === item ? "font-medium" : "font-normal"
-                      }`}
-                    >
-                      {item}
-                    </span>
-                    {search === item && (
-                      <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-teal-600">
-                        <Check className="h-5 w-5" />
-                      </span>
-                    )}
-                  </button>
-                ))}
-              </div>
-            )}
-            {showDropdown && filteredData.length === 0 && search !== "" && (
-              <div className="absolute mt-1 w-full rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5">
-                <div className="relative cursor-default px-4 py-2 text-gray-700 select-none">
-                  Nothing found.
-                </div>
-              </div>
-            )}
-          </div>
+          <SearchDropdown
+            search={search}
+            onSearchChange={handleSearchChange}
+            onFocus={handleFocus}
+            showDropdown={showDropdown}
+            toggleDropdown={toggleDropdown}
+            filteredData={filteredData}
+            onSelect={handleSelected}
+          />
         </div>
 
         <div className="mt-4 flex flex-row justify-between">
           <div>Only show my rides</div>
-          <button
-            type="button"
-            role="switch"
-            aria-checked={onlyJoined}
-            onClick={handleSwitchChange}
-            className={switchClass}
-          >
-            <span className="sr-only">Only show my rides</span>
-            <span className={toggleClass} />
-          </button>
+          <ToggleSwitch
+            checked={onlyJoined}
+            onChange={handleSwitchChange}
+            label="Only show my rides"
+            srOnlyLabel
+          />
         </div>
 
         <div className="mt-4 flex flex-row items-center justify-between">

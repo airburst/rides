@@ -1,5 +1,73 @@
 # Customising the App
 
+---
+
+## Component Architecture (Updated 2026-02-09)
+
+### Optimized Component Structure
+
+Large form components have been refactored into modular folder structures for better maintainability. Here's the new structure:
+
+```
+components/
+  forms/
+    RideForm/              # Ride creation/edit (was 436 lines, now split)
+      index.tsx
+      RepeatingSection.tsx
+      RideConfirmationDialog.tsx
+    
+    RepeatingRideForm/     # Repeating schedules (was 283 lines, now split)
+      index.tsx            # ⚠️ Optimized: removed 5 useEffect hooks
+      MonthDaySelector.tsx
+      WeekSelector.tsx
+    
+    UserProfileForm/       # User profiles (was 256 lines, now split)
+      index.tsx
+      AvatarSection.tsx
+      AdminFields.tsx
+      PreferencesSection.tsx
+  
+  RepeatingRides/
+    RepeatingRideDetails/  # Ride details (was 242 lines, now split)
+      index.tsx
+      RideInfoSection.tsx
+      ScheduleSection.tsx
+      DeleteConfirmation.tsx
+  
+  ToggleSwitch.tsx         # Reusable components
+  Row.tsx
+  Filters/
+    FiltersPanel.tsx       # Optimized with custom hook
+    SearchDropdown.tsx
+```
+
+### React Performance Patterns
+
+**Memoization Strategy:**
+- `useMemo` - for expensive computations and derived state
+- `useCallback` - for event handlers passed to child components
+- `React.memo` - for presentational components
+
+**useEffect Best Practices:**
+```tsx
+// ❌ Anti-pattern (removed from codebase)
+useEffect(() => {
+  setValue("field", computedValue);
+}, [computedValue, setValue]);
+
+// ✅ Correct pattern (now used)
+const computedValue = useMemo(() => calculate(data), [data]);
+```
+
+**When to Extract Components:**
+- File exceeds ~250 lines
+- Logical sections can be isolated
+- Component is reusable across the app
+
+---
+
+# Service Setup
+
 This app uses Open Source code, which can be freely forked, and online hosting services, which, at the time of writing, allow very generous free tiers. It should be possible to operate this app for a cycling club at no cost.
 
 Setting up your own copy does require some software skills. Reach out to [Mark Fairhurst](mailto:mark@fairhursts.net) if you need assistance.
