@@ -4,8 +4,8 @@ import {
   useUpdateRepeatingRide,
 } from "@/hooks/repeating-rides";
 import { useCreateRide, useUpdateRide } from "@/hooks/useRides";
-import { useRouter } from "@tanstack/react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "@tanstack/react-router";
 import clsx from "clsx";
 import { lazy, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -409,7 +409,7 @@ const RideForm = ({
           </>
         )}
 
-        <div className="grid w-full grid-cols-2 gap-4 md:gap-8">
+        <div className="grid w-full grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
           <Button primary loading={isPending} type="submit">
             <div>SAVE</div>
           </Button>

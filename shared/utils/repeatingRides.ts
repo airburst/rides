@@ -9,7 +9,8 @@ import { getScalarValue } from "./general";
 
 const loadRRule = async () => {
   const pkg = await import("rrule");
-  return pkg.default.RRule;
+  // Handle both ESM and CJS module formats
+  return pkg.RRule || pkg.default?.RRule || pkg.default;
 };
 
 export const convertToRRule = async (data: RepeatingRide): Promise<string> => {

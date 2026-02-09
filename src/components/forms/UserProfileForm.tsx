@@ -1,6 +1,6 @@
 import { useUpdateUser } from "@/hooks/users";
-import { useRouter } from "@tanstack/react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "@tanstack/react-router";
 import { EditIcon } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -230,7 +230,7 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
             </label>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 md:flex md:gap-8">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-8">
             <Button
               primary
               type="submit"
