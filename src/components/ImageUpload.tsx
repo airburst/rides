@@ -1,9 +1,6 @@
-"use client";
-
 import { MAX_FILE_SIZE_IN_BYTES } from "@/constants";
 import { type User } from "@/types";
 import { Upload } from "lucide-react";
-import Image from "next/image";
 import { type MouseEvent, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "./Button";
@@ -60,7 +57,7 @@ const ImageUpload = ({ user, onClose }: ImageUploadProps) => {
     <div className="flex flex-row gap-8 items-center">
       <div className="avatar">
         <div className="w-[40px] h-[40px] rounded-full">
-          <Image
+          <img
             className="text-neutral-500"
             src={avatarURL}
             width={40}

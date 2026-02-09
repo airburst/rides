@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { makeClickableUrl } from "@utils/makeClickableUrl";
 import { type RideNote } from "src/types";
 

@@ -12,11 +12,11 @@ import {
 } from "./repeatingRides";
 
 // Mock the isWinter function
-jest.mock("./dates", () => {
-  const originalModule = jest.requireActual("./dates");
+vi.mock("./dates", async () => {
+  const originalModule = await vi.importActual("./dates");
   return {
     ...originalModule,
-    isWinter: jest.fn(),
+    isWinter: vi.fn(),
   };
 });
 
@@ -102,11 +102,11 @@ describe("repeatingRides", () => {
 
   describe("changeToWinterTime", () => {
     beforeEach(() => {
-      (isWinter as jest.Mock).mockReset();
+      (isWinter as ReturnType<typeof vi.fn>).mockReset();
     });
 
     it("should change time if date is in winter", () => {
-      (isWinter as jest.Mock).mockReturnValue(true);
+      (isWinter as ReturnType<typeof vi.fn>).mockReturnValue(true);
       const dateTime = new Date("2023-01-15T10:00:00.000Z");
       const winterStartTime = "09:30";
 
@@ -115,7 +115,7 @@ describe("repeatingRides", () => {
     });
 
     it("should not change time if date is not in winter", () => {
-      (isWinter as jest.Mock).mockReturnValue(false);
+      (isWinter as ReturnType<typeof vi.fn>).mockReturnValue(false);
       const dateTime = new Date("2023-06-15T10:00:00.000Z");
       const winterStartTime = "09:30";
 
@@ -224,7 +224,7 @@ describe("repeatingRides", () => {
     });
 
     it("should apply winter start times when specified", () => {
-      (isWinter as jest.Mock).mockReturnValue(true);
+      (isWinter as ReturnType<typeof vi.fn>).mockReturnValue(true);
 
       const template: RepeatingRideDb = {
         id: "1",

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import { Link } from "@tanstack/react-router";
 import { getNow } from "../../../shared/utils";
 import { type RideList } from "../../types";
 import { RoundBadge } from "../Badge";
@@ -43,7 +43,7 @@ export const Day = ({ day, date, rides = [], classes, past }: Props) => {
   );
 
   return (
-    <Link href={`/rides/${date}`} prefetch={true}>
+    <Link to="/rides/$date" params={{ date }}>
       {Content}
     </Link>
   );

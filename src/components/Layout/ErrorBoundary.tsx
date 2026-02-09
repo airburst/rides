@@ -1,5 +1,3 @@
-"use client";
-
 import { CircleAlert } from "lucide-react";
 import { Component, type ErrorInfo, type ReactNode } from "react";
 

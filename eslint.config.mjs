@@ -1,33 +1,39 @@
 import js from "@eslint/js";
 import tseslint from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
-import nextConfig from "eslint-config-next";
 import globals from "globals";
 
 const eslintConfig = [
+  {
+    ignores: [".output/**", ".vinxi/**", ".next/**", "node_modules/**"],
+  },
   js.configs.recommended,
-  ...nextConfig,
   {
     plugins: {
       "@typescript-eslint": tseslint,
     },
     rules: {
       "prefer-const": "error",
-      "no-unused-vars": "off", // Use TypeScript's version instead
-      "react/react-in-jsx-scope": "off", // Not needed with React 17+ JSX transform
+      "no-unused-vars": "off",
+      "react/react-in-jsx-scope": "off",
     },
   },
-  // Jest test files
   {
     files: ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"],
     languageOptions: {
+      parser: tsParser,
+      parserOptions: {
+        sourceType: "module",
+      },
       globals: {
         ...globals.jest,
+        vi: "readonly",
       },
     },
   },
   {
     files: ["**/*.ts", "**/*.tsx"],
+    ignores: ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
@@ -36,6 +42,7 @@ const eslintConfig = [
         sourceType: "module",
       },
       globals: {
+        ...globals.browser,
         React: "readonly",
       },
     },

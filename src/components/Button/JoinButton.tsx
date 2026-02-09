@@ -1,4 +1,3 @@
-"use client";
 import { useJoinRide, useLeaveRide } from "@/hooks/useRides";
 import { Plus, X } from "lucide-react";
 import { Button, type ButtonProps } from "./Button";

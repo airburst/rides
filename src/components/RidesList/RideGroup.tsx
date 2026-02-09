@@ -1,5 +1,5 @@
+import { Link } from "@tanstack/react-router";
 import { ungroupRides } from "@utils/transformRideData";
-import Link from "next/link";
 import { type Group, type User } from "../../types";
 import { RideCard } from "../Card/RideCard";
 
@@ -22,11 +22,11 @@ export const RideGroup = ({ group, user }: Props) => {
       {types.map(({ rides }) =>
         rides.map((ride) => (
           <Link
-            href={`/ride/${ride.id}`}
+            to="/ride/$id"
+            params={{ id: ride.id! }}
             id={ride.id}
             key={ride.id}
             className="w-full scroll-mt-32 px-2 md:scroll-mt-36 md:px-0"
-            prefetch={true}
           >
             <RideCard ride={ride} user={user} />
           </Link>

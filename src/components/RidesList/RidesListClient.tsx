@@ -1,5 +1,3 @@
-"use client";
-
 import { useFilter } from "@/contexts/FilterContext";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useRides } from "@/hooks/useRides";
@@ -8,7 +6,7 @@ import type { FilterQuery, User } from "@/types";
 import { getQueryDateRange } from "@utils/dates";
 import { makeFilterData } from "@utils/rides";
 import { groupRides } from "@utils/transformRideData";
-import { usePathname } from "next/navigation";
+import { useLocation } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { FiltersPanel } from "../Filters";
 import { RideGroup } from "./RideGroup";
@@ -33,8 +31,8 @@ export function RidesListClient({ date }: RidesListClientProps) {
   const { showFilterMenu, setShowFilterMenu } = useFilter();
   const [filterQuery, setFilterQuery] = useState<FilterQuery>({});
   const [filters] = useLocalStorage<FilterQuery>("bcc-filters", {});
-  const path = usePathname();
-  const shouldApplyFilters = path === "/";
+  const { pathname } = useLocation();
+  const shouldApplyFilters = pathname === "/";
 
   useEffect(() => {
     setFilterQuery(filters);

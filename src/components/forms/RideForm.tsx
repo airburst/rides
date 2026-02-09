@@ -1,17 +1,13 @@
-"use client";
-
 import {
   useCreateRepeatingRide,
   useGenerateRides,
   useUpdateRepeatingRide,
 } from "@/hooks/repeating-rides";
 import { useCreateRide, useUpdateRide } from "@/hooks/useRides";
-import { Switch } from "@headlessui/react";
+import { useRouter } from "@tanstack/react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import clsx from "clsx";
-import dynamic from "next/dynamic";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { lazy, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import {
@@ -30,7 +26,7 @@ import { ConfirmWithContent } from "../ConfirmWithContent";
 import Editor from "../Markdown/Editor";
 import { rideFormSchema, type RideFormSchema } from "./formSchemas";
 
-const RepeatingRideForm = dynamic(() => import("./RepeatingRideForm"));
+const RepeatingRideForm = lazy(() => import("./RepeatingRideForm"));
 
 const today = getNow().split("T")[0] ?? "";
 
@@ -123,7 +119,7 @@ const RideForm = ({
         {
           onSuccess: () => {
             toast.success("Ride updated successfully");
-            router.back();
+            router.history.back();
           },
           onError: (error) => {
             toast.error(error.message || "Failed to update ride");
@@ -134,7 +130,7 @@ const RideForm = ({
       createMutation.mutate(rideData, {
         onSuccess: () => {
           toast.success("Ride created successfully");
-          router.back();
+          router.history.back();
         },
         onError: (error) => {
           toast.error(error.message || "Failed to create ride");
@@ -153,7 +149,7 @@ const RideForm = ({
         {
           onSuccess: () => {
             toast.success("Repeating ride updated successfully");
-            router.back();
+            router.history.back();
           },
           onError: (error) => {
             toast.error(error.message || "Failed to update repeating ride");
@@ -189,7 +185,7 @@ const RideForm = ({
 
   const handleNo = () => {
     hide();
-    router.push("/");
+    void router.navigate({ to: "/" });
   };
 
   const handleYes = (cb: (flag: boolean) => void) => {
@@ -203,7 +199,7 @@ const RideForm = ({
           onSuccess: (results) => {
             const count = results.results?.[0]?.count ?? 0;
             toast.success(`Generated ${count} rides`);
-            router.push("/");
+            void router.navigate({ to: "/" });
             cb(true);
           },
           onError: () => {
@@ -391,14 +387,16 @@ const RideForm = ({
           <>
             <div className="flex flex-row">
               <div className="pr-8">This ride repeats</div>
-              <Switch
-                checked={repeats}
-                onChange={handleRepeatsChange}
+              <button
+                type="button"
+                role="switch"
+                aria-checked={repeats}
+                onClick={handleRepeatsChange}
                 className={switchClass}
               >
-                <span className="sr-only">Enable notifications</span>
+                <span className="sr-only">Toggle repeating</span>
                 <span className={toggleClass} />
-              </Switch>
+              </button>
             </div>
             <RepeatingRideForm
               defaultValues={defaults}

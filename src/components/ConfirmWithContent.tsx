@@ -1,11 +1,4 @@
-"use client";
-
-import {
-  Description,
-  Dialog,
-  DialogPanel,
-  DialogTitle,
-} from "@headlessui/react";
+import { Dialog } from "@base-ui/react/dialog";
 import { useState, type JSX } from "react";
 import { Button } from "./Button";
 
@@ -39,42 +32,38 @@ export const ConfirmWithContent = ({
     }
   };
 
-  // Only close the dialog if the value is truthy
-  const doClose = (value?: unknown) => {
-    if (value) {
-      closeHandler();
-    }
-  };
-
   return (
-    <Dialog open={open} onClose={doClose} className="relative z-10 text-lg">
-      {/* Background */}
-      <div className="fixed inset-0 bg-black/30" aria-hidden="true" />
-      <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
-        <DialogPanel className="motion-preset-slide-up max-w-lg space-y-4 rounded-md bg-white p-4">
-          <DialogTitle>{heading}</DialogTitle>
-          {description && <Description>{description}</Description>}
-          {children}
-          <div className="mt-4 flex flex-row gap-4">
-            <Button
-              data-autofocus
-              className="min-w-24"
-              primary
-              onClick={confirmHandler}
-              loading={waiting}
-            >
-              <span>{okLabel}</span>
-            </Button>
-            <Button
-              className="min-w-24"
-              onClick={closeHandler}
-              disabled={waiting}
-            >
-              <span>{cancelLabel}</span>
-            </Button>
-          </div>
-        </DialogPanel>
-      </div>
-    </Dialog>
+    <Dialog.Root open={open}>
+      <Dialog.Portal>
+        <Dialog.Backdrop className="fixed inset-0 z-10 bg-black/30" />
+        <div className="fixed inset-0 z-10 flex w-screen items-center justify-center p-4">
+          <Dialog.Popup className="motion-preset-slide-up max-w-lg space-y-4 rounded-md bg-white p-4 text-lg">
+            <Dialog.Title>{heading}</Dialog.Title>
+            {description && (
+              <Dialog.Description>{description}</Dialog.Description>
+            )}
+            {children}
+            <div className="mt-4 flex flex-row gap-4">
+              <Button
+                data-autofocus
+                className="min-w-24"
+                primary
+                onClick={confirmHandler}
+                loading={waiting}
+              >
+                <span>{okLabel}</span>
+              </Button>
+              <Button
+                className="min-w-24"
+                onClick={closeHandler}
+                disabled={waiting}
+              >
+                <span>{cancelLabel}</span>
+              </Button>
+            </div>
+          </Dialog.Popup>
+        </div>
+      </Dialog.Portal>
+    </Dialog.Root>
   );
 };

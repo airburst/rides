@@ -63,6 +63,16 @@
   --text-xl: 1.4rem;
   --text-lg: 1.2rem;
   --text-base: 1.2rem;
+  --animate-slide-down: slide-down 200ms ease-in-out;
+}
+
+@keyframes slide-down {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
 }
 
 @layer base {
@@ -70,10 +80,6 @@
     @apply flex;
     @apply min-h-screen;
     @apply m-0;
-  }
-
-  #__next {
-    @apply w-screen;
   }
 
   *,

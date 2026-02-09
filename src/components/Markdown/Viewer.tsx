@@ -1,5 +1,3 @@
-"use client";
-
 import { NOTES_SHOW_MORE_LENGTH } from "@/constants";
 import clsx from "clsx";
 import { ChevronDown, ChevronUp } from "lucide-react";

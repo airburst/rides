@@ -1,8 +1,6 @@
-"use client";
 import { formatDistance } from "@utils/rides";
+import { useNavigate } from "@tanstack/react-router";
 import clsx from "clsx";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { type RideList, type User } from "../../types";
 import { Cancelled } from "../RideDetails/Cancelled";
 import { BasicCard } from "./BasicCard";
@@ -22,9 +20,9 @@ export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
   const details = destination
     ? `${destination} - ${convertedDistance}`
     : `${convertedDistance}`;
-  const router = useRouter();
+  const navigate = useNavigate();
 
-  const onPress = () => router.push(`/ride/${id}`);
+  const onPress = () => void navigate({ to: "/ride/$id", params: { id: id! } });
 
   if (!id) {
     return null;
@@ -32,7 +30,6 @@ export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
 
   const isCancelled = ride.cancelled ?? false;
 
-  // TanStack Query handles optimistic updates automatically
   const isGoing = user
     ? users?.map((u) => u.userId).includes(user.id)
     : false;
@@ -43,8 +40,6 @@ export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
 
   const cardClass = clsx("grid w-full grid-cols-[auto_1fr_80px]");
 
-  // If a rider is going, span the title across 2 columns to make space
-  // else span the entire row (of 3 columns)
   const titleClass = clsx(
     "truncate p-1 pl-2 font-bold uppercase tracking-wide text-neutral-600",
     isGoing ? "col-span-2" : "col-span-3",
@@ -74,9 +69,8 @@ export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
               {time}
             </div>
             <div className="items-center truncate p-1 pl-2">{details}</div>
-            {/* Rider count icon */}
             <div className="flex flex-row items-center justify-end gap-2 pr-2">
-              <Image
+              <img
                 src="/static/images/biking-neutral-500-64.png"
                 width={16}
                 height={16}

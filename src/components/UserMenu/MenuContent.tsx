@@ -1,5 +1,3 @@
-"use client";
-
 import { type Role } from "@/types";
 import {
   Calendar,

@@ -1,4 +1,3 @@
-"use client";
 import { useRide } from "@/hooks/useRides";
 import { useSession } from "@/hooks/useSession";
 import type { Ride, User } from "@/types";
