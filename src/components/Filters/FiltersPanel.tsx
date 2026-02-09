@@ -1,9 +1,9 @@
 import { DEFAULT_WEEKS_TO_SHOW } from "@/constants";
 import { useFilter } from "@/contexts/FilterContext";
+import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import clsx from "clsx";
 import { Check, ChevronDown, X } from "lucide-react";
 import { useRef, useState, type ChangeEvent } from "react";
-import { useOnClickOutside } from "@/hooks/useOnClickOutside";
 import { Button } from "../Button";
 
 type Props = {
@@ -87,7 +87,7 @@ export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
       ref={ref as React.RefObject<HTMLDivElement>}
       className="fixed top-0 left-0 z-30 h-82 w-full animate-slide-down bg-neutral-800 text-white shadow-xl"
     >
-      <div className="container mx-auto flex w-full flex-col p-4 md:px-4 lg:max-w-[1024px]">
+      <div className="container mx-auto flex w-full flex-col p-4 md:px-4 lg:max-w-5xl">
         <div className="flex flex-row justify-between">
           <div className="text-3xl">Filters</div>
           <button

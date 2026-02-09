@@ -142,7 +142,7 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
           <div className="grid w-full grid-cols-[auto_auto_auto] items-center justify-start gap-4 md:gap-8">
             <div className="flex flex-col gap-1">Avatar</div>
             <div className="avatar">
-              <div className="w-[40px] rounded-full">
+              <div className="w-10 rounded-full">
                 <img
                   className="text-neutral-500"
                   src={user.image!}
