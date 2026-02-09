@@ -21,7 +21,7 @@ export function useRepeatingRide(id: string) {
         `/repeating-rides/${id}`,
         { token },
       );
-      return repeatingRideFromDb(data.repeatingRide);
+      return await repeatingRideFromDb(data.repeatingRide);
     },
     enabled: isAuthenticated && !!id,
   });

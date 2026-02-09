@@ -1,5 +1,5 @@
+import { Link } from "@tanstack/react-router";
 import clsx from "clsx";
-import Link from "next/link";
 import { type ReactNode } from "react";
 
 type MenuEntryProps = {
@@ -25,9 +25,8 @@ export const MenuEntry = ({
   return href ? (
     <li className={classes}>
       <Link
-        href={href}
+        to={href}
         className="px-4 py-2 focus:bg-neutral-800 focus:text-white"
-        prefetch={true}
       >
         <button
           type="button"

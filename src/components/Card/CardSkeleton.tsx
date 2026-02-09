@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { Skeleton } from "../Skeleton";
 
 export const CardSkeleton = () => (
@@ -14,7 +13,7 @@ export const CardSkeleton = () => (
         <Skeleton className="w-[200px]" />{" "}
       </div>
       <div className="flex flex-row items-center justify-center gap-1 p-1">
-        <Image
+        <img
           src="/static/images/biking-neutral-500-64.png"
           width={16}
           height={16}

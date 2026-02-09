@@ -21,7 +21,9 @@ export function useRepeatingRides() {
         token,
       });
       // Transform from DB format to editable format
-      return data.repeatingRides.map((ride) => repeatingRideFromDb(ride));
+      return await Promise.all(
+        data.repeatingRides.map((ride) => repeatingRideFromDb(ride)),
+      );
     },
     enabled: isAuthenticated,
   });

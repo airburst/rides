@@ -1,7 +1,5 @@
-"use client";
 import { type User } from "@/types";
 import clsx from "clsx";
-import { useRouter } from "next/navigation";
 import { MembershipIcon } from "../MembershipIcon";
 import { BasicCard } from "./BasicCard";
 
@@ -11,7 +9,6 @@ type Props = {
 
 export const UserCard: React.FC<Props> = ({ user }: Props) => {
   const { id, name, email, role, membershipStatus } = user;
-  const router = useRouter();
   const showBadge = ["ADMIN", "LEADER"].includes(role);
   const badgeClass = clsx(
     "text-white badge badge-lg",
@@ -19,10 +16,8 @@ export const UserCard: React.FC<Props> = ({ user }: Props) => {
     role === "ADMIN" && "bg-primary",
   );
 
-  const onPress = () => router.push(`/profile/${id}`);
-
   return (
-    <BasicCard id={id} onPress={onPress}>
+    <BasicCard id={id}>
       <div className="flex w-full flex-col">
         <div className="flex-1 p-2">
           <div className="flex items-center align-middle font-bold uppercase tracking-wide">

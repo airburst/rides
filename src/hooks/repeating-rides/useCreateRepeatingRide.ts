@@ -13,7 +13,7 @@ export function useCreateRepeatingRide() {
   return useMutation({
     mutationFn: async (ride: RepeatingRide) => {
       const token = await getAccessTokenSilently();
-      const dbRide = repeatingRideToDb(ride);
+      const dbRide = await repeatingRideToDb(ride);
       return apiClient<CreateResponse>("/repeating-rides", {
         token,
         method: "POST",

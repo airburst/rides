@@ -1,5 +1,3 @@
-"use client";
-
 import { useRides } from "@/hooks/rides";
 import { generateCalendar } from "@utils/calendar";
 import {

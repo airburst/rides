@@ -1,9 +1,7 @@
-"use client";
-
 import { useCancelRide, useDeleteRide, useRide } from "@/hooks/useRides";
 import { useSession } from "@/hooks/useSession";
+import { useLocation, useParams, useRouter } from "@tanstack/react-router";
 import { Menu } from "lucide-react";
-import { useParams, usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import { flattenQuery } from "shared/utils";
 import { toast } from "sonner";
@@ -14,9 +12,11 @@ const UserMenu = () => {
   const { session, isAuthenticated, login, logout } = useSession();
   const role = session?.user?.role;
   const router = useRouter();
-  const pathname = usePathname();
-  const params = useParams();
-  const rideId = flattenQuery(params.id);
+  const { pathname } = useLocation();
+  const params = useParams({ strict: false });
+  const rideId = flattenQuery(
+    (params as Record<string, string | undefined>).id,
+  );
 
   // Derive rideId or repeatingRideId from the pathname
   const isRepeatingRidePage = pathname.includes("repeating");
@@ -24,7 +24,9 @@ const UserMenu = () => {
   const repeatingRideId = isRepeatingRidePage ? rideId : undefined;
 
   // Fetch ride data to check if cancelled (only for regular ride pages)
-  const { data: ride } = useRide(!isRepeatingRidePage && !isProfilePage && rideId ? rideId : "");
+  const { data: ride } = useRide(
+    !isRepeatingRidePage && !isProfilePage && rideId ? rideId : "",
+  );
   const isCancelled = ride?.cancelled ?? false;
 
   // Mutations
@@ -64,7 +66,7 @@ const UserMenu = () => {
 
     cancelMutation.mutate(rideId, {
       onSuccess: () => {
-        router.back();
+        router.history.back();
         toast.success("Ride has been cancelled.");
         closeMenu();
         cb(true);
@@ -81,7 +83,7 @@ const UserMenu = () => {
 
     deleteMutation.mutate(rideId, {
       onSuccess: () => {
-        router.back();
+        router.history.back();
         toast.success("Ride has been deleted.");
         closeMenu();
         cb(true);

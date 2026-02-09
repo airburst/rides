@@ -1,4 +1,4 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL!;
+const API_URL = import.meta.env.VITE_API_URL!;
 
 export class ApiError extends Error {
   constructor(
@@ -31,7 +31,9 @@ export async function apiClient<T>(
   });
 
   if (!response.ok) {
-    const error = await response.json().catch(() => ({ error: "Request failed" }));
+    const error = await response
+      .json()
+      .catch(() => ({ error: "Request failed" }));
     throw new ApiError(response.status, error.error ?? "Request failed");
   }
 

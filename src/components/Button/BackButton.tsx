@@ -1,6 +1,5 @@
-"use client";
+import { useRouter } from "@tanstack/react-router";
 import { ChevronLeft } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { Button } from "./Button";
 
 type ButtonProps = {
@@ -20,9 +19,9 @@ export const BackButton = ({
 
   const goBack = () => {
     if (url) {
-      router.replace(url);
+      void router.navigate({ to: url });
     } else {
-      router.back();
+      router.history.back();
     }
   };
 

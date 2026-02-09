@@ -1,15 +1,12 @@
-"use client";
-
 import { useSession } from "@/hooks/useSession";
-import dynamic from "next/dynamic";
-import Image from "next/image";
-import Link from "next/link";
+import { Link } from "@tanstack/react-router";
+import { lazy, Suspense } from "react";
 import Logo from "../../../public/static/images/bath-cc-logo.svg";
 import { FilterButton } from "../Filters";
 
-const UserMenu = dynamic(() => import("../UserMenu"));
+const UserMenu = lazy(() => import("../UserMenu"));
 
-const CLUB_SHORT_NAME = process.env.NEXT_PUBLIC_CLUB_SHORT_NAME;
+const CLUB_SHORT_NAME = import.meta.env.VITE_CLUB_SHORT_NAME;
 
 export const Header = () => {
   const { isAuthenticated } = useSession();
@@ -19,13 +16,12 @@ export const Header = () => {
       <div className="container flex w-full flex-row justify-between px-2 md:px-4 lg:max-w-[1024px]">
         <div className=" text-4xl tracking-wide sm:text-5xl">
           <Link
-            type="button"
-            href="/"
+            to="/"
             title="Home"
             aria-label="Back to rides page"
             className="flex items-center gap-4"
           >
-            <Image
+            <img
               className="hidden h-[64px] w-[64px] sm:block"
               src={Logo as string}
               alt="Bath Cycling Club Logo"
@@ -36,7 +32,9 @@ export const Header = () => {
 
         <div className="flex items-center gap-4">
           {isAuthenticated && <FilterButton />}
-          <UserMenu />
+          <Suspense>
+            <UserMenu />
+          </Suspense>
         </div>
       </div>
     </div>

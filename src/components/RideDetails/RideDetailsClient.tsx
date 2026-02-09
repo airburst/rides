@@ -1,4 +1,3 @@
-"use client";
 import { useRide } from "@/hooks/useRides";
 import { useSession } from "@/hooks/useSession";
 import type { Ride, User } from "@/types";
@@ -58,7 +57,8 @@ export function RideDetailsClient({ id }: Props) {
 
   // Format ride data to extract day/time from rideDate
   const formattedRide = formatRideData(ride) as Ride;
-  const { name, rideDate, time, day, cancelled, rideLimit, users } = formattedRide;
+  const { name, rideDate, time, day, cancelled, rideLimit, users } =
+    formattedRide;
 
   const userList = users?.map((u: { user: User }) => u.user) ?? [];
   const isLeader = ["ADMIN", "LEADER"].includes(role ?? "");

@@ -1,4 +1,3 @@
-"use client";
 import { type RepeatingRide } from "@/types";
 import { type ChangeEvent, useState } from "react";
 import { RepeatingRideCard } from "../Card";

@@ -1,5 +1,3 @@
-"use client";
-import { Switch } from "@headlessui/react";
 import { onlyNumbers } from "@utils/general";
 import clsx from "clsx";
 import { Phone } from "lucide-react";
@@ -63,14 +61,16 @@ export const RiderDetails = ({ user, isLeader, sessionUser }: Props) => {
             CALL
           </a>
 
-          <Switch
-            checked={showEmergency}
-            onChange={setShowEmergency}
+          <button
+            type="button"
+            role="switch"
+            aria-checked={showEmergency}
+            onClick={() => setShowEmergency(!showEmergency)}
             className={switchClass}
           >
-            <span className="sr-only">Enable notifications</span>
+            <span className="sr-only">Toggle emergency contact</span>
             <span className={toggleClass} />
-          </Switch>
+          </button>
         </div>
       )}
     </div>

@@ -1,10 +1,7 @@
-"use client";
-
 import { useUpdateUser } from "@/hooks/users";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "@tanstack/react-router";
 import { EditIcon } from "lucide-react";
-import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
@@ -68,7 +65,7 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
       {
         onSuccess: () => {
           toast.success("Profile updated successfully");
-          router.back();
+          router.history.back();
         },
         onError: (error) => {
           toast.error(error.message || "Failed to update profile");
@@ -145,8 +142,8 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
           <div className="grid w-full grid-cols-[auto_auto_auto] items-center justify-start gap-4 md:gap-8">
             <div className="flex flex-col gap-1">Avatar</div>
             <div className="avatar">
-              <div className="w-[40px] rounded-full">
-                <Image
+              <div className="w-10 rounded-full">
+                <img
                   className="text-neutral-500"
                   src={user.image!}
                   width={40}
@@ -233,7 +230,7 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
             </label>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 md:flex md:gap-8">
+          <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-8">
             <Button
               primary
               type="submit"

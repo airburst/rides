@@ -1,15 +1,12 @@
-"use client";
-
 import { useFilter } from "@/contexts/FilterContext";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useRides } from "@/hooks/useRides";
 import { useSession } from "@/hooks/useSession";
-import type { FilterQuery, User } from "@/types";
+import type { User } from "@/types";
 import { getQueryDateRange } from "@utils/dates";
 import { makeFilterData } from "@utils/rides";
 import { groupRides } from "@utils/transformRideData";
-import { usePathname } from "next/navigation";
-import { useEffect, useMemo, useState } from "react";
+import { useLocation } from "@tanstack/react-router";
+import { useMemo } from "react";
 import { FiltersPanel } from "../Filters";
 import { RideGroup } from "./RideGroup";
 import RidesListSkeleton from "./RidesListSkeleton";
@@ -30,15 +27,9 @@ export function RidesListClient({ date }: RidesListClientProps) {
   );
   const { data: rides, isPending, error } = useRides(start, end);
 
-  const { showFilterMenu, setShowFilterMenu } = useFilter();
-  const [filterQuery, setFilterQuery] = useState<FilterQuery>({});
-  const [filters] = useLocalStorage<FilterQuery>("bcc-filters", {});
-  const path = usePathname();
-  const shouldApplyFilters = path === "/";
-
-  useEffect(() => {
-    setFilterQuery(filters);
-  }, [filters]);
+  const { showFilterMenu, setShowFilterMenu, filterQuery } = useFilter();
+  const { pathname } = useLocation();
+  const shouldApplyFilters = pathname === "/";
 
   // Show skeleton on initial load (no cached data)
   if (isPending && !rides) {
@@ -89,8 +80,6 @@ export function RidesListClient({ date }: RidesListClientProps) {
         data={makeFilterData(rides ?? [])}
         isShowing={showFilterMenu}
         closeHandler={() => setShowFilterMenu(false)}
-        filterQuery={filterQuery}
-        setFilterQuery={setFilterQuery}
       />
     </>
   );

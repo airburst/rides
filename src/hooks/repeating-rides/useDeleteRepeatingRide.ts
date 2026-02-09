@@ -2,7 +2,11 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiClient } from "@/lib/api";
 
-type DeleteResponse = { success: boolean; id: string; deletedRideCount?: number };
+type DeleteResponse = {
+  success: boolean;
+  id: string;
+  deletedRideCount?: number;
+};
 type DeleteInput = { id: string; cascade?: boolean };
 
 export function useDeleteRepeatingRide() {

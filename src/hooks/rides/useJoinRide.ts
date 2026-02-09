@@ -41,7 +41,11 @@ export function useJoinRide() {
           ...previousRide,
           users: [
             ...(previousRide.users ?? []),
-            { user: { id: targetUserId } as NonNullable<Ride["users"]>[number]["user"] },
+            {
+              user: { id: targetUserId } as NonNullable<
+                Ride["users"]
+              >[number]["user"],
+            },
           ],
         });
       }

@@ -1,15 +1,13 @@
-"use client";
 import { useDeleteRepeatingRide } from "@/hooks/repeating-rides";
 import { type RepeatingRide } from "@/types";
 import { formatDate, formatTime } from "@utils/dates";
-import dynamic from "next/dynamic";
-import { useRouter } from "next/navigation";
-import { useState, type JSX } from "react";
+import { useRouter } from "@tanstack/react-router";
+import { lazy, useState, type JSX } from "react";
 import { toast } from "sonner";
 import { BackButton, Button } from "../Button";
 import { ConfirmWithContent } from "../ConfirmWithContent";
 
-const Viewer = dynamic(() => import("@/components/Markdown/Viewer"));
+const Viewer = lazy(() => import("@/components/Markdown/Viewer"));
 
 export type RepeatingRideDetailsProps = {
   ride: RepeatingRide;
@@ -49,9 +47,17 @@ const RepeatingRideDetails = ({ ride }: RepeatingRideDetailsProps) => {
   } = ride;
   const time = formatTime(startDate);
 
-  const goToCopy = () => router.push(`./copy/${id}`);
+  const goToCopy = () =>
+    void router.navigate({
+      to: "/repeating-rides/copy/$id",
+      params: { id: id! },
+    });
 
-  const goToEdit = () => router.push(`./edit/${id}`);
+  const goToEdit = () =>
+    void router.navigate({
+      to: "/repeating-rides/edit/$id",
+      params: { id: id! },
+    });
 
   const toggleDeleteAllRides = () => setDeleteAllRides(!deleteAllRides);
 
@@ -66,7 +72,7 @@ const RepeatingRideDetails = ({ ride }: RepeatingRideDetailsProps) => {
               : "Repeating ride has been deleted.";
           toast.success(message);
           hideConfirm();
-          router.back();
+          router.history.back();
           cb(true);
         },
         onError: () => {

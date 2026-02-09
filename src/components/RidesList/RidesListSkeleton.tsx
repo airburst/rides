@@ -1,5 +1,3 @@
-"use client";
-
 import { CardSkeleton } from "../Card/CardSkeleton";
 
 export type RidesListSkeletonProps = {

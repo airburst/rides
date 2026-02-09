@@ -1,12 +1,8 @@
-"use client";
-
 import { useFilter } from "@/contexts/FilterContext";
-import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { type FilterQuery, type RideList, type User } from "@/types";
+import { type RideList, type User } from "@/types";
 import { makeFilterData } from "@utils/rides";
 import { groupRides } from "@utils/transformRideData";
-import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useLocation } from "@tanstack/react-router";
 import { FiltersPanel } from "../Filters";
 import { RideGroup } from "./RideGroup";
 
@@ -16,15 +12,9 @@ type Props = {
 };
 
 export const FilteredRides = ({ rides, user }: Props) => {
-  const { showFilterMenu, setShowFilterMenu } = useFilter();
-  const [filterQuery, setFilterQuery] = useState<FilterQuery>({});
-  const [filters] = useLocalStorage<FilterQuery>("bcc-filters", {});
-  const path = usePathname();
-  const shouldApplyFilters = path === "/";
-
-  useEffect(() => {
-    setFilterQuery(filters);
-  }, [filters]);
+  const { showFilterMenu, setShowFilterMenu, filterQuery } = useFilter();
+  const { pathname } = useLocation();
+  const shouldApplyFilters = pathname === "/";
 
   const closeFilters = () => setShowFilterMenu(false);
 
@@ -57,8 +47,6 @@ export const FilteredRides = ({ rides, user }: Props) => {
         data={makeFilterData(rides)}
         isShowing={showFilterMenu}
         closeHandler={closeFilters}
-        filterQuery={filterQuery}
-        setFilterQuery={setFilterQuery}
       />
     </>
   );

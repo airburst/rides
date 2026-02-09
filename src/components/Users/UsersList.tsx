@@ -1,7 +1,5 @@
-"use client";
-
+import { Link } from "@tanstack/react-router";
 import { type User } from "@/types";
-import Link from "next/link";
 import { useState, type ChangeEvent } from "react";
 import { UserCard } from "../Card";
 
@@ -108,7 +106,7 @@ const UsersList = ({ users }: UsersListProps) => {
 
       <div className="grid w-full grid-cols-1 gap-2 px-2 sm:px-0 md:grid-cols-2 md:gap-4 lg:grid-cols-3">
         {filteredRoles.map((user) => (
-          <Link href={`/profile/${user.id}`} key={user.id} prefetch={true}>
+          <Link to="/profile/$id" params={{ id: user.id }} key={user.id}>
             <UserCard user={user} />
           </Link>
         ))}

@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { RRule } from "rrule";
 import {
   type RepeatingRide,
   type RepeatingRideDb,
@@ -8,7 +7,13 @@ import {
 import { getNextMonth, isWinter } from "./dates";
 import { getScalarValue } from "./general";
 
-export const convertToRRule = (data: RepeatingRide): string => {
+const loadRRule = async () => {
+  const pkg = await import("rrule");
+  // Handle both ESM and CJS module formats
+  return pkg.RRule || pkg.default?.RRule || pkg.default;
+};
+
+export const convertToRRule = async (data: RepeatingRide): Promise<string> => {
   const {
     freq,
     interval = 1,
@@ -23,6 +28,7 @@ export const convertToRRule = (data: RepeatingRide): string => {
   const dtstart = new Date(startDate);
   const until = endDate ? new Date(endDate) : undefined;
 
+  const RRule = await loadRRule();
   const rrule = new RRule({
     freq,
     interval,
@@ -37,11 +43,15 @@ export const convertToRRule = (data: RepeatingRide): string => {
   return rrule.toString();
 };
 
-export const updateRRuleStartDate = (schedule: string, startDate?: string) => {
+export const updateRRuleStartDate = async (
+  schedule: string,
+  startDate?: string,
+) => {
   if (!startDate) {
     return schedule;
   }
 
+  const RRule = await loadRRule();
   // Convert rrule back into editable variables
   const rrule = RRule.fromString(schedule);
   const {
@@ -72,7 +82,9 @@ export const updateRRuleStartDate = (schedule: string, startDate?: string) => {
   return updatedSchedule.toString();
 };
 
-export const repeatingRideToDb = (ride: RepeatingRide): RepeatingRideDb => {
+export const repeatingRideToDb = async (
+  ride: RepeatingRide,
+): Promise<RepeatingRideDb> => {
   const {
     freq,
     interval,
@@ -84,7 +96,7 @@ export const repeatingRideToDb = (ride: RepeatingRide): RepeatingRideDb => {
     bymonthday,
     ...rest
   } = ride;
-  const schedule = convertToRRule(ride);
+  const schedule = await convertToRRule(ride);
 
   return {
     schedule,
@@ -92,8 +104,11 @@ export const repeatingRideToDb = (ride: RepeatingRide): RepeatingRideDb => {
   };
 };
 
-export const repeatingRideFromDb = (ride: RepeatingRideDb): RepeatingRide => {
+export const repeatingRideFromDb = async (
+  ride: RepeatingRideDb,
+): Promise<RepeatingRide> => {
   const { schedule, ...rest } = ride;
+  const RRule = await loadRRule();
   // Convert rrule back into editable variables
   const rrule = RRule.fromString(schedule);
   const textRule = rrule.toText();
@@ -186,14 +201,15 @@ export type RideSet = {
   rides: TemplateRide[];
 };
 
-export const makeRidesInPeriod = (
+export const makeRidesInPeriod = async (
   template: RepeatingRideDb,
   date?: string,
-): RideSet => {
+): Promise<RideSet> => {
   const { id, schedule } = template;
   const start = date ? new Date(date) : new Date();
   const nextMonth = getNextMonth(date);
   const end = new Date(nextMonth);
+  const RRule = await loadRRule();
   const rideDates = RRule.fromString(schedule).between(start, end);
 
   // Update timings if winterStartTime is set
