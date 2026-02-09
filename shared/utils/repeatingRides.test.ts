@@ -1,5 +1,6 @@
 import { describe, it, expect, beforeEach, mock } from "bun:test";
-import { RRule } from "rrule";
+import pkg from "rrule";
+const { RRule } = pkg;
 import type { RepeatingRide, RepeatingRideDb } from "src/types";
 
 const mockIsWinter = mock(() => false);

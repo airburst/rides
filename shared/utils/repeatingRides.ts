@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { RRule } from "rrule";
+import pkg from "rrule";
+const { RRule } = pkg;
 import {
   type RepeatingRide,
   type RepeatingRideDb,
