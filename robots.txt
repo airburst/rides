@@ -1,5 +1,4 @@
 User-agent: *
-Allow: /*
-
-Disallow: /api/*
-Disallow: /profile/*
+Allow: /
+Disallow: /api/
+Disallow: /profile/
