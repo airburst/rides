@@ -1,5 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 import { apiClient } from "@/lib/api";
 import type { Role, Preferences } from "@/types";
 
@@ -24,7 +25,11 @@ export function useSession() {
     logout,
   } = useAuth0();
 
-  const { data: dbUser, isLoading: isUserLoading } = useQuery({
+  const {
+    data: dbUser,
+    isLoading: isUserLoading,
+    error,
+  } = useQuery({
     queryKey: ["currentUser"],
     queryFn: async () => {
       const token = await getAccessTokenSilently();
@@ -32,7 +37,15 @@ export function useSession() {
       return data.user;
     },
     enabled: isAuthenticated,
+    retry: false,
   });
+
+  useEffect(() => {
+    if (error && isAuthenticated) {
+      console.error("Failed to fetch user session:", error);
+      logout({ logoutParams: { returnTo: window.location.origin } });
+    }
+  }, [error, isAuthenticated, logout]);
 
   const session =
     isAuthenticated && dbUser
