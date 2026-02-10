@@ -1,7 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { lazy, Suspense } from "react";
 import { Button } from "@/components/Button";
 import { FullPageContent } from "@/components/Layout/FullPageContent";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   formatCalendarDate,
   getLastMonth,
@@ -9,6 +8,7 @@ import {
   getNow,
 } from "@utils/dates";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { lazy, Suspense } from "react";
 import { type CalendarProps } from "@/components/Calendar";
 
 const Calendar = lazy<React.ComponentType<CalendarProps>>(

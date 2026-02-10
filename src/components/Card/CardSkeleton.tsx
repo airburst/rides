@@ -10,7 +10,7 @@ export const CardSkeleton = () => (
 
       <div className="p-1 font-bold tracking-wide text-neutral-600">00:00</div>
       <div className="p-1 flex items-center">
-        <Skeleton className="w-[200px]" />{" "}
+        <Skeleton className="w-50" />{" "}
       </div>
       <div className="flex flex-row items-center justify-center gap-1 p-1">
         <img

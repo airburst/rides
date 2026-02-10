@@ -6,8 +6,7 @@ import {
 import { useCreateRide, useUpdateRide } from "@/hooks/useRides";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "@tanstack/react-router";
-import clsx from "clsx";
-import { lazy, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import {
@@ -17,16 +16,15 @@ import {
   makeRidesInPeriod,
   makeUtcDate,
   repeatingRideToDb,
-} from "../../../shared/utils";
-import { RIDER_LIMIT_OPTIONS } from "../../constants";
-import { type Preferences } from "../../types";
-import { Button } from "../Button";
-import { CancelButton } from "../Button/CancelButton";
-import { ConfirmWithContent } from "../ConfirmWithContent";
-import Editor from "../Markdown/Editor";
-import { rideFormSchema, type RideFormSchema } from "./formSchemas";
-
-const RepeatingRideForm = lazy(() => import("./RepeatingRideForm"));
+} from "../../../../shared/utils";
+import { RIDER_LIMIT_OPTIONS } from "../../../constants";
+import { type Preferences } from "../../../types";
+import { Button } from "../../Button";
+import { CancelButton } from "../../Button/CancelButton";
+import Editor from "../../Markdown/Editor";
+import { rideFormSchema, type RideFormSchema } from "../formSchemas";
+import { RepeatingSection } from "./RepeatingSection";
+import { RideConfirmationDialog } from "./RideConfirmationDialog";
 
 const today = getNow().split("T")[0] ?? "";
 
@@ -67,148 +65,166 @@ const RideForm = ({
   const updateRepeatingMutation = useUpdateRepeatingRide();
   const generateMutation = useGenerateRides();
 
-  const isPending =
-    createMutation.isPending ||
-    updateMutation.isPending ||
-    createRepeatingMutation.isPending ||
-    updateRepeatingMutation.isPending ||
-    generateMutation.isPending;
+  const isPending = useMemo(
+    () =>
+      createMutation.isPending ||
+      updateMutation.isPending ||
+      createRepeatingMutation.isPending ||
+      updateRepeatingMutation.isPending ||
+      generateMutation.isPending,
+    [
+      createMutation.isPending,
+      updateMutation.isPending,
+      createRepeatingMutation.isPending,
+      updateRepeatingMutation.isPending,
+      generateMutation.isPending,
+    ],
+  );
+
   const [rideDateList, setRideDateList] = useState<string[]>([]);
   const [scheduleId, setScheduleId] = useState<string | null>(null);
-  const showRepeatingSwitch = isAdmin && (isNewRide || isRepeating);
+  const showRepeatingSwitch = useMemo(
+    () => Boolean(isAdmin && (isNewRide || isRepeating)),
+    [isAdmin, isNewRide, isRepeating],
+  );
   const [showCreate, setShowCreate] = useState<boolean>(false);
 
-  const show = () => setShowCreate(true);
-  const hide = () => {
-    setShowCreate(false);
-  };
+  const show = useCallback(() => setShowCreate(true), []);
+  const hide = useCallback(() => setShowCreate(false), []);
 
-  const switchClass = clsx(
-    "relative inline-flex h-6 w-11 items-center rounded-full",
-    repeats ? "bg-green-600" : "bg-gray-200",
+  const handleRepeatsChange = useCallback(
+    () => setRepeats(!repeats),
+    [repeats],
   );
-  const toggleClass = clsx(
-    "inline-block h-4 w-4 transform rounded-full bg-white transition",
-    repeats ? "translate-x-6" : "translate-x-1",
+
+  const handleNotesChange = useCallback(
+    (text: string) => {
+      setValue("notes", text);
+    },
+    [setValue],
   );
-  const handleRepeatsChange = () => setRepeats(!repeats);
 
-  const handleNotesChange = (text: string) => {
-    setValue("notes", text);
-  };
+  const createRide = useCallback(
+    (data: RideFormSchema) => {
+      const rideDate = makeUtcDate(data.rideDate, data.time);
 
-  const createRide = (data: RideFormSchema) => {
-    const rideDate = makeUtcDate(data.rideDate, data.time);
+      const rideData = {
+        name: data.name,
+        rideDate,
+        distance: Number(data.distance),
+        rideGroup: data.rideGroup || undefined,
+        destination: data.destination || undefined,
+        meetPoint: data.meetPoint || undefined,
+        route: data.route || undefined,
+        leader: data.leader || undefined,
+        notes: data.notes || undefined,
+        rideLimit: data.rideLimit ? Number(data.rideLimit) : -1,
+      };
 
-    const rideData = {
-      name: data.name,
-      rideDate,
-      distance: Number(data.distance),
-      rideGroup: data.rideGroup || undefined,
-      destination: data.destination || undefined,
-      meetPoint: data.meetPoint || undefined,
-      route: data.route || undefined,
-      leader: data.leader || undefined,
-      notes: data.notes || undefined,
-      rideLimit: data.rideLimit ? Number(data.rideLimit) : -1,
-    };
-
-    if (data.id) {
-      updateMutation.mutate(
-        { id: data.id, data: rideData },
-        {
+      if (data.id) {
+        updateMutation.mutate(
+          { id: data.id, data: rideData },
+          {
+            onSuccess: () => {
+              toast.success("Ride updated successfully");
+              router.history.back();
+            },
+            onError: (error) => {
+              toast.error(error.message || "Failed to update ride");
+            },
+          },
+        );
+      } else {
+        createMutation.mutate(rideData, {
           onSuccess: () => {
-            toast.success("Ride updated successfully");
+            toast.success("Ride created successfully");
             router.history.back();
           },
           onError: (error) => {
-            toast.error(error.message || "Failed to update ride");
+            toast.error(error.message || "Failed to create ride");
           },
-        },
-      );
-    } else {
-      createMutation.mutate(rideData, {
-        onSuccess: () => {
-          toast.success("Ride created successfully");
-          router.history.back();
-        },
-        onError: (error) => {
-          toast.error(error.message || "Failed to create ride");
-        },
-      });
-    }
-  };
+        });
+      }
+    },
+    [updateMutation, createMutation, router],
+  );
 
-  const createRepeating = (data: RideFormSchema) => {
-    const payload = makeRepeatingRide(data);
+  const createRepeating = useCallback(
+    (data: RideFormSchema) => {
+      const payload = makeRepeatingRide(data);
 
-    if (data.id) {
-      // Update existing repeating ride
-      updateRepeatingMutation.mutate(
-        { ...payload, id: data.id },
-        {
-          onSuccess: () => {
-            toast.success("Repeating ride updated successfully");
-            router.history.back();
+      if (data.id) {
+        // Update existing repeating ride
+        updateRepeatingMutation.mutate(
+          { ...payload, id: data.id },
+          {
+            onSuccess: () => {
+              toast.success("Repeating ride updated successfully");
+              router.history.back();
+            },
+            onError: (error) => {
+              toast.error(error.message || "Failed to update repeating ride");
+            },
+          },
+        );
+      } else {
+        // Create new repeating ride
+        createRepeatingMutation.mutate(payload, {
+          onSuccess: (results) => {
+            // Store schedule id to use in handleYes function
+            setScheduleId(results.id);
+            // Calculate rides list and ask to create them
+            void repeatingRideToDb(payload).then(async (dbRide) => {
+              const rideList = await makeRidesInPeriod(dbRide, data.startDate);
+              const rideDates = rideList.rides.map(({ rideDate }) =>
+                formatDate(rideDate),
+              );
+              if (rideDates.length > 0) {
+                setRideDateList(rideDates);
+                show();
+              }
+            });
+            toast.success("Repeating ride created successfully");
           },
           onError: (error) => {
-            toast.error(error.message || "Failed to update repeating ride");
+            toast.error(error.message || "Failed to create repeating ride");
           },
-        },
-      );
-    } else {
-      // Create new repeating ride
-      createRepeatingMutation.mutate(payload, {
-        onSuccess: (results) => {
-          // Store schedule id to use in handleYes function
-          setScheduleId(results.id);
-          // Calculate rides list and ask to create them
-          void repeatingRideToDb(payload).then(async (dbRide) => {
-            const rideList = await makeRidesInPeriod(dbRide, data.startDate);
-            const rideDates = rideList.rides.map(({ rideDate }) =>
-              formatDate(rideDate),
-            );
-            if (rideDates.length > 0) {
-              setRideDateList(rideDates);
-              show();
-            }
-          });
-          toast.success("Repeating ride created successfully");
-        },
-        onError: (error) => {
-          toast.error(error.message || "Failed to create repeating ride");
-        },
-      });
-    }
-  };
+        });
+      }
+    },
+    [updateRepeatingMutation, createRepeatingMutation, router, show],
+  );
 
-  const handleNo = () => {
+  const handleNo = useCallback(() => {
     hide();
     void router.navigate({ to: "/" });
-  };
+  }, [hide, router]);
 
-  const handleYes = (cb: (flag: boolean) => void) => {
-    hide();
+  const handleYes = useCallback(
+    (cb: (flag: boolean) => void) => {
+      hide();
 
-    if (scheduleId) {
-      const date = getValues("rideDate");
-      generateMutation.mutate(
-        { scheduleId, date },
-        {
-          onSuccess: (results) => {
-            const count = results.results?.[0]?.count ?? 0;
-            toast.success(`Generated ${count} rides`);
-            void router.navigate({ to: "/" });
-            cb(true);
+      if (scheduleId) {
+        const date = getValues("rideDate");
+        generateMutation.mutate(
+          { scheduleId, date },
+          {
+            onSuccess: (results) => {
+              const count = results.results?.[0]?.count ?? 0;
+              toast.success(`Generated ${count} rides`);
+              void router.navigate({ to: "/" });
+              cb(true);
+            },
+            onError: () => {
+              toast.error("Failed to generate rides");
+              cb(false);
+            },
           },
-          onError: () => {
-            toast.error("Failed to generate rides");
-            cb(false);
-          },
-        },
-      );
-    }
-  };
+        );
+      }
+    },
+    [hide, scheduleId, getValues, generateMutation, router],
+  );
 
   return (
     <>
@@ -382,32 +398,17 @@ const RideForm = ({
           />
         </div>
 
-        {showRepeatingSwitch && (
-          <>
-            <div className="flex flex-row">
-              <div className="pr-8">This ride repeats</div>
-              <button
-                type="button"
-                role="switch"
-                aria-checked={repeats}
-                onClick={handleRepeatsChange}
-                className={switchClass}
-              >
-                <span className="sr-only">Toggle repeating</span>
-                <span className={toggleClass} />
-              </button>
-            </div>
-            <RepeatingRideForm
-              defaultValues={defaults}
-              register={register}
-              errors={errors}
-              repeats={repeats}
-              watch={watch}
-              setValue={setValue}
-              isRepeating={isRepeating}
-            />
-          </>
-        )}
+        <RepeatingSection
+          showRepeatingSwitch={showRepeatingSwitch}
+          repeats={repeats}
+          handleRepeatsChange={handleRepeatsChange}
+          defaultValues={defaults}
+          register={register}
+          errors={errors}
+          watch={watch}
+          setValue={setValue}
+          isRepeating={isRepeating ?? false}
+        />
 
         <div className="grid w-full grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
           <Button primary loading={isPending} type="submit">
@@ -417,18 +418,12 @@ const RideForm = ({
         </div>
       </form>
 
-      <ConfirmWithContent
+      <RideConfirmationDialog
         open={showCreate}
-        closeHandler={handleNo}
-        heading="Do you want to create rides on the following dates using this schedule?"
-        onYes={(callback) => handleYes(callback)}
-      >
-        <>
-          {rideDateList.map((date) => (
-            <div key={date}>{date}</div>
-          ))}
-        </>
-      </ConfirmWithContent>
+        rideDateList={rideDateList}
+        onYes={handleYes}
+        onNo={handleNo}
+      />
     </>
   );
 };

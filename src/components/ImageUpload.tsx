@@ -58,7 +58,7 @@ const ImageUpload = ({ user, onClose }: ImageUploadProps) => {
   return (
     <div className="flex flex-row gap-8 items-center">
       <div className="avatar">
-        <div className="w-[40px] h-[40px] rounded-full">
+        <div className="w-10 h-10 rounded-full">
           <img
             className="text-neutral-500"
             src={avatarURL}

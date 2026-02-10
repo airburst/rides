@@ -1,8 +1,8 @@
 import { useRide } from "@/hooks/useRides";
 import { useSession } from "@/hooks/useSession";
 import type { Ride, User } from "@/types";
-import { formatRideData, hasSpace } from "@utils/rides";
 import { isJoinable } from "@utils/dates";
+import { formatRideData, hasSpace } from "@utils/rides";
 import { MessageSquare } from "lucide-react";
 import { useState, type JSX } from "react";
 import { Badge } from "../Badge";
@@ -111,11 +111,11 @@ export function RideDetailsClient({ id }: Props) {
             hasRiders={hasRiders}
             isLeader={isLeader}
           />
-          <div className="mb-16 grid grid-cols-3 gap-2 p-2 sm:px-0 md:max-w-[460px] md:gap-4">
-            <BackButton className="ps-[4px] pe-[4px]" />
+          <div className="mb-16 grid grid-cols-3 gap-2 p-2 sm:px-0 md:max-w-115 md:gap-4">
+            <BackButton className="ps-1 pe-1" />
 
             {isGoing && (
-              <Button accent className="ps-[4px] pe-[4px]" onClick={openNotes}>
+              <Button accent className="ps-1 pe-1" onClick={openNotes}>
                 <MessageSquare className="h-6 w-6" />
                 NOTE
               </Button>
@@ -123,7 +123,7 @@ export function RideDetailsClient({ id }: Props) {
 
             {user && (canJoin || isGoing) && (
               <JoinButton
-                className="ps-[4px] pe-[4px]"
+                className="ps-1 pe-1"
                 going={isGoing}
                 ariaLabel={`Join ${name} ride`}
                 rideId={id}

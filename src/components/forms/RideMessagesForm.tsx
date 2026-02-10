@@ -1,4 +1,4 @@
-import { type FormEventHandler } from "react";
+import { type SubmitEventHandler } from "react";
 import {
   type FieldErrorsImpl,
   type UseFormRegister,
@@ -14,7 +14,7 @@ export type RideMessagesFormProps = {
   defaultValues: FormValues;
   register: UseFormRegister<FormValues>;
   errors: Partial<FieldErrorsImpl<FormValues>>;
-  handleSubmit: FormEventHandler<HTMLFormElement>;
+  handleSubmit: SubmitEventHandler<HTMLFormElement>;
   setValue: UseFormSetValue<FormValues>;
   isDirty: boolean;
   waiting: boolean;

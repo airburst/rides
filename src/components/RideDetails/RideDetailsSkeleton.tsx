@@ -57,9 +57,9 @@ export const RideDetailsSkeleton = () => (
         <Row>
           <div className="col-span-2 flex flex-col gap-2">
             <Skeleton className="w-full" />
-            <Skeleton className="w-[240px]" />
-            <Skeleton className="w-[200px]" />
-            <Skeleton className="w-[240px]" />
+            <Skeleton className="w-60" />
+            <Skeleton className="w-50" />
+            <Skeleton className="w-60" />
           </div>
         </Row>
       </div>
