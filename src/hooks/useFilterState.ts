@@ -1,5 +1,5 @@
 import { DEFAULT_WEEKS_TO_SHOW } from "@/constants";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import type { ChangeEvent } from "react";
 
 type FilterQuery = {

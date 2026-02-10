@@ -6,7 +6,7 @@ import {
 import { useCreateRide, useUpdateRide } from "@/hooks/useRides";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "@tanstack/react-router";
-import { lazy, useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import {

@@ -22,13 +22,24 @@ export function Providers({ children }: { children: ReactNode }) {
       }),
   );
 
+  // Skip Auth0 during SSR/prerendering - it keeps the process alive
+  const isClient = typeof window !== "undefined";
+
+  if (!isClient) {
+    // During prerender, just provide QueryClient without Auth0
+    return (
+      <QueryClientProvider client={queryClient}>
+        <FilterProvider>{children}</FilterProvider>
+      </QueryClientProvider>
+    );
+  }
+
   return (
     <Auth0Provider
       domain={AUTH0_DOMAIN}
       clientId={AUTH0_CLIENT_ID}
       authorizationParams={{
-        redirect_uri:
-          typeof window !== "undefined" ? window.location.origin : "",
+        redirect_uri: window.location.origin,
         audience: AUTH0_AUDIENCE,
       }}
       cacheLocation="localstorage"

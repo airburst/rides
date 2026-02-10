@@ -25,6 +25,18 @@ const eslintConfig = [
     },
   },
   {
+    files: ["build.ts"],
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: {
+        sourceType: "module",
+      },
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
+  {
     files: ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"],
     languageOptions: {
       parser: tsParser,
