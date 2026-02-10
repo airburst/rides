@@ -23,8 +23,8 @@ import { Button } from "../../Button";
 import { CancelButton } from "../../Button/CancelButton";
 import Editor from "../../Markdown/Editor";
 import { rideFormSchema, type RideFormSchema } from "../formSchemas";
-import { RideConfirmationDialog } from "./RideConfirmationDialog";
 import { RepeatingSection } from "./RepeatingSection";
+import { RideConfirmationDialog } from "./RideConfirmationDialog";
 
 const today = getNow().split("T")[0] ?? "";
 

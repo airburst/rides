@@ -15,11 +15,6 @@ const config = defineConfig({
     tanstackStart({
       spa: {
         enabled: true,
-        prerender: {
-          // outputPath: "/custom-shell",
-          crawlLinks: false,
-          retryCount: 0,
-        },
       },
     }),
     viteReact(),

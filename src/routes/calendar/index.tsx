@@ -1,5 +1,4 @@
 import { Button } from "@/components/Button";
-import { type CalendarProps } from "@/components/Calendar";
 import { FullPageContent } from "@/components/Layout/FullPageContent";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
@@ -10,6 +9,7 @@ import {
 } from "@utils/dates";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { lazy, Suspense } from "react";
+import { type CalendarProps } from "@/components/Calendar";
 
 const Calendar = lazy<React.ComponentType<CalendarProps>>(
   () => import("@/components/Calendar"),
