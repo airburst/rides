@@ -24,36 +24,34 @@ export const DeleteConfirmation = memo(
         heading="Are you sure you want to delete this repeating ride?"
         onYes={onConfirm}
       >
-        <div>
-          <div className="">
-            <label htmlFor="cascade" className="label cursor-pointer">
-              <span className="label-text">
-                Also delete or cancel every future ride created from this
-                schedule
-              </span>
-              <input
-                id="cascade"
-                type="radio"
-                name="radio-cascade"
-                checked={deleteAllRides}
-                onChange={toggleDeleteAllRides}
-              />
-            </label>
-          </div>
-          <div className="">
-            <label htmlFor="no-cascade" className="label cursor-pointer">
-              <span className="label-text">
-                Only delete the schedule and keep all of the rides
-              </span>
-              <input
-                id="no-cascade"
-                type="radio"
-                name="radio-cascade"
-                checked={!deleteAllRides}
-                onChange={toggleDeleteAllRides}
-              />
-            </label>
-          </div>
+        <div className="flex flex-col gap-2">
+          <label htmlFor="cascade" className="label cursor-pointer">
+            <span className="label-text flex-1">
+              Delete schedule and ALL future rides
+            </span>
+            <input
+              id="cascade"
+              type="radio"
+              name="radio-cascade"
+              className="shrink-0"
+              checked={deleteAllRides}
+              onChange={toggleDeleteAllRides}
+            />
+          </label>
+
+          <label htmlFor="no-cascade" className="label cursor-pointer gap-2">
+            <span className="label-text flex-1">
+              Delete the schedule, but keep future rides
+            </span>
+            <input
+              id="no-cascade"
+              type="radio"
+              name="radio-cascade"
+              className="shrink-0"
+              checked={!deleteAllRides}
+              onChange={toggleDeleteAllRides}
+            />
+          </label>
         </div>
       </ConfirmWithContent>
     );

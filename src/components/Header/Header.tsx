@@ -1,7 +1,7 @@
 import { useSession } from "@/hooks/useSession";
 import { Link } from "@tanstack/react-router";
 import { lazy, Suspense } from "react";
-import Logo from "../../../public/static/images/bath-cc-logo.svg";
+const Logo = "/static/images/bath-cc-logo.svg";
 import { FilterButton } from "../Filters";
 
 const UserMenu = lazy(() => import("../UserMenu"));
@@ -23,7 +23,7 @@ export const Header = () => {
           >
             <img
               className="hidden h-16 w-16 sm:block"
-              src={Logo as string}
+              src={Logo}
               alt="Bath Cycling Club Logo"
             />
             {CLUB_SHORT_NAME} Rides

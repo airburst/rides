@@ -35,8 +35,8 @@ export const ConfirmWithContent = ({
   return (
     <Dialog.Root open={open}>
       <Dialog.Portal>
-        <Dialog.Backdrop className="fixed inset-0 z-10 bg-black/30" />
-        <div className="fixed inset-0 z-10 flex w-screen items-center justify-center p-4">
+        <Dialog.Backdrop className="fixed inset-0 z-40 bg-black/30" />
+        <div className="fixed inset-0 z-40 flex w-screen items-center justify-center p-4">
           <Dialog.Popup className="motion-preset-slide-up max-w-lg space-y-4 rounded-md bg-white p-4 text-lg">
             <Dialog.Title>{heading}</Dialog.Title>
             {description && (
