@@ -113,6 +113,7 @@ const UserMenu = () => {
           className="drawer-toggle"
           checked={show}
           readOnly
+          aria-label="Toggle menu"
         />
         <div className="drawer-content">
           <div className="rounded p-1 text-3xl">
