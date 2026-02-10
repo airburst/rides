@@ -5,7 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 4.1.0 - 2026-02-10
+## 4.2.0 - 2026-02-10
+
+### Added
+
+- Copy ride link feature - Leaders/admins can copy a short URL to share rides (e.g., `/r/abc123`)
+
+## 4.1.0 - 2026-02-09
+
+### Added
+
+- Copy ride link feature - Leaders/admins can copy a short URL to share rides (e.g., `/r/abc123`)
 
 ### Changed
 
@@ -38,7 +48,6 @@ All server-side responsibilities:
 
 Temporary deprecated features:
 
-- Copy ride link (no shortener service)
 - Change avatar in profile (no image processing service)
 
 ## Previous Versions

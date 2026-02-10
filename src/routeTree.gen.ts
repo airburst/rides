@@ -18,6 +18,7 @@ import { Route as CalendarIndexRouteImport } from './routes/calendar/index'
 import { Route as RidesDateRouteImport } from './routes/rides/$date'
 import { Route as RideIdRouteImport } from './routes/ride/$id'
 import { Route as RepeatingRidesIdRouteImport } from './routes/repeating-rides/$id'
+import { Route as RIdRouteImport } from './routes/r/$id'
 import { Route as ProfileIdRouteImport } from './routes/profile/$id'
 import { Route as CalendarDateRouteImport } from './routes/calendar/$date'
 import { Route as RideNewIndexRouteImport } from './routes/ride/new/index'
@@ -72,6 +73,11 @@ const RepeatingRidesIdRoute = RepeatingRidesIdRouteImport.update({
   path: '/repeating-rides/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RIdRoute = RIdRouteImport.update({
+  id: '/r/$id',
+  path: '/r/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProfileIdRoute = ProfileIdRouteImport.update({
   id: '/profile/$id',
   path: '/profile/$id',
@@ -119,6 +125,7 @@ export interface FileRoutesByFullPath {
   '/users': typeof UsersRoute
   '/calendar/$date': typeof CalendarDateRoute
   '/profile/$id': typeof ProfileIdRoute
+  '/r/$id': typeof RIdRoute
   '/repeating-rides/$id': typeof RepeatingRidesIdRoute
   '/ride/$id': typeof RideIdRoute
   '/rides/$date': typeof RidesDateRoute
@@ -137,6 +144,7 @@ export interface FileRoutesByTo {
   '/users': typeof UsersRoute
   '/calendar/$date': typeof CalendarDateRoute
   '/profile/$id': typeof ProfileIdRoute
+  '/r/$id': typeof RIdRoute
   '/repeating-rides/$id': typeof RepeatingRidesIdRoute
   '/ride/$id': typeof RideIdRoute
   '/rides/$date': typeof RidesDateRoute
@@ -157,6 +165,7 @@ export interface FileRoutesById {
   '/users': typeof UsersRoute
   '/calendar/$date': typeof CalendarDateRoute
   '/profile/$id': typeof ProfileIdRoute
+  '/r/$id': typeof RIdRoute
   '/repeating-rides/$id': typeof RepeatingRidesIdRoute
   '/ride/$id': typeof RideIdRoute
   '/rides/$date': typeof RidesDateRoute
@@ -178,6 +187,7 @@ export interface FileRouteTypes {
     | '/users'
     | '/calendar/$date'
     | '/profile/$id'
+    | '/r/$id'
     | '/repeating-rides/$id'
     | '/ride/$id'
     | '/rides/$date'
@@ -196,6 +206,7 @@ export interface FileRouteTypes {
     | '/users'
     | '/calendar/$date'
     | '/profile/$id'
+    | '/r/$id'
     | '/repeating-rides/$id'
     | '/ride/$id'
     | '/rides/$date'
@@ -215,6 +226,7 @@ export interface FileRouteTypes {
     | '/users'
     | '/calendar/$date'
     | '/profile/$id'
+    | '/r/$id'
     | '/repeating-rides/$id'
     | '/ride/$id'
     | '/rides/$date'
@@ -234,6 +246,7 @@ export interface RootRouteChildren {
   CalendarRoute: typeof CalendarRouteWithChildren
   UsersRoute: typeof UsersRoute
   ProfileIdRoute: typeof ProfileIdRoute
+  RIdRoute: typeof RIdRoute
   RepeatingRidesIdRoute: typeof RepeatingRidesIdRoute
   RideIdRoute: typeof RideIdRoute
   RidesDateRoute: typeof RidesDateRoute
@@ -310,6 +323,13 @@ declare module '@tanstack/react-router' {
       path: '/repeating-rides/$id'
       fullPath: '/repeating-rides/$id'
       preLoaderRoute: typeof RepeatingRidesIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/r/$id': {
+      id: '/r/$id'
+      path: '/r/$id'
+      fullPath: '/r/$id'
+      preLoaderRoute: typeof RIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/profile/$id': {
@@ -390,6 +410,7 @@ const rootRouteChildren: RootRouteChildren = {
   CalendarRoute: CalendarRouteWithChildren,
   UsersRoute: UsersRoute,
   ProfileIdRoute: ProfileIdRoute,
+  RIdRoute: RIdRoute,
   RepeatingRidesIdRoute: RepeatingRidesIdRoute,
   RideIdRoute: RideIdRoute,
   RidesDateRoute: RidesDateRoute,

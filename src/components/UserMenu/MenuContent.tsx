@@ -3,6 +3,7 @@ import {
   Calendar,
   CircleAlert,
   Copy,
+  Link,
   LogIn,
   LogOut,
   Pencil,
@@ -13,7 +14,9 @@ import {
   Users,
   X,
 } from "lucide-react";
+import copyToClipboard from "copy-to-clipboard";
 import { flattenQuery } from "shared/utils";
+import { toast } from "sonner";
 import pkg from "../../../package.json";
 import { MenuEntry } from "./MenuEntry";
 
@@ -49,6 +52,15 @@ export const MenuContent = ({
   const editRideUrl = repeatingRideId
     ? `/repeating-rides/edit/${repeatingRideId}`
     : `/ride/edit/${rideId}`;
+
+  const copyLink = () => {
+    if (!rideId) return;
+    const shortId = rideId.slice(-6);
+    const url = `${window.location.origin}/r/${shortId}`;
+    copyToClipboard(url);
+    toast.success("Short link copied to clipboard");
+    closeMenu();
+  };
 
   return (
     <div className="min-h-full w-80 bg-neutral-900 px-2 sm:w-96">
@@ -104,6 +116,11 @@ export const MenuContent = ({
             <MenuEntry label="Delete Ride" onClick={confirmDelete}>
               <Trash2 className="h-6 w-6" />
             </MenuEntry>
+            {rideId && (
+              <MenuEntry label="Copy Ride Link" onClick={copyLink}>
+                <Link className="h-6 w-6" />
+              </MenuEntry>
+            )}
           </>
         )}
 
