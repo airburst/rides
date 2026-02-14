@@ -5,6 +5,33 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.4.0 - 2026-02-14
+
+### Added
+
+- Avatar cropping UI - Users can now crop and adjust their profile pictures before upload
+  - Visual crop editor with zoom/pan controls (1x-3x zoom)
+  - Square aspect ratio enforced for consistent avatars
+  - Grid overlay for composition guidance
+  - Client-side image processing using Canvas API
+  - Lazy-loaded cropping library (24KB) - doesn't slow down profile page load
+  - Touch-friendly controls for mobile devices
+  - Preview and adjust framing before finalizing upload
+
+### Changed
+
+- Avatar upload flow now requires crop confirmation before upload
+- Modal dialog expanded to accommodate crop editor (max-w-2xl)
+- Simplified file selection UI (removed redundant avatar preview)
+- Pre-cropped 240px image sent to backend (backend still generates 40px thumbnail)
+
+### Technical
+
+- Added `react-easy-crop` dependency (code-split)
+- Created `cropImage.ts` utility for canvas-based WebP generation
+- Created `ImageCropEditor` component with lazy loading
+- Updated `ImageUpload` component with two-stage upload flow
+
 ## 4.3.0 - 2026-02-14
 
 ### Added
