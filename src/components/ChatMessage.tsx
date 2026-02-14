@@ -1,3 +1,4 @@
+import { resolveAvatarUrl } from "@/lib/avatar";
 import { makeClickableUrl } from "@utils/makeClickableUrl";
 import { type RideNote } from "src/types";
 
@@ -10,7 +11,7 @@ export const ChatMessage: React.FC<RideNote> = ({
     {image && (
       <div className="avatar placeholder chat-image">
         <div className="w-10 rounded-full bg-neutral text-neutral-content">
-          <img alt="Tailwind CSS chat bubble component" src={image} />
+          <img alt="Tailwind CSS chat bubble component" src={resolveAvatarUrl(image)} />
         </div>
       </div>
     )}

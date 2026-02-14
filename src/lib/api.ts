@@ -16,10 +16,15 @@ export async function apiClient<T>(
 ): Promise<T> {
   const { token, ...fetchOptions } = options;
 
-  const headers: HeadersInit = {
-    "Content-Type": "application/json",
-    ...fetchOptions.headers,
-  };
+  const headers: HeadersInit = fetchOptions.headers || {};
+
+  // Only set Content-Type if not already set and body is not FormData
+  if (
+    !Object.keys(headers).some((k) => k.toLowerCase() === "content-type") &&
+    !(fetchOptions.body instanceof FormData)
+  ) {
+    (headers as Record<string, string>)["Content-Type"] = "application/json";
+  }
 
   if (token) {
     (headers as Record<string, string>).Authorization = `Bearer ${token}`;

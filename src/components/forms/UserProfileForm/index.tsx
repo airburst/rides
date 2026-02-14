@@ -88,71 +88,82 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
 
         <input type="hidden" id="user-id" name="id" value={user?.id} />
 
-        <div className="grid grid-cols-1 gap-4 p-2">
-          <div className="grid w-full grid-cols-1 gap-4 md:gap-8">
-            <label htmlFor="name" className="flex flex-col gap-1">
-              Name *
-              <input
-                id="name"
-                type="text"
-                className="input"
-                {...register("name")}
+        {/* Profile Section with Avatar */}
+        <div className="p-2 lg:p-4">
+          <div 
+            className="grid gap-6 [grid-template-areas:'avatar'_'fields'] lg:[grid-template-areas:'fields_avatar'] lg:grid-cols-2"
+          >
+            {/* Avatar - appears first on mobile, right on desktop */}
+            <div className="flex justify-center lg:justify-end [grid-area:avatar]">
+              <AvatarSection
+                imageUrl={user.imageLarge || user.image!}
+                onChangeClick={showAvatarModal}
               />
-              {errors.name && (
-                <span className="font-normal text-red-500">
-                  {errors.name?.message}
-                </span>
-              )}
-            </label>
+            </div>
+
+            {/* Form Fields - appears second on mobile, left on desktop */}
+            <div className="flex flex-col gap-4 [grid-area:fields]">
+              <label htmlFor="name" className="flex flex-col gap-1">
+                Name *
+                <input
+                  id="name"
+                  type="text"
+                  className="input w-full"
+                  {...register("name")}
+                />
+                {errors.name && (
+                  <span className="font-normal text-red-500">
+                    {errors.name?.message}
+                  </span>
+                )}
+              </label>
+
+              <label htmlFor="mobile" className="flex flex-col gap-1">
+                Mobile *
+                <input
+                  id="mobile"
+                  type="text"
+                  className="input w-full"
+                  {...register("mobile")}
+                />
+                {errors.mobile && (
+                  <span className="font-normal text-red-500">
+                    {errors.mobile?.message}
+                  </span>
+                )}
+              </label>
+
+              <label htmlFor="emergency" className="flex flex-col gap-1">
+                Emergency Contact *
+                <input
+                  id="emergency"
+                  type="text"
+                  className="input w-full"
+                  {...register("emergency")}
+                />
+                {errors.emergency && (
+                  <span className="font-normal text-red-500">
+                    {errors.emergency?.message}
+                  </span>
+                )}
+              </label>
+
+              <div className="flex flex-col gap-1">
+                <span className="text-sm font-medium">Email</span>
+                <div className="text-neutral-500">{defaultValues?.email}</div>
+              </div>
+            </div>
           </div>
-          <div className="grid w-full grid-cols-1 gap-4 md:gap-8">
-            <label htmlFor="name" className="flex flex-col gap-1">
-              Mobile *
-              <input
-                id="mobile"
-                type="text"
-                className="input"
-                {...register("mobile")}
-              />
-              {errors.mobile && (
-                <span className="font-normal text-red-500">
-                  {errors.mobile?.message}
-                </span>
-              )}
-            </label>
-          </div>
-          <div className="grid w-full grid-cols-1 gap-4 md:gap-8">
-            <label htmlFor="name" className="flex flex-col gap-1">
-              Emergency Contact *
-              <input
-                id="emergency"
-                type="text"
-                className="input"
-                {...register("emergency")}
-              />
-              {errors.emergency && (
-                <span className="font-normal text-red-500">
-                  {errors.emergency?.message}
-                </span>
-              )}
-            </label>
-          </div>
-          <div className="grid w-full grid-cols-[auto_1fr] gap-4 md:gap-8">
-            <div className="flex flex-col gap-1">Email</div>
-            <div className="text-neutral-500">{defaultValues?.email}</div>
-          </div>
-          <AvatarSection
-            imageUrl={user.image!}
-            onChangeClick={showAvatarModal}
-          />
 
           {isAdmin && (
-            <AdminFields
-              defaultRole={defaultValues?.role}
-              defaultMembershipId={defaultValues?.membershipId}
-              defaultMembershipStatus={defaultValues?.membershipStatus}
-              register={register}
-            />
+            <div className="mt-6">
+              <AdminFields
+                defaultRole={defaultValues?.role}
+                defaultMembershipId={defaultValues?.membershipId}
+                defaultMembershipStatus={defaultValues?.membershipStatus}
+                register={register}
+              />
+            </div>
           )}
         </div>
 

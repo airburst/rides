@@ -1,5 +1,4 @@
-import { Button } from "@/components/Button";
-import { EditIcon } from "lucide-react";
+import { resolveAvatarUrl } from "@/lib/avatar";
 import { memo } from "react";
 
 type AvatarSectionProps = {
@@ -10,24 +9,25 @@ type AvatarSectionProps = {
 export const AvatarSection = memo(
   ({ imageUrl, onChangeClick }: AvatarSectionProps) => {
     return (
-      <div className="grid w-full grid-cols-[auto_auto_auto] items-center justify-start gap-4 md:gap-8">
-        <div className="flex flex-col gap-1">Avatar</div>
+      <button
+        type="button"
+        onClick={onChangeClick}
+        aria-label="Change avatar"
+        className="flex flex-col items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity"
+      >
         <div className="avatar">
-          <div className="w-10 rounded-full">
+          <div className="w-32 rounded-full">
             <img
               className="text-neutral-500"
-              src={imageUrl}
-              width={40}
-              height={40}
-              alt="Avatar"
+              src={resolveAvatarUrl(imageUrl)}
+              width={128}
+              height={128}
+              alt="Profile avatar"
             />
           </div>
         </div>
-        <Button accent onClick={onChangeClick}>
-          <EditIcon />
-          CHANGE
-        </Button>
-      </div>
+        <span className="text-sm text-neutral-500">Click image to change</span>
+      </button>
     );
   },
 );

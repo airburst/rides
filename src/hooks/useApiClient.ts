@@ -22,5 +22,5 @@ export function useApiClient() {
     [getAccessTokenSilently, isAuthenticated],
   );
 
-  return { fetchWithAuth };
+  return fetchWithAuth;
 }
