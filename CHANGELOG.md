@@ -10,16 +10,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Avatar upload feature - Users can now upload custom profile pictures
-  - Dual-size image generation: 40x40px thumbnail and 120x120px standard
+  - Dual-size image generation: 40x40px thumbnail and 240x240px standard
   - Automatic WebP conversion for optimal file size
-  - Profile page displays larger 120px version, other areas use 40px thumbnail
+  - Profile page displays 128px avatar (using 240px source), other areas use 40px thumbnail
   - Immediate refresh after upload using cache-busting
   - Self-hosted storage in rides-api
   - Backwards compatible with existing Gravatar, Auth0, and base64 images
 
 ### Changed
 
-- Profile page avatar display increased from 40px to 80px (using 120px source)
+- Profile page avatar display increased to 128px (w-32)
+- Profile form layout redesigned with responsive grid
+  - Mobile: Avatar at top, form fields below (full width)
+  - Desktop (lg): Equal 50/50 split with avatar on right
+  - Avatar is now clickable button with "Click image to change" text
+- Menu icon changed from Settings to User icon for Profile link
 - Enhanced `resolveAvatarUrl()` utility to handle all avatar URL formats
 
 ### Fixed
