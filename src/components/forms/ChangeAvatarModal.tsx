@@ -1,6 +1,5 @@
 import { type User } from "@/types";
 import { Dialog } from "@base-ui/react/dialog";
-import { Button } from "../Button";
 import ImageUpload from "../ImageUpload";
 
 export type ChangeAvatarModalProps = {
