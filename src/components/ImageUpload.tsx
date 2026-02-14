@@ -1,11 +1,14 @@
 import { MAX_FILE_SIZE_IN_BYTES } from "@/constants";
 import { useUploadAvatar } from "@/hooks/users";
-import { resolveAvatarUrl } from "@/lib/avatar";
+import { createCroppedImage, readFileAsDataURL } from "@/lib/cropImage";
+import type { Area } from "@/types/crop";
 import { type User } from "@/types";
-import { Upload } from "lucide-react";
-import { type MouseEvent, useRef, useState } from "react";
+import { Upload, X } from "lucide-react";
+import { type ChangeEvent, lazy, Suspense, useRef, useState } from "react";
 import { toast } from "sonner";
 import { Button } from "./Button";
+
+const ImageCropEditor = lazy(() => import("./ImageCropEditor"));
 
 export type ImageUploadProps = {
   user: User;
@@ -14,44 +17,63 @@ export type ImageUploadProps = {
 };
 
 const ImageUpload = ({ user, onClose, onSuccess }: ImageUploadProps) => {
-  const [avatarURL, setAvatarURL] = useState(resolveAvatarUrl(user.image));
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
+  const [isProcessing, setIsProcessing] = useState(false);
   const uploadMutation = useUploadAvatar();
 
   const fileUploadRef = useRef<HTMLInputElement>(null);
 
-  const handleImageUpload = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    fileUploadRef?.current?.click();
-  };
-
-  const uploadImageDisplay = async () => {
+  const handleFileSelect = async (event: ChangeEvent<HTMLInputElement>) => {
     try {
-      if (!fileUploadRef?.current?.files?.length) {
+      const file = event.target.files?.[0];
+      if (!file) return;
+
+      if (file.size > MAX_FILE_SIZE_IN_BYTES) {
+        toast.error("File size too large (max 4MB)");
         return;
       }
 
-      const uploadedFile = fileUploadRef.current.files[0];
-      if (!uploadedFile) {
-        return;
-      }
-
-      if (uploadedFile.size > MAX_FILE_SIZE_IN_BYTES) {
-        toast.error("File size too large");
-        return;
-      }
-
-      // Validate file type
-      if (!uploadedFile.type.startsWith("image/")) {
+      if (!file.type.startsWith("image/")) {
         toast.error("Please select an image file");
         return;
       }
 
+      setSelectedFile(file);
+      const dataUrl = await readFileAsDataURL(file);
+      setImageSrc(dataUrl);
+    } catch (error) {
+      console.error("Error reading file:", error);
+      toast.error("Failed to load image");
+    }
+  };
+
+  const handleCropComplete = (croppedArea: Area) => {
+    setCroppedAreaPixels(croppedArea);
+  };
+
+  const handleUpload = async () => {
+    if (!imageSrc || !croppedAreaPixels || !selectedFile) {
+      toast.error("Please select and crop an image first");
+      return;
+    }
+
+    try {
+      setIsProcessing(true);
+
+      // Create cropped image blob
+      const croppedBlob = await createCroppedImage(imageSrc, croppedAreaPixels);
+
+      // Convert blob to file
+      const croppedFile = new File([croppedBlob], selectedFile.name, {
+        type: "image/webp",
+      });
+
       uploadMutation.mutate(
-        { userId: user.id, file: uploadedFile },
+        { userId: user.id, file: croppedFile },
         {
           onSuccess: (response: { image: string; imageLarge: string }) => {
-            const newAvatarUrl = resolveAvatarUrl(response.image);
-            setAvatarURL(newAvatarUrl);
             toast.success("Avatar updated successfully");
             onSuccess?.(response.image, response.imageLarge);
             onClose();
@@ -60,48 +82,82 @@ const ImageUpload = ({ user, onClose, onSuccess }: ImageUploadProps) => {
             console.error("Avatar upload error:", error);
             toast.error("Unable to upload image");
           },
+          onSettled: () => {
+            setIsProcessing(false);
+          },
         },
       );
     } catch (error) {
-      console.error("Avatar upload error:", error);
-      toast.error("Unable to upload image");
+      console.error("Error cropping image:", error);
+      toast.error("Failed to process image");
+      setIsProcessing(false);
     }
   };
 
-  return (
-    <div className="flex flex-row gap-8 items-center">
-      <div className="avatar">
-        <div className="w-10 h-10 rounded-full">
-          <img
-            className="text-neutral-500"
-            src={avatarURL}
-            width={40}
-            height={40}
-            alt="Avatar"
-          />
+  const handleCancel = () => {
+    setSelectedFile(null);
+    setImageSrc(null);
+    setCroppedAreaPixels(null);
+    if (fileUploadRef.current) {
+      fileUploadRef.current.value = "";
+    }
+  };
+
+  const handleSelectClick = () => {
+    fileUploadRef?.current?.click();
+  };
+
+  // Show crop editor if image is selected
+  if (imageSrc) {
+    return (
+      <div className="space-y-4">
+        <Suspense
+          fallback={
+            <div className="w-full h-96 bg-gray-100 rounded-lg flex items-center justify-center">
+              <p className="text-gray-500">Loading crop editor...</p>
+            </div>
+          }
+        >
+          <ImageCropEditor imageSrc={imageSrc} onCropComplete={handleCropComplete} />
+        </Suspense>
+
+        <div className="flex gap-4 justify-end">
+          <Button onClick={handleCancel} disabled={isProcessing || uploadMutation.isPending}>
+            <X className="w-4 h-4" />
+            Cancel
+          </Button>
+          <Button
+            accent
+            onClick={handleUpload}
+            disabled={!croppedAreaPixels || isProcessing || uploadMutation.isPending}
+            loading={isProcessing || uploadMutation.isPending}
+          >
+            <Upload className="w-4 h-4" />
+            {isProcessing ? "Processing..." : "Save & Upload"}
+          </Button>
         </div>
       </div>
+    );
+  }
 
-      <form id="form" encType="multipart/form-data">
-        <Button
-          accent
-          className="min-w-32"
-          type="submit"
-          disabled={uploadMutation.isPending}
-          loading={uploadMutation.isPending}
-          onClick={handleImageUpload}
-        >
-          <Upload className="w-6 h-6" />
-          UPLOAD
-        </Button>
-        <input
-          type="file"
-          id="file"
-          ref={fileUploadRef}
-          onChange={uploadImageDisplay}
-          hidden
-        />
-      </form>
+  // Show file selection UI
+  return (
+    <div className="flex flex-col gap-4 items-center py-8">
+      <Button accent className="min-w-48" onClick={handleSelectClick}>
+        <Upload className="w-6 h-6" />
+        Select Image
+      </Button>
+      <input
+        type="file"
+        id="file"
+        ref={fileUploadRef}
+        onChange={handleFileSelect}
+        accept="image/*"
+        hidden
+      />
+      <p className="text-sm text-gray-600 text-center">
+        Select an image to crop and upload. Maximum size: 4MB
+      </p>
     </div>
   );
 };
