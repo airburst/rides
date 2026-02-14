@@ -31,7 +31,7 @@ const ImageUpload = ({ user, onClose, onSuccess }: ImageUploadProps) => {
       if (!file) return;
 
       if (file.size > MAX_FILE_SIZE_IN_BYTES) {
-        toast.error("File size too large (max 4MB)");
+        toast.error("File size too large (max 8MB)");
         return;
       }
 
@@ -156,7 +156,7 @@ const ImageUpload = ({ user, onClose, onSuccess }: ImageUploadProps) => {
         hidden
       />
       <p className="text-sm text-gray-600 text-center">
-        Select an image to crop and upload. Maximum size: 4MB
+        Select an image to crop and upload. Maximum size: 8MB
       </p>
     </div>
   );
