@@ -142,7 +142,7 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
             <div className="text-neutral-500">{defaultValues?.email}</div>
           </div>
           <AvatarSection
-            imageUrl={user.image!}
+            imageUrl={user.imageLarge || user.image!}
             onChangeClick={showAvatarModal}
           />
 

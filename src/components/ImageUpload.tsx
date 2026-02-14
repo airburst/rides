@@ -1,4 +1,6 @@
 import { MAX_FILE_SIZE_IN_BYTES } from "@/constants";
+import { useUploadAvatar } from "@/hooks/users";
+import { resolveAvatarUrl } from "@/lib/avatar";
 import { type User } from "@/types";
 import { Upload } from "lucide-react";
 import { type MouseEvent, useRef, useState } from "react";
@@ -8,11 +10,12 @@ import { Button } from "./Button";
 export type ImageUploadProps = {
   user: User;
   onClose: () => void;
+  onSuccess?: (image: string, imageLarge: string) => void;
 };
 
-const ImageUpload = ({ user, onClose }: ImageUploadProps) => {
-  const [avatarURL, setAvatarURL] = useState(user.image!);
-  const [isUploading, setIsUploading] = useState(false);
+const ImageUpload = ({ user, onClose, onSuccess }: ImageUploadProps) => {
+  const [avatarURL, setAvatarURL] = useState(resolveAvatarUrl(user.image));
+  const uploadMutation = useUploadAvatar();
 
   const fileUploadRef = useRef<HTMLInputElement>(null);
 
@@ -23,35 +26,45 @@ const ImageUpload = ({ user, onClose }: ImageUploadProps) => {
 
   const uploadImageDisplay = async () => {
     try {
-      if (fileUploadRef?.current?.files) {
-        const uploadedFile = fileUploadRef.current.files[0];
-
-        if (uploadedFile?.size && uploadedFile?.size > MAX_FILE_SIZE_IN_BYTES) {
-          toast.error("File size too large");
-          return;
-        }
-
-        const reader = new FileReader();
-
-        reader.onloadend = async () => {
-          setAvatarURL(reader.result as string);
-          console.log("Avatar upload requested for user:", user.id);
-          console.log(
-            "Note: Avatar upload not yet implemented with external API",
-          );
-          toast.info("Avatar upload not yet available");
-          setIsUploading(false);
-          onClose();
-        };
-
-        setIsUploading(true);
-        reader.readAsDataURL(uploadedFile!);
+      if (!fileUploadRef?.current?.files?.length) {
+        return;
       }
+
+      const uploadedFile = fileUploadRef.current.files[0];
+      if (!uploadedFile) {
+        return;
+      }
+
+      if (uploadedFile.size > MAX_FILE_SIZE_IN_BYTES) {
+        toast.error("File size too large");
+        return;
+      }
+
+      // Validate file type
+      if (!uploadedFile.type.startsWith("image/")) {
+        toast.error("Please select an image file");
+        return;
+      }
+
+      uploadMutation.mutate(
+        { userId: user.id, file: uploadedFile },
+        {
+          onSuccess: (response: { image: string; imageLarge: string }) => {
+            const newAvatarUrl = resolveAvatarUrl(response.image);
+            setAvatarURL(newAvatarUrl);
+            toast.success("Avatar updated successfully");
+            onSuccess?.(response.image, response.imageLarge);
+            onClose();
+          },
+          onError: (error: Error) => {
+            console.error("Avatar upload error:", error);
+            toast.error("Unable to upload image");
+          },
+        },
+      );
     } catch (error) {
-      console.error(error);
+      console.error("Avatar upload error:", error);
       toast.error("Unable to upload image");
-      setIsUploading(false);
-      setAvatarURL(user.image!);
     }
   };
 
@@ -74,8 +87,8 @@ const ImageUpload = ({ user, onClose }: ImageUploadProps) => {
           accent
           className="min-w-32"
           type="submit"
-          disabled={isUploading}
-          loading={isUploading}
+          disabled={uploadMutation.isPending}
+          loading={uploadMutation.isPending}
           onClick={handleImageUpload}
         >
           <Upload className="w-6 h-6" />

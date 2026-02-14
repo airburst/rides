@@ -7,9 +7,10 @@ export type ChangeAvatarModalProps = {
   open: boolean;
   onClose: () => void;
   user: User;
+  onSuccess?: (image: string, imageLarge: string) => void;
 };
 
-const ChangeAvatarModal = ({ open, onClose, user }: ChangeAvatarModalProps) => {
+const ChangeAvatarModal = ({ open, onClose, user, onSuccess }: ChangeAvatarModalProps) => {
   return (
     <Dialog.Root
       open={open}
@@ -26,7 +27,7 @@ const ChangeAvatarModal = ({ open, onClose, user }: ChangeAvatarModalProps) => {
               Upload or take a picture of your choice, no larger than 4mb.
             </Dialog.Description>
             <div>
-              <ImageUpload user={user} onClose={onClose} />
+              <ImageUpload user={user} onClose={onClose} onSuccess={onSuccess} />
             </div>
             <div className="mt-4 flex flex-row gap-4">
               <Button className="min-w-24" onClick={onClose}>

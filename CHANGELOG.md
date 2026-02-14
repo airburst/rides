@@ -5,6 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.3.0 - 2026-02-14
+
+### Added
+
+- Avatar upload feature - Users can now upload custom profile pictures
+  - Dual-size image generation: 40x40px thumbnail and 120x120px standard
+  - Automatic WebP conversion for optimal file size
+  - Profile page displays larger 120px version, other areas use 40px thumbnail
+  - Immediate refresh after upload using cache-busting
+  - Self-hosted storage in rides-api
+  - Backwards compatible with existing Gravatar, Auth0, and base64 images
+
+### Changed
+
+- Profile page avatar display increased from 40px to 80px (using 120px source)
+- Enhanced `resolveAvatarUrl()` utility to handle all avatar URL formats
+
+### Fixed
+
+- Restored avatar upload functionality (was deprecated in v4.0.0)
+
 ## 4.2.0 - 2026-02-10
 
 ### Added

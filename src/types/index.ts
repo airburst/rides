@@ -16,6 +16,7 @@ export type User = {
   mobile?: string | null;
   emergency?: string | null;
   image?: string | null; // url
+  imageLarge?: string | null; // url
   role: Role;
   preferences?: Preferences;
   rideNotes?: string;

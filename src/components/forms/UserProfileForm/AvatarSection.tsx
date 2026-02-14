@@ -1,3 +1,4 @@
+import { resolveAvatarUrl } from "@/lib/avatar";
 import { Button } from "@/components/Button";
 import { EditIcon } from "lucide-react";
 import { memo } from "react";
@@ -13,12 +14,12 @@ export const AvatarSection = memo(
       <div className="grid w-full grid-cols-[auto_auto_auto] items-center justify-start gap-4 md:gap-8">
         <div className="flex flex-col gap-1">Avatar</div>
         <div className="avatar">
-          <div className="w-10 rounded-full">
+          <div className="w-20 rounded-full">
             <img
               className="text-neutral-500"
-              src={imageUrl}
-              width={40}
-              height={40}
+              src={resolveAvatarUrl(imageUrl)}
+              width={80}
+              height={80}
               alt="Avatar"
             />
           </div>
