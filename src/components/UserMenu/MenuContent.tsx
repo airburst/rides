@@ -1,4 +1,5 @@
 import { type Role } from "@/types";
+import copyToClipboard from "copy-to-clipboard";
 import {
   Calendar,
   CircleAlert,
@@ -9,12 +10,11 @@ import {
   Pencil,
   Plus,
   Repeat,
-  Settings,
   Trash2,
+  User,
   Users,
   X,
 } from "lucide-react";
-import copyToClipboard from "copy-to-clipboard";
 import { flattenQuery } from "shared/utils";
 import { toast } from "sonner";
 import pkg from "../../../package.json";
@@ -83,6 +83,12 @@ export const MenuContent = ({
           </MenuEntry>
         )}
 
+        {isAuthenticated && (
+          <MenuEntry label="Profile" href="/profile" onClick={closeMenu}>
+            <User className="h-6 w-6" />
+          </MenuEntry>
+        )}
+
         <MenuEntry label="Calendar" href="/calendar" onClick={closeMenu}>
           <Calendar className="h-6 w-6" />
         </MenuEntry>
@@ -140,18 +146,13 @@ export const MenuContent = ({
         )}
 
         {isAuthenticated && (
-          <>
-            <MenuEntry label="Settings" href="/profile" onClick={closeMenu}>
-              <Settings className="h-6 w-6" />
-            </MenuEntry>
-            <MenuEntry
-              className="text-error"
-              label="Log out"
-              onClick={handleSignout}
-            >
-              <LogOut className="fill-error" />
-            </MenuEntry>
-          </>
+          <MenuEntry
+            className="text-error"
+            label="Log out"
+            onClick={handleSignout}
+          >
+            <LogOut className="fill-error" />
+          </MenuEntry>
         )}
       </ul>
 
