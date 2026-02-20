@@ -37,6 +37,10 @@ export function Providers({ children }: { children: ReactNode }) {
 
   if (!authReady) return content;
 
+  const isAndroidOrPWA =
+    /android/i.test(navigator.userAgent) ||
+    window.matchMedia("(display-mode: standalone)").matches;
+
   return (
     <Auth0Provider
       domain={AUTH0_DOMAIN}
@@ -47,7 +51,7 @@ export function Providers({ children }: { children: ReactNode }) {
       }}
       cacheLocation="localstorage"
       useRefreshTokens={true}
-      useRefreshTokensFallback={false}
+      useRefreshTokensFallback={isAndroidOrPWA}
     >
       {content}
     </Auth0Provider>
