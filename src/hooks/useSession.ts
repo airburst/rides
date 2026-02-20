@@ -41,11 +41,17 @@ export function useSession() {
   });
 
   useEffect(() => {
-    if (error && isAuthenticated && error instanceof ApiError && (error.status === 401 || error.status === 403)) {
-      console.error("Auth failed, logging out:", error);
+    if (!error || !isAuthenticated) return;
+
+    if (error instanceof ApiError && (error.status === 401 || error.status === 403)) {
+      console.error("API auth failed, logging out:", error);
       logout({ logoutParams: { returnTo: window.location.origin } });
+    } else if (!(error instanceof ApiError)) {
+      // Auth0 SDK error (login_required, consent_required, etc.)
+      console.error("Token error, re-authenticating:", error);
+      loginWithRedirect();
     }
-  }, [error, isAuthenticated, logout]);
+  }, [error, isAuthenticated, logout, loginWithRedirect]);
 
   const session =
     isAuthenticated && dbUser
