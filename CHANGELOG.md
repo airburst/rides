@@ -5,6 +5,31 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.4.1 - 2026-02-20
+
+### Fixed
+
+- Removed 5 unnecessary `useMemo` calls wrapping trivially cheap expressions
+  - Simple comparisons (`freq === 0`)
+  - Boolean operations (`isPending` OR chain, `showRepeatingSwitch` boolean)
+  - These had overhead exceeding the computation cost
+- Fixed default array props creating new references every render
+  - Extracted `EMPTY_RIDES` constant in Calendar/Day component
+  - Extracted `EMPTY_NOTES` constant in RideDetails/Messages component
+
+### Changed
+
+- Added DOMPurify sanitization to all `dangerouslySetInnerHTML` usages
+  - Markdown Viewer: sanitize markdown-it output
+  - Markdown Editor: sanitize preview HTML
+  - ChatMessage: sanitize makeClickableUrl output
+  - Prevents XSS vulnerabilities while preserving safe HTML formatting
+
+### Technical
+
+- Added `isomorphic-dompurify` dependency for HTML sanitization
+- React Doctor score improved: 92/100 → 93/100 (5 fewer warnings)
+
 ## 4.4.0 - 2026-02-14
 
 ### Added
