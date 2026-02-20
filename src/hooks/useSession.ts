@@ -1,7 +1,7 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { apiClient } from "@/lib/api";
+import { apiClient, ApiError } from "@/lib/api";
 import type { Role, Preferences } from "@/types";
 
 type UserResponse = {
@@ -41,8 +41,8 @@ export function useSession() {
   });
 
   useEffect(() => {
-    if (error && isAuthenticated) {
-      console.error("Failed to fetch user session:", error);
+    if (error && isAuthenticated && error instanceof ApiError && (error.status === 401 || error.status === 403)) {
+      console.error("Auth failed, logging out:", error);
       logout({ logoutParams: { returnTo: window.location.origin } });
     }
   }, [error, isAuthenticated, logout]);

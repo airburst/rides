@@ -46,7 +46,8 @@ export function Providers({ children }: { children: ReactNode }) {
         audience: AUTH0_AUDIENCE,
       }}
       cacheLocation="localstorage"
-      useRefreshTokens={true} // Enables automatic token refresh - users stay logged in for ~30 days
+      useRefreshTokens={true}
+      useRefreshTokensFallback={false}
     >
       {content}
     </Auth0Provider>
