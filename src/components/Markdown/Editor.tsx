@@ -7,6 +7,7 @@ import {
   ListOrdered,
   Quote,
 } from "lucide-react";
+import DOMPurify from "isomorphic-dompurify";
 import markdownIt from "markdown-it";
 import { useState } from "react";
 import "./markdown.css";
@@ -169,7 +170,9 @@ const MarkdownEditor = ({
           <div
             id="markdown-preview"
             className="text-gray-800"
-            dangerouslySetInnerHTML={{ __html: md.render(value) }}
+            dangerouslySetInnerHTML={{
+              __html: DOMPurify.sanitize(md.render(value)),
+            }}
           />
         </div>
       )}

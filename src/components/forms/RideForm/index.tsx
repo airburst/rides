@@ -6,7 +6,7 @@ import {
 import { useCreateRide, useUpdateRide } from "@/hooks/useRides";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "@tanstack/react-router";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import {
@@ -65,28 +65,16 @@ const RideForm = ({
   const updateRepeatingMutation = useUpdateRepeatingRide();
   const generateMutation = useGenerateRides();
 
-  const isPending = useMemo(
-    () =>
-      createMutation.isPending ||
-      updateMutation.isPending ||
-      createRepeatingMutation.isPending ||
-      updateRepeatingMutation.isPending ||
-      generateMutation.isPending,
-    [
-      createMutation.isPending,
-      updateMutation.isPending,
-      createRepeatingMutation.isPending,
-      updateRepeatingMutation.isPending,
-      generateMutation.isPending,
-    ],
-  );
+  const isPending =
+    createMutation.isPending ||
+    updateMutation.isPending ||
+    createRepeatingMutation.isPending ||
+    updateRepeatingMutation.isPending ||
+    generateMutation.isPending;
 
   const [rideDateList, setRideDateList] = useState<string[]>([]);
   const [scheduleId, setScheduleId] = useState<string | null>(null);
-  const showRepeatingSwitch = useMemo(
-    () => Boolean(isAdmin && (isNewRide || isRepeating)),
-    [isAdmin, isNewRide, isRepeating],
-  );
+  const showRepeatingSwitch = Boolean(isAdmin && (isNewRide || isRepeating));
   const [showCreate, setShowCreate] = useState<boolean>(false);
 
   const show = useCallback(() => setShowCreate(true), []);

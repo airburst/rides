@@ -3,6 +3,8 @@ import { getNow } from "../../../shared/utils";
 import { type RideList } from "../../types";
 import { RoundBadge } from "../Badge";
 
+const EMPTY_RIDES: RideList[] = [];
+
 type Props = {
   day: number;
   date: string;
@@ -18,7 +20,7 @@ const getBadgeStyle = (past: boolean | undefined): string => {
   return "ready";
 };
 
-export const Day = ({ day, date, rides = [], classes, past }: Props) => {
+export const Day = ({ day, date, rides = EMPTY_RIDES, classes, past }: Props) => {
   const today = getNow();
   const isToday = today.startsWith(date);
 

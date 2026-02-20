@@ -112,9 +112,9 @@ const RepeatingRideForm = memo(
     );
 
     // Repeating rule chosen frequency
-    const isYearly = useMemo(() => freq === 0, [freq]);
-    const isMonthly = useMemo(() => freq === 1, [freq]);
-    const isWeekly = useMemo(() => freq === 2, [freq]);
+    const isYearly = freq === 0;
+    const isMonthly = freq === 1;
+    const isWeekly = freq === 2;
 
     if (isEditMode || !repeats) {
       return null;

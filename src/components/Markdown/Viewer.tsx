@@ -1,5 +1,6 @@
 import { NOTES_SHOW_MORE_LENGTH } from "@/constants";
 import clsx from "clsx";
+import DOMPurify from "isomorphic-dompurify";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import markdownIt from "markdown-it";
 import { useState } from "react";
@@ -24,11 +25,12 @@ const Viewer = ({ markdown, title }: ViewerProps) => {
     typographer: true,
   });
   const html = md.render(markdown ?? "");
+  const sanitizedHtml = DOMPurify.sanitize(html);
   // Add a show more/less button if the text is long
-  const isLong = html.length > NOTES_SHOW_MORE_LENGTH;
+  const isLong = sanitizedHtml.length > NOTES_SHOW_MORE_LENGTH;
   const displayText = showAll
-    ? html
-    : `${html.slice(0, NOTES_SHOW_MORE_LENGTH)}${isLong ? "..." : ""}`;
+    ? sanitizedHtml
+    : `${sanitizedHtml.slice(0, NOTES_SHOW_MORE_LENGTH)}${isLong ? "..." : ""}`;
   const notesClass = clsx("col-span-2", showAll ? "mb-4" : "mb-2");
   const showMoreClass =
     "w-full h-[24px] flex justify-center absolute bottom-4 bg-linear-to-t from-white";

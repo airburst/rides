@@ -1,11 +1,13 @@
 import { ChatMessage } from "@components/ChatMessage";
 import { type RideNote } from "src/types";
 
+const EMPTY_NOTES: RideNote[] = [];
+
 type Props = {
   riderNotes?: RideNote[];
 };
 
-export const Messages = ({ riderNotes = [] }: Props) => {
+export const Messages = ({ riderNotes = EMPTY_NOTES }: Props) => {
   if (riderNotes.length === 0) {
     return null;
   }
