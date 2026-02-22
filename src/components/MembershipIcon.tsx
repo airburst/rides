@@ -9,12 +9,12 @@ export const MembershipIcon = ({ membershipStatus }: MembershipIconProps) => {
     case "MEMBER":
       return <ShieldCheck className="text-secondary" />;
     case "EXPIRED":
-      return <ShieldAlert className="text-error" />;
+      return <ShieldAlert className="text-destructive" />;
     case "OTHER_CLUB":
       return <Handshake className="text-primary" />;
     default:
       // "NOT_MEMBER":
       return null;
-    // return <ShieldOff className="text-error" />;
+    // return <ShieldOff className="text-destructive" />;
   }
 };

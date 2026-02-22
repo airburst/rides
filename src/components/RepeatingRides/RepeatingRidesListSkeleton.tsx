@@ -1,3 +1,4 @@
+import { Input } from "@/components/ui/input";
 import { CardSkeleton } from "../Card/CardSkeleton";
 
 export type RepeatingRidesListSkeletonProps = {
@@ -13,11 +14,11 @@ const RepeatingRidesListSkeleton = ({
     </div>
 
     <div className="w-full px-2 sm:px-0">
-      <input
+      <Input
         type="text"
         id="search"
         name="search"
-        className="input input-lg my-2 w-full"
+        className="my-2 h-10"
         placeholder="Search by name or email"
       />
     </div>

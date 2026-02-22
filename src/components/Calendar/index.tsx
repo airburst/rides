@@ -44,7 +44,7 @@ const Calendar: React.FC<CalendarProps> = ({ date }: CalendarProps) => {
       </div>
 
       <div
-        className={`grid h-full grid-cols-7 grid-rows-${rowCount} auto-rows-fr gap-px bg-base-300`}
+        className={`grid h-full grid-cols-7 grid-rows-${rowCount} auto-rows-fr gap-px bg-border`}
       >
         {daysWithRides.map(
           ({ type, day, rides: mappedRides, date: calDate }) =>
