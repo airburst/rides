@@ -1,4 +1,5 @@
 import { formatDistance } from "@utils/rides";
+import { formatTime } from "@utils/dates";
 import clsx from "clsx";
 import { type RideList, type User } from "../../types";
 import { Cancelled } from "../RideDetails/Cancelled";
@@ -10,8 +11,9 @@ type Props = {
 };
 
 export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
-  const { id, name, time, rideGroup, destination, distance, rideLimit, users } =
+  const { id, name, rideDate, rideGroup, destination, distance, rideLimit, users } =
     ride;
+  const time = formatTime(rideDate);
   const convertedDistance = formatDistance(
     distance ?? 0,
     user?.preferences?.units,

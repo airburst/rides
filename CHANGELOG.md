@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.4.2 - 2026-02-22
+
+### Fixed
+
+- Fixed RideCard time display not showing ride start time
+  - Compute time from `rideDate` using `formatTime()` utility
+  - Previously relied on optional `time` field not populated by API
+
 ## 4.4.1 - 2026-02-20
 
 ### Fixed
