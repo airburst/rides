@@ -8,21 +8,22 @@ export const ChatMessage: React.FC<RideNote> = ({
   rideNotes,
   image,
 }: RideNote) => (
-  <div className="chat chat-start flex pl-2">
+  <div className="flex gap-2 pl-2">
     {image && (
-      <div className="avatar placeholder chat-image">
-        <div className="w-10 rounded-full bg-neutral text-neutral-content">
+      <div className="shrink-0">
+        <div className="h-10 w-10 overflow-hidden rounded-full bg-neutral">
           <img
-            alt="Tailwind CSS chat bubble component"
+            alt={`${name}'s avatar`}
             src={resolveAvatarUrl(image)}
+            className="h-full w-full object-cover"
           />
         </div>
       </div>
     )}
     <div className="flex w-full flex-col">
-      <div className="chat-header">{name}</div>
+      <div className="text-xs font-medium opacity-60">{name}</div>
       <div
-        className="chat-bubble wrap-break-word leading-snug text-neutral-700"
+        className="wrap-break-word rounded-lg rounded-tl-none bg-neutral-100 px-3 py-2 leading-snug text-neutral-700"
         dangerouslySetInnerHTML={{
           __html: DOMPurify.sanitize(makeClickableUrl(rideNotes ?? "")),
         }}

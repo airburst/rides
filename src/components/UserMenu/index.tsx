@@ -1,5 +1,6 @@
 import { useCancelRide, useDeleteRide, useRide } from "@/hooks/useRides";
 import { useSession } from "@/hooks/useSession";
+import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { useLocation, useParams, useRouter } from "@tanstack/react-router";
 import { Menu } from "lucide-react";
 import { useState } from "react";
@@ -106,36 +107,23 @@ const UserMenu = () => {
 
   return (
     <>
-      <div className="drawer-auto-gutter drawer drawer-end">
-        <input
-          id="my-drawer"
-          type="checkbox"
-          className="drawer-toggle"
-          checked={show}
-          readOnly
-          aria-label="Toggle menu"
-        />
-        <div className="drawer-content">
-          <div className="rounded p-1 text-3xl">
-            <button
-              type="button"
-              onClick={toggleMenu}
-              onKeyDown={toggleMenu}
-              aria-label="open menu"
-              className="cursor-pointer"
-            >
-              <Menu className="h-8 w-8 fill-white" />
-            </button>
-          </div>
-        </div>
+      <div className="rounded p-1 text-3xl">
+        <button
+          type="button"
+          onClick={toggleMenu}
+          aria-label="open menu"
+          className="cursor-pointer"
+        >
+          <Menu className="h-8 w-8 fill-white" />
+        </button>
+      </div>
 
-        <div className="drawer-side">
-          <label
-            htmlFor="my-drawer"
-            aria-label="close sidebar"
-            className="drawer-overlay"
-            onClick={closeMenu}
-          ></label>
+      <Sheet open={show} onOpenChange={setShow}>
+        <SheetContent
+          side="right"
+          showCloseButton={false}
+          className="w-80 bg-neutral-900 p-0 sm:w-96 sm:max-w-none"
+        >
           <MenuContent
             role={role}
             isAuthenticated={isAuthenticated}
@@ -148,8 +136,8 @@ const UserMenu = () => {
             repeatingRideId={repeatingRideId}
             isCancelled={isCancelled}
           />
-        </div>
-      </div>
+        </SheetContent>
+      </Sheet>
 
       <Confirm
         open={showConfirmCancel}

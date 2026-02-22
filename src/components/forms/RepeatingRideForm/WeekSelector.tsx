@@ -1,3 +1,4 @@
+import { NativeSelect } from "@/components/ui/native-select";
 import { memo } from "react";
 
 type WeekSelectorProps = {
@@ -12,9 +13,8 @@ export const WeekSelector = memo(
       <div className="grid grid-cols-3 gap-4">
         <div className="w-full">
           <label htmlFor="bysetpos">Week</label>
-          <select
+          <NativeSelect
             id="bysetpos"
-            className="select w-full text-lg font-normal"
             defaultValue={defaultBysetpos ?? 1}
             {...register("bysetpos")}
           >
@@ -23,15 +23,14 @@ export const WeekSelector = memo(
             <option value="3">3rd</option>
             <option value="4">4th</option>
             <option value="-1">Last</option>
-          </select>
+          </NativeSelect>
         </div>
 
         <div className="col-span-2 w-full">
           <label htmlFor="byweekday-month">Day of week</label>
-          <select
+          <NativeSelect
             id="byweekday-month"
             aria-label="Repeating schedule freqency"
-            className="select w-full text-lg font-normal"
             defaultValue={defaultByweekday}
             {...register("byweekday")}
           >
@@ -42,7 +41,7 @@ export const WeekSelector = memo(
             <option value="4">Friday</option>
             <option value="5">Saturday</option>
             <option value="6">Sunday</option>
-          </select>
+          </NativeSelect>
         </div>
       </div>
     );

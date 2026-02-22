@@ -3,10 +3,12 @@ import { useSession } from "@/hooks/useSession";
 import type { Ride, User } from "@/types";
 import { isJoinable } from "@utils/dates";
 import { formatRideData, hasSpace } from "@utils/rides";
-import { MessageSquare } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { TriangleAlert, MessageSquare } from "lucide-react";
 import { useState, type JSX } from "react";
 import { Badge } from "../Badge";
 import { BackButton, Button, JoinButton } from "../Button";
+import { Spinner } from "../Spinner";
 import { RideInfo } from "./RideInfo";
 import { RideMessages } from "./RideMessages";
 import { RidersGoing } from "./RidersGoing";
@@ -37,7 +39,7 @@ export function RideDetailsClient({ id }: Props) {
   if (isPending && !ride) {
     return (
       <div className="flex h-64 w-full items-center justify-center">
-        <span className="loading loading-spinner loading-lg" />
+        <Spinner />
       </div>
     );
   }
@@ -99,10 +101,13 @@ export function RideDetailsClient({ id }: Props) {
           </Heading>
           {!isSpace && (
             <div className="mx-2 sm:mx-0">
-              <div className="alert alert-warning">
-                This ride is full. Please contact the leader if you want to
-                join.
-              </div>
+              <Alert className="border-warning bg-warning/10">
+                <TriangleAlert className="text-warning" />
+                <AlertDescription>
+                  This ride is full. Please contact the leader if you want to
+                  join.
+                </AlertDescription>
+              </Alert>
             </div>
           )}
           <RidersGoing

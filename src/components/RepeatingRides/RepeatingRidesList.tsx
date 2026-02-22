@@ -1,3 +1,4 @@
+import { Input } from "@/components/ui/input";
 import { type RepeatingRide } from "@/types";
 import { type ChangeEvent, useState } from "react";
 import { RepeatingRideCard } from "../Card";
@@ -36,11 +37,11 @@ const RepeatingRidesList = ({ repeatingRides }: RepeatingRidesListProps) => {
   return (
     <>
       <div className="w-full px-2 sm:px-0">
-        <input
+        <Input
           type="text"
           id="search"
           name="search"
-          className="input input-lg mb-4 w-full"
+          className="mb-4 h-10"
           placeholder="Search by ride name, group or day"
           onChange={handleSearch}
         />

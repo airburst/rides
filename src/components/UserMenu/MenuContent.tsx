@@ -76,7 +76,7 @@ export const MenuContent = ({
         </button>
       </div>
 
-      <ul className="menu text-base-300 p-0 text-xl">
+      <ul className="flex flex-col gap-1 p-0 text-xl text-neutral-300">
         {!isAuthenticated && (
           <MenuEntry label="Log in" onClick={handleSignin}>
             <LogIn className="h-6 w-6" />
@@ -147,11 +147,11 @@ export const MenuContent = ({
 
         {isAuthenticated && (
           <MenuEntry
-            className="text-error"
+            className="text-destructive"
             label="Log out"
             onClick={handleSignout}
           >
-            <LogOut className="fill-error" />
+            <LogOut className="fill-destructive" />
           </MenuEntry>
         )}
       </ul>

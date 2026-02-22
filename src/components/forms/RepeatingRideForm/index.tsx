@@ -1,3 +1,5 @@
+import { Input } from "@/components/ui/input";
+import { NativeSelect } from "@/components/ui/native-select";
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import type {
   FieldErrors,
@@ -125,9 +127,8 @@ const RepeatingRideForm = memo(
         <div className="grid grid-cols-3 gap-4">
           <div className="w-full">
             <label htmlFor="interval">Every</label>
-            <select
+            <NativeSelect
               id="interval"
-              className="select w-full text-lg font-normal"
               defaultValue={defaultValues?.interval}
               {...register("interval")}
             >
@@ -135,30 +136,28 @@ const RepeatingRideForm = memo(
               <option value="2">2</option>
               <option value="3">3</option>
               <option value="4">4</option>
-            </select>
+            </NativeSelect>
           </div>
 
           <div className="col-span-2 w-full md:col-span-1">
             <label htmlFor="freq">Frequency</label>
-            <select
+            <NativeSelect
               id="freq"
               aria-label="Repeating schedule freqency"
-              className="select w-full text-lg font-normal"
               defaultValue={defaultValues?.freq}
               {...register("freq")}
             >
               <option value="2">Weeks</option>
               <option value="1">Months</option>
-            </select>
+            </NativeSelect>
           </div>
 
           {isWeekly && (
             <div className="col-span-3 w-full md:col-span-1">
               <label htmlFor="byweekday">On</label>
-              <select
+              <NativeSelect
                 id="byweekday"
                 aria-label="Repeating schedule freqency"
-                className="select w-full text-lg font-normal"
                 defaultValue={defaultValues?.byweekday}
                 {...register("byweekday")}
               >
@@ -169,22 +168,21 @@ const RepeatingRideForm = memo(
                 <option value="4">Friday</option>
                 <option value="5">Saturday</option>
                 <option value="6">Sunday</option>
-              </select>
+              </NativeSelect>
             </div>
           )}
 
           {isMonthly && (
             <div className="col-span-3 w-full md:col-span-1">
               <label htmlFor="repeat-type">Repeat type</label>
-              <select
+              <NativeSelect
                 id="repeat-type"
-                className="select w-full text-lg font-normal"
                 value={monthType}
                 onChange={handleMonthTypeChange}
               >
                 <option value="byday">On the same day each month</option>
                 <option value="byweek">On specific day and week</option>
-              </select>
+              </NativeSelect>
             </div>
           )}
         </div>
@@ -213,11 +211,10 @@ const RepeatingRideForm = memo(
           <div className="flex flex-col gap-4 md:gap-8">
             <label htmlFor="startDate" className="flex flex-col gap-1">
               Start Date *
-              <input
+              <Input
                 id="startDate"
                 type="date"
                 min={today}
-                className="input w-full"
                 defaultValue={date}
                 {...register("startDate", {
                   required: true,
@@ -233,12 +230,11 @@ const RepeatingRideForm = memo(
           <div className="flex flex-col gap-4 md:gap-8">
             <label htmlFor="endDate" className="flex flex-col gap-1">
               End Date (optional)
-              <input
+              <Input
                 id="endDate"
                 type="date"
                 defaultValue={defaultEndDate}
                 min={minEndDate}
-                className="input w-full"
                 {...register("endDate")}
               />
             </label>
@@ -247,10 +243,9 @@ const RepeatingRideForm = memo(
           <div className="flex flex-col gap-4 md:gap-8">
             <label htmlFor="winterStartTime" className="flex flex-col gap-1">
               Winter Start
-              <input
+              <Input
                 id="winterStartTime"
                 type="time"
-                className="input w-full"
                 defaultValue={defaultValues?.winterStartTime}
                 {...register("winterStartTime")}
               />

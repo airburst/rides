@@ -2,6 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { lazy, Suspense, useEffect } from "react";
 import { BackButton } from "@/components/Button";
 import { MainContent } from "@/components/Layout/MainContent";
+import { Spinner } from "@/components/Spinner";
 import { useSession } from "@/hooks/useSession";
 import { useUser } from "@/hooks/users";
 
@@ -31,7 +32,7 @@ function UserPage() {
     return (
       <MainContent>
         <div className="flex h-64 w-full items-center justify-center">
-          <span className="loading loading-spinner loading-lg" />
+          <Spinner />
         </div>
       </MainContent>
     );

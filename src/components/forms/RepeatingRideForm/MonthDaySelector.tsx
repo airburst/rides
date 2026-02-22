@@ -1,3 +1,4 @@
+import { NativeSelect } from "@/components/ui/native-select";
 import { memo, useMemo } from "react";
 
 type MonthDaySelectorProps = {
@@ -17,9 +18,8 @@ export const MonthDaySelector = memo(
       <div className="flex">
         <div className="w-full">
           <label htmlFor="bymonthday">Day</label>
-          <select
+          <NativeSelect
             id="bymonthday"
-            className="select w-full text-lg font-normal"
             defaultValue={monthDay}
             {...register("bymonthday")}
           >
@@ -28,7 +28,7 @@ export const MonthDaySelector = memo(
                 {day}
               </option>
             ))}
-          </select>
+          </NativeSelect>
         </div>
       </div>
     );

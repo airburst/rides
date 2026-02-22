@@ -1,3 +1,5 @@
+import { Input } from "@/components/ui/input";
+import { NativeSelect } from "@/components/ui/native-select";
 import { MembershipIcon } from "@/components/MembershipIcon";
 import { memo } from "react";
 import type { UseFormRegister } from "react-hook-form";
@@ -22,16 +24,15 @@ export const AdminFields = memo(
         <div className="grid w-full grid-cols-1 gap-4 md:gap-8">
           <label htmlFor="role" className="flex flex-col">
             Role
-            <select
+            <NativeSelect
               id="role"
-              className="input"
               defaultValue={defaultRole ?? ""}
               {...register("role")}
             >
               <option value="USER">USER</option>
               <option value="LEADER">LEADER</option>
               <option value="ADMIN">ADMIN</option>
-            </select>
+            </NativeSelect>
           </label>
         </div>
 
@@ -41,9 +42,8 @@ export const AdminFields = memo(
               <span className="flex-1">RiderHQ Membership Id</span>
               <MembershipIcon membershipStatus={defaultMembershipStatus} />
             </div>
-            <input
+            <Input
               id="membershipId"
-              className="input"
               placeholder="E.g. gm_r3nqcaa"
               defaultValue={defaultMembershipId ?? ""}
               {...register("membershipId")}
@@ -51,9 +51,8 @@ export const AdminFields = memo(
           </label>
           <label htmlFor="membershipStatus" className="flex flex-col">
             Membership Status
-            <select
+            <NativeSelect
               id="membershipStatus"
-              className="input"
               defaultValue={defaultMembershipStatus ?? ""}
               {...register("membershipStatus")}
             >
@@ -61,7 +60,7 @@ export const AdminFields = memo(
               <option value="EXPIRED">EXPIRED</option>
               <option value="NOT_MEMBER">NOT A MEMBER</option>
               <option value="OTHER_CLUB">MEMBER OF ANOTHER CLUB</option>
-            </select>
+            </NativeSelect>
           </label>
         </div>
       </>

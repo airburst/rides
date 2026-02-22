@@ -1,3 +1,5 @@
+import { Input } from "@/components/ui/input";
+import { NativeSelect } from "@/components/ui/native-select";
 import { Link } from "@tanstack/react-router";
 import { type User } from "@/types";
 import { useState, type ChangeEvent } from "react";
@@ -57,11 +59,11 @@ const UsersList = ({ users }: UsersListProps) => {
   return (
     <>
       <div className="mb-4 grid w-full grid-cols-1 gap-2 px-2 text-neutral-700 md:px-0 lg:grid-cols-3 lg:gap-8">
-        <input
+        <Input
           type="text"
           id="search"
           name="search"
-          className="input input-lg w-full"
+          className="h-10"
           placeholder="Search by name or email"
           onChange={handleSearch}
         />
@@ -71,9 +73,9 @@ const UsersList = ({ users }: UsersListProps) => {
           className="flex flex-1 flex-row items-center gap-2"
         >
           <span className="w-32 lg:w-auto">Role</span>
-          <select
+          <NativeSelect
             id="role"
-            className="input flex-1 md:w-32"
+            className="flex-1 md:w-32"
             defaultValue={roleFilter}
             onChange={handleRoleSelected}
           >
@@ -81,7 +83,7 @@ const UsersList = ({ users }: UsersListProps) => {
             <option value="USER">USER</option>
             <option value="LEADER">LEADER</option>
             <option value="ADMIN">ADMIN</option>
-          </select>
+          </NativeSelect>
         </label>
 
         <label
@@ -89,9 +91,9 @@ const UsersList = ({ users }: UsersListProps) => {
           className="flex flex-1 flex-row items-center gap-2"
         >
           <span className="w-32 lg:w-auto">Membership</span>
-          <select
+          <NativeSelect
             id="membershipStatus"
-            className="input flex-1 md:w-32"
+            className="flex-1 md:w-32"
             defaultValue={statusFilter}
             onChange={handleMembershipStatusSelected}
           >
@@ -100,7 +102,7 @@ const UsersList = ({ users }: UsersListProps) => {
             <option value="EXPIRED">Expired</option>
             <option value="NOT_MEMBER">Non Members</option>
             <option value="OTHER_CLUB">Other Clubs</option>
-          </select>
+          </NativeSelect>
         </label>
       </div>
 

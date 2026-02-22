@@ -76,6 +76,17 @@
   --color-muted-foreground: var(--club-muted-foreground);
   --color-border: var(--club-base-300);
   --color-input: var(--club-base-300);
+  --color-primary: var(--club-primary);
+  --color-primary-foreground: var(--club-primary-foreground);
+  --color-secondary: var(--club-secondary);
+  --color-secondary-foreground: var(--club-secondary-foreground);
+  --color-accent: var(--club-accent);
+  --color-accent-foreground: var(--club-accent-foreground);
+  --color-neutral: var(--club-neutral);
+  --color-neutral-foreground: var(--club-neutral-content);
+  --color-info: var(--club-info);
+  --color-success: var(--club-success);
+  --color-warning: var(--club-warning);
   --color-ring: var(--club-primary);
   --color-destructive: var(--club-error);
   --color-destructive-foreground: var(--club-error-content);
@@ -145,18 +156,6 @@ figcaption {
 svg {
   @apply h-6;
   @apply w-6;
-}
-
-/* DaisyUI overrides */
-.btn {
-  @apply rounded-sm;
-  @apply text-base;
-  @apply py-4;
-  @apply border-0;
-}
-
-.alert {
-  @apply rounded-sm;
 }
 
 /* Markdown editor overrides */
