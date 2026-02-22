@@ -1,6 +1,6 @@
 import { useCancelRide, useDeleteRide, useRide } from "@/hooks/useRides";
 import { useSession } from "@/hooks/useSession";
-import { Sheet, SheetContent } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { useLocation, useParams, useRouter } from "@tanstack/react-router";
 import { Menu } from "lucide-react";
 import { useState } from "react";
@@ -124,6 +124,7 @@ const UserMenu = () => {
           showCloseButton={false}
           className="w-80 bg-neutral-900 p-0 sm:w-96 sm:max-w-none"
         >
+          <SheetTitle className="sr-only">Menu</SheetTitle>
           <MenuContent
             role={role}
             isAuthenticated={isAuthenticated}

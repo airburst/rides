@@ -22,7 +22,7 @@ export const PreferencesSection = memo(
         <div className="grid grid-cols-1 gap-4 p-2">
           <div className="grid grid-cols-1 gap-4 md:gap-8">
             <label className="w-full">
-              <div className="mb-1 text-sm font-medium">Units</div>
+              <div className="mb-1 font-medium">Units</div>
               <NativeSelect
                 id="units"
                 defaultValue={defaultUnits}

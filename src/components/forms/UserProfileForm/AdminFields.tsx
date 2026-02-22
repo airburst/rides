@@ -1,6 +1,6 @@
+import { MembershipIcon } from "@/components/MembershipIcon";
 import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/native-select";
-import { MembershipIcon } from "@/components/MembershipIcon";
 import { memo } from "react";
 import type { UseFormRegister } from "react-hook-form";
 import type { UserProfileFormSchema } from "../formSchemas";
@@ -36,7 +36,7 @@ export const AdminFields = memo(
           </label>
         </div>
 
-        <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-[1fr_1fr] md:gap-8">
+        <div className="grid w-full grid-cols-1 gap-4 md:grid-cols-[1fr_1fr] md:gap-8 mt-4">
           <label htmlFor="membershipId" className="flex flex-col">
             <div className="flex flex-row">
               <span className="flex-1">RiderHQ Membership Id</span>

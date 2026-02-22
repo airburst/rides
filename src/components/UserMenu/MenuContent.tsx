@@ -72,7 +72,7 @@ export const MenuContent = ({
           aria-label="open menu"
           className="w-full cursor-pointer"
         >
-          <X className="h-8 w-8" />
+          <X className="h-8 w-8 text-white" />
         </button>
       </div>
 

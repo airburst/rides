@@ -147,7 +147,7 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
               </label>
 
               <div className="flex flex-col gap-1">
-                <span className="text-sm font-medium">Email</span>
+                <span className="font-medium">Email</span>
                 <div className="text-neutral-500">{defaultValues?.email}</div>
               </div>
             </div>

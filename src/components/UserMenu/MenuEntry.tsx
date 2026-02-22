@@ -1,5 +1,5 @@
-import { Link } from "@tanstack/react-router";
 import { cn } from "@/lib/utils";
+import { Link } from "@tanstack/react-router";
 import { type ReactNode } from "react";
 
 type MenuEntryProps = {
@@ -22,27 +22,24 @@ export const MenuEntry = ({
     className,
   );
 
+  const innerClasses = "grid w-full grid-cols-[20px_1fr] items-center gap-6 px-4 py-1";
+
   return href ? (
     <li className={classes}>
       <Link
         to={href}
-        className="px-4 py-2 focus:bg-neutral-800 focus:text-white"
+        className={cn(innerClasses, "focus:bg-neutral-800 focus:text-white")}
+        onClick={onClick}
       >
-        <button
-          type="button"
-          className="grid w-full grid-cols-[20px_1fr] items-center gap-6"
-          onClick={onClick}
-        >
-          {children}
-          <span className="justify-self-start">{label}</span>
-        </button>
+        {children}
+        <span className="justify-self-start">{label}</span>
       </Link>
     </li>
   ) : (
     <li className={classes}>
       <button
         type="button"
-        className="grid w-full grid-cols-[20px_1fr] items-center gap-6"
+        className={innerClasses}
         onClick={onClick}
       >
         {children}
