@@ -1,6 +1,6 @@
 {
   "name": "rides",
-  "version": "4.4.3",
+  "version": "4.4.4",
   "private": true,
   "type": "module",
   "scripts": {
@@ -79,7 +79,7 @@
     "tailwind-merge": "^3.5.0",
     "tailwindcss": "^4.2.0",
     "tailwindcss-motion": "^1.1.1",
-    "typescript": "^5.9.3",
+    "typescript": "^6.0.0-beta",
     "vite": "^7.3.1"
   }
 }

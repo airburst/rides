@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.4.4 - 2026-02-22
+
+### Technical
+
+- Upgraded TypeScript from 5.9.3 to 6.0.0-beta
+  - Performance improvements in type checking
+  - Enhanced type inference and control flow analysis
+  - All tests and builds passing
+
 ## 4.4.3 - 2026-02-22
 
 ### Updated

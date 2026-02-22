@@ -7,10 +7,10 @@
     "vite.config.ts"
   ],
   "compilerOptions": {
-    "target": "ES2022",
+    "target": "esnext",
     "jsx": "react-jsx",
     "module": "ESNext",
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "types": ["vite/client"],
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
@@ -25,11 +25,11 @@
     "moduleDetection": "force",
     "isolatedModules": true,
     "incremental": true,
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"],
       "@components/*": ["./src/components/*"],
-      "@utils/*": ["shared/utils/*"]
+      "@utils/*": ["./shared/utils/*"],
+      "*": ["./*"]
     }
   },
   "exclude": [
