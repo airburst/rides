@@ -76,7 +76,11 @@
   }
 }
 
-/* Force white background on all inputs in light mode */
+/* Prevent Radix from shifting body when sheet/dialog opens */
+html body[data-scroll-locked] {
+  margin-right: 0 !important;
+  padding-right: 0 !important;
+}
 input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]),
 select,
 textarea {
@@ -86,6 +90,7 @@ textarea {
 
 html {
   scrollbar-width: thin;
+  scrollbar-gutter: stable;
   scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
 }
 
