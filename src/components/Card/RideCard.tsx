@@ -1,6 +1,6 @@
 import { formatDistance } from "@utils/rides";
 import { formatTime } from "@utils/dates";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 import { type RideList, type User } from "../../types";
 import { Cancelled } from "../RideDetails/Cancelled";
 import { BasicCard } from "./BasicCard";
@@ -34,9 +34,9 @@ export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
   const hasLimit = rideLimit && rideLimit > -1;
   const ridersLabel = hasLimit ? `${riderCount}/${rideLimit}` : riderCount;
 
-  const cardClass = clsx("grid w-full grid-cols-[auto_1fr_80px]");
+  const cardClass = cn("grid w-full grid-cols-[auto_1fr_80px]");
 
-  const titleClass = clsx(
+  const titleClass = cn(
     "truncate p-1 pl-2 font-bold uppercase tracking-wide text-neutral-600",
     isGoing ? "col-span-2" : "col-span-3",
   );

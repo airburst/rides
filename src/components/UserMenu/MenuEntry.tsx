@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 import { type ReactNode } from "react";
 
 type MenuEntryProps = {
@@ -17,7 +17,7 @@ export const MenuEntry = ({
   className,
   children,
 }: MenuEntryProps) => {
-  const classes = clsx(
+  const classes = cn(
     "hover:bg-neutral-800 hover:text-white rounded",
     className,
   );
