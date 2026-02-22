@@ -1,4 +1,4 @@
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 
 type Props = {
   text?: string | number;
@@ -6,30 +6,35 @@ type Props = {
   small?: boolean;
 };
 
-export const Badge = ({ text, style = "unready", small }: Props) => {
-  const classes = clsx(
-    "badge text-white border-0",
-    { "bg-red-500": style === "unready" },
-    { "bg-primary": style === "ready" },
-    { "bg-slate-500": style === "past" },
-    { "badge-md": !small },
-    { "badge-sm": small },
-  );
+const styleMap: Record<string, string> = {
+  unready: "bg-red-500",
+  ready: "bg-primary",
+  past: "bg-slate-500",
+};
 
-  return <div className={classes}>{text}</div>;
+export const Badge = ({ text, style = "unready", small }: Props) => {
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center justify-center rounded-full border-0 text-xs font-medium text-white",
+        small ? "px-1.5 py-0.5" : "px-2 py-0.5",
+        styleMap[style],
+      )}
+    >
+      {text}
+    </span>
+  );
 };
 
 export const RoundBadge = ({ text, style = "unready" }: Props) => {
-  const classes = clsx(
-    "badge badge-lg text-white w-10 h-10 lg:text-xl rounded-full",
-    { "bg-red-500": style === "unready" },
-    { "bg-primary": style === "ready" },
-    { "bg-slate-500": style === "past" },
-  );
-
   return (
-    <div className={classes}>
+    <span
+      className={cn(
+        "inline-flex h-10 w-10 items-center justify-center rounded-full text-white lg:text-xl",
+        styleMap[style],
+      )}
+    >
       <span className="flex justify-center">{text}</span>
-    </div>
+    </span>
   );
 };

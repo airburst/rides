@@ -1,3 +1,4 @@
+import { NativeSelect } from "@/components/ui/native-select";
 import { useFilter } from "@/contexts/FilterContext";
 import { useFilterState } from "@/hooks/useFilterState";
 import { useOnClickOutside } from "@/hooks/useOnClickOutside";
@@ -91,10 +92,10 @@ export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
         <div className="mt-4 flex flex-row items-center justify-between">
           <div>Weeks ahead</div>
           <label htmlFor="weeks" className="flex w-32 flex-col gap-1">
-            <select
+            <NativeSelect
               id="weeks"
               aria-label="Weeks ahead"
-              className="rounded-md text-neutral-700"
+              className="text-neutral-700"
               value={weeksAhead}
               onChange={handleWeeksChange}
             >
@@ -103,7 +104,7 @@ export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
               <option value="6">6</option>
               <option value="8">8</option>
               <option value="-1">Forever</option>
-            </select>
+            </NativeSelect>
           </label>
         </div>
 

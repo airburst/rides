@@ -5,6 +5,7 @@ import {
   createRootRoute,
 } from "@tanstack/react-router";
 import { Toaster } from "sonner";
+import { Button } from "@/components/ui/button";
 import { Header } from "@/components/Header/Header";
 import { Providers } from "@/components/Providers";
 import appCss from "../styles/globals.css?url";
@@ -79,7 +80,7 @@ function RootComponent() {
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" data-theme="bcc">
+    <html lang="en">
       <head>
         <HeadContent />
       </head>
@@ -114,13 +115,12 @@ function NotFound() {
         Sorry - we can&apos;t find this page.
       </div>
       <div className="flex items-center justify-center p-4 text-neutral-700">
-        <button
-          className="btn btn-primary"
+        <Button
           onClick={() => window.history.back()}
           type="button"
         >
           BACK
-        </button>
+        </Button>
       </div>
     </div>
   );

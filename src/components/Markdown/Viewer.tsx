@@ -1,5 +1,5 @@
 import { NOTES_SHOW_MORE_LENGTH } from "@/constants";
-import clsx from "clsx";
+import { cn } from "@/lib/utils";
 import DOMPurify from "isomorphic-dompurify";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import markdownIt from "markdown-it";
@@ -31,7 +31,7 @@ const Viewer = ({ markdown, title }: ViewerProps) => {
   const displayText = showAll
     ? sanitizedHtml
     : `${sanitizedHtml.slice(0, NOTES_SHOW_MORE_LENGTH)}${isLong ? "..." : ""}`;
-  const notesClass = clsx("col-span-2", showAll ? "mb-4" : "mb-2");
+  const notesClass = cn("col-span-2", showAll ? "mb-4" : "mb-2");
   const showMoreClass =
     "w-full h-[24px] flex justify-center absolute bottom-4 bg-linear-to-t from-white";
 

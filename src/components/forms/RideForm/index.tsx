@@ -7,7 +7,7 @@ import { useCreateRide, useUpdateRide } from "@/hooks/useRides";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "@tanstack/react-router";
 import { useCallback, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, type Resolver } from "react-hook-form";
 import { toast } from "sonner";
 import {
   formatDate,
@@ -19,6 +19,8 @@ import {
 } from "../../../../shared/utils";
 import { RIDER_LIMIT_OPTIONS } from "../../../constants";
 import { type Preferences } from "../../../types";
+import { Input } from "@/components/ui/input";
+import { NativeSelect } from "@/components/ui/native-select";
 import { Button } from "../../Button";
 import { CancelButton } from "../../Button/CancelButton";
 import Editor from "../../Markdown/Editor";
@@ -49,7 +51,7 @@ const RideForm = ({
     getValues,
     formState: { defaultValues, errors },
   } = useForm<RideFormSchema>({
-    resolver: zodResolver(rideFormSchema),
+    resolver: zodResolver(rideFormSchema) as Resolver<RideFormSchema>,
     defaultValues: defaults,
   });
   const router = useRouter();
@@ -225,10 +227,9 @@ const RideForm = ({
         <div className="flex flex-col gap-4 md:gap-8">
           <label htmlFor="name" className="flex flex-col gap-1">
             Ride name *
-            <input
+            <Input
               id="name"
               type="text"
-              className="input w-full"
               {...register("name")}
             />
             {errors.name && (
@@ -243,10 +244,9 @@ const RideForm = ({
           <div className="flex flex-col gap-4 md:gap-8">
             <label htmlFor="rideGroup" className="flex flex-col gap-1">
               Group name
-              <input
+              <Input
                 id="rideGroup"
                 type="text"
-                className="input w-full"
                 {...register("rideGroup")}
               />
             </label>
@@ -254,9 +254,8 @@ const RideForm = ({
           <div className="flex flex-col gap-4 md:gap-8">
             <label htmlFor="rideLimit" className="flex flex-col gap-1">
               Rider limit
-              <select
+              <NativeSelect
                 id="rideLimit"
-                className="input w-full"
                 {...register("rideLimit")}
               >
                 <option value="-1">No limit</option>
@@ -265,7 +264,7 @@ const RideForm = ({
                     {val}
                   </option>
                 ))}
-              </select>
+              </NativeSelect>
             </label>
           </div>
         </div>
@@ -274,11 +273,10 @@ const RideForm = ({
           <div className="flex flex-col gap-4 md:gap-8">
             <label htmlFor="rideDate" className="flex flex-col gap-1">
               Date *
-              <input
+              <Input
                 id="rideDate"
                 type="date"
                 min={today}
-                className="input w-full"
                 {...register("rideDate")}
               />
               {errors.rideDate && (
@@ -292,10 +290,9 @@ const RideForm = ({
           <div className="flex flex-col gap-4 md:gap-8">
             <label htmlFor="time" className="flex flex-col gap-1">
               Start time *
-              <input
+              <Input
                 id="time"
                 type="time"
-                className="input w-full"
                 {...register("time")}
               />
               {errors.time && (
@@ -310,10 +307,9 @@ const RideForm = ({
         <div className="flex flex-col gap-4 md:gap-8">
           <label htmlFor="meetPoint" className="flex flex-col gap-1">
             Meeting point
-            <input
+            <Input
               id="meetPoint"
               type="text"
-              className="input w-full"
               {...register("meetPoint")}
             />
           </label>
@@ -322,10 +318,9 @@ const RideForm = ({
         <div className="flex flex-col gap-4 md:gap-8">
           <label htmlFor="distance" className="flex flex-col">
             Distance ({preferences?.units ?? "km"}) *
-            <input
+            <Input
               id="distance"
               type="number"
-              className="input w-full"
               {...register("distance")}
             />
             {errors.distance && (
@@ -339,10 +334,9 @@ const RideForm = ({
         <div className="flex flex-col gap-4 md:gap-8">
           <label htmlFor="destination" className="flex flex-col">
             Destination
-            <input
+            <Input
               id="destination"
               type="text"
-              className="input w-full"
               {...register("destination")}
             />
           </label>
@@ -351,10 +345,9 @@ const RideForm = ({
         <div className="flex flex-col gap-4 md:gap-8">
           <label htmlFor="route" className="flex flex-col">
             Route Link
-            <input
+            <Input
               id="route"
               type="text"
-              className="input w-full"
               {...register("route")}
             />
           </label>
@@ -363,10 +356,9 @@ const RideForm = ({
         <div className="flex flex-col gap-4 md:gap-8">
           <label htmlFor="leader" className="flex flex-col">
             Leader
-            <input
+            <Input
               id="leader"
               type="text"
-              className="input w-full"
               {...register("leader")}
             />
           </label>

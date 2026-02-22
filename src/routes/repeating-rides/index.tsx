@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { lazy, Suspense, useEffect } from "react";
 import { MainContent } from "@/components/Layout/MainContent";
+import { Spinner } from "@/components/Spinner";
 import { useRepeatingRides } from "@/hooks/repeating-rides";
 import { useSession } from "@/hooks/useSession";
 
@@ -29,7 +30,7 @@ function RepeatingRides() {
     return (
       <MainContent>
         <div className="flex h-64 w-full items-center justify-center">
-          <span className="loading loading-spinner loading-lg" />
+          <Spinner />
         </div>
       </MainContent>
     );

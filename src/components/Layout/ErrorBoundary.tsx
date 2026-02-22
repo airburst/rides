@@ -29,7 +29,7 @@ export class ErrorBoundary extends Component<Props, State> {
       return (
         <div className="flex flex-col justify-center text-neutral-800">
           <div className="flex h-64 items-center justify-center">
-            <CircleAlert className="h-24 w-24 text-error" />
+            <CircleAlert className="h-24 w-24 text-destructive" />
           </div>
           <div className="flex items-center p-4 text-center text-2xl text-neutral-700">
             Sorry.. the app is experiencing problems

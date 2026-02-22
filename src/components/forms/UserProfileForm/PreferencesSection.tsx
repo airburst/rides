@@ -1,5 +1,6 @@
 import { Button } from "@/components/Button";
 import { CancelButton } from "@/components/Button/CancelButton";
+import { NativeSelect } from "@/components/ui/native-select";
 import { memo } from "react";
 import type { UseFormRegister } from "react-hook-form";
 import type { UserProfileFormSchema } from "../formSchemas";
@@ -21,16 +22,15 @@ export const PreferencesSection = memo(
         <div className="grid grid-cols-1 gap-4 p-2">
           <div className="grid grid-cols-1 gap-4 md:gap-8">
             <label className="w-full">
-              <div className="label">Units</div>
-              <select
+              <div className="mb-1 font-medium">Units</div>
+              <NativeSelect
                 id="units"
-                className="select select-bordered w-full"
                 defaultValue={defaultUnits}
                 {...register("preferences.units")}
               >
                 <option value="km">Kilometers</option>
                 <option value="miles">Miles</option>
-              </select>
+              </NativeSelect>
             </label>
           </div>
 

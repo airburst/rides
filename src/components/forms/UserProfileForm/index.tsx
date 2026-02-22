@@ -1,3 +1,4 @@
+import { Input } from "@/components/ui/input";
 import { useUpdateUser } from "@/hooks/users";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "@tanstack/react-router";
@@ -105,10 +106,9 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
             <div className="flex flex-col gap-4 [grid-area:fields]">
               <label htmlFor="name" className="flex flex-col gap-1">
                 Name *
-                <input
+                <Input
                   id="name"
                   type="text"
-                  className="input w-full"
                   {...register("name")}
                 />
                 {errors.name && (
@@ -120,10 +120,9 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
 
               <label htmlFor="mobile" className="flex flex-col gap-1">
                 Mobile *
-                <input
+                <Input
                   id="mobile"
                   type="text"
-                  className="input w-full"
                   {...register("mobile")}
                 />
                 {errors.mobile && (
@@ -135,10 +134,9 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
 
               <label htmlFor="emergency" className="flex flex-col gap-1">
                 Emergency Contact *
-                <input
+                <Input
                   id="emergency"
                   type="text"
-                  className="input w-full"
                   {...register("emergency")}
                 />
                 {errors.emergency && (
@@ -149,7 +147,7 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
               </label>
 
               <div className="flex flex-col gap-1">
-                <span className="text-sm font-medium">Email</span>
+                <span className="font-medium">Email</span>
                 <div className="text-neutral-500">{defaultValues?.email}</div>
               </div>
             </div>

@@ -1,5 +1,5 @@
+import { cn } from "@/lib/utils";
 import { onlyNumbers } from "@utils/general";
-import clsx from "clsx";
 import { Phone } from "lucide-react";
 import { useState } from "react";
 import { type User } from "../../types";
@@ -25,26 +25,28 @@ export const RiderDetails = ({ user, isLeader, sessionUser }: Props) => {
   const mobileNumber = onlyNumbers(mobile ?? "");
   const emergencyNumber = onlyNumbers(emergency ?? "");
 
-  const switchClass = clsx(
+  const switchClass = cn(
     "relative inline-flex h-6 w-11 self-center items-center rounded-full",
     showEmergency ? "bg-red-600" : "bg-gray-200",
   );
 
-  const toggleClass = clsx(
+  const toggleClass = cn(
     "inline-block h-4 w-4 transform rounded-full bg-white transition",
     showEmergency ? "translate-x-6" : "translate-x-1",
   );
 
-  const rowClass = clsx(
+  const rowClass = cn(
     "flex w-full flex-row items-center justify-between px-2 font-medium md:grid md:grid-cols-[1fr_auto] md:justify-start md:gap-4",
     isMe && "text-neutral-800",
   );
 
   const numberToDisplay = showEmergency ? emergencyNumber : mobileNumber;
 
-  const callButtonClass = clsx(
-    "btn btn-sm",
-    showEmergency ? "bg-error text-white" : "bg-neutral-100 text-neutral-600",
+  const callButtonClass = cn(
+    "inline-flex items-center justify-center gap-1 rounded-md px-3 py-1 text-sm font-medium",
+    showEmergency
+      ? "bg-destructive text-white"
+      : "bg-neutral-100 text-neutral-600",
   );
 
   return (

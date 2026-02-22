@@ -25,8 +25,8 @@ export const DeleteConfirmation = memo(
         onYes={onConfirm}
       >
         <div className="flex flex-col gap-2">
-          <label htmlFor="cascade" className="label cursor-pointer">
-            <span className="label-text flex-1">
+          <label htmlFor="cascade" className="flex cursor-pointer items-center gap-2">
+            <span className="flex-1 text-sm">
               Delete schedule and ALL future rides
             </span>
             <input
@@ -39,8 +39,8 @@ export const DeleteConfirmation = memo(
             />
           </label>
 
-          <label htmlFor="no-cascade" className="label cursor-pointer gap-2">
-            <span className="label-text flex-1">
+          <label htmlFor="no-cascade" className="flex cursor-pointer items-center gap-2">
+            <span className="flex-1 text-sm">
               Delete the schedule, but keep future rides
             </span>
             <input

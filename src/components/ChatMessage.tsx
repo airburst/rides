@@ -1,6 +1,6 @@
-import DOMPurify from "isomorphic-dompurify";
 import { resolveAvatarUrl } from "@/lib/avatar";
 import { makeClickableUrl } from "@utils/makeClickableUrl";
+import DOMPurify from "isomorphic-dompurify";
 import { type RideNote } from "src/types";
 
 export const ChatMessage: React.FC<RideNote> = ({
@@ -8,21 +8,22 @@ export const ChatMessage: React.FC<RideNote> = ({
   rideNotes,
   image,
 }: RideNote) => (
-  <div className="chat chat-start flex pl-2">
+  <div className="flex items-end gap-2">
     {image && (
-      <div className="avatar placeholder chat-image">
-        <div className="w-10 rounded-full bg-neutral text-neutral-content">
+      <div className="shrink-0">
+        <div className="h-10 w-10 overflow-hidden rounded-full bg-neutral">
           <img
-            alt="Tailwind CSS chat bubble component"
+            alt={`${name}'s avatar`}
             src={resolveAvatarUrl(image)}
+            className="h-full w-full object-cover"
           />
         </div>
       </div>
     )}
     <div className="flex w-full flex-col">
-      <div className="chat-header">{name}</div>
+      <div className="text-xs font-medium opacity-60">{name}</div>
       <div
-        className="chat-bubble wrap-break-word leading-snug text-neutral-700"
+        className="relative w-fit max-w-full wrap-break-word rounded-lg rounded-bl-none bg-neutral-200 px-3 py-2 leading-snug text-neutral-700 before:absolute before:-left-2 before:bottom-0 before:h-0 before:w-0 before:border-8 before:border-transparent before:border-r-neutral-200 before:border-b-neutral-200 before:content-['']"
         dangerouslySetInnerHTML={{
           __html: DOMPurify.sanitize(makeClickableUrl(rideNotes ?? "")),
         }}

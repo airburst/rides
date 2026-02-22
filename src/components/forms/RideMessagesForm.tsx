@@ -45,7 +45,7 @@ const RideMessagesForm = ({
           <textarea
             id="notes"
             aria-label="ride note"
-            className="rounded"
+            className="rounded p-2"
             rows={4}
             defaultValue={defaultValues.notes}
             {...register("notes")}
