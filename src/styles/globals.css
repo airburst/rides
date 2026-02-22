@@ -1,6 +1,6 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 @plugin "daisyui";
-@plugin "@tailwindcss/forms";
 
 /* Club themes */
 /* Set a theme in root layout.tsx data-theme="bcc" */
@@ -31,31 +31,30 @@
   --color-error-content: #ffffff;
 }
 
-/* @plugin "daisyui/theme" {
-  name: "corsham";
-  prefersdark: false;
-  color-scheme: light;
+/* Single source of truth for club colors (CSS bridge) */
+:root {
+  --club-primary: #24376e;
+  --club-primary-foreground: #ffffff;
+  --club-secondary: #831843;
+  --club-secondary-foreground: #ffffff;
+  --club-accent: #3f60c0;
+  --club-accent-foreground: #ffffff;
+  --club-base-100: #ffffff;
+  --club-base-200: #f1f4fb;
+  --club-base-300: #e4e8f6;
+  --club-base-content: #262626;
+  --club-neutral: #e5e7eb;
+  --club-neutral-content: #111827;
+  --club-info: #3b82f6;
+  --club-success: #15803d;
+  --club-warning: #fbbd23;
+  --club-error: #dc2626;
+  --club-error-content: #ffffff;
+  --club-muted-foreground: #64748b;
+  --radius: 0.5rem;
+}
 
-  --color-primary: "#00a4d1";
-  --color-primary-content: "#ffffff";
-  --color-secondary: "#4b277e";
-  --color-secondary-content: "#ffffff";
-  --color-accent: "#4b277e";
-  --color-accent-content: "#ffffff";
-  --color-neutral: "#333333";
-  --color-neutral-content: #111827;
-  --color-base-100: "#FFFFFF";
-  --color-base-200: "#f6f6f6";
-  --color-base-300: "#e6e6e6";
-  --color-info: "#3b82f6";
-  --color-info-content: "#ffffff";
-  --color-success: "#15803d";
-  --color-success-content: "#ffffff";
-  --color-warning: "#FBBD23";
-  --color-error: "#e22530";
-  --color-error-content: "#ffffff";
-} */
-
+/* ShadCN variable mapping — extends @theme with vars ShadCN components expect */
 @theme inline {
   --font-display: "Outfit", sans-serif;
   --font-main: "Outfit", sans-serif;
@@ -64,6 +63,22 @@
   --text-lg: 1.2rem;
   --text-base: 1.2rem;
   --animate-slide-down: slide-down 200ms ease-in-out;
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+  --color-background: var(--club-base-100);
+  --color-foreground: var(--club-base-content);
+  --color-card: var(--club-base-100);
+  --color-card-foreground: var(--club-base-content);
+  --color-popover: var(--club-base-100);
+  --color-popover-foreground: var(--club-base-content);
+  --color-muted: var(--club-base-200);
+  --color-muted-foreground: var(--club-muted-foreground);
+  --color-border: var(--club-base-300);
+  --color-input: var(--club-base-300);
+  --color-ring: var(--club-primary);
+  --color-destructive: var(--club-error);
+  --color-destructive-foreground: var(--club-error-content);
 }
 
 @keyframes slide-down {
