@@ -76,6 +76,14 @@
   }
 }
 
+/* Force white background on all inputs in light mode */
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]),
+select,
+textarea {
+  background-color: #ffffff !important;
+  font-size: 1em !important;
+}
+
 html {
   scrollbar-width: thin;
   scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
