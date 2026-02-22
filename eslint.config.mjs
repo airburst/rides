@@ -44,6 +44,7 @@ const eslintConfig = [
         sourceType: "module",
       },
       globals: {
+        ...globals.browser,
         ...globals.jest,
         mock: "readonly",
         require: "readonly",

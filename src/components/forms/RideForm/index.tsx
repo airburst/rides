@@ -7,7 +7,7 @@ import { useCreateRide, useUpdateRide } from "@/hooks/useRides";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "@tanstack/react-router";
 import { useCallback, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, type Resolver } from "react-hook-form";
 import { toast } from "sonner";
 import {
   formatDate,
@@ -49,7 +49,7 @@ const RideForm = ({
     getValues,
     formState: { defaultValues, errors },
   } = useForm<RideFormSchema>({
-    resolver: zodResolver(rideFormSchema),
+    resolver: zodResolver(rideFormSchema) as Resolver<RideFormSchema>,
     defaultValues: defaults,
   });
   const router = useRouter();

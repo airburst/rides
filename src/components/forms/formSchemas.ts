@@ -7,23 +7,25 @@ const phoneRegex = new RegExp(
 );
 
 export const userProfileFormSchema = z.object({
-  id: z.string().trim().min(3, { message: "Id is required" }),
+  id: z.string().trim().min(3, { error: "Id is required" }),
   name: z
-    .string({ required_error: "Name is required" })
+    .string({ error: "Name is required" })
     .trim()
-    .min(3, { message: "Name must contain at least 3 letters" }),
+    .min(3, { error: "Name must contain at least 3 letters" }),
   mobile: z
-    .string({ required_error: "Mobile number is required" })
+    .string({ error: "Mobile number is required" })
     .trim()
-    .min(3, { message: "Mobile number is required" }),
+    .min(3, { error: "Mobile number is required" }),
   emergency: z
     .string({
-      required_error: "An emergency contact (with number) is required",
+      error: "An emergency contact (with number) is required",
     })
     .trim()
-    .regex(phoneRegex, "Emergency contact must include a telephone number")
-    .min(11, { message: "Too short for an emergency contact and number" }),
-  email: z.string().trim().email({ message: "Invalid email address" }),
+    .regex(phoneRegex, {
+      error: "Emergency contact must include a telephone number",
+    })
+    .min(11, { error: "Too short for an emergency contact and number" }),
+  email: z.string().trim().email({ error: "Invalid email address" }),
   preferences: z.object({
     units: z.string(),
   }),
@@ -39,18 +41,18 @@ export const rideFormSchema = zfd.formData({
   id: zfd.text(z.string().optional()),
   name: zfd.text(
     z
-      .string({ required_error: "Ride name is required" })
+      .string({ error: "Ride name is required" })
       .trim()
-      .min(3, { message: "Ride name must contain at least 3 letters" }),
+      .min(3, { error: "Ride name must contain at least 3 letters" }),
   ),
-  rideDate: zfd.text(z.string({ required_error: "Ride date is required" })),
+  rideDate: zfd.text(z.string({ error: "Ride date is required" })),
   time: zfd.text(z.string()),
   rideGroup: zfd.text(z.string().optional()),
   destination: zfd.text(z.string().optional()),
   meetPoint: zfd.text(z.string().optional()),
   notes: zfd.text(z.string().optional()),
   distance: zfd.numeric(
-    z.number().min(10, { message: "Ride must be at least 10km" }),
+    z.number().min(10, { error: "Ride must be at least 10km" }),
   ),
   leader: zfd.text(z.string().optional()),
   route: zfd.text(z.string().optional()),
