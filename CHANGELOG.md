@@ -5,6 +5,29 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.5.0 - 2026-02-22
+
+### Changed
+
+- Replaced DaisyUI with ShadCN component library (Button, Input, Label, Sheet, Badge, Alert)
+- Migrated all forms to ShadCN Input + styled native select
+- Replaced DaisyUI drawer with ShadCN Sheet for user menu and filter panel
+- Replaced DaisyUI chat/badge/alert/avatar with custom Tailwind implementations
+- Upgraded zod to v4 and zod-form-data to v3
+- Consolidated clsx usage to cn() utility (clsx + tailwind-merge)
+- Collapsed CSS bridge layer to direct hex values in @theme inline
+
+### Added
+
+- Form test coverage: schema validation tests + component integration tests (43 tests)
+- ShadCN UI components: button, input, label, sheet, badge, alert, native-select
+- Spinner component replacing DaisyUI loading-spinner pattern
+
+### Technical
+
+- Removed DaisyUI dependency entirely — CSS bundle reduced from 104KB to 48KB
+- Theme files (bath.ts, shrewsbury.ts) converted to ShadCN variable format
+
 ## 4.4.4 - 2026-02-22
 
 ### Technical
