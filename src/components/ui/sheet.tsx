@@ -25,7 +25,7 @@ function SheetClose({
 function SheetPortal({
   ...props
 }: React.ComponentProps<typeof Dialog.Portal>) {
-  return <Dialog.Portal data-slot="sheet-portal" keepMounted {...props} />
+  return <Dialog.Portal data-slot="sheet-portal" {...props} />
 }
 
 function SheetOverlay({
