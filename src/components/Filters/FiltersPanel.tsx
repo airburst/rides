@@ -110,13 +110,18 @@ export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
           </div>
 
           <div className="mt-4 flex flex-row justify-end gap-4">
-            <Button onClick={reset} title="Reset filters">
+            <Button
+              onClick={reset}
+              title="Reset filters"
+              className="hover:brightness-110"
+            >
               <span>RESET</span>
             </Button>
             <Button
               secondary
               onClick={closeHandler}
               title="apply and close filter menu"
+              className="hover:brightness-110"
             >
               <span>APPLY</span>
             </Button>
