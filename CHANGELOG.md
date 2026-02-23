@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.6.0 - 2026-02-23
+
+### Changed
+
+- Replaced radix-ui with @base-ui/react for all UI primitives (Sheet, Label)
+- FiltersPanel now uses Sheet with top slide animation, gaining backdrop, focus trap and escape key dismissal
+- Sheet backdrop uses CSS transitions instead of animations for reliable open/close
+- Removed unused dark mode styles from button variants
+
+### Added
+
+- Local Slot component replacing radix-ui Slot dependency
+
+### Technical
+
+- Removed radix-ui dependency entirely
+- Removed unused animate-slide-down keyframe and useOnClickOutside hook usage from FiltersPanel
+
 ## 4.5.0 - 2026-02-22
 
 ### Changed
