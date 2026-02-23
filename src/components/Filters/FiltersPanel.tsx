@@ -1,9 +1,5 @@
 import { NativeSelect } from "@/components/ui/native-select";
-import {
-  Sheet,
-  SheetContent,
-  SheetTitle,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { useFilter } from "@/contexts/FilterContext";
 import { useFilterState } from "@/hooks/useFilterState";
 import { X } from "lucide-react";
@@ -56,7 +52,9 @@ export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
       >
         <div className="container mx-auto flex w-full flex-col p-4 md:px-4 lg:max-w-5xl">
           <div className="flex flex-row justify-between">
-            <SheetTitle className="text-3xl text-white">Filters</SheetTitle>
+            <SheetTitle className="text-3xl font-light tracking-wide text-white">
+              Filters
+            </SheetTitle>
             <button
               type="button"
               aria-label="Close filters"
