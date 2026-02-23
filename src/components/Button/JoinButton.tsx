@@ -33,13 +33,7 @@ export const JoinButton: React.FC<Props> = ({
       LEAVE
     </Button>
   ) : (
-    <Button
-      {...props}
-      error
-      onClick={handleJoin}
-      disabled={isPending}
-      className={`hover:brightness-110 ${props.className ?? ""}`}
-    >
+    <Button {...props} error onClick={handleJoin} disabled={isPending}>
       <Plus className="h-6 w-6" />
       JOIN
     </Button>
