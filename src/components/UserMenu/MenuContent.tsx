@@ -70,7 +70,7 @@ export const MenuContent = ({
           onClick={closeMenu}
           onKeyDown={closeMenu}
           aria-label="open menu"
-          className="w-full cursor-pointer"
+          className="w-full cursor-pointer px-2"
         >
           <X className="h-8 w-8 text-white" />
         </button>

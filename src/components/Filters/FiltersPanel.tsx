@@ -82,9 +82,8 @@ export const FiltersPanel = ({ isShowing, closeHandler, data }: Props) => {
             <div>Only show my rides</div>
             <ToggleSwitch
               checked={onlyJoined}
-              onChange={handleSwitchChange}
+              onCheckedChange={handleSwitchChange}
               label="Only show my rides"
-              srOnlyLabel
             />
           </div>
 

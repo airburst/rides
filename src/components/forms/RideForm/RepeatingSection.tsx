@@ -44,9 +44,8 @@ export const RepeatingSection = memo(
           <div className="pr-8">This ride repeats</div>
           <ToggleSwitch
             checked={repeats}
-            onChange={handleRepeatsChange}
+            onCheckedChange={handleRepeatsChange}
             label="Toggle repeating"
-            srOnlyLabel
           />
         </div>
         <RepeatingRideForm
