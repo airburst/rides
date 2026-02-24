@@ -47,7 +47,7 @@ export const ConfirmWithContent = ({
               <Button
                 data-autofocus
                 className="min-w-24"
-                primary
+                error
                 onClick={confirmHandler}
                 loading={waiting}
               >

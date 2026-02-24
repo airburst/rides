@@ -1,8 +1,8 @@
 import { MAX_FILE_SIZE_IN_BYTES } from "@/constants";
 import { useUploadAvatar } from "@/hooks/users";
 import { createCroppedImage, readFileAsDataURL } from "@/lib/cropImage";
-import type { Area } from "@/types/crop";
 import { type User } from "@/types";
+import type { Area } from "@/types/crop";
 import { Upload, X } from "lucide-react";
 import { type ChangeEvent, lazy, Suspense, useRef, useState } from "react";
 import { toast } from "sonner";
@@ -118,18 +118,25 @@ const ImageUpload = ({ user, onClose, onSuccess }: ImageUploadProps) => {
             </div>
           }
         >
-          <ImageCropEditor imageSrc={imageSrc} onCropComplete={handleCropComplete} />
+          <ImageCropEditor
+            imageSrc={imageSrc}
+            onCropComplete={handleCropComplete}
+          />
         </Suspense>
 
         <div className="flex gap-4 justify-end">
-          <Button onClick={handleCancel} disabled={isProcessing || uploadMutation.isPending}>
+          <Button
+            onClick={handleCancel}
+            disabled={isProcessing || uploadMutation.isPending}
+          >
             <X className="w-4 h-4" />
             Cancel
           </Button>
           <Button
-            accent
             onClick={handleUpload}
-            disabled={!croppedAreaPixels || isProcessing || uploadMutation.isPending}
+            disabled={
+              !croppedAreaPixels || isProcessing || uploadMutation.isPending
+            }
             loading={isProcessing || uploadMutation.isPending}
           >
             <Upload className="w-4 h-4" />
@@ -143,7 +150,7 @@ const ImageUpload = ({ user, onClose, onSuccess }: ImageUploadProps) => {
   // Show file selection UI
   return (
     <div className="flex flex-col gap-4 items-center py-8">
-      <Button accent className="min-w-48" onClick={handleSelectClick}>
+      <Button className="min-w-48" onClick={handleSelectClick}>
         <Upload className="w-6 h-6" />
         Select Image
       </Button>

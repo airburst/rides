@@ -57,7 +57,7 @@ const RideMessagesForm = ({
         <Button primary loading={waiting} disabled={!isDirty} type="submit">
           <div>ADD</div>
         </Button>
-        <Button accent onClick={clearForm} type="submit">
+        <Button onClick={clearForm} type="submit">
           <div>CLEAR</div>
         </Button>
         <Button disabled={waiting} onClick={closeHandler}>

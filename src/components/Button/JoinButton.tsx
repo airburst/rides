@@ -28,7 +28,12 @@ export const JoinButton: React.FC<Props> = ({
   const isPending = joinMutation.isPending || leaveMutation.isPending;
 
   return going ? (
-    <Button {...props} success onClick={handleLeave} disabled={isPending}>
+    <Button
+      {...props}
+      onClick={handleLeave}
+      disabled={isPending}
+      className="bg-success hover:bg-green-600"
+    >
       <X className="h-6 w-6" />
       LEAVE
     </Button>

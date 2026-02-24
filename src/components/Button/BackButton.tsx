@@ -3,12 +3,14 @@ import { ChevronLeft } from "lucide-react";
 import { Button } from "./Button";
 
 type ButtonProps = {
+  label?: string;
   url?: string;
   className?: string;
   noIcon?: boolean;
 };
 
 export const BackButton = ({
+  label = "BACK",
   url,
   className,
   noIcon = false,
@@ -26,9 +28,9 @@ export const BackButton = ({
   };
 
   return (
-    <Button primary {...props} className={className} onClick={goBack}>
+    <Button {...props} className={className} onClick={goBack}>
       {showIcon && <ChevronLeft className="h-6 w-6" />}
-      BACK
+      {label}
     </Button>
   );
 };

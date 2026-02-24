@@ -87,9 +87,7 @@ const RepeatingRideDetails = ({ ride }: RepeatingRideDetailsProps) => {
         <Button secondary onClick={goToEdit}>
           EDIT
         </Button>
-        <Button accent onClick={goToCopy}>
-          COPY
-        </Button>
+        <Button onClick={goToCopy}>COPY</Button>
         <Button error onClick={showConfirm}>
           DELETE
         </Button>

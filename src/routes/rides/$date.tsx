@@ -37,7 +37,7 @@ function RidesOnDate() {
             <BackButton />
             {isLeader && isInFuture && (
               <Link to="/ride/new/$date" params={{ date }}>
-                <Button accent className="w-full">
+                <Button className="w-full">
                   <Plus className="h-8 w-8" />
                   <span>ADD RIDE</span>
                 </Button>

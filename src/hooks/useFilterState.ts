@@ -19,7 +19,6 @@ export const useFilterState = (
   const [weeksAhead, setWeeksAhead] = useState<string>(
     initialFilterQuery.weeksAhead ?? DEFAULT_WEEKS_TO_SHOW,
   );
-  const [showDropdown, setShowDropdown] = useState(false);
 
   const handleSwitchChange = useCallback(() => {
     const newValue = !onlyJoined;
@@ -29,11 +28,6 @@ export const useFilterState = (
       onlyJoined: newValue,
     });
   }, [onlyJoined, initialFilterQuery, setFilterQuery]);
-
-  const handleSearchChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-    setSearch(e.target.value);
-    setShowDropdown(true);
-  }, []);
 
   const handleWeeksChange = useCallback(
     (e: ChangeEvent<HTMLSelectElement>) => {
@@ -45,11 +39,9 @@ export const useFilterState = (
   );
 
   const handleSelected = useCallback(
-    (query: string | null) => {
-      const q = query ?? "";
-      setFilterQuery({ ...initialFilterQuery, q });
-      setSearch(q);
-      setShowDropdown(false);
+    (query: string) => {
+      setFilterQuery({ ...initialFilterQuery, q: query });
+      setSearch(query);
     },
     [initialFilterQuery, setFilterQuery],
   );
@@ -64,30 +56,13 @@ export const useFilterState = (
     });
   }, [setFilterQuery]);
 
-  const filterData = useCallback(
-    (data: (string | null | undefined)[]) =>
-      search === ""
-        ? data
-        : data.filter((item) =>
-            (item ?? "")
-              .toLowerCase()
-              .replace(/\s+/g, "")
-              .includes(search.toLowerCase().replace(/\s+/g, "")),
-          ),
-    [search],
-  );
-
   return {
     onlyJoined,
     search,
     weeksAhead,
-    showDropdown,
     handleSwitchChange,
-    handleSearchChange,
     handleWeeksChange,
     handleSelected,
     reset,
-    filterData,
-    setShowDropdown,
   };
 };

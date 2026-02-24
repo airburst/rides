@@ -33,17 +33,12 @@ export const PreferencesSection = memo(
               </NativeSelect>
             </label>
           </div>
-
+          {/* TODO: move buttons to index */}
           <div className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-8">
-            <Button
-              primary
-              type="submit"
-              loading={isPending}
-              disabled={!isDirty}
-            >
+            <CancelButton />
+            <Button type="submit" loading={isPending} disabled={!isDirty}>
               SAVE
             </Button>
-            <CancelButton />
           </div>
         </div>
       </>
