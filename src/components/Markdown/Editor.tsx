@@ -1,3 +1,4 @@
+import DOMPurify from "isomorphic-dompurify";
 import {
   Bold,
   Code,
@@ -7,7 +8,6 @@ import {
   ListOrdered,
   Quote,
 } from "lucide-react";
-import DOMPurify from "isomorphic-dompurify";
 import markdownIt from "markdown-it";
 import { useState } from "react";
 import "./markdown.css";
@@ -108,7 +108,7 @@ const MarkdownEditor = ({
   ];
 
   return (
-    <div className="w-full overflow-hidden rounded-lg border border-gray-300 bg-white">
+    <div className="w-full overflow-hidden rounded-lg border border-gray-300 bg-white text-sm">
       {/* Tabs */}
       <div className="flex border-b border-gray-300 bg-gray-50">
         <button
@@ -161,15 +161,15 @@ const MarkdownEditor = ({
             value={value}
             onChange={(e) => handleChange(e.target.value)}
             placeholder="Write your notes in markdown..."
-            className="w-full resize-none border-0 p-4 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            rows={12}
+            className="w-full resize-none border-0 p-4 font-mono focus:outline-none focus:ring-2 focus:ring-blue-500"
+            rows={6}
           />
         </>
       ) : (
         <div className="min-h-48 p-4">
           <div
             id="markdown-preview"
-            className="text-gray-800"
+            className="text-gray-800 text-lg"
             dangerouslySetInnerHTML={{
               __html: DOMPurify.sanitize(md.render(value)),
             }}

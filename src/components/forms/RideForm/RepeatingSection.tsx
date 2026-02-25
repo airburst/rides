@@ -40,13 +40,12 @@ export const RepeatingSection = memo(
 
     return (
       <>
-        <div className="flex flex-row">
+        <div className="flex flex-row items-center">
           <div className="pr-8">This ride repeats</div>
           <ToggleSwitch
             checked={repeats}
-            onChange={handleRepeatsChange}
+            onCheckedChange={handleRepeatsChange}
             label="Toggle repeating"
-            srOnlyLabel
           />
         </div>
         <RepeatingRideForm

@@ -5,8 +5,6 @@ import { type Ride, type User } from "../../types";
 import { CancelledBanner } from "./Cancelled";
 import { Messages } from "./Messages";
 import { Row } from "./Row";
-// const RideWithGpsMap = dynamic(() => import("@/components/RideWithGpsMap"));
-
 type Props = {
   ride: Ride;
   user?: User;
@@ -92,8 +90,6 @@ export const RideInfo = ({ ride, user }: Props) => {
           </Row>
         )}
       </div>
-
-      {/* <RideWithGpsMap url={route} units={user?.preferences?.units} /> */}
 
       {!cancelled && notes && <Viewer markdown={notes} title="Notes" />}
 

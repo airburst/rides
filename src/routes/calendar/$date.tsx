@@ -1,7 +1,7 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { lazy, Suspense } from "react";
 import { Button } from "@/components/Button";
+import { type CalendarProps } from "@/components/Calendar";
 import { FullPageContent } from "@/components/Layout/FullPageContent";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   formatCalendarDate,
   getLastMonth,
@@ -9,7 +9,7 @@ import {
   getNow,
 } from "@utils/dates";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { type CalendarProps } from "@/components/Calendar";
+import { lazy, Suspense } from "react";
 
 const Calendar = lazy<React.ComponentType<CalendarProps>>(
   () => import("@/components/Calendar"),
@@ -31,13 +31,13 @@ function RideCalendarDate() {
         <div className="flex w-full flex-col gap-2 bg-white">
           <div className="flex w-full flex-row items-center justify-between p-2 font-bold uppercase tracking-wider text-neutral-700">
             <Link to="/calendar/$date" params={{ date: lastMonth }}>
-              <Button accent>
+              <Button>
                 <ChevronLeft className="h-8 w-8" />
               </Button>
             </Link>
             <span>{formatCalendarDate(monthDate)}</span>
             <Link to="/calendar/$date" params={{ date: nextMonth }}>
-              <Button accent>
+              <Button>
                 <ChevronRight className="h-8 w-8" />
               </Button>
             </Link>

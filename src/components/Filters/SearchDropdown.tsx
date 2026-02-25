@@ -1,77 +1,66 @@
-import { Check, ChevronDown } from "lucide-react";
-import { memo, type ChangeEvent } from "react";
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxItem,
+  ComboboxList,
+} from "@/components/ui/combobox";
+import { Combobox as ComboboxPrimitive } from "@base-ui/react";
+import { ChevronDownIcon, XIcon } from "lucide-react";
+import { memo } from "react";
 
 type SearchDropdownProps = {
-  search: string;
-  onSearchChange: (e: ChangeEvent<HTMLInputElement>) => void;
-  onFocus: () => void;
-  showDropdown: boolean;
-  toggleDropdown: () => void;
-  filteredData: (string | null | undefined)[];
-  onSelect: (query: string | null) => void;
+  value: string;
+  onValueChange: (value: string) => void;
+  data: (string | null | undefined)[];
+  placeholder?: string;
 };
 
 export const SearchDropdown = memo(
   ({
-    search,
-    onSearchChange,
-    onFocus,
-    showDropdown,
-    toggleDropdown,
-    filteredData,
-    onSelect,
+    value,
+    onValueChange,
+    data,
+    placeholder = "Search ride details...",
   }: SearchDropdownProps) => {
+    const items = data.filter(Boolean) as string[];
+
     return (
-      <div className="relative z-20 mt-1">
-        <div className="relative w-full cursor-default overflow-hidden rounded-lg bg-white text-left shadow-md focus-within:ring-2 focus-within:ring-white focus-within:ring-offset-2 focus-within:ring-offset-teal-300 sm:text-sm">
-          <input
-            className="w-full border-none py-2 pr-10 pl-3 leading-5 text-gray-700 focus:ring-0 focus:outline-none"
-            placeholder="Search ride details"
-            value={search}
-            onChange={onSearchChange}
-            onFocus={onFocus}
+      <Combobox
+        items={items}
+        value={value}
+        onValueChange={(val) => onValueChange(val ?? "")}
+      >
+        <div className="relative flex w-full items-center rounded-lg border border-neutral-600 bg-white">
+          <ComboboxPrimitive.Input
+            placeholder={placeholder}
+            className="h-9 w-full bg-transparent px-3 py-1 text-sm text-neutral-900 placeholder:text-neutral-400 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50 rounded-lg"
+            style={{ color: "#111827" }}
           />
-          <button
-            type="button"
-            className="absolute inset-y-0 right-0 flex items-center pr-2 text-gray-700"
-            onClick={toggleDropdown}
-          >
-            <ChevronDown className="h-4 w-4 fill-neutral-700" />
-          </button>
+          {value ? (
+            <ComboboxPrimitive.Clear
+              onClick={() => onValueChange("")}
+              className="absolute right-2 text-neutral-500 hover:text-neutral-800"
+            >
+              <XIcon className="size-4" />
+            </ComboboxPrimitive.Clear>
+          ) : (
+            <ComboboxPrimitive.Trigger className="absolute right-2 text-neutral-500 hover:text-neutral-800">
+              <ChevronDownIcon className="size-4" />
+            </ComboboxPrimitive.Trigger>
+          )}
         </div>
-        {showDropdown && filteredData.length > 0 && (
-          <div className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5 focus:outline-none">
-            {filteredData.map((item) => (
-              <button
-                key={item}
-                type="button"
-                className="relative w-full cursor-default py-2 pr-4 pl-10 text-left text-gray-900 select-none hover:bg-teal-600 hover:text-white"
-                onClick={() => onSelect(item ?? "")}
-              >
-                <span
-                  className={`block truncate ${
-                    search === item ? "font-medium" : "font-normal"
-                  }`}
-                >
-                  {item}
-                </span>
-                {search === item && (
-                  <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-teal-600">
-                    <Check className="h-5 w-5" />
-                  </span>
-                )}
-              </button>
-            ))}
-          </div>
-        )}
-        {showDropdown && filteredData.length === 0 && search !== "" && (
-          <div className="absolute mt-1 w-full rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black/5">
-            <div className="relative cursor-default px-4 py-2 text-gray-700 select-none">
-              Nothing found.
-            </div>
-          </div>
-        )}
-      </div>
+        <ComboboxContent>
+          <ComboboxEmpty>Nothing found.</ComboboxEmpty>
+          <ComboboxList>
+            {(item: string) => (
+              <ComboboxItem key={item} value={item}>
+                {item}
+              </ComboboxItem>
+            )}
+          </ComboboxList>
+        </ComboboxContent>
+      </Combobox>
     );
   },
 );

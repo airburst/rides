@@ -1,3 +1,4 @@
+import { Switch } from "@/components/ui/switch";
 import { cn } from "@/lib/utils";
 import { onlyNumbers } from "@utils/general";
 import { Phone } from "lucide-react";
@@ -25,16 +26,6 @@ export const RiderDetails = ({ user, isLeader, sessionUser }: Props) => {
   const mobileNumber = onlyNumbers(mobile ?? "");
   const emergencyNumber = onlyNumbers(emergency ?? "");
 
-  const switchClass = cn(
-    "relative inline-flex h-6 w-11 self-center items-center rounded-full",
-    showEmergency ? "bg-red-600" : "bg-gray-200",
-  );
-
-  const toggleClass = cn(
-    "inline-block h-4 w-4 transform rounded-full bg-white transition",
-    showEmergency ? "translate-x-6" : "translate-x-1",
-  );
-
   const rowClass = cn(
     "flex w-full flex-row items-center justify-between px-2 font-medium md:grid md:grid-cols-[1fr_auto] md:justify-start md:gap-4",
     isMe && "text-neutral-800",
@@ -43,10 +34,8 @@ export const RiderDetails = ({ user, isLeader, sessionUser }: Props) => {
   const numberToDisplay = showEmergency ? emergencyNumber : mobileNumber;
 
   const callButtonClass = cn(
-    "inline-flex items-center justify-center gap-1 rounded-md px-3 py-1 text-sm font-medium",
-    showEmergency
-      ? "bg-destructive text-white"
-      : "bg-neutral-100 text-neutral-600",
+    "inline-flex items-center justify-center rounded-md px-6 text-sm font-semibold tracking-wide h-full",
+    showEmergency ? "bg-destructive text-white" : "bg-muted",
   );
 
   return (
@@ -57,22 +46,17 @@ export const RiderDetails = ({ user, isLeader, sessionUser }: Props) => {
       </div>
 
       {isLeader && (
-        <div className="grid grid-cols-[1fr_44px] gap-1">
+        <div className="grid grid-cols-[1fr_32px] grid-rows-[32px] gap-2 items-center">
           <a className={callButtonClass} href={`tel:${numberToDisplay}`}>
-            <Phone className="h-4 w-4" />
-            CALL
+            <Phone />
           </a>
 
-          <button
-            type="button"
-            role="switch"
-            aria-checked={showEmergency}
-            onClick={() => setShowEmergency(!showEmergency)}
-            className={switchClass}
-          >
-            <span className="sr-only">Toggle emergency contact</span>
-            <span className={toggleClass} />
-          </button>
+          <Switch
+            className="data-[state=checked]:bg-red-600"
+            checked={showEmergency}
+            onCheckedChange={setShowEmergency}
+            aria-label="Toggle emergency contact"
+          />
         </div>
       )}
     </div>

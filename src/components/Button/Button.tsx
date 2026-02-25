@@ -1,11 +1,11 @@
-import { cn } from "@/lib/utils";
-import { LoaderCircle } from "lucide-react";
-import { forwardRef, type ReactNode } from "react";
 import {
   Button as ShadButton,
   type buttonVariants,
 } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { type VariantProps } from "class-variance-authority";
+import { LoaderCircle } from "lucide-react";
+import { forwardRef, type ReactNode } from "react";
 
 type Variant = NonNullable<VariantProps<typeof buttonVariants>["variant"]>;
 
@@ -19,20 +19,14 @@ export interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
   disabled?: boolean;
   primary?: boolean;
   secondary?: boolean;
-  accent?: boolean;
-  info?: boolean;
-  success?: boolean;
-  warning?: boolean;
+  outline?: boolean;
   error?: boolean;
 }
 
 function resolveVariant(props: ButtonProps): Variant {
   if (props.primary) return "default";
   if (props.secondary) return "secondary";
-  if (props.accent) return "accent";
-  if (props.info) return "info";
-  if (props.success) return "success";
-  if (props.warning) return "warning";
+  if (props.outline) return "outline";
   if (props.error) return "destructive";
   if (props.link) return "link";
   return "default";
@@ -52,10 +46,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       onClick,
       primary: _primary,
       secondary: _secondary,
-      accent: _accent,
-      info: _info,
-      success: _success,
-      warning: _warning,
       error: _error,
     },
     ref,
@@ -63,21 +53,22 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const variant = resolveVariant({
       primary: _primary,
       secondary: _secondary,
-      accent: _accent,
-      info: _info,
-      success: _success,
-      warning: _warning,
       error: _error,
       link: _link,
     });
 
     const upperText = text?.toUpperCase();
     const buttonContent = children ?? upperText;
+    const buttonClasses = cn(
+      "min-h-16 h-full rounded-sm text-base",
+      variant === "secondary" ? "text-foreground" : "text-white",
+      className,
+    );
 
     return (
       <ShadButton
         variant={variant}
-        className={cn("min-h-16 h-full rounded-sm text-base", className)}
+        className={buttonClasses}
         type={type}
         ref={ref}
         aria-label={ariaLabel}

@@ -1,10 +1,10 @@
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { useRide } from "@/hooks/useRides";
 import { useSession } from "@/hooks/useSession";
 import type { Ride, User } from "@/types";
 import { isJoinable } from "@utils/dates";
 import { formatRideData, hasSpace } from "@utils/rides";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { TriangleAlert, MessageSquare } from "lucide-react";
+import { MessageSquare, TriangleAlert } from "lucide-react";
 import { useState, type JSX } from "react";
 import { Badge } from "../Badge";
 import { BackButton, Button, JoinButton } from "../Button";
@@ -120,7 +120,7 @@ export function RideDetailsClient({ id }: Props) {
             <BackButton className="ps-1 pe-1" />
 
             {isGoing && (
-              <Button accent className="ps-1 pe-1" onClick={openNotes}>
+              <Button secondary className="ps-1 pe-1" onClick={openNotes}>
                 <MessageSquare className="h-6 w-6" />
                 NOTE
               </Button>

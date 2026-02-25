@@ -22,7 +22,7 @@
   /* Club colors */
   --color-primary: #24376e;
   --color-primary-foreground: #ffffff;
-  --color-secondary: #831843;
+  --color-secondary: oklch(86.9% 0.022 252.894);
   --color-secondary-foreground: #ffffff;
   --color-accent: #3f60c0;
   --color-accent-foreground: #ffffff;
