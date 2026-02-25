@@ -9,7 +9,6 @@ export {
   useUpdateRide,
   useDeleteRide,
   useCancelRide,
-  useUncancelRide,
   type CreateRideInput,
   type UpdateRideInput,
 } from "./rides";

@@ -10,7 +10,5 @@ export { useCreateRide } from "./useCreateRide";
 export { useUpdateRide } from "./useUpdateRide";
 export { useDeleteRide } from "./useDeleteRide";
 export { useCancelRide } from "./useCancelRide";
-export { useUncancelRide } from "./useUncancelRide";
-
 // Types
 export type { CreateRideInput, UpdateRideInput } from "./types";
