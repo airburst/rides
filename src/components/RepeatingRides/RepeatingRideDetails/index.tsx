@@ -83,11 +83,11 @@ const RepeatingRideDetails = ({ ride }: RepeatingRideDetailsProps) => {
       </div>
 
       <div className="grid w-full grid-cols-4 gap-2 justify-self-start px-2 sm:p-0 md:gap-4">
-        <BackButton noIcon />
-        <Button secondary onClick={goToEdit}>
-          EDIT
+        <BackButton label="CANCEL" noIcon />
+        <Button secondary onClick={goToCopy}>
+          COPY
         </Button>
-        <Button onClick={goToCopy}>COPY</Button>
+        <Button onClick={goToEdit}>EDIT</Button>
         <Button error onClick={showConfirm}>
           DELETE
         </Button>

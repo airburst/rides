@@ -28,7 +28,7 @@ export const BackButton = ({
   };
 
   return (
-    <Button {...props} className={className} onClick={goBack}>
+    <Button {...props} secondary className={className} onClick={goBack}>
       {showIcon && <ChevronLeft className="h-6 w-6" />}
       {label}
     </Button>

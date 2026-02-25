@@ -57,10 +57,10 @@ const RideMessagesForm = ({
         <Button primary loading={waiting} disabled={!isDirty} type="submit">
           <div>ADD</div>
         </Button>
-        <Button onClick={clearForm} type="submit">
+        <Button secondary onClick={clearForm} type="submit">
           <div>CLEAR</div>
         </Button>
-        <Button disabled={waiting} onClick={closeHandler}>
+        <Button secondary disabled={waiting} onClick={closeHandler}>
           <span>CANCEL</span>
         </Button>
       </div>

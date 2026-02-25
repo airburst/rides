@@ -120,7 +120,7 @@ export function RideDetailsClient({ id }: Props) {
             <BackButton className="ps-1 pe-1" />
 
             {isGoing && (
-              <Button className="ps-1 pe-1 bg-accent" onClick={openNotes}>
+              <Button secondary className="ps-1 pe-1" onClick={openNotes}>
                 <MessageSquare className="h-6 w-6" />
                 NOTE
               </Button>

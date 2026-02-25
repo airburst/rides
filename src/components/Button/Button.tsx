@@ -59,11 +59,16 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
 
     const upperText = text?.toUpperCase();
     const buttonContent = children ?? upperText;
+    const buttonClasses = cn(
+      "min-h-16 h-full rounded-sm text-base",
+      variant === "secondary" ? "text-foreground" : "text-white",
+      className,
+    );
 
     return (
       <ShadButton
         variant={variant}
-        className={cn("min-h-16 h-full rounded-sm text-base", className)}
+        className={buttonClasses}
         type={type}
         ref={ref}
         aria-label={ariaLabel}

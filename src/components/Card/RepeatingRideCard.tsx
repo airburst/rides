@@ -28,7 +28,7 @@ export const RepeatingRideCard: React.FC<Props> = ({ ride }: Props) => {
         </div>
 
         {isExpired && (
-          <div className="flex h-full w-24 items-center justify-center rounded-r bg-secondary px-2 text-white">
+          <div className="flex h-full w-24 items-center justify-center rounded-r bg-destructive px-2 text-white">
             EXPIRED
           </div>
         )}
