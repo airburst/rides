@@ -7,7 +7,7 @@ type MembershipIconProps = {
 export const MembershipIcon = ({ membershipStatus }: MembershipIconProps) => {
   switch (membershipStatus) {
     case "MEMBER":
-      return <ShieldCheck className="text-secondary" />;
+      return <ShieldCheck className="text-primary" />;
     case "EXPIRED":
       return <ShieldAlert className="text-destructive" />;
     case "OTHER_CLUB":
