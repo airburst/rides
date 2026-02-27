@@ -46,6 +46,5 @@ yarn-error.log*
 
 # AI
 .claude
-.ai-plans
 .worktrees
 
