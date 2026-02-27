@@ -1,9 +1,8 @@
+import { type RideFormProps } from "@/components/forms/RideForm";
+import { MainContent } from "@/components/Layout/MainContent";
+import { useRideFormDefaults } from "@/hooks/rides";
 import { createFileRoute } from "@tanstack/react-router";
 import { lazy, Suspense } from "react";
-import { MainContent } from "@/components/Layout/MainContent";
-import { useRide } from "@/hooks/useRides";
-import { useSession } from "@/hooks/useSession";
-import { type RideFormProps } from "@/components/forms/RideForm";
 
 const RideForm = lazy<React.ComponentType<RideFormProps>>(
   () => import("@/components/forms/RideForm"),
@@ -15,11 +14,8 @@ export const Route = createFileRoute("/ride/edit/$id")({
 
 function EditRidePage() {
   const { id } = Route.useParams();
-  const { session } = useSession();
-  const user = session?.user;
-  const isLeaderOrAdmin = user?.role === "LEADER" || user?.role === "ADMIN";
-
-  const { data: ride, isLoading, error } = useRide(id);
+  const { defaultValues, isLoading, error, isLeaderOrAdmin, isAdmin } =
+    useRideFormDefaults(id, "edit");
 
   if (!isLeaderOrAdmin) {
     return (
@@ -37,7 +33,7 @@ function EditRidePage() {
     );
   }
 
-  if (error || !ride) {
+  if (error || !defaultValues) {
     return (
       <MainContent>
         <h1>Error fetching ride</h1>
@@ -45,38 +41,13 @@ function EditRidePage() {
     );
   }
 
-  const rideDateStr =
-    ride.rideDate?.replace(" ", "T").replace(/\+00$/, "Z") ?? "";
-  const rideDateTime = rideDateStr ? new Date(rideDateStr) : null;
-  const time = rideDateTime
-    ? `${String(rideDateTime.getUTCHours()).padStart(2, "0")}:${String(rideDateTime.getUTCMinutes()).padStart(2, "0")}`
-    : "";
-  const rideDate = rideDateStr.split("T")[0] ?? "";
-
-  const defaultValues = {
-    id,
-    name: ride.name ?? "",
-    rideDate,
-    time,
-    rideGroup: ride.rideGroup ?? "",
-    destination: ride.destination ?? "",
-    meetPoint: ride.meetPoint ?? "",
-    distance: +(ride.distance ?? 0),
-    leader: ride.leader ?? "",
-    route: ride.route ?? "",
-    notes: ride.notes ?? "",
-    rideLimit: +(ride.rideLimit ?? -1),
-    interval: 1,
-    freq: 2,
-  };
-
   return (
     <MainContent>
       <Suspense>
         <RideForm
           isRepeating={false}
           defaultValues={defaultValues}
-          isAdmin={user?.role === "ADMIN"}
+          isAdmin={isAdmin}
         />
       </Suspense>
     </MainContent>

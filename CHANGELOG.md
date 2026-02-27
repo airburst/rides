@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.6.2 - 2026-02-27
+
+### Changed
+
+- Added centralized API timestamp normalization via `normalizeApiDate()` in `src/utils/dates.ts`
+- Replaced inline ride date parsing in ride edit/copy routes with shared form default generation
+- Extracted shared form-default hooks for ride and repeating-ride edit/copy flows
+- Split calendar-specific date helpers from `src/utils/dates.ts` into `src/routes/calendar/calendarDates.ts`
+
+### Technical
+
+- Added targeted tests for date normalization/form date parsing and new form-default hooks
+- Added calendar helper tests for extracted `calendarDates` module
+
 ## 4.6.1 - 2026-02-27
 
 ### Fixed

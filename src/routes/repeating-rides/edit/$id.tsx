@@ -1,12 +1,9 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { lazy, Suspense, useEffect } from "react";
+import { type RideFormProps } from "@/components/forms/RideForm";
 import { MainContent } from "@/components/Layout/MainContent";
 import { Spinner } from "@/components/Spinner";
-import { useRepeatingRide } from "@/hooks/repeating-rides";
-import { useSession } from "@/hooks/useSession";
-import { formatFormDate, getFormRideDateAndTime } from "@utils/dates";
-import { flattenArrayNumber } from "@utils/forms";
-import { type RideFormProps } from "@/components/forms/RideForm";
+import { useRepeatingRideFormDefaults } from "@/hooks/repeating-rides";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { lazy, Suspense, useEffect } from "react";
 
 const RideForm = lazy<React.ComponentType<RideFormProps>>(
   () => import("@/components/forms/RideForm"),
@@ -19,19 +16,16 @@ export const Route = createFileRoute("/repeating-rides/edit/$id")({
 function EditRepeatingRide() {
   const { id } = Route.useParams();
   const navigate = useNavigate();
-  const { session, isLoading: authLoading } = useSession();
-  const isAdmin = session?.user?.role === "ADMIN";
-  const isLeader = isAdmin || session?.user?.role === "LEADER";
-
-  const { data: repeatingRide, isLoading, error } = useRepeatingRide(id ?? "");
+  const { defaultValues, isLoading, error, isLeaderOrAdmin, isAdmin } =
+    useRepeatingRideFormDefaults(id ?? "", "edit");
 
   useEffect(() => {
-    if (!authLoading && !isLeader) {
+    if (!isLoading && !isLeaderOrAdmin) {
       void navigate({ to: "/" });
     }
-  }, [authLoading, isLeader, navigate]);
+  }, [isLoading, isLeaderOrAdmin, navigate]);
 
-  if (authLoading || isLoading) {
+  if (isLoading) {
     return (
       <MainContent>
         <div className="flex h-64 w-full items-center justify-center">
@@ -41,11 +35,11 @@ function EditRepeatingRide() {
     );
   }
 
-  if (!isLeader) {
+  if (!isLeaderOrAdmin) {
     return null;
   }
 
-  if (error || !repeatingRide) {
+  if (error || !defaultValues) {
     return (
       <MainContent>
         <div className="grid w-full grid-cols-1 gap-4 md:gap-8">
@@ -56,34 +50,6 @@ function EditRepeatingRide() {
       </MainContent>
     );
   }
-
-  const { rideDate, startDate, time } = getFormRideDateAndTime(
-    repeatingRide.startDate,
-  );
-
-  const defaultValues = {
-    id,
-    name: repeatingRide.name,
-    freq: repeatingRide.freq,
-    rideDate,
-    startDate,
-    endDate: repeatingRide.endDate
-      ? formatFormDate(repeatingRide.endDate)
-      : undefined,
-    time,
-    winterStartTime: repeatingRide.winterStartTime ?? "08:30",
-    rideGroup: repeatingRide.rideGroup ?? "",
-    destination: repeatingRide.destination ?? "",
-    meetPoint: repeatingRide.meetPoint ?? "",
-    notes: repeatingRide.notes ?? "",
-    leader: repeatingRide.leader ?? "",
-    route: repeatingRide.route ?? "",
-    distance: repeatingRide.distance ?? 1,
-    rideLimit: repeatingRide.rideLimit ?? -1,
-    byweekday: flattenArrayNumber(repeatingRide.byweekday),
-    bysetpos: flattenArrayNumber(repeatingRide.bysetpos),
-    bymonthday: flattenArrayNumber(repeatingRide.bymonthday),
-  };
 
   return (
     <MainContent>

@@ -4,8 +4,8 @@ import {
   getDateStub,
   getLastMonth,
   getNextMonth,
-  getNow,
-} from "./dates";
+} from "@/routes/calendar/calendarDates";
+import { getNow } from "./dates";
 
 export const generateCalendar = (date: string) => {
   const today = getNow().split("T")[0] ?? "";
