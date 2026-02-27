@@ -135,15 +135,10 @@ export const formatFormDate = (date: string = getNow()) => {
   return dayjs(date).utc().add(delta, "minutes").format("YYYY-MM-DD");
 };
 
-export const getRideDateAndTime = (date: string) => {
-  const delta = dayjs(date).utcOffset();
-  const d = dayjs(date).utc().add(delta, "minutes").toISOString();
-
-  return {
-    day: formatDateShort(d),
-    time: formatTime(d),
-  };
-};
+export const getRideDateAndTime = (date: string) => ({
+  day: formatDateShort(date),
+  time: formatTime(date),
+});
 
 // Formatted for form inputs:
 // date = "yyyy-mm-dd" and time = "hh:mm"
