@@ -114,6 +114,12 @@ export const formatDate = (date: string) => {
   return dayjs(date).utc().add(delta, "minutes").format("dddd DD MMMM YYYY");
 };
 
+export const formatDateShort = (date: string) => {
+  const delta = dayjs(date).utcOffset();
+
+  return dayjs(date).utc().add(delta, "minutes").format("dddd DD MMMM");
+};
+
 export const formatCalendarDate = (date: string) => {
   const delta = dayjs(date).utcOffset();
 
@@ -134,7 +140,7 @@ export const getRideDateAndTime = (date: string) => {
   const d = dayjs(date).utc().add(delta, "minutes").toISOString();
 
   return {
-    day: formatDate(d),
+    day: formatDateShort(d),
     time: formatTime(d),
   };
 };

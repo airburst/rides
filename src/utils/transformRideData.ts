@@ -4,7 +4,7 @@ import {
   type RideList,
   type User,
 } from "@/types";
-import { formatDate, getNextNWeeks } from "./dates";
+import { formatDateShort, getNextNWeeks } from "./dates";
 
 const isGoing = (userId: string, users?: { userId: string | undefined }[]) =>
   users?.map((u) => u.userId).includes(userId);
@@ -86,7 +86,7 @@ export const groupRides = (
     : data;
 
   for (const ride of filteredRides) {
-    const d = formatDate(ride.rideDate);
+    const d = formatDateShort(ride.rideDate);
     const rideList = groupedByDate.get(d) ?? [];
 
     rideList.push(ride);
