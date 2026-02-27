@@ -11,7 +11,7 @@ export const FilterButton = () => {
   const hasFiltersApplied = !!(
     filterQuery.onlyJoined ||
     filterQuery.q ||
-    filterQuery.weeksAhead !== DEFAULT_WEEKS_TO_SHOW
+    (filterQuery.weeksAhead && filterQuery.weeksAhead !== DEFAULT_WEEKS_TO_SHOW)
   );
 
   const toggle = () => setShowFilterMenu(!showFilterMenu);
