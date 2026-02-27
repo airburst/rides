@@ -2,6 +2,13 @@
 
 Cycling club rides and events planner.
 
+## Recent Updates (2026-02-27)
+
+- Date parsing is now centralized through `normalizeApiDate()` and shared form helpers in `src/utils/dates.ts`.
+- Ride edit/copy and repeating-ride edit/copy routes now use shared default-value hooks instead of route-local parsing logic.
+- Calendar-specific date helpers moved into `src/routes/calendar/calendarDates.ts` to reduce `dates.ts` coupling.
+- Added regression tests for normalized API date handling and extracted helper/hooks behavior.
+
 ## Current Tech Stack
 
 - Next.js 15 / React 19 / TypeScript

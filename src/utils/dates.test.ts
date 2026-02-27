@@ -1,7 +1,14 @@
-import { describe, it, expect, beforeAll } from "bun:test";
+import { beforeAll, describe, expect, it } from "bun:test";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc.js";
-import { formatDate, isWinter } from "./dates";
+import {
+  formatDate,
+  formatFormDate,
+  formatTime,
+  getFormRideDateAndTime,
+  isWinter,
+  normalizeApiDate,
+} from "./dates";
 
 describe("formatDate", () => {
   beforeAll(() => {
@@ -20,6 +27,57 @@ describe("formatDate", () => {
     const result = formatDate(date);
 
     expect(result).toBe("Tuesday 01 April 2025");
+  });
+});
+
+describe("normalizeApiDate", () => {
+  it("normalizes postgres timestamptz strings", () => {
+    const date = "2026-02-27 09:30:00+00";
+
+    expect(normalizeApiDate(date)).toBe("2026-02-27T09:30:00Z");
+  });
+
+  it("does not alter ISO date strings", () => {
+    const date = "2026-02-27T09:30:00.000Z";
+
+    expect(normalizeApiDate(date)).toBe(date);
+  });
+});
+
+describe("form date/time helpers", () => {
+  const isoDate = "2026-02-27T09:30:00.000Z";
+  const postgresDate = "2026-02-27 09:30:00+00";
+
+  it("formats time from ISO dates", () => {
+    expect(formatTime(isoDate)).toBe("09:30");
+  });
+
+  it("formats time from postgres timestamptz dates", () => {
+    expect(formatTime(postgresDate)).toBe("09:30");
+  });
+
+  it("formats form date from ISO dates", () => {
+    expect(formatFormDate(isoDate)).toBe("2026-02-27");
+  });
+
+  it("formats form date from postgres timestamptz dates", () => {
+    expect(formatFormDate(postgresDate)).toBe("2026-02-27");
+  });
+
+  it("gets form ride date and time from postgres timestamptz", () => {
+    expect(getFormRideDateAndTime(postgresDate)).toEqual({
+      rideDate: "2026-02-27",
+      startDate: "2026-02-27",
+      time: "09:30",
+    });
+  });
+
+  it("returns empty values when date is missing", () => {
+    expect(getFormRideDateAndTime(undefined)).toEqual({
+      rideDate: "",
+      startDate: "",
+      time: "",
+    });
   });
 });
 

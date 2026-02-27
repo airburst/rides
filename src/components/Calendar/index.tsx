@@ -1,7 +1,8 @@
 import { useRides } from "@/hooks/rides";
+import { getMonthDateRange } from "@/routes/calendar/calendarDates";
 import { generateCalendar } from "@utils/calendar";
+import { getNow } from "@utils/dates";
 import { flattenQuery } from "@utils/general";
-import { getMonthDateRange, getNow } from "@utils/dates";
 import { mapRidesToDate } from "@utils/transformRideData";
 import { MainContent } from "../Layout/MainContent";
 import { Day, OutsideDay } from "./Day";

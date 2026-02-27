@@ -2,14 +2,14 @@ import { Button } from "@/components/Button";
 import { type CalendarProps } from "@/components/Calendar";
 import { FullPageContent } from "@/components/Layout/FullPageContent";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { getNow } from "@utils/dates";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { lazy, Suspense } from "react";
 import {
   formatCalendarDate,
   getLastMonth,
   getNextMonth,
-  getNow,
-} from "@utils/dates";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { lazy, Suspense } from "react";
+} from "./calendarDates";
 
 const Calendar = lazy<React.ComponentType<CalendarProps>>(
   () => import("@/components/Calendar"),

@@ -4,7 +4,8 @@ import {
   type RepeatingRideDb,
   type TemplateRide,
 } from "@/types";
-import { getNextMonth, isWinter } from "./dates";
+import dayjs from "dayjs";
+import { isWinter } from "./dates";
 import { getScalarValue } from "./general";
 
 const loadRRule = async () => {
@@ -238,7 +239,7 @@ export const makeRidesInPeriod = async (
 ): Promise<RideSet> => {
   const { id, schedule } = template;
   const start = date ? new Date(date) : new Date();
-  const nextMonth = getNextMonth(date);
+  const nextMonth = dayjs(date).add(1, "month").startOf("month").toISOString();
   const end = new Date(nextMonth);
   const RRule = await loadRRule();
   const rideDates = RRule.fromString(schedule).between(start, end);
