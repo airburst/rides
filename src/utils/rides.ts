@@ -1,10 +1,10 @@
-import { DEFAULT_PREFERENCES } from "../../src/constants";
+import { DEFAULT_PREFERENCES } from "@/constants";
 import {
   type Preferences,
   type Ride,
   type RideList,
   type User,
-} from "../../src/types";
+} from "@/types";
 import { getRideDateAndTime } from "./dates";
 import { getPreferences } from "./preferences";
 

@@ -34,13 +34,13 @@ Cycling club ride planner SPA. TanStack Start (SPA mode) + Vite + Bun. Deployed 
 - `useApiClient()` hook wraps `apiClient()` with Auth0 token injection
 - `useSession()` fetches current user from `/users/me` after Auth0 auth, handles token errors
 - Domain hooks organized in `src/hooks/rides/`, `src/hooks/repeating-rides/`, `src/hooks/users/` — each with barrel `index.ts` and `types.ts`
-- Shared utilities in `shared/utils/` (aliased as `@utils/*`)
+- Shared utilities in `src/utils/` (aliased as `@utils/*`)
 
 ### Path Aliases
 
 - `@/*` → `./src/*`
 - `@components/*` → `./src/components/*`
-- `@utils/*` → `./shared/utils/*`
+- `@utils/*` → `./src/utils/*`
 
 ### Env Vars
 

@@ -3,7 +3,7 @@ import {
   type RepeatingRide,
   type RepeatingRideDb,
   type TemplateRide,
-} from "src/types";
+} from "@/types";
 import { getNextMonth, isWinter } from "./dates";
 import { getScalarValue } from "./general";
 
@@ -43,6 +43,39 @@ export const convertToRRule = async (data: RepeatingRide): Promise<string> => {
   return rrule.toString();
 };
 
+export const getNextOccurrence = async (
+  data: RepeatingRide,
+): Promise<string | null> => {
+  const {
+    freq,
+    interval = 1,
+    startDate,
+    endDate,
+    byweekday,
+    bysetpos,
+    bymonth,
+    bymonthday,
+  } = data;
+
+  const dtstart = new Date(startDate);
+  const until = endDate ? new Date(endDate) : undefined;
+
+  const RRule = await loadRRule();
+  const rrule = new RRule({
+    freq,
+    interval,
+    byweekday,
+    bysetpos,
+    bymonth,
+    bymonthday,
+    dtstart,
+    until,
+  });
+
+  const next = rrule.after(new Date());
+  return next ? next.toISOString() : null;
+};
+
 export const updateRRuleStartDate = async (
   schedule: string,
   startDate?: string,
@@ -63,9 +96,7 @@ export const updateRRuleStartDate = async (
     bymonthday,
     until,
   } = rrule.options;
-  // Add one day to start date
   const dtstart = new Date(startDate.valueOf());
-  dtstart.setDate(dtstart.getDate() + 1);
 
   // Update start date
   const updatedSchedule = new RRule({

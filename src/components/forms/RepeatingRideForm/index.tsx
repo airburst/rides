@@ -7,7 +7,7 @@ import type {
   UseFormSetValue,
   UseFormWatch,
 } from "react-hook-form";
-import { getDay, getNow, rruleDay } from "../../../../shared/utils";
+import { getDay, getNow, rruleDay } from "@utils/dates";
 import type { RideFormSchema } from "../formSchemas";
 import { MonthDaySelector } from "./MonthDaySelector";
 import { WeekSelector } from "./WeekSelector";

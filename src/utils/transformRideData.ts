@@ -3,7 +3,7 @@ import {
   type Group,
   type RideList,
   type User,
-} from "../../src/types";
+} from "@/types";
 import { formatDate, getNextNWeeks } from "./dates";
 
 const isGoing = (userId: string, users?: { userId: string | undefined }[]) =>

@@ -4,7 +4,7 @@ import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { useLocation, useParams, useRouter } from "@tanstack/react-router";
 import { Menu } from "lucide-react";
 import { useState } from "react";
-import { flattenQuery } from "shared/utils";
+import { flattenQuery } from "@utils/general";
 import { toast } from "sonner";
 import { Confirm } from "../Confirm";
 import { MenuContent } from "./MenuContent";

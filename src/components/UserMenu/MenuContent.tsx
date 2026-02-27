@@ -15,7 +15,7 @@ import {
   Users,
   X,
 } from "lucide-react";
-import { flattenQuery } from "shared/utils";
+import { flattenQuery } from "@utils/general";
 import { toast } from "sonner";
 import pkg from "../../../package.json";
 import { MenuEntry } from "./MenuEntry";

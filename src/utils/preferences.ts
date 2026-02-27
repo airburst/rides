@@ -1,5 +1,5 @@
-import { DEFAULT_PREFERENCES } from "../../src/constants";
-import { type User, type Preferences } from "../../src/types";
+import { DEFAULT_PREFERENCES } from "@/constants";
+import { type User, type Preferences } from "@/types";
 
 export const getPreferences = (user: User): Preferences => {
   const preferences = user.preferences!;

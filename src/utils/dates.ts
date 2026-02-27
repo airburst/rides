@@ -111,7 +111,7 @@ export const isSaturday = (date: string) => dayjs(date).day() === 6;
 export const formatDate = (date: string) => {
   const delta = dayjs(date).utcOffset();
 
-  return dayjs(date).utc().add(delta, "minutes").format("dddd DD MMMM");
+  return dayjs(date).utc().add(delta, "minutes").format("dddd DD MMMM YYYY");
 };
 
 export const formatCalendarDate = (date: string) => {
@@ -124,8 +124,10 @@ export const getDay = (date?: string): number => +(dayjs(date).date() || 1);
 
 export const formatTime = (date: string) => dayjs(date).utc().format("HH:mm");
 
-export const formatFormDate = (date: string = getNow()) =>
-  dayjs(date).utc().format("YYYY-MM-DD");
+export const formatFormDate = (date: string = getNow()) => {
+  const delta = dayjs(date).utcOffset();
+  return dayjs(date).utc().add(delta, "minutes").format("YYYY-MM-DD");
+};
 
 export const getRideDateAndTime = (date: string) => {
   const delta = dayjs(date).utcOffset();
@@ -177,11 +179,11 @@ export const firstDayOfMonth = (date?: string) =>
 export const daysInMonth = (date?: string) =>
   date ? dayjs(date).daysInMonth() : dayjs().daysInMonth();
 
-// Winter is 01 Dec - end Feb
+// Winter is 01 Nov - end Feb
 export const isWinter = (date: string): boolean => {
   const month = dayjs(date).month();
 
-  return month > 10 || month < 2;
+  return month >= 10 || month < 2;
 };
 
 export const getDateStub = (date: string) => {
