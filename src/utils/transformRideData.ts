@@ -4,7 +4,7 @@ import {
   type RideList,
   type User,
 } from "@/types";
-import { formatDate, getNextNWeeks } from "./dates";
+import { formatDateShort, getNextNWeeks } from "./dates";
 
 const isGoing = (userId: string, users?: { userId: string | undefined }[]) =>
   users?.map((u) => u.userId).includes(userId);
@@ -55,10 +55,21 @@ const filterRides = (
 };
 
 const groupByType = (data: RideList[]) => {
-  // Group rides by date, then type
+  // Sort by start time (asc), distance (desc), name (asc)
+  const sorted = [...data].sort((a, b) => {
+    const timeA = a.rideDate;
+    const timeB = b.rideDate;
+    if (timeA !== timeB) return timeA < timeB ? -1 : 1;
+    const distA = +(a.distance ?? 0);
+    const distB = +(b.distance ?? 0);
+    if (distB !== distA) return distB - distA;
+    return a.name.localeCompare(b.name);
+  });
+
+  // Group rides by name
   const groupedByName = new Map<string, RideList[]>();
 
-  for (const ride of data) {
+  for (const ride of sorted) {
     const d = ride.name;
     const rideList = groupedByName.get(d) ?? [];
     rideList.push(ride);
@@ -86,7 +97,7 @@ export const groupRides = (
     : data;
 
   for (const ride of filteredRides) {
-    const d = formatDate(ride.rideDate);
+    const d = formatDateShort(ride.rideDate);
     const rideList = groupedByDate.get(d) ?? [];
 
     rideList.push(ride);
