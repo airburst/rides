@@ -5,7 +5,7 @@ const mockUseSession = mock(() => ({
 }));
 
 const mockUseRide = mock(() => ({
-  data: null,
+  data: null as unknown,
   isLoading: false,
   error: null,
 }));

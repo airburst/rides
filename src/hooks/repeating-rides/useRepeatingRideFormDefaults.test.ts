@@ -1,5 +1,5 @@
-import { formatFormDate, getNow } from "@utils/dates";
 import { beforeEach, describe, expect, it, mock } from "bun:test";
+import { formatFormDate, getNow } from "../../utils/dates";
 
 const mockUseSession = mock(() => ({
   session: { user: { role: "ADMIN" } },
@@ -7,7 +7,7 @@ const mockUseSession = mock(() => ({
 }));
 
 const mockUseRepeatingRide = mock(() => ({
-  data: null,
+  data: null as unknown,
   isLoading: false,
   error: null,
 }));
