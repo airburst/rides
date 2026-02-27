@@ -12,13 +12,13 @@ describe("formatDate", () => {
     const date = "2025-03-30T09:30:00.000Z";
     const result = formatDate(date);
 
-    expect(result).toBe("Sunday 30 March");
+    expect(result).toBe("Sunday 30 March 2025");
   });
 
   it("formats a summertime offset date string correctly", () => {
     const date = "2025-04-01T09:30:00.000Z";
     const result = formatDate(date);
 
-    expect(result).toBe("Tuesday 01 April");
+    expect(result).toBe("Tuesday 01 April 2025");
   });
 });

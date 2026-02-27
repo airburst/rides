@@ -9,14 +9,9 @@ import { useRouter } from "@tanstack/react-router";
 import { useCallback, useState } from "react";
 import { useForm, type Resolver } from "react-hook-form";
 import { toast } from "sonner";
-import {
-  formatDate,
-  getNow,
-  makeRepeatingRide,
-  makeRidesInPeriod,
-  makeUtcDate,
-  repeatingRideToDb,
-} from "../../../../shared/utils";
+import { formatDate, getNow, makeUtcDate } from "@utils/dates";
+import { makeRepeatingRide } from "@utils/forms";
+import { makeRidesInPeriod, repeatingRideToDb } from "@utils/repeatingRides";
 import { RIDER_LIMIT_OPTIONS } from "../../../constants";
 import { type Preferences } from "../../../types";
 import { Input } from "@/components/ui/input";

@@ -1,7 +1,8 @@
 import { Row } from "@/components/Row";
 import { type RepeatingRide } from "@/types";
 import { formatDate, formatTime } from "@utils/dates";
-import { memo } from "react";
+import { getNextOccurrence } from "@utils/repeatingRides";
+import { memo, useEffect, useState } from "react";
 
 type ScheduleSectionProps = {
   ride: RepeatingRide;
@@ -10,6 +11,11 @@ type ScheduleSectionProps = {
 export const ScheduleSection = memo(({ ride }: ScheduleSectionProps) => {
   const { startDate, winterStartTime, endDate, textRule } = ride;
   const time = formatTime(startDate);
+  const [nextRun, setNextRun] = useState<string | null>(null);
+
+  useEffect(() => {
+    void getNextOccurrence(ride).then(setNextRun);
+  }, [ride]);
 
   return (
     <div className="flex w-full flex-col gap-2 rounded bg-white py-2 shadow-md">
@@ -33,7 +39,7 @@ export const ScheduleSection = memo(({ ride }: ScheduleSectionProps) => {
       </Row>
       <Row>
         <div>Next run</div>
-        <div>{formatDate(startDate)}</div>
+        <div>{nextRun ? formatDate(nextRun) : "—"}</div>
       </Row>
       {endDate && (
         <Row>

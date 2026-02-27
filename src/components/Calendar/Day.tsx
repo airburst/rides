@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { getNow } from "../../../shared/utils";
+import { getNow } from "@utils/dates";
 import { type RideList } from "../../types";
 import { RoundBadge } from "../Badge";
 

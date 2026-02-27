@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach, mock } from "bun:test";
 import pkg from "rrule";
 const { RRule } = pkg;
-import type { RepeatingRide, RepeatingRideDb } from "src/types";
+import type { RepeatingRide, RepeatingRideDb } from "@/types";
 
 const mockIsWinter = mock(() => false);
 
@@ -50,7 +50,7 @@ describe("repeatingRides", () => {
       const newStartDate = "2023-02-01T10:00:00.000Z";
 
       const result = await updateRRuleStartDate(schedule, newStartDate);
-      expect(result).toContain("DTSTART:20230202T100000Z");
+      expect(result).toContain("DTSTART:20230201T100000Z");
     });
 
     it("should return original schedule if no startDate provided", async () => {
