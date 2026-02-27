@@ -55,8 +55,11 @@ const filterRides = (
 };
 
 const groupByType = (data: RideList[]) => {
-  // Sort by distance (desc), then name (asc)
+  // Sort by start time (asc), distance (desc), name (asc)
   const sorted = [...data].sort((a, b) => {
+    const timeA = a.rideDate;
+    const timeB = b.rideDate;
+    if (timeA !== timeB) return timeA < timeB ? -1 : 1;
     const distA = +(a.distance ?? 0);
     const distB = +(b.distance ?? 0);
     if (distB !== distA) return distB - distA;
