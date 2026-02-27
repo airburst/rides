@@ -55,10 +55,18 @@ const filterRides = (
 };
 
 const groupByType = (data: RideList[]) => {
-  // Group rides by date, then type
+  // Sort by distance (desc), then name (asc)
+  const sorted = [...data].sort((a, b) => {
+    const distA = +(a.distance ?? 0);
+    const distB = +(b.distance ?? 0);
+    if (distB !== distA) return distB - distA;
+    return a.name.localeCompare(b.name);
+  });
+
+  // Group rides by name
   const groupedByName = new Map<string, RideList[]>();
 
-  for (const ride of data) {
+  for (const ride of sorted) {
     const d = ride.name;
     const rideList = groupedByName.get(d) ?? [];
     rideList.push(ride);
