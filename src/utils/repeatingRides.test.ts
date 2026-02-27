@@ -15,6 +15,7 @@ const {
   changeToWinterTime,
   convertToRRule,
   generateRide,
+  getNextOccurrence,
   makeRidesInPeriod,
   repeatingRideFromDb,
   repeatingRideToDb,
@@ -98,6 +99,33 @@ describe("repeatingRides", () => {
       expect(result).toHaveProperty("endDate", "2023-12-31T10:00:00.000Z");
       expect(result).toHaveProperty("byweekday");
       expect(result).toHaveProperty("textRule");
+    });
+
+    it("should parse monthly by day schedule", async () => {
+      const dbRide: RepeatingRideDb = {
+        id: "monthly-1",
+        name: "Monthly Day Ride",
+        schedule:
+          "DTSTART:20230115T100000Z\nRRULE:FREQ=MONTHLY;BYMONTHDAY=15",
+      };
+
+      const result = await repeatingRideFromDb(dbRide);
+      expect(result.freq).toBe(RRule.MONTHLY);
+      expect(result.bymonthday).toBe(15);
+    });
+
+    it("should parse monthly by week position schedule", async () => {
+      const dbRide: RepeatingRideDb = {
+        id: "monthly-2",
+        name: "Monthly Position Ride",
+        schedule:
+          "DTSTART:20230107T100000Z\nRRULE:FREQ=MONTHLY;BYDAY=SA;BYSETPOS=1",
+      };
+
+      const result = await repeatingRideFromDb(dbRide);
+      expect(result.freq).toBe(RRule.MONTHLY);
+      expect(result.bysetpos).toBe(1);
+      expect(result.byweekday).toBe(5); // SA = 5
     });
   });
 
@@ -240,6 +268,154 @@ describe("repeatingRides", () => {
       );
       expect(result.rides).toHaveLength(5); //5 Sundays in January 2023
       expect(result.rides?.[0]?.rideDate).toContain("09:30:00");
+    });
+
+    it("should apply real winter time for November dates", async () => {
+      mockIsWinter.mockImplementation((date: string) => {
+        const month = new Date(date).getMonth();
+        return month >= 10 || month < 2;
+      });
+
+      const template: RepeatingRideDb = {
+        id: "winter-1",
+        name: "Winter Ride",
+        schedule:
+          "DTSTART:20231105T100000Z\nRRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=SU",
+        winterStartTime: "09:00",
+      };
+
+      const result = await makeRidesInPeriod(template, "2023-11-05");
+      expect(result.rides.length).toBeGreaterThan(0);
+      for (const ride of result.rides) {
+        expect(ride.rideDate).toContain("09:00:00");
+      }
+    });
+  });
+
+  describe("getNextOccurrence", () => {
+    it("weekly ride returns a future date", async () => {
+      const ride: RepeatingRide = {
+        name: "Weekly Ride",
+        freq: RRule.WEEKLY,
+        interval: 1,
+        startDate: "2020-01-06T10:00:00.000Z",
+        byweekday: 0, // Monday
+      };
+
+      const result = await getNextOccurrence(ride);
+      expect(result).not.toBeNull();
+      expect(new Date(result!).getTime()).toBeGreaterThan(Date.now());
+    });
+
+    it("ride with until in the past returns null", async () => {
+      const ride: RepeatingRide = {
+        name: "Past Ride",
+        freq: RRule.WEEKLY,
+        interval: 1,
+        startDate: "2020-01-06T10:00:00.000Z",
+        endDate: "2020-12-31T10:00:00.000Z",
+        byweekday: 0,
+      };
+
+      const result = await getNextOccurrence(ride);
+      expect(result).toBeNull();
+    });
+
+    it("monthly ride returns correct next occurrence", async () => {
+      const ride: RepeatingRide = {
+        name: "Monthly Ride",
+        freq: RRule.MONTHLY,
+        interval: 1,
+        startDate: "2020-01-15T10:00:00.000Z",
+        bymonthday: 15,
+      };
+
+      const result = await getNextOccurrence(ride);
+      expect(result).not.toBeNull();
+      expect(new Date(result!).getUTCDate()).toBe(15);
+    });
+  });
+
+  describe("create and generate flow", () => {
+    it("form → RRule → rides round-trip", async () => {
+      const ride: RepeatingRide = {
+        id: "test-1",
+        name: "Thursday Ride",
+        freq: RRule.WEEKLY,
+        interval: 1,
+        startDate: "2025-05-01T18:30:00.000Z",
+        endDate: "2025-12-31T18:30:00.000Z",
+        byweekday: 3, // Thursday
+      };
+
+      const dbRide = await repeatingRideToDb(ride);
+      expect(dbRide.schedule).toContain("FREQ=WEEKLY");
+      expect(dbRide.schedule).toContain("BYDAY=TH");
+
+      const rideSet = await makeRidesInPeriod(dbRide, "2025-05-01");
+      expect(rideSet.rides.length).toBeGreaterThan(0);
+      expect(rideSet.rides[0]).toHaveProperty("scheduleId", "test-1");
+
+      for (const r of rideSet.rides) {
+        const d = new Date(r.rideDate);
+        expect(d.getUTCDay()).toBe(4); // Thursday
+        expect(d.getUTCHours()).toBe(18);
+        expect(d.getUTCMinutes()).toBe(30);
+      }
+    });
+
+    it("DTSTART doesn't shift on re-save", async () => {
+      const ride: RepeatingRide = {
+        id: "test-2",
+        name: "Sunday Ride",
+        freq: RRule.WEEKLY,
+        interval: 1,
+        startDate: "2025-03-02T09:00:00.000Z",
+        endDate: "2025-12-31T09:00:00.000Z",
+        byweekday: 6, // Sunday
+      };
+
+      const dbRide1 = await repeatingRideToDb(ride);
+      const roundTripped = await repeatingRideFromDb(dbRide1);
+      const dbRide2 = await repeatingRideToDb(roundTripped);
+
+      expect(dbRide2.schedule).toBe(dbRide1.schedule);
+    });
+
+    it("updateRRuleStartDate preserves time", async () => {
+      const ride: RepeatingRide = {
+        name: "Ride",
+        freq: RRule.WEEKLY,
+        interval: 1,
+        startDate: "2025-01-06T08:30:00.000Z",
+        byweekday: 0,
+      };
+
+      const dbRide = await repeatingRideToDb(ride);
+      const updated = await updateRRuleStartDate(
+        dbRide.schedule,
+        "2025-03-03T08:30:00.000Z",
+      );
+
+      expect(updated).toContain("DTSTART:20250303T083000Z");
+    });
+
+    it("makeRidesInPeriod is idempotent", async () => {
+      const ride: RepeatingRide = {
+        id: "idem-1",
+        name: "Saturday Ride",
+        freq: RRule.WEEKLY,
+        interval: 1,
+        startDate: "2025-05-03T08:00:00.000Z",
+        endDate: "2025-12-31T08:00:00.000Z",
+        byweekday: 5, // Saturday
+      };
+
+      const dbRide = await repeatingRideToDb(ride);
+      const first = await makeRidesInPeriod(dbRide, "2025-05-03");
+      const second = await makeRidesInPeriod(dbRide, "2025-05-03");
+
+      expect(second.rides).toEqual(first.rides);
     });
   });
 });
