@@ -45,7 +45,8 @@ function EditRidePage() {
     );
   }
 
-  const rideDateStr = ride.rideDate?.replace(" ", "T") ?? "";
+  const rideDateStr =
+    ride.rideDate?.replace(" ", "T").replace(/\+00$/, "Z") ?? "";
   const rideDateTime = rideDateStr ? new Date(rideDateStr) : null;
   const time = rideDateTime
     ? `${String(rideDateTime.getUTCHours()).padStart(2, "0")}:${String(rideDateTime.getUTCMinutes()).padStart(2, "0")}`

@@ -5,6 +5,14 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.6.1 - 2026-02-27
+
+### Fixed
+
+- Ride times no longer shift by 1 hour after DST transition
+- Edit form time input now populates correctly
+- Simplified `getRideDateAndTime` to remove redundant UTC offset conversion
+
 ## 4.6.0 - 2026-02-23
 
 ### Changed
