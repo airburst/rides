@@ -12,7 +12,7 @@ const utcDate = (date?: string) => {
 };
 
 export const formatCalendarDate = (date: string) =>
-  dayjs(normalizeApiDate(date)).utc().format("MMMM YYYY");
+  utcDate(date).format("MMMM YYYY");
 
 export const getMonth = () => dayjs().month();
 
