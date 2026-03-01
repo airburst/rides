@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.6.3 - 2026-03-01
+
+### Fixed
+
+- Calendar title now displays the correct month when navigating across DST boundaries
+
 ## 4.6.2 - 2026-02-27
 
 ### Changed
