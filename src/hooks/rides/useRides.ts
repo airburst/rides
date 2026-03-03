@@ -1,6 +1,6 @@
+import { apiClient } from "@/lib/api";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useQuery } from "@tanstack/react-query";
-import { apiClient } from "@/lib/api";
 import type { RidesResponse } from "./types";
 
 export function useRides(start?: string, end?: string) {
@@ -23,8 +23,8 @@ export function useRides(start?: string, end?: string) {
       }
 
       const params = new URLSearchParams();
-      if (start) params.set("start", start);
-      if (end) params.set("end", end);
+      if (startDate) params.set("start", startDate);
+      if (endDate) params.set("end", endDate);
 
       const query = params.toString();
       const endpoint = query ? `/rides?${query}` : "/rides";
