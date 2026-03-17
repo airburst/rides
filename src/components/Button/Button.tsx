@@ -62,6 +62,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     const buttonClasses = cn(
       "min-h-16 h-full rounded-sm text-base",
       variant === "secondary" ? "text-foreground" : "text-white",
+      variant === "link" && "text-primary",
       className,
     );
 
