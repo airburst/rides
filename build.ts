@@ -1,7 +1,7 @@
 #!/usr/bin/env bun
 import { spawn } from "bun";
 
-const BUILD_TIMEOUT = 30000; // 30 seconds - enough for build + prerender
+const BUILD_TIMEOUT = 10000; // 10 seconds - enough for build + prerender
 
 const build = spawn(["vite", "build"], {
   stdout: "inherit",

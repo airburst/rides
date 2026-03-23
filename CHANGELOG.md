@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.8.0 - 2026-03-23
+
+### Changed
+
+- Upgrade to Vite 8 (Rolldown-powered bundler) and @vitejs/plugin-react v6 (Oxc)
+- Replace vite-tsconfig-paths plugin with native resolve.tsconfigPaths
+- Rename build.rollupOptions to build.rolldownOptions
+
+### Fixed
+
+- UserMenu fetching /rides/ with user ID when navigating back from profile pages
+- Join button now uses darker red with lighten-on-hover matching Leave button style
+
 ## 4.7.0 - 2026-03-23
 
 ### Added

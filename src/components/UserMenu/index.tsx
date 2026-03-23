@@ -20,13 +20,13 @@ const UserMenu = () => {
   );
 
   // Derive rideId or repeatingRideId from the pathname
+  const isRidePage = pathname.startsWith("/ride/");
   const isRepeatingRidePage = pathname.includes("repeating");
-  const isProfilePage = pathname.includes("profile");
   const repeatingRideId = isRepeatingRidePage ? rideId : undefined;
 
   // Fetch ride data to check if cancelled (only for regular ride pages)
   const { data: ride } = useRide(
-    !isRepeatingRidePage && !isProfilePage && rideId ? rideId : "",
+    isRidePage && rideId ? rideId : "",
   );
   const isCancelled = ride?.cancelled ?? false;
 
