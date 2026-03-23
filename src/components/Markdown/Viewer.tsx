@@ -1,9 +1,9 @@
 import { NOTES_SHOW_MORE_LENGTH } from "@/constants";
 import { cn } from "@/lib/utils";
 import DOMPurify from "isomorphic-dompurify";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import markdownIt from "markdown-it";
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { Button } from "../Button";
 import "./markdown.css";
 
@@ -14,10 +14,9 @@ export type ViewerProps = {
 
 const Viewer = ({ markdown, title }: ViewerProps) => {
   const [showAll, setShowAll] = useState(false);
+  const contentRef = useRef<HTMLDivElement>(null);
 
-  const toggleShowAll = () => {
-    setShowAll(!showAll);
-  };
+  const toggleShowAll = useCallback(() => setShowAll((prev) => !prev), []);
 
   const md = new markdownIt({
     html: true,
@@ -26,38 +25,50 @@ const Viewer = ({ markdown, title }: ViewerProps) => {
   });
   const html = md.render(markdown ?? "");
   const sanitizedHtml = DOMPurify.sanitize(html);
-  // Add a show more/less button if the text is long
   const isLong = sanitizedHtml.length > NOTES_SHOW_MORE_LENGTH;
-  const displayText = showAll
-    ? sanitizedHtml
-    : `${sanitizedHtml.slice(0, NOTES_SHOW_MORE_LENGTH)}${isLong ? "..." : ""}`;
-  const notesClass = cn("col-span-2", showAll ? "mb-4" : "mb-4");
-  const showMoreClass =
-    "w-full h-8 flex justify-center absolute bottom-4 bg-linear-to-t from-white";
 
   return (
     <div className="flex w-full flex-col gap-2 rounded bg-white py-2 shadow-md">
       {title && (
-        <div className="px-2 lg:px-4 text-xl font-bold tracking-wide text-neutral-700">
+        <div className="px-2 text-xl font-bold tracking-wide text-neutral-700 lg:px-4">
           {title}
         </div>
       )}
 
-      <div className="relative grid w-full grid-cols-[100px_1fr] items-center justify-between gap-2 px-2 lg:px-4 font-normal md:grid-cols-[220px_1fr] md:justify-start md:gap-4">
+      <div className="relative px-2 font-normal lg:px-4">
         <div
-          id="ride-notes"
-          className={notesClass}
-          dangerouslySetInnerHTML={{ __html: displayText }}
-        />
+          ref={contentRef}
+          className={cn(
+            "relative overflow-hidden transition-[max-height] duration-300 ease-in-out",
+            !showAll && isLong && "max-h-30",
+          )}
+          style={
+            showAll || !isLong
+              ? { maxHeight: contentRef.current?.scrollHeight ?? "none" }
+              : undefined
+          }
+        >
+          <div
+            id="ride-notes"
+            dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
+          />
+          {isLong && (
+            <div
+              className={cn(
+                "pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-linear-to-t from-white to-transparent transition-opacity duration-300",
+                showAll && "opacity-0",
+              )}
+            />
+          )}
+        </div>
         {isLong && (
-          <div className={showMoreClass}>
+          <div className="flex w-full justify-center">
             <Button className="font-light" link onClick={toggleShowAll}>
               {showAll ? "Show less" : "Show more"}
-              {showAll ? (
-                <ChevronUp className="h-4 w-4" />
-              ) : (
-                <ChevronDown className="h-4 w-4" />
-              )}
+              <ChevronDown
+                className="h-4 w-4 transition-transform duration-300"
+                style={{ transform: showAll ? "rotate(180deg)" : "rotate(0deg)" }}
+              />
             </Button>
           </div>
         )}
