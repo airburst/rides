@@ -4,7 +4,8 @@
 }
 
 #ride-notes,
-#markdown-preview {
+#markdown-preview,
+.tiptap {
   a {
     color: #24376e;
     text-decoration: underline;
@@ -53,4 +54,16 @@
     color: #db2777;
     font-family: ui-monospace, monospace;
   }
+}
+
+.tiptap:focus {
+  outline: none;
+}
+
+.tiptap p.is-editor-empty:first-child::before {
+  color: #adb5bd;
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
 }

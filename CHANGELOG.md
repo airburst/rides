@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.7.0 - 2026-03-23
+
+### Added
+
+- Tiptap WYSIWYG editor replaces markdown textarea for ride notes
+- Mobile fullscreen mode when editing notes
+- Toolbar active state highlighting for current formatting
+
+### Changed
+
+- Editor lazy loaded via React.lazy for smaller initial bundle
+- Removed hidden input hack for notes field in RideForm
+
+### Technical
+
+- Added @tiptap/react, @tiptap/starter-kit, @tiptap/extension-link, @tiptap/extension-placeholder
+- Markdown round-trip: markdown-it (md→html) + turndown (html→md) for Tiptap compatibility
+
 ## 4.6.4 - 2026-03-23
 
 ### Fixed
