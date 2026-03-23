@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 4.6.4 - 2026-03-23
+
+### Fixed
+
+- Self-host Outfit font via fontsource to eliminate render-blocking Google Fonts requests
+- Prefix calendar helper files with `-` to exclude from TanStack Router route tree
+
 ## 4.6.3 - 2026-03-01
 
 ### Fixed

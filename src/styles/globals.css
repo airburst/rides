@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import "@fontsource-variable/outfit";
 
 :root {
   --radius: 0.5rem;
@@ -7,9 +8,9 @@
 
 @theme inline {
   /* Typography */
-  --font-display: "Outfit", sans-serif;
-  --font-main: "Outfit", sans-serif;
-  --font-sans: "Outfit", sans-serif;
+  --font-display: "Outfit Variable", sans-serif;
+  --font-main: "Outfit Variable", sans-serif;
+  --font-sans: "Outfit Variable", sans-serif;
   --text-xl: 1.4rem;
   --text-lg: 1.2rem;
   --text-base: 1.2rem;
