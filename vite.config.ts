@@ -18,17 +18,9 @@ const config = defineConfig({
       },
     }),
     viteReact(),
-    // Only analyze bundle when ANALYZE=true
-    // ...(process.env.ANALYZE
-    //   ? [
-    //       visualizer({
-    //         filename: "./dist/stats.html",
-    //         open: true,
-    //         gzipSize: true,
-    //         brotliSize: true,
-    //       }),
-    //     ]
-    //   : []),
+    // Bundle analysis: ANALYZE=true bun run build
+    // Uncomment and import { visualizer } from "rollup-plugin-visualizer"
+    // visualizer({ filename: "./dist/stats.html", gzipSize: true, brotliSize: true }),
   ],
   build: {
     rollupOptions: {
@@ -36,6 +28,15 @@ const config = defineConfig({
         manualChunks(id) {
           // Split vendor chunks for better caching
           if (id.includes("node_modules")) {
+            if (id.includes("@auth0")) {
+              return "auth0";
+            }
+            if (
+              id.includes("react-dom") ||
+              (id.includes("/react/") && !id.includes("@tanstack"))
+            ) {
+              return "react-vendor";
+            }
             if (id.includes("@tanstack/react-query")) {
               return "query-vendor";
             }
@@ -50,6 +51,9 @@ const config = defineConfig({
             }
             if (id.includes("rrule")) {
               return "rrule";
+            }
+            if (id.includes("dayjs")) {
+              return "dayjs";
             }
           }
         },
