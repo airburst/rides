@@ -11,6 +11,7 @@ const eslintConfig = [
       ".vinxi/**",
       ".next/**",
       "node_modules/**",
+      "patches/**",
     ],
   },
   js.configs.recommended,

@@ -11,7 +11,7 @@
     "lint": "eslint --fix",
     "check-types": "tsc --noEmit",
     "format": "prettier --write .",
-    "postinstall": "sh patches/fix-router-generator-zod4.sh",
+    "postinstall": "node patches/fix-router-generator-zod4.mjs",
     "prepare": "husky"
   },
   "dependencies": {
@@ -88,5 +88,8 @@
     "tailwindcss-motion": "^1.1.1",
     "typescript": "^6.0.2",
     "vite": "^7.3.1"
+  },
+  "overrides": {
+    "zod": "$zod"
   }
 }
