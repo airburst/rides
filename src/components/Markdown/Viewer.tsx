@@ -28,7 +28,7 @@ const Viewer = ({ markdown, title }: ViewerProps) => {
   const isLong = sanitizedHtml.length > NOTES_SHOW_MORE_LENGTH;
 
   return (
-    <div className="flex w-full flex-col gap-2 rounded bg-white py-2 shadow-md">
+    <div className="flex w-full flex-col gap-2 rounded bg-white py-2 lg:py-4 shadow-md">
       {title && (
         <div className="px-2 text-xl font-bold tracking-wide text-neutral-700 lg:px-4">
           {title}
@@ -67,7 +67,9 @@ const Viewer = ({ markdown, title }: ViewerProps) => {
               {showAll ? "Show less" : "Show more"}
               <ChevronDown
                 className="h-4 w-4 transition-transform duration-300"
-                style={{ transform: showAll ? "rotate(180deg)" : "rotate(0deg)" }}
+                style={{
+                  transform: showAll ? "rotate(180deg)" : "rotate(0deg)",
+                }}
               />
             </Button>
           </div>

@@ -40,7 +40,7 @@ export const RideInfo = ({ ride, user }: Props) => {
   return (
     <div className="flex w-full flex-col gap-2 lg:gap-4 px-2 sm:px-0">
       {cancelled && <CancelledBanner />}
-      <div className="relative flex w-full flex-col gap-2 rounded bg-white py-2 shadow-md">
+      <div className="relative flex w-full flex-col gap-2 rounded bg-white py-2 lg:py-4 shadow-md">
         <Row>
           <div className="text-xl font-bold tracking-wide text-neutral-700">
             {time}

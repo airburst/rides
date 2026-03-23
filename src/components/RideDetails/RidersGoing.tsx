@@ -27,7 +27,7 @@ export const RidersGoing = ({
 
   return (
     <div className="flex w-full px-2 sm:px-0">
-      <div className="flex w-full flex-col gap-2 rounded bg-white py-2 shadow-md">
+      <div className="flex w-full flex-col gap-2 rounded bg-white py-2 lg:py-4 shadow-md">
         {user ? (
           users?.map((u) => (
             <RiderDetails

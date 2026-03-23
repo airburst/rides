@@ -18,7 +18,7 @@ export const ScheduleSection = memo(({ ride }: ScheduleSectionProps) => {
   }, [ride]);
 
   return (
-    <div className="flex w-full flex-col gap-2 rounded bg-white py-2 shadow-md">
+    <div className="flex w-full flex-col gap-2 rounded lg:px-2 bg-white py-2 lg:py-4 shadow-md">
       <div className="px-2 text-xl font-bold tracking-wide text-neutral-700">
         Schedule
       </div>

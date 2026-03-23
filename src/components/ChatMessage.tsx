@@ -21,7 +21,7 @@ export const ChatMessage: React.FC<RideNote> = ({
       </div>
     )}
     <div className="flex w-full flex-col">
-      <div className="text-xs font-medium opacity-60">{name}</div>
+      <div className="text-xs font-medium opacity-75 pb-1">{name}</div>
       <div
         className="relative w-fit max-w-full wrap-break-word rounded-lg rounded-bl-none bg-neutral-200 px-3 py-2 leading-snug text-neutral-700 before:absolute before:-left-2 before:bottom-0 before:h-0 before:w-0 before:border-8 before:border-transparent before:border-r-neutral-200 before:border-b-neutral-200 before:content-['']"
         dangerouslySetInnerHTML={{

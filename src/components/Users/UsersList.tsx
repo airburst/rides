@@ -1,7 +1,7 @@
 import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/native-select";
-import { Link } from "@tanstack/react-router";
 import { type User } from "@/types";
+import { Link } from "@tanstack/react-router";
 import { useState, type ChangeEvent } from "react";
 import { UserCard } from "../Card";
 
@@ -58,12 +58,12 @@ const UsersList = ({ users }: UsersListProps) => {
 
   return (
     <>
-      <div className="mb-4 grid w-full grid-cols-1 gap-2 px-2 text-neutral-700 md:px-0 lg:grid-cols-3 lg:gap-8">
+      <div className="mb-4 lg:mb-8 grid w-full grid-cols-1 gap-2 px-2 text-neutral-700 md:px-0 lg:grid-cols-3 lg:gap-8">
         <Input
           type="text"
           id="search"
           name="search"
-          className="h-10"
+          className="h-12 lg:h-16"
           placeholder="Search by name or email"
           onChange={handleSearch}
         />
@@ -75,7 +75,7 @@ const UsersList = ({ users }: UsersListProps) => {
           <span className="w-32 lg:w-auto">Role</span>
           <NativeSelect
             id="role"
-            className="flex-1 md:w-32"
+            className="flex-1 md:w-32 h-12 lg:h-16"
             defaultValue={roleFilter}
             onChange={handleRoleSelected}
           >
@@ -93,7 +93,7 @@ const UsersList = ({ users }: UsersListProps) => {
           <span className="w-32 lg:w-auto">Membership</span>
           <NativeSelect
             id="membershipStatus"
-            className="flex-1 md:w-32"
+            className="flex-1 md:w-32 h-12 lg:h-16"
             defaultValue={statusFilter}
             onChange={handleMembershipStatusSelected}
           >

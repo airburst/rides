@@ -41,7 +41,7 @@ const RepeatingRidesList = ({ repeatingRides }: RepeatingRidesListProps) => {
           type="text"
           id="search"
           name="search"
-          className="mb-4 h-10"
+          className="mb-4 h-16"
           placeholder="Search by ride name, group or day"
           onChange={handleSearch}
         />

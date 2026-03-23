@@ -25,7 +25,7 @@ export const RideDetailsSkeleton = () => (
     </Heading>
 
     <div className="flex w-full flex-col gap-2 lg:gap-4 px-2 sm:px-0">
-      <div className="flex w-full flex-col gap-2 rounded bg-white py-2 shadow-md">
+      <div className="flex w-full flex-col gap-2 rounded bg-white py-2 lg:py-4 shadow-md">
         <Row>
           <div>Name</div>
           <Skeleton className="w-full" />
@@ -50,7 +50,7 @@ export const RideDetailsSkeleton = () => (
     </div>
 
     <div className="flex w-full flex-col gap-2 lg:gap-4 px-2 sm:px-0">
-      <div className="flex w-full flex-col gap-2 rounded bg-white py-2 shadow-md">
+      <div className="flex w-full flex-col gap-2 rounded bg-white py-2 lg:py-4 shadow-md">
         <div className="px-2 text-xl font-bold tracking-wide text-neutral-700">
           Notes
         </div>
@@ -70,7 +70,7 @@ export const RideDetailsSkeleton = () => (
     </Heading>
 
     <div className="flex w-full flex-col gap-2 lg:gap-4 px-2 sm:px-0">
-      <div className="flex w-full flex-col gap-2 rounded bg-white py-2 shadow-md">
+      <div className="flex w-full flex-col gap-2 rounded bg-white py-2 lg:py-4 shadow-md">
         <Row>
           <Skeleton width={80} />
           <Skeleton className="w-full" />
