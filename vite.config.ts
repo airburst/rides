@@ -31,12 +31,6 @@ const config = defineConfig({
             if (id.includes("@auth0")) {
               return "auth0";
             }
-            if (
-              id.includes("react-dom") ||
-              (id.includes("/react/") && !id.includes("@tanstack"))
-            ) {
-              return "react-vendor";
-            }
             if (id.includes("@tanstack/react-query")) {
               return "query-vendor";
             }
@@ -51,9 +45,6 @@ const config = defineConfig({
             }
             if (id.includes("rrule")) {
               return "rrule";
-            }
-            if (id.includes("dayjs")) {
-              return "dayjs";
             }
           }
         },
