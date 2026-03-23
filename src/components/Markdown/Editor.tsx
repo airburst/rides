@@ -1,4 +1,8 @@
-import DOMPurify from "isomorphic-dompurify";
+import { cn } from "@/lib/utils";
+import { EditorContent, useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
+import Link from "@tiptap/extension-link";
+import Placeholder from "@tiptap/extension-placeholder";
 import {
   Bold,
   Code,
@@ -7,9 +11,11 @@ import {
   List,
   ListOrdered,
   Quote,
+  X,
 } from "lucide-react";
 import markdownIt from "markdown-it";
-import { useState } from "react";
+import TurndownService from "turndown";
+import { useCallback, useEffect, useState } from "react";
 import "./markdown.css";
 
 const md = new markdownIt({
@@ -19,170 +25,196 @@ const md = new markdownIt({
   breaks: true,
 });
 
+const turndown = new TurndownService({
+  headingStyle: "atx",
+  bulletListMarker: "-",
+  codeBlockStyle: "fenced",
+});
+
+const mdToHtml = (markdown: string) => md.render(markdown);
+const htmlToMd = (html: string) => turndown.turndown(html);
+
 export type MarkdownEditorProps = {
   initialValue?: string;
   onChange?: (value: string) => void;
+};
+
+const MOBILE_BREAKPOINT = 768;
+
+type ToolbarProps = {
+  editor: ReturnType<typeof useEditor>;
+  className?: string;
+  onFullscreenClose?: () => void;
+};
+
+const Toolbar = ({ editor, className, onFullscreenClose }: ToolbarProps) => {
+  if (!editor) return null;
+
+  const buttons = [
+    {
+      icon: Bold,
+      label: "Bold",
+      action: () => editor.chain().focus().toggleBold().run(),
+      isActive: editor.isActive("bold"),
+    },
+    {
+      icon: Italic,
+      label: "Italic",
+      action: () => editor.chain().focus().toggleItalic().run(),
+      isActive: editor.isActive("italic"),
+    },
+    {
+      icon: Quote,
+      label: "Quote",
+      action: () => editor.chain().focus().toggleBlockquote().run(),
+      isActive: editor.isActive("blockquote"),
+    },
+    {
+      icon: Code,
+      label: "Code",
+      action: () => editor.chain().focus().toggleCode().run(),
+      isActive: editor.isActive("code"),
+    },
+    {
+      icon: LinkIcon,
+      label: "Link",
+      action: () => {
+        if (editor.isActive("link")) {
+          editor.chain().focus().unsetLink().run();
+          return;
+        }
+        const url = prompt("Enter URL:");
+        if (url) {
+          editor.chain().focus().setLink({ href: url }).run();
+        }
+      },
+      isActive: editor.isActive("link"),
+    },
+    {
+      icon: List,
+      label: "Bullet List",
+      action: () => editor.chain().focus().toggleBulletList().run(),
+      isActive: editor.isActive("bulletList"),
+    },
+    {
+      icon: ListOrdered,
+      label: "Numbered List",
+      action: () => editor.chain().focus().toggleOrderedList().run(),
+      isActive: editor.isActive("orderedList"),
+    },
+  ];
+
+  return (
+    <div
+      className={cn(
+        "flex flex-wrap gap-1 bg-gray-50 p-2",
+        className,
+      )}
+    >
+      {buttons.map((button) => {
+        const Icon = button.icon;
+        return (
+          <button
+            key={button.label}
+            type="button"
+            onClick={button.action}
+            title={button.label}
+            className={cn(
+              "rounded p-2 transition-colors",
+              button.isActive
+                ? "bg-blue-100 text-blue-700"
+                : "text-gray-600 hover:bg-gray-200 hover:text-gray-900",
+            )}
+          >
+            <Icon className="h-4 w-4" />
+          </button>
+        );
+      })}
+      {onFullscreenClose && (
+        <button
+          type="button"
+          onClick={onFullscreenClose}
+          title="Close fullscreen"
+          className="ml-auto rounded p-2 text-gray-600 transition-colors hover:bg-gray-200 hover:text-gray-900"
+        >
+          <X className="h-4 w-4" />
+        </button>
+      )}
+    </div>
+  );
 };
 
 const MarkdownEditor = ({
   initialValue = "",
   onChange,
 }: MarkdownEditorProps) => {
-  const [value, setValue] = useState(initialValue);
-  const [mode, setMode] = useState<"edit" | "preview">("edit");
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
-  const handleChange = (newValue: string) => {
-    setValue(newValue);
-    onChange?.(newValue);
-  };
+  const editor = useEditor({
+    extensions: [
+      StarterKit,
+      Link.configure({ openOnClick: false }),
+      Placeholder.configure({ placeholder: "Write your notes..." }),
+    ],
+    content: initialValue ? mdToHtml(initialValue) : "",
+    onUpdate: ({ editor: e }) => {
+      const html = e.getHTML();
+      // Tiptap returns <p></p> for empty content
+      const markdown = html === "<p></p>" ? "" : htmlToMd(html);
+      onChange?.(markdown);
+    },
+  });
 
-  const insertMarkdown = (before: string, after: string = "") => {
-    const textarea = document.getElementById(
-      "markdown-textarea",
-    ) as HTMLTextAreaElement;
-    if (!textarea) return;
-
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    const selectedText = value.substring(start, end);
-    const newText =
-      value.substring(0, start) +
-      before +
-      selectedText +
-      after +
-      value.substring(end);
-
-    handleChange(newText);
-
-    // Restore focus and selection
-    setTimeout(() => {
-      textarea.focus();
-      const newCursorPos = start + before.length + selectedText.length;
-      textarea.setSelectionRange(newCursorPos, newCursorPos);
-    }, 0);
-  };
-
-  const insertLink = () => {
-    const url = prompt("Enter URL:");
-    if (url) {
-      insertMarkdown("[", `](${url})`);
+  const handleFocus = useCallback(() => {
+    if (window.innerWidth < MOBILE_BREAKPOINT) {
+      setIsFullscreen(true);
     }
-  };
+  }, []);
 
-  const toolbarButtons = [
-    {
-      icon: Bold,
-      label: "Bold",
-      action: () => insertMarkdown("**", "**"),
-    },
-    {
-      icon: Italic,
-      label: "Italic",
-      action: () => insertMarkdown("*", "*"),
-    },
-    {
-      icon: Quote,
-      label: "Quote",
-      action: () => insertMarkdown("> ", ""),
-    },
-    {
-      icon: Code,
-      label: "Code",
-      action: () => insertMarkdown("`", "`"),
-    },
-    {
-      icon: LinkIcon,
-      label: "Link",
-      action: insertLink,
-    },
-    {
-      icon: List,
-      label: "Bullet List",
-      action: () => insertMarkdown("- ", ""),
-    },
-    {
-      icon: ListOrdered,
-      label: "Numbered List",
-      action: () => insertMarkdown("1. ", ""),
-    },
-  ];
+  useEffect(() => {
+    if (!editor) return;
+    editor.on("focus", handleFocus);
+    return () => {
+      editor.off("focus", handleFocus);
+    };
+  }, [editor, handleFocus]);
+
+  if (!editor) return null;
 
   return (
-    <div className="w-full overflow-hidden rounded-lg border border-gray-300 bg-white text-sm">
-      {/* Tabs */}
-      <div className="flex border-b border-gray-300 bg-gray-50">
-        <button
-          type="button"
-          onClick={() => setMode("edit")}
-          className={`px-4 py-2 text-sm font-medium transition-colors ${
-            mode === "edit"
-              ? "border-b-2 border-blue-500 bg-white text-blue-600"
-              : "text-gray-600 hover:text-gray-900"
-          }`}
-        >
-          Edit
-        </button>
-        <button
-          type="button"
-          onClick={() => setMode("preview")}
-          className={`px-4 py-2 text-sm font-medium transition-colors ${
-            mode === "preview"
-              ? "border-b-2 border-blue-500 bg-white text-blue-600"
-              : "text-gray-600 hover:text-gray-900"
-          }`}
-        >
-          Preview
-        </button>
-      </div>
-
-      {mode === "edit" ? (
+    <div
+      className={cn(
+        "w-full overflow-hidden rounded-lg border border-gray-300 bg-white",
+        isFullscreen && "fixed inset-0 z-50 flex flex-col rounded-none",
+      )}
+    >
+      {isFullscreen ? (
         <>
-          {/* Toolbar */}
-          <div className="flex flex-wrap gap-1 border-b border-gray-200 bg-gray-50 p-2">
-            {toolbarButtons.map((button) => {
-              const Icon = button.icon;
-              return (
-                <button
-                  key={button.label}
-                  type="button"
-                  onClick={button.action}
-                  title={button.label}
-                  className="rounded p-2 text-gray-600 transition-colors hover:bg-gray-200 hover:text-gray-900"
-                >
-                  <Icon className="h-4 w-4" />
-                </button>
-              );
-            })}
+          <div className="flex items-center justify-between border-b p-2">
+            <span className="font-medium">Notes</span>
+            <button
+              type="button"
+              onClick={() => setIsFullscreen(false)}
+              className="rounded px-3 py-1 text-sm text-blue-600 hover:bg-blue-50"
+            >
+              Done
+            </button>
           </div>
-
-          {/* Editor */}
-          <textarea
-            id="markdown-textarea"
-            value={value}
-            onChange={(e) => handleChange(e.target.value)}
-            placeholder="Write your notes in markdown..."
-            className="w-full resize-none border-0 p-4 font-mono focus:outline-none focus:ring-2 focus:ring-blue-500"
-            rows={6}
+          <EditorContent
+            editor={editor}
+            className="flex-1 overflow-y-auto p-4"
+          />
+          <Toolbar
+            editor={editor}
+            className="border-t"
+            onFullscreenClose={() => setIsFullscreen(false)}
           />
         </>
       ) : (
-        <div className="min-h-48 p-4">
-          <div
-            id="markdown-preview"
-            className="text-gray-800 text-lg"
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(md.render(value)),
-            }}
-          />
-        </div>
-      )}
-
-      {/* Help text */}
-      {mode === "edit" && (
-        <div className="border-t border-gray-200 bg-gray-50 px-4 py-2 text-xs text-gray-500">
-          Markdown supported: **bold**, *italic*, [link](url), `code`, &gt;
-          quote, - list
-        </div>
+        <>
+          <Toolbar editor={editor} className="border-b border-gray-200" />
+          <EditorContent editor={editor} className="min-h-36 p-4" />
+        </>
       )}
     </div>
   );

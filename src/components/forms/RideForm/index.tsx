@@ -6,7 +6,7 @@ import {
 import { useCreateRide, useUpdateRide } from "@/hooks/useRides";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "@tanstack/react-router";
-import { useCallback, useState } from "react";
+import { lazy, Suspense, useCallback, useState } from "react";
 import { useForm, type Resolver } from "react-hook-form";
 import { toast } from "sonner";
 import { formatDate, getNow, makeUtcDate } from "@utils/dates";
@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { NativeSelect } from "@/components/ui/native-select";
 import { Button } from "../../Button";
 import { CancelButton } from "../../Button/CancelButton";
-import Editor from "../../Markdown/Editor";
+const Editor = lazy(() => import("../../Markdown/Editor"));
 import { rideFormSchema, type RideFormSchema } from "../formSchemas";
 import { RepeatingSection } from "./RepeatingSection";
 import { RideConfirmationDialog } from "./RideConfirmationDialog";
@@ -361,16 +361,16 @@ const RideForm = ({
 
         <div className="flex flex-col">
           <label className="flex flex-col">Notes</label>
-          <Editor
-            initialValue={defaultValues?.notes}
-            onChange={handleNotesChange}
-          />
-          <input
-            id="notes"
-            type="hidden"
-            aria-label="notes"
-            {...register("notes")}
-          />
+          <Suspense
+            fallback={
+              <div className="h-48 animate-pulse rounded-lg bg-gray-100" />
+            }
+          >
+            <Editor
+              initialValue={defaultValues?.notes}
+              onChange={handleNotesChange}
+            />
+          </Suspense>
         </div>
 
         <RepeatingSection
