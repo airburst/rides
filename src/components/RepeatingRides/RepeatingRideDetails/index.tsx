@@ -77,7 +77,7 @@ const RepeatingRideDetails = ({ ride }: RepeatingRideDetailsProps) => {
         Repeating Ride Details
       </div>
 
-      <div className="mb-4 flex w-full flex-col gap-2 px-2 sm:px-0">
+      <div className="mb-4 lg:mt-2 flex w-full flex-col gap-2 lg:gap-4 px-2 sm:px-0">
         <RideInfoSection ride={ride} />
         <ScheduleSection ride={ride} />
       </div>

@@ -24,7 +24,7 @@ export const RideDetailsSkeleton = () => (
       <div>Ride Details</div>
     </Heading>
 
-    <div className="flex w-full flex-col gap-2 px-2 sm:px-0">
+    <div className="flex w-full flex-col gap-2 lg:gap-4 px-2 sm:px-0">
       <div className="flex w-full flex-col gap-2 rounded bg-white py-2 shadow-md">
         <Row>
           <div>Name</div>
@@ -49,7 +49,7 @@ export const RideDetailsSkeleton = () => (
       </div>
     </div>
 
-    <div className="flex w-full flex-col gap-2 px-2 sm:px-0">
+    <div className="flex w-full flex-col gap-2 lg:gap-4 px-2 sm:px-0">
       <div className="flex w-full flex-col gap-2 rounded bg-white py-2 shadow-md">
         <div className="px-2 text-xl font-bold tracking-wide text-neutral-700">
           Notes
@@ -69,7 +69,7 @@ export const RideDetailsSkeleton = () => (
       <div>GOING</div>
     </Heading>
 
-    <div className="flex w-full flex-col gap-2 px-2 sm:px-0">
+    <div className="flex w-full flex-col gap-2 lg:gap-4 px-2 sm:px-0">
       <div className="flex w-full flex-col gap-2 rounded bg-white py-2 shadow-md">
         <Row>
           <Skeleton width={80} />
