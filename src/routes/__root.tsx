@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Header } from "@/components/Header/Header";
 import { Providers } from "@/components/Providers";
 import appCss from "../styles/globals.css?url";
+import outfitLatinUrl from "@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2?url";
 
 const APP_NAME = `${import.meta.env.VITE_CLUB_SHORT_NAME ?? "BCC"} Rides`;
 const APP_DESCRIPTION = `${import.meta.env.VITE_CLUB_LONG_NAME ?? "Bath Cycling Club"} Ride Planner`;
@@ -33,6 +34,13 @@ export const Route = createRootRoute({
       },
     ],
     links: [
+      {
+        rel: "preload",
+        href: outfitLatinUrl,
+        as: "font",
+        type: "font/woff2",
+        crossOrigin: "anonymous",
+      },
       { rel: "stylesheet", href: appCss },
 { rel: "icon", href: "/static/favicon.ico" },
       {
