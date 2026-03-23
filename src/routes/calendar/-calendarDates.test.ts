@@ -6,7 +6,7 @@ import {
   getLastMonth,
   getMonthDateRange,
   getNextMonth,
-} from "./calendarDates";
+} from "./-calendarDates";
 
 describe("calendarDates", () => {
   it("formats calendar month labels", () => {
