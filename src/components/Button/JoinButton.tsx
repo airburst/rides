@@ -38,7 +38,12 @@ export const JoinButton: React.FC<Props> = ({
       LEAVE
     </Button>
   ) : (
-    <Button {...props} error onClick={handleJoin} disabled={isPending}>
+    <Button
+      {...props}
+      onClick={handleJoin}
+      disabled={isPending}
+      className="bg-red-700 hover:bg-red-600"
+    >
       <Plus className="h-6 w-6" />
       JOIN
     </Button>
