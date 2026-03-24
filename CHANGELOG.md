@@ -1,5 +1,11 @@
 # Change Log
 
+## 4.9.0
+
+### Minor Changes
+
+- Fix new user login: only send admin fields in profile PATCH when user is admin, redirect incomplete profiles to /profile page. Add changesets for versioning workflow.
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)

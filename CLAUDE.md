@@ -62,7 +62,6 @@ Cycling club ride planner SPA. TanStack Start (SPA mode) + Vite + Bun. Deployed 
 
 Before committing, run the pre-commit hooks manually to verify: `bun run lint && bun run check-types && bun test`
 
-Before creating a PR:
+Before creating a PR, add a changeset via `bun run changeset` (patch for fixes, minor for features, major for breaking changes).
 
-1. Bump `version` in `package.json` using semver (patch for fixes, minor for features, major for breaking changes)
-2. Add an entry to `CHANGELOG.md` following the [Keep a Changelog](http://keepachangelog.com/) format with date (`## X.Y.Z - YYYY-MM-DD`) and sections: Added, Changed, Fixed, Technical as appropriate
+To version: `bun run version` consumes changesets, bumps `package.json` version, and updates `CHANGELOG.md`.

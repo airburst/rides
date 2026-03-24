@@ -94,9 +94,10 @@ describe("UserProfileForm", () => {
     expect(args.data.name).toBe("Jane Updated");
     expect(args.data.mobile).toBe("07700 900123");
     expect(args.data.emergency).toBe("John Smith 07700 900456");
-    expect(args.data.role).toBe("USER");
-    expect(args.data.membershipId).toBe("M001");
-    expect(args.data.membershipStatus).toBe("MEMBER");
+    // Non-admin users should not send role or membership fields
+    expect(args.data.role).toBeUndefined();
+    expect(args.data.membershipId).toBeUndefined();
+    expect(args.data.membershipStatus).toBeUndefined();
   });
 
   it("shows validation error for empty name", async () => {

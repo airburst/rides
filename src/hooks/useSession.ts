@@ -1,5 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useQuery } from "@tanstack/react-query";
+import { useNavigate } from "@tanstack/react-router";
 import { useEffect } from "react";
 import { apiClient, ApiError } from "@/lib/api";
 import type { Role, Preferences } from "@/types";
@@ -10,6 +11,8 @@ type UserResponse = {
     name: string | null;
     email: string | null;
     image: string | null;
+    mobile: string | null;
+    emergency: string | null;
     role: Role;
     preferences: Preferences | null;
   };
@@ -24,6 +27,7 @@ export function useSession() {
     loginWithRedirect,
     logout,
   } = useAuth0();
+  const navigate = useNavigate();
 
   const {
     data: dbUser,
@@ -52,6 +56,16 @@ export function useSession() {
       loginWithRedirect();
     }
   }, [error, isAuthenticated, logout, loginWithRedirect]);
+
+  // Redirect new users to profile page to complete mandatory fields
+  const needsProfileSetup = Boolean(
+    dbUser && (!dbUser.name || !dbUser.mobile || !dbUser.emergency),
+  );
+  useEffect(() => {
+    if (!needsProfileSetup) return;
+    if (window.location.pathname === "/profile") return;
+    void navigate({ to: "/profile" });
+  }, [needsProfileSetup, navigate]);
 
   const session =
     isAuthenticated && dbUser
