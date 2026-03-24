@@ -1,8 +1,8 @@
 import { cn } from "@/lib/utils";
-import { EditorContent, useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
 import Link from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
+import { EditorContent, useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
 import {
   Bold,
   Code,
@@ -14,8 +14,8 @@ import {
   X,
 } from "lucide-react";
 import markdownIt from "markdown-it";
-import TurndownService from "turndown";
 import { useCallback, useEffect, useState } from "react";
+import TurndownService from "turndown";
 import "./markdown.css";
 
 const md = new markdownIt({
@@ -105,12 +105,7 @@ const Toolbar = ({ editor, className, onFullscreenClose }: ToolbarProps) => {
   ];
 
   return (
-    <div
-      className={cn(
-        "flex flex-wrap gap-1 bg-gray-50 p-2",
-        className,
-      )}
-    >
+    <div className={cn("flex flex-wrap gap-1 bg-gray-50 p-2", className)}>
       {buttons.map((button) => {
         const Icon = button.icon;
         return (
@@ -152,7 +147,7 @@ const MarkdownEditor = ({
 
   const editor = useEditor({
     extensions: [
-      StarterKit,
+      StarterKit.configure({ link: false }),
       Link.configure({ openOnClick: false }),
       Placeholder.configure({ placeholder: "Write your notes..." }),
     ],

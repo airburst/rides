@@ -1,5 +1,11 @@
 # Change Log
 
+## 4.9.3
+
+### Patch Changes
+
+- Upgrade ESLint to v10, lucide-react to v1.0.1, and entities to v8. Remove 12 unused dependencies (eslint plugin stack, cmdk, tailwindcss-motion, dotenv, etc.). Fix TipTap duplicate link extension warning.
+
 ## 4.9.2
 
 ### Patch Changes

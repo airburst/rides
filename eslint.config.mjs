@@ -22,7 +22,6 @@ const eslintConfig = [
     rules: {
       "prefer-const": "error",
       "no-unused-vars": "off",
-      "react/react-in-jsx-scope": "off",
     },
   },
   {
