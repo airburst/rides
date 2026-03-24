@@ -19,6 +19,7 @@ export function useUpdateUser() {
     onSettled: (_data, _err, { id }) => {
       void queryClient.invalidateQueries({ queryKey: ["user", id] });
       void queryClient.invalidateQueries({ queryKey: ["users"] });
+      void queryClient.invalidateQueries({ queryKey: ["currentUser"] });
     },
   });
 }

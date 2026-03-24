@@ -41,6 +41,7 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
       membershipStatus: user?.membershipStatus ?? "NOT_MEMBER",
     },
   });
+  const isNewUser = !user.mobile && !user.emergency;
   const router = useRouter();
   const updateMutation = useUpdateUser();
   const [showAvatarModalForm, setShowAvatarModalForm] = useState(false);
@@ -68,7 +69,6 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
         {
           onSuccess: () => {
             toast.success("Profile updated successfully");
-            const isNewUser = !user.mobile && !user.emergency;
             if (isNewUser) {
               void router.navigate({ to: "/" });
             } else {
