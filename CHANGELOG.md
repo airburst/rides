@@ -1,5 +1,11 @@
 # Change Log
 
+## 4.9.2
+
+### Patch Changes
+
+- Fix new user redirect from profile
+
 ## 4.9.1
 
 ### Patch Changes

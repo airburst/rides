@@ -81,7 +81,7 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
         },
       );
     },
-    [updateMutation, router],
+    [updateMutation, router, isNewUser],
   );
 
   return (

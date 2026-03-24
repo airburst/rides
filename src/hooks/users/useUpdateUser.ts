@@ -16,10 +16,10 @@ export function useUpdateUser() {
         body: JSON.stringify(data),
       });
     },
-    onSettled: (_data, _err, { id }) => {
+    onSuccess: async (_data, { id }) => {
+      await queryClient.invalidateQueries({ queryKey: ["currentUser"] });
       void queryClient.invalidateQueries({ queryKey: ["user", id] });
       void queryClient.invalidateQueries({ queryKey: ["users"] });
-      void queryClient.invalidateQueries({ queryKey: ["currentUser"] });
     },
   });
 }
