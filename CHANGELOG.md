@@ -1,5 +1,11 @@
 # Change Log
 
+## 4.10.0
+
+### Minor Changes
+
+- Swipe to join or leave ride
+
 ## 4.9.3
 
 ### Patch Changes
