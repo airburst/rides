@@ -1,5 +1,11 @@
 # Change Log
 
+## 4.9.1
+
+### Patch Changes
+
+- Navigate home after new user completes profile setup; preserve back() for existing user/admin edits.
+
 ## 4.9.0
 
 ### Minor Changes

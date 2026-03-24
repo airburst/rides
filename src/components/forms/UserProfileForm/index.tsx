@@ -68,7 +68,12 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
         {
           onSuccess: () => {
             toast.success("Profile updated successfully");
-            router.history.back();
+            const isNewUser = !user.mobile && !user.emergency;
+            if (isNewUser) {
+              void router.navigate({ to: "/" });
+            } else {
+              router.history.back();
+            }
           },
           onError: (error) => {
             toast.error(error.message || "Failed to update profile");
