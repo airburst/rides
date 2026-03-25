@@ -18,7 +18,11 @@ export const RepeatingRideCard: React.FC<Props> = ({ ride }: Props) => {
   }
 
   return (
-    <Link to="/repeating-rides/$id" params={{ id }}>
+    <Link
+      to="/repeating-rides/$id"
+      params={{ id }}
+      className="scroll-mt-20 snap-start sm:scroll-mt-28"
+    >
       <BasicCard>
         <div className="flex-1 flex-col gap-1 truncate p-2 lg:flex-row">
           <div className="align-middle font-bold uppercase tracking-wide">

@@ -14,7 +14,7 @@ export const RideGroup = ({ group, user }: Props) => {
   const types = rideData.map(({ rides }) => ({ rides }));
 
   return (
-    <div className="flex w-full flex-col items-start gap-2">
+    <div className="flex w-full flex-col items-start gap-2 snap-start scroll-mt-2">
       <div className="flex w-full px-2 font-bold uppercase tracking-widest sm:top-24 sm:rounded text-sm">
         <div>{rideDate}</div>
       </div>
@@ -26,7 +26,7 @@ export const RideGroup = ({ group, user }: Props) => {
             params={{ id: ride.id! }}
             id={ride.id}
             key={ride.id}
-            className="w-full scroll-mt-32 px-2 md:scroll-mt-36 md:px-0"
+            className="w-full px-2 md:px-0"
           >
             <RideCard ride={ride} user={user} />
           </Link>
