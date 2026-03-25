@@ -16,6 +16,7 @@ import {
 import markdownIt from "markdown-it";
 import { useCallback, useEffect, useState } from "react";
 import TurndownService from "turndown";
+import { Button } from "../Button";
 import "./markdown.css";
 
 const md = new markdownIt({
@@ -187,13 +188,9 @@ const MarkdownEditor = ({
         <>
           <div className="flex items-center justify-between border-b p-2">
             <span className="font-medium">Notes</span>
-            <button
-              type="button"
-              onClick={() => setIsFullscreen(false)}
-              className="rounded px-3 py-1 text-sm text-blue-600 hover:bg-blue-50"
-            >
-              Done
-            </button>
+            <Button type="button" onClick={() => setIsFullscreen(false)}>
+              DONE
+            </Button>
           </div>
           <EditorContent
             editor={editor}

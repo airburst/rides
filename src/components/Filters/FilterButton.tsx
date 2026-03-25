@@ -1,7 +1,7 @@
 import { DEFAULT_WEEKS_TO_SHOW } from "@/constants";
 import { useFilter } from "@/contexts/FilterContext";
-import { Filter, FilterX } from "lucide-react";
 import { useLocation } from "@tanstack/react-router";
+import { Filter, FilterX } from "lucide-react";
 
 export const FilterButton = () => {
   const { pathname } = useLocation();
@@ -28,9 +28,9 @@ export const FilterButton = () => {
         className="flex cursor-pointer items-center rounded p-1 text-3xl"
       >
         {hasFiltersApplied ? (
-          <FilterX className="h-6 w-6 fill-white" />
+          <FilterX className="h-6 w-6" />
         ) : (
-          <Filter className="h-6 w-6 fill-white" />
+          <Filter className="h-6 w-6" />
         )}
       </button>
     </>
