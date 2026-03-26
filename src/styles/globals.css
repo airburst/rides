@@ -83,7 +83,6 @@ html {
   scrollbar-width: thin;
   scrollbar-gutter: stable;
   scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
-  background: var(--color-muted);
 }
 
 /* Prevent copy popup after long press on iphone */
@@ -97,6 +96,7 @@ body {
   margin: 0;
   padding: 0;
   min-height: 100svh;
+  background: var(--color-muted);
 }
 
 /* Text styles */

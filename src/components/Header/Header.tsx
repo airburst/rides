@@ -12,7 +12,7 @@ export const Header = () => {
   const { isAuthenticated } = useSession();
 
   return (
-    <div className="fixed flex h-16 w-full items-center justify-center sm:h-24 z-20 backdrop-blur-xl">
+    <div className="sticky top-0 flex h-16 w-full items-center justify-center sm:h-24 z-20 backdrop-blur-xl bg-muted/50">
       <div className="container flex w-full flex-row justify-between px-2 md:px-4 lg:max-w-5xl">
         <div className=" text-4xl tracking-wide sm:text-5xl">
           <Link

@@ -14,7 +14,7 @@ export const RideGroup = ({ group, user }: Props) => {
   const types = rideData.map(({ rides }) => ({ rides }));
 
   return (
-    <div className="flex w-full flex-col items-start gap-2 snap-start scroll-mt-2">
+    <div className="flex w-full flex-col items-start gap-2 snap-start scroll-mt-16 sm:scroll-mt-24">
       <div className="flex w-full px-2 font-bold uppercase tracking-widest sm:top-24 sm:rounded text-sm">
         <div>{rideDate}</div>
       </div>

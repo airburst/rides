@@ -1,3 +1,7 @@
+import { Header } from "@/components/Header/Header";
+import { Providers } from "@/components/Providers";
+import { Button } from "@/components/ui/button";
+import outfitLatinUrl from "@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2?url";
 import {
   HeadContent,
   Outlet,
@@ -5,11 +9,7 @@ import {
   createRootRoute,
 } from "@tanstack/react-router";
 import { Toaster } from "sonner";
-import { Button } from "@/components/ui/button";
-import { Header } from "@/components/Header/Header";
-import { Providers } from "@/components/Providers";
 import appCss from "../styles/globals.css?url";
-import outfitLatinUrl from "@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2?url";
 
 const APP_NAME = `${import.meta.env.VITE_CLUB_SHORT_NAME ?? "BCC"} Rides`;
 const APP_DESCRIPTION = `${import.meta.env.VITE_CLUB_LONG_NAME ?? "Bath Cycling Club"} Ride Planner`;
@@ -42,7 +42,7 @@ export const Route = createRootRoute({
         crossOrigin: "anonymous",
       },
       { rel: "stylesheet", href: appCss },
-{ rel: "icon", href: "/static/favicon.ico" },
+      { rel: "icon", href: "/static/favicon.ico" },
       {
         rel: "icon",
         type: "image/png",
@@ -66,8 +66,10 @@ export const Route = createRootRoute({
 function RootComponent() {
   return (
     <Providers>
-      <Header />
-      <Outlet />
+      <div className="h-svh overflow-y-scroll snap-y snap-mandatory lg:snap-none">
+        <Header />
+        <Outlet />
+      </div>
       <Toaster position="bottom-center" richColors />
     </Providers>
   );
@@ -110,10 +112,7 @@ function NotFound() {
         Sorry - we can&apos;t find this page.
       </div>
       <div className="flex items-center justify-center p-4 text-neutral-700">
-        <Button
-          onClick={() => window.history.back()}
-          type="button"
-        >
+        <Button onClick={() => window.history.back()} type="button">
           BACK
         </Button>
       </div>
