@@ -45,7 +45,7 @@ export const RideInfo = ({ ride, user }: Props) => {
   return (
     <div className="flex w-full flex-col gap-2 lg:gap-4 px-2 sm:px-0">
       {cancelled && <CancelledBanner />}
-      <div className="relative flex w-full flex-col gap-2 rounded bg-white p-4 shadow-md">
+      <div className="relative flex w-full flex-col gap-2 rounded bg-white p-4">
         {/* Title: name + group */}
         <div className={`grid ${titleClass} gap-2`}>
           <h1 className="text-xl font-bold tracking-wide text-neutral-700">

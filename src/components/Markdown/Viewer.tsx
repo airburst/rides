@@ -27,7 +27,7 @@ const Viewer = ({ markdown, title }: ViewerProps) => {
   return (
     <div
       className={cn(
-        "flex w-full flex-col overflow-hidden rounded bg-white shadow-md",
+        "flex w-full flex-col overflow-hidden rounded bg-white",
         !open && "pb-4",
       )}
     >

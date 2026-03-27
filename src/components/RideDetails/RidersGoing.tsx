@@ -30,7 +30,7 @@ export const RidersGoing = ({
 
   return (
     <div className="flex w-full px-2 sm:px-0">
-      <div className="flex w-full flex-col gap-2 rounded bg-white p-4 shadow-md">
+      <div className="flex w-full flex-col gap-2 rounded bg-white p-4">
         <div className="flex items-center gap-4 text-xl font-bold tracking-wide text-neutral-700">
           Going
           {ridersLabel !== undefined && (

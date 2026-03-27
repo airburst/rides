@@ -1,7 +1,7 @@
 import { FilterProvider } from "@/contexts/FilterContext";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { useEffect, useState, type ReactNode } from "react";
 
 const AUTH0_DOMAIN = import.meta.env.VITE_AUTH0_DOMAIN!;
@@ -30,7 +30,7 @@ export function Providers({ children }: { children: ReactNode }) {
     <QueryClientProvider client={queryClient}>
       <FilterProvider>
         {children}
-        <ReactQueryDevtools initialIsOpen={false} />
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </FilterProvider>
     </QueryClientProvider>
   );

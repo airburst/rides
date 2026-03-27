@@ -23,7 +23,7 @@ export const RideInfoSection = memo(({ ride }: RideInfoSectionProps) => {
 
   return (
     <>
-      <div className="relative flex w-full flex-col gap-2 rounded bg-white lg:px-2 py-2 lg:py-4 shadow-md">
+      <div className="relative flex w-full flex-col gap-2 rounded bg-white lg:px-2 py-2 lg:py-4">
         <Row>
           <div>Name</div>
           <div className="truncate text-xl font-bold tracking-wide text-neutral-700">
