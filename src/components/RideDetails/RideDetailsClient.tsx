@@ -5,23 +5,14 @@ import type { Ride, User } from "@/types";
 import { isJoinable } from "@utils/dates";
 import { formatRideData, hasSpace } from "@utils/rides";
 import { MessageSquare, TriangleAlert } from "lucide-react";
-import { useState, type JSX } from "react";
+import { useState } from "react";
 import { Badge } from "../Badge";
 import { BackButton, Button, JoinButton } from "../Button";
+import { SectionHeader } from "../SectionHeader";
 import { Spinner } from "../Spinner";
 import { RideInfo } from "./RideInfo";
 import { RideMessages } from "./RideMessages";
 import { RidersGoing } from "./RidersGoing";
-
-type RowProps = {
-  children: JSX.Element | JSX.Element[] | null | undefined;
-};
-
-const Heading = ({ children }: RowProps) => (
-  <div className="bg-primary flex w-full flex-row items-center justify-center p-2 font-bold tracking-wide text-white uppercase sm:rounded">
-    {children}
-  </div>
-);
 
 type Props = {
   id: string;
@@ -80,10 +71,8 @@ export function RideDetailsClient({ id }: Props) {
   const closeNotes = () => setShowNotesForm(false);
 
   return (
-    <div className="flex w-full flex-col gap-2 md:gap-4">
-      <Heading>
-        <div>{day}</div>
-      </Heading>
+    <div className="flex w-full flex-col gap-4 mt-4">
+      <SectionHeader>{day}</SectionHeader>
 
       <RideInfo ride={formattedRide} user={user} />
 
@@ -93,12 +82,12 @@ export function RideDetailsClient({ id }: Props) {
         </div>
       ) : (
         <>
-          <Heading>
-            <div className="flex items-center gap-4">
+          <SectionHeader>
+            <span className="flex items-center gap-4">
               Going
               <Badge text={ridersLabel} />
-            </div>
-          </Heading>
+            </span>
+          </SectionHeader>
           {!isSpace && (
             <div className="mx-2 sm:mx-0">
               <Alert className="border-warning bg-warning/10">

@@ -1,3 +1,4 @@
+import { SectionHeader } from "../SectionHeader";
 import { Skeleton } from "../Skeleton";
 
 import type { JSX } from "react";
@@ -12,17 +13,9 @@ const Row = ({ children }: RowProps) => (
   </div>
 );
 
-const Heading = ({ children }: RowProps) => (
-  <div className="flex w-full flex-row items-center justify-center bg-primary p-2 font-bold uppercase tracking-wide text-white sm:rounded">
-    {children}
-  </div>
-);
-
 export const RideDetailsSkeleton = () => (
-  <div className="flex w-full flex-col gap-2">
-    <Heading>
-      <div>Ride Details</div>
-    </Heading>
+  <div className="flex w-full flex-col gap-4 mt-4">
+    <SectionHeader>Ride Details</SectionHeader>
 
     <div className="flex w-full flex-col gap-2 lg:gap-4 px-2 sm:px-0">
       <div className="flex w-full flex-col gap-2 rounded bg-white py-2 lg:py-4 shadow-md">
@@ -65,9 +58,7 @@ export const RideDetailsSkeleton = () => (
       </div>
     </div>
 
-    <Heading>
-      <div>GOING</div>
-    </Heading>
+    <SectionHeader>Going</SectionHeader>
 
     <div className="flex w-full flex-col gap-2 lg:gap-4 px-2 sm:px-0">
       <div className="flex w-full flex-col gap-2 rounded bg-white py-2 lg:py-4 shadow-md">

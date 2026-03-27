@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { ungroupRides } from "@utils/transformRideData";
 import { type Group, type User } from "../../types";
 import { RideCard } from "../Card/RideCard";
+import { DateHeader } from "./DateHeader";
 
 type Props = {
   group: Group;
@@ -15,9 +16,7 @@ export const RideGroup = ({ group, user }: Props) => {
 
   return (
     <div className="flex w-full flex-col items-start gap-4 mt-4">
-      <div className="flex w-full px-2 font-bold uppercase tracking-widest sm:rounded text-sm snap-start scroll-mt-20">
-        <div>{rideDate}</div>
-      </div>
+      <DateHeader>{rideDate}</DateHeader>
 
       {types.map(({ rides }) =>
         rides.map((ride) => (
