@@ -27,7 +27,7 @@ export const RiderDetails = ({ user, isLeader, sessionUser }: Props) => {
   const emergencyNumber = onlyNumbers(emergency ?? "");
 
   const rowClass = cn(
-    "flex w-full flex-row items-center justify-between lg:px-4 font-medium md:grid md:grid-cols-[1fr_auto] md:justify-start md:gap-4",
+    "flex w-full flex-row items-center justify-between md:grid md:grid-cols-[1fr_auto] md:justify-start md:gap-4",
     isMe && "text-neutral-800",
   );
 

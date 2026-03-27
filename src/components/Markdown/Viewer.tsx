@@ -25,7 +25,12 @@ const Viewer = ({ markdown, title }: ViewerProps) => {
   const sanitizedHtml = DOMPurify.sanitize(html);
 
   return (
-    <div className={cn("flex w-full flex-col overflow-hidden rounded bg-white shadow-md", !open && "pb-4")}>
+    <div
+      className={cn(
+        "flex w-full flex-col overflow-hidden rounded bg-white shadow-md",
+        !open && "pb-4",
+      )}
+    >
       {title && (
         <button
           type="button"
@@ -37,7 +42,7 @@ const Viewer = ({ markdown, title }: ViewerProps) => {
           </span>
           <ChevronRight
             className={cn(
-              "h-5 w-5 text-neutral-400 transition-transform duration-300",
+              "text-neutral-500 transition-transform duration-300",
               open && "rotate-90",
             )}
           />

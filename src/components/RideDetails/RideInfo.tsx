@@ -45,7 +45,7 @@ export const RideInfo = ({ ride, user }: Props) => {
   return (
     <div className="flex w-full flex-col gap-2 lg:gap-4 px-2 sm:px-0">
       {cancelled && <CancelledBanner />}
-      <div className="relative flex w-full flex-col gap-4 rounded bg-white p-4 shadow-md">
+      <div className="relative flex w-full flex-col gap-2 rounded bg-white p-4 shadow-md">
         {/* Title: name + group */}
         <div className="flex items-center gap-3">
           <h1 className="text-2xl font-bold tracking-wide text-neutral-700">
@@ -55,7 +55,7 @@ export const RideInfo = ({ ride, user }: Props) => {
         </div>
 
         {/* Metadata grid */}
-        <div className="grid grid-cols-2 gap-x-4 gap-y-3 text-neutral-600">
+        <div className="grid grid-cols-2 gap-2 text-neutral-600">
           {/* Date + time — always first row */}
           <div className="flex items-center gap-2">
             <Calendar className="h-4 w-4 shrink-0 text-neutral-400" />
@@ -90,7 +90,7 @@ export const RideInfo = ({ ride, user }: Props) => {
         {/* Route CTA */}
         {route && (
           <a
-            className="flex w-full items-center justify-center gap-2 rounded border border-primary px-4 py-3 font-semibold text-primary transition-colors hover:bg-primary hover:text-white"
+            className="lg:max-w-64 flex items-center justify-center gap-2 rounded-lg border border-primary px-4 py-3 font-semibold text-primary transition-colors hover:bg-primary hover:text-white"
             href={route}
             target="_blank"
             rel="noreferrer"
