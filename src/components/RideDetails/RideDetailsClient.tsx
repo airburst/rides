@@ -6,9 +6,7 @@ import { isJoinable } from "@utils/dates";
 import { formatRideData, hasSpace } from "@utils/rides";
 import { MessageSquare, TriangleAlert } from "lucide-react";
 import { useState } from "react";
-import { Badge } from "../Badge";
 import { BackButton, Button, JoinButton } from "../Button";
-import { SectionHeader } from "../SectionHeader";
 import { Spinner } from "../Spinner";
 import { RideInfo } from "./RideInfo";
 import { RideMessages } from "./RideMessages";
@@ -71,23 +69,17 @@ export function RideDetailsClient({ id }: Props) {
   const closeNotes = () => setShowNotesForm(false);
 
   return (
-    <div className="flex w-full flex-col gap-4 mt-4">
-      <SectionHeader>{day}</SectionHeader>
-
+    <div className="flex w-full flex-col gap-2 lg:gap-4 mt-4 pb-24">
       <RideInfo ride={formattedRide} user={user} />
 
       {cancelled ? (
-        <div className="mb-16 flex flex-row justify-between px-2 pt-2 sm:px-0 md:justify-start md:gap-4">
-          <BackButton className="min-w-28 md:min-w-32" />
+        <div className="fixed inset-x-0 bottom-0 z-10 border-t border-neutral-200 bg-white pb-[env(safe-area-inset-bottom)]">
+          <div className="mx-auto max-w-3xl p-2">
+            <BackButton className="min-w-28 md:min-w-32" />
+          </div>
         </div>
       ) : (
         <>
-          <SectionHeader>
-            <span className="flex items-center gap-4">
-              Going
-              <Badge text={ridersLabel} />
-            </span>
-          </SectionHeader>
           {!isSpace && (
             <div className="mx-2 sm:mx-0">
               <Alert className="border-warning bg-warning/10">
@@ -104,26 +96,29 @@ export function RideDetailsClient({ id }: Props) {
             users={userList}
             hasRiders={hasRiders}
             isLeader={isLeader}
+            ridersLabel={ridersLabel}
           />
-          <div className="mb-16 grid grid-cols-3 gap-2 p-2 sm:px-0 md:max-w-115 md:gap-4">
-            <BackButton className="ps-1 pe-1" />
+          <div className="fixed inset-x-0 bottom-0 z-10 border-t border-neutral-200 bg-white pb-[env(safe-area-inset-bottom)]">
+            <div className="mx-auto grid max-w-3xl grid-cols-3 gap-2 p-2">
+              <BackButton className="ps-1 pe-1" />
 
-            {isGoing && (
-              <Button secondary className="ps-1 pe-1" onClick={openNotes}>
-                <MessageSquare className="h-6 w-6" />
-                NOTE
-              </Button>
-            )}
+              {isGoing && (
+                <Button secondary className="ps-1 pe-1" onClick={openNotes}>
+                  <MessageSquare className="h-6 w-6" />
+                  NOTE
+                </Button>
+              )}
 
-            {user && (canJoin || isGoing) && (
-              <JoinButton
-                className="ps-1 pe-1"
-                going={isGoing}
-                ariaLabel={`Join ${name} ride`}
-                rideId={id}
-                userId={user.id}
-              />
-            )}
+              {user && (canJoin || isGoing) && (
+                <JoinButton
+                  className="ps-1 pe-1"
+                  going={isGoing}
+                  ariaLabel={`Join ${name} ride`}
+                  rideId={id}
+                  userId={user.id}
+                />
+              )}
+            </div>
           </div>
         </>
       )}

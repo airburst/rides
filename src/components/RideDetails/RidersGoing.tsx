@@ -1,5 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { type User } from "../../types";
+import { Badge } from "../Badge";
 import { RiderDetails } from "./RiderDetails";
 
 type Props = {
@@ -8,6 +9,7 @@ type Props = {
   isLeader: boolean;
   hasRiders?: boolean;
   rideNotes?: string;
+  ridersLabel?: string | number;
 };
 
 export const RidersGoing = ({
@@ -16,6 +18,7 @@ export const RidersGoing = ({
   hasRiders,
   isLeader,
   rideNotes,
+  ridersLabel,
 }: Props) => {
   const { loginWithRedirect } = useAuth0();
 
@@ -27,7 +30,13 @@ export const RidersGoing = ({
 
   return (
     <div className="flex w-full px-2 sm:px-0">
-      <div className="flex w-full flex-col gap-2 rounded bg-white py-2 lg:py-4 shadow-md">
+      <div className="flex w-full flex-col gap-2 rounded bg-white p-4 shadow-md">
+        <div className="flex items-center gap-3 text-xl font-bold tracking-wide text-neutral-700">
+          Going
+          {ridersLabel !== undefined && (
+            <Badge text={ridersLabel} className="px-3 py-1 text-sm" />
+          )}
+        </div>
         {user ? (
           users?.map((u) => (
             <RiderDetails
@@ -38,7 +47,7 @@ export const RidersGoing = ({
             />
           ))
         ) : (
-          <div className="flex flex-col gap-2 px-2">
+          <div className="flex flex-col gap-2">
             {rideNotes && <div>Note: {rideNotes}</div>}
             <div>
               Please{" "}

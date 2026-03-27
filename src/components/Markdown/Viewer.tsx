@@ -1,10 +1,8 @@
-import { NOTES_SHOW_MORE_LENGTH } from "@/constants";
 import { cn } from "@/lib/utils";
 import DOMPurify from "isomorphic-dompurify";
-import { ChevronDown } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import markdownIt from "markdown-it";
 import { useCallback, useRef, useState } from "react";
-import { Button } from "../Button";
 import "./markdown.css";
 
 export type ViewerProps = {
@@ -13,10 +11,10 @@ export type ViewerProps = {
 };
 
 const Viewer = ({ markdown, title }: ViewerProps) => {
-  const [showAll, setShowAll] = useState(false);
+  const [open, setOpen] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const toggleShowAll = useCallback(() => setShowAll((prev) => !prev), []);
+  const toggle = useCallback(() => setOpen((prev) => !prev), []);
 
   const md = new markdownIt({
     html: true,
@@ -25,55 +23,42 @@ const Viewer = ({ markdown, title }: ViewerProps) => {
   });
   const html = md.render(markdown ?? "");
   const sanitizedHtml = DOMPurify.sanitize(html);
-  const isLong = sanitizedHtml.length > NOTES_SHOW_MORE_LENGTH;
 
   return (
-    <div className="flex w-full flex-col gap-2 rounded bg-white py-2 lg:py-4 shadow-md">
+    <div className={cn("flex w-full flex-col overflow-hidden rounded bg-white shadow-md", !open && "pb-4")}>
       {title && (
-        <div className="px-2 text-xl font-bold tracking-wide text-neutral-700 lg:px-4">
-          {title}
-        </div>
+        <button
+          type="button"
+          onClick={toggle}
+          className="flex w-full cursor-pointer items-center justify-between p-4"
+        >
+          <span className="text-xl font-bold tracking-wide text-neutral-700">
+            {title}
+          </span>
+          <ChevronRight
+            className={cn(
+              "h-5 w-5 text-neutral-400 transition-transform duration-300",
+              open && "rotate-90",
+            )}
+          />
+        </button>
       )}
 
-      <div className="relative px-2 font-normal lg:px-4">
-        <div
-          ref={contentRef}
-          className={cn(
-            "relative overflow-hidden transition-[max-height] duration-300 ease-in-out",
-            !showAll && isLong && "max-h-30",
-          )}
-          style={
-            showAll || !isLong
-              ? { maxHeight: contentRef.current?.scrollHeight ?? "none" }
-              : undefined
-          }
-        >
+      <div
+        ref={contentRef}
+        className="overflow-hidden transition-[max-height] duration-300 ease-in-out"
+        style={{
+          maxHeight: open
+            ? `${contentRef.current?.scrollHeight ?? 9999}px`
+            : "3.5rem",
+        }}
+      >
+        <div className="px-4 pb-4 font-normal">
           <div
             id="ride-notes"
             dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
           />
-          {isLong && (
-            <div
-              className={cn(
-                "pointer-events-none absolute inset-x-0 bottom-0 h-12 bg-linear-to-t from-white to-transparent transition-opacity duration-300",
-                showAll && "opacity-0",
-              )}
-            />
-          )}
         </div>
-        {isLong && (
-          <div className="flex w-full justify-center">
-            <Button className="font-light" link onClick={toggleShowAll}>
-              {showAll ? "Show less" : "Show more"}
-              <ChevronDown
-                className="h-4 w-4 transition-transform duration-300"
-                style={{
-                  transform: showAll ? "rotate(180deg)" : "rotate(0deg)",
-                }}
-              />
-            </Button>
-          </div>
-        )}
       </div>
     </div>
   );

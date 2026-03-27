@@ -5,7 +5,7 @@ type Props = {
 };
 
 export const FullPageContent: React.FC<Props> = ({ children }) => (
-  <main className="mt-16 flex w-full max-h-[calc(100svh-64px)] md:max-h-[calc(100svh-96px)] flex-col items-center text-neutral-500 text-lg sm:mt-24 md:px-4]">
+  <main className="flex w-full h-full flex-col items-center text-neutral-500 text-lg sm:mt-24 md:px-4]">
     {children}
   </main>
 );

@@ -4,6 +4,7 @@ type Props = {
   text?: string | number;
   style?: string;
   small?: boolean;
+  className?: string;
 };
 
 const styleMap: Record<string, string> = {
@@ -12,13 +13,14 @@ const styleMap: Record<string, string> = {
   past: "bg-slate-500",
 };
 
-export const Badge = ({ text, style = "unready", small }: Props) => {
+export const Badge = ({ text, style = "unready", small, className }: Props) => {
   return (
     <span
       className={cn(
         "inline-flex items-center justify-center rounded-full border-0 text-xs font-medium text-white",
         small ? "px-1.5 py-0.5" : "px-2 py-0.5",
         styleMap[style],
+        className,
       )}
     >
       {text}

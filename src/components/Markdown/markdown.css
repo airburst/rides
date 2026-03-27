@@ -14,6 +14,10 @@
   p {
     line-height: var(--markdown-line-height);
     margin-bottom: var(--markdown-bottom-margin);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 
   blockquote {

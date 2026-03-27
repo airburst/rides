@@ -1,79 +1,63 @@
 import { SectionHeader } from "../SectionHeader";
 import { Skeleton } from "../Skeleton";
 
-import type { JSX } from "react";
-
-type RowProps = {
-  children: JSX.Element | JSX.Element[] | null | undefined;
-};
-
-const Row = ({ children }: RowProps) => (
-  <div className="grid w-full grid-cols-[100px_1fr] items-center px-2 font-medium md:grid-cols-[220px_1fr] md:justify-start md:gap-4 gap-2">
-    {children}
-  </div>
-);
-
 export const RideDetailsSkeleton = () => (
-  <div className="flex w-full flex-col gap-4 mt-4">
+  <div className="flex w-full flex-col gap-4 mt-4 pb-24">
     <SectionHeader>Ride Details</SectionHeader>
 
     <div className="flex w-full flex-col gap-2 lg:gap-4 px-2 sm:px-0">
-      <div className="flex w-full flex-col gap-2 rounded bg-white py-2 lg:py-4 shadow-md">
-        <Row>
-          <div>Name</div>
-          <Skeleton className="w-full" />
-        </Row>
-        <Row>
-          <div>Group</div>
-          <Skeleton width={32} />
-        </Row>
-        <Row>
-          <div>Meet at</div>
-          <Skeleton width={32} />
-        </Row>
-        <Row>
-          <div>Distance</div>
-          <Skeleton width={8} />
-        </Row>
-        <Row>
-          <div>Leader</div>
-          <Skeleton width={24} />
-        </Row>
-      </div>
-    </div>
-
-    <div className="flex w-full flex-col gap-2 lg:gap-4 px-2 sm:px-0">
-      <div className="flex w-full flex-col gap-2 rounded bg-white py-2 lg:py-4 shadow-md">
-        <div className="px-2 text-xl font-bold tracking-wide text-neutral-700">
-          Notes
+      {/* Hero card skeleton */}
+      <div className="flex w-full flex-col gap-3 rounded bg-white p-3 lg:p-4 shadow-md">
+        {/* Time */}
+        <Skeleton width={16} height={3} />
+        {/* Name + group badge */}
+        <div className="flex items-center gap-3">
+          <Skeleton className="w-48" height={6} />
+          <Skeleton width={24} height={5} />
         </div>
-        <Row>
-          <div className="col-span-2 flex flex-col gap-2">
-            <Skeleton className="w-full" />
-            <Skeleton className="w-60" />
-            <Skeleton className="w-50" />
-            <Skeleton className="w-60" />
+        {/* Location */}
+        <div className="flex items-center gap-2">
+          <Skeleton width={4} height={4} className="rounded" />
+          <Skeleton className="w-56" />
+        </div>
+        {/* Distance + leader */}
+        <div className="flex items-center gap-5">
+          <div className="flex items-center gap-2">
+            <Skeleton width={4} height={4} className="rounded" />
+            <Skeleton width={16} />
           </div>
-        </Row>
+          <div className="flex items-center gap-2">
+            <Skeleton width={4} height={4} className="rounded" />
+            <Skeleton width={20} />
+          </div>
+        </div>
+        {/* Route button */}
+        <Skeleton className="w-full" height={10} />
+      </div>
+
+      {/* Notes skeleton */}
+      <div className="flex w-full flex-col gap-2 rounded bg-white py-2 lg:py-4 shadow-md">
+        <div className="px-2 lg:px-4">
+          <Skeleton width={16} height={5} />
+        </div>
+        <div className="flex flex-col gap-2 px-2 lg:px-4">
+          <Skeleton className="w-full" />
+          <Skeleton className="w-60" />
+          <Skeleton className="w-50" />
+        </div>
       </div>
     </div>
 
     <SectionHeader>Going</SectionHeader>
 
     <div className="flex w-full flex-col gap-2 lg:gap-4 px-2 sm:px-0">
-      <div className="flex w-full flex-col gap-2 rounded bg-white py-2 lg:py-4 shadow-md">
-        <Row>
-          <Skeleton width={80} />
-          <Skeleton className="w-full" />
-        </Row>
-        <Row>
-          <Skeleton width={80} />
-          <Skeleton className="w-full" />
-        </Row>
-        <Row>
-          <Skeleton width={80} />
-          <Skeleton className="w-full" />
-        </Row>
+      <div className="flex w-full flex-col gap-3 rounded bg-white py-2 lg:py-4 shadow-md">
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="flex items-center gap-3 px-2 lg:px-4">
+            <Skeleton width={8} height={8} className="rounded-full" />
+            <Skeleton className="w-40" />
+          </div>
+        ))}
       </div>
     </div>
   </div>

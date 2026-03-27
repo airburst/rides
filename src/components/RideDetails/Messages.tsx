@@ -14,7 +14,7 @@ export const Messages = ({ riderNotes = EMPTY_NOTES }: Props) => {
 
   return (
     <div>
-      <div className="flex w-full gap-2 flex-col rounded bg-white p-2 lg:p-4 shadow-md ">
+      <div className="flex w-full gap-2 flex-col rounded bg-white p-4 shadow-md">
         <div className="text-xl font-bold tracking-wide text-neutral-700">
           Messages
         </div>
