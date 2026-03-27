@@ -47,6 +47,12 @@
   --color-ring: #24376e;
   --color-destructive: #dc2626;
   --color-destructive-foreground: #ffffff;
+
+  /* Join/Leave buttons */
+  --color-join: #15803d;
+  --color-join-hover: #16a34a;
+  --color-leave: #b91c1c;
+  --color-leave-hover: #dc2626;
 }
 
 @layer base {
@@ -100,15 +106,6 @@ body {
 }
 
 /* Text styles */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  @apply text-balance;
-}
-
 p,
 li,
 figcaption {

@@ -7,12 +7,12 @@ export type CreateRideInput = {
   name: string;
   rideDate: string;
   distance: number;
-  rideGroup?: string;
-  destination?: string;
-  meetPoint?: string;
-  route?: string;
-  leader?: string;
-  notes?: string;
+  rideGroup?: string | null;
+  destination?: string | null;
+  meetPoint?: string | null;
+  route?: string | null;
+  leader?: string | null;
+  notes?: string | null;
   rideLimit?: number;
   scheduleId?: string;
 };

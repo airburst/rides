@@ -97,12 +97,12 @@ const RideForm = ({
         name: data.name,
         rideDate,
         distance: Number(data.distance),
-        rideGroup: data.rideGroup || undefined,
-        destination: data.destination || undefined,
-        meetPoint: data.meetPoint || undefined,
-        route: data.route || undefined,
-        leader: data.leader || undefined,
-        notes: data.notes || undefined,
+        rideGroup: data.rideGroup || null,
+        destination: data.destination || null,
+        meetPoint: data.meetPoint || null,
+        route: data.route || null,
+        leader: data.leader || null,
+        notes: data.notes || null,
         rideLimit: data.rideLimit ? Number(data.rideLimit) : -1,
       };
 

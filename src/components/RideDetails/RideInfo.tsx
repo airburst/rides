@@ -1,9 +1,8 @@
 import Viewer from "@/components/Markdown/Viewer";
 import { makeClickableUrl } from "@utils/makeClickableUrl";
 import { formatDistance } from "@utils/rides";
-import { Calendar, Clock, Map, MapPin, Ruler, UserRound } from "lucide-react";
+import { Calendar, Clock, Map, Ruler, UserRound } from "lucide-react";
 import { type Ride, type User } from "../../types";
-import { Badge } from "../Badge";
 import { CancelledBanner } from "./Cancelled";
 import { Messages } from "./Messages";
 
@@ -41,46 +40,50 @@ export const RideInfo = ({ ride, user }: Props) => {
     }));
 
   const locationText = [meetPoint, destination].filter(Boolean).join(" → ");
+  const titleClass = rideGroup ? "grid-cols-[1fr_auto]" : "grid-cols-1";
 
   return (
     <div className="flex w-full flex-col gap-2 lg:gap-4 px-2 sm:px-0">
       {cancelled && <CancelledBanner />}
       <div className="relative flex w-full flex-col gap-2 rounded bg-white p-4 shadow-md">
         {/* Title: name + group */}
-        <div className="flex items-center gap-3">
-          <h1 className="text-2xl font-bold tracking-wide text-neutral-700">
+        <div className={`grid ${titleClass} gap-2`}>
+          <h1 className="text-xl font-bold tracking-wide text-neutral-700">
             {name}
           </h1>
-          {rideGroup && <Badge text={rideGroup} style="ready" />}
+          {rideGroup && (
+            <div className="flex justify-self-end lg:justify-self-start bg-primary/10 rounded-full px-2 text-sm items-center justify-center truncate max-h-8">
+              {rideGroup}
+            </div>
+          )}
         </div>
 
         {/* Metadata grid */}
         <div className="grid grid-cols-2 gap-2 text-neutral-600">
-          {/* Date + time — always first row */}
-          <div className="flex items-center gap-2">
-            <Calendar className="h-4 w-4 shrink-0 text-neutral-400" />
-            <span>{day}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Clock className="h-4 w-4 shrink-0 text-neutral-400" />
-            <span>{time}</span>
-          </div>
-
           {/* Location — spans full width */}
           {locationText && (
             <div className="col-span-2 flex items-center gap-2">
-              <MapPin className="h-4 w-4 shrink-0 text-neutral-400" />
               <span>{locationText}</span>
             </div>
           )}
 
+          {/* Date + time */}
+          <div className="flex items-center gap-2">
+            <Clock className="h-4 w-4 shrink-0 text-neutral-400" />
+            <span className="font-bold">{time}</span>
+          </div>
+          <div className="flex items-center gap-2 justify-self-end lg:justify-self-start">
+            <Calendar className="h-4 w-4 shrink-0 text-neutral-400" />
+            <span>{day}</span>
+          </div>
+
           {/* Distance + leader */}
           <div className="flex items-center gap-2">
             <Ruler className="h-4 w-4 shrink-0 text-neutral-400" />
-            <span>{formattedDistance}</span>
+            <span className="font-bold">{formattedDistance}</span>
           </div>
           {leader && (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 justify-self-end lg:justify-self-start">
               <UserRound className="h-4 w-4 shrink-0 text-neutral-400" />
               <span>{leader}</span>
             </div>

@@ -32,7 +32,7 @@ export const JoinButton: React.FC<Props> = ({
       {...props}
       onClick={handleLeave}
       disabled={isPending}
-      className="bg-success hover:bg-green-600"
+      className="bg-[var(--color-leave)] hover:bg-[var(--color-leave-hover)]"
     >
       <X className="h-6 w-6" />
       LEAVE
@@ -42,7 +42,7 @@ export const JoinButton: React.FC<Props> = ({
       {...props}
       onClick={handleJoin}
       disabled={isPending}
-      className="bg-red-700 hover:bg-red-600"
+      className="bg-[var(--color-join)] hover:bg-[var(--color-join-hover)]"
     >
       <Plus className="h-6 w-6" />
       JOIN
