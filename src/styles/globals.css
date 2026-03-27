@@ -40,7 +40,7 @@
   --color-card-foreground: #262626;
   --color-popover: #ffffff;
   --color-popover-foreground: #262626;
-  --color-muted: oklch(92.5% 0.005 214.3);
+  --color-muted: oklch(87.2% 0.01 258.338);
   --color-muted-foreground: #64748b;
   --color-border: #e4e8f6;
   --color-input: #e4e8f6;
@@ -113,10 +113,4 @@ p,
 li,
 figcaption {
   @apply text-pretty;
-}
-
-/* SVG Icon overrides */
-svg {
-  @apply h-6;
-  @apply w-6;
 }

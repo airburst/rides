@@ -1,10 +1,10 @@
+import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { useCancelRide, useDeleteRide, useRide } from "@/hooks/useRides";
 import { useSession } from "@/hooks/useSession";
-import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import { useLocation, useParams, useRouter } from "@tanstack/react-router";
+import { flattenQuery } from "@utils/general";
 import { Menu } from "lucide-react";
 import { useState } from "react";
-import { flattenQuery } from "@utils/general";
 import { toast } from "sonner";
 import { Confirm } from "../Confirm";
 import { MenuContent } from "./MenuContent";
@@ -107,14 +107,14 @@ const UserMenu = () => {
 
   return (
     <>
-      <div className="rounded p-1 text-3xl">
+      <div className="p-1">
         <button
           type="button"
           onClick={toggleMenu}
           aria-label="open menu"
-          className="cursor-pointer"
+          className="cursor-pointer items-center flex"
         >
-          <Menu className="h-8 w-8 fill-white" />
+          <Menu />
         </button>
       </div>
 

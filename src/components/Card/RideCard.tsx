@@ -1,6 +1,7 @@
-import { formatDistance } from "@utils/rides";
-import { formatTime } from "@utils/dates";
 import { cn } from "@/lib/utils";
+import { formatTime } from "@utils/dates";
+import { formatDistance } from "@utils/rides";
+import { Bike } from "lucide-react";
 import { type RideList, type User } from "../../types";
 import { Cancelled } from "../RideDetails/Cancelled";
 import { BasicCard } from "./BasicCard";
@@ -66,12 +67,7 @@ export const RideCard: React.FC<Props> = ({ ride, user }: Props) => {
             </div>
             <div className="items-center truncate p-1 pl-2">{details}</div>
             <div className="flex flex-row items-center justify-end gap-2 pr-2">
-              <img
-                src="/static/images/biking-neutral-500-64.png"
-                width={16}
-                height={16}
-                alt="Number of riders"
-              />
+              <Bike size={20} />
               <span className="text-xl font-bold">{ridersLabel}</span>
             </div>
           </>

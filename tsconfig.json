@@ -3,8 +3,7 @@
     "**/*.ts",
     "**/*.tsx",
     "**/*.js",
-    "eslint.config.mjs",
-    "vite.config.ts"
+    "eslint.config.mjs"
   ],
   "compilerOptions": {
     "target": "esnext",
@@ -38,6 +37,7 @@
     ".output",
     ".vinxi",
     "**/*.test.ts",
-    "**/*.test.tsx"
+    "**/*.test.tsx",
+    "vite.config.ts"
   ]
 }
