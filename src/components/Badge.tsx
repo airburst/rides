@@ -10,7 +10,7 @@ type Props = {
 const styleMap: Record<string, string> = {
   unready: "bg-red-500",
   ready: "bg-primary",
-  past: "bg-slate-500",
+  past: "bg-zinc-400",
 };
 
 export const Badge = ({ text, style = "unready", small, className }: Props) => {

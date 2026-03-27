@@ -68,16 +68,10 @@ export function RideDetailsClient({ id }: Props) {
   const closeNotes = () => setShowNotesForm(false);
 
   return (
-    <div className="flex w-full flex-col gap-2 lg:gap-4 mt-4 pb-24">
+    <div className="flex min-h-[calc(100svh-5rem)] w-full flex-col gap-2 lg:gap-4 mt-4 sm:min-h-[calc(100svh-7rem)]">
       <RideInfo ride={formattedRide} user={user} />
 
-      {cancelled ? (
-        <div className="fixed inset-x-0 bottom-0 z-10 border-t border-neutral-200 bg-white pb-[env(safe-area-inset-bottom)]">
-          <div className="mx-auto max-w-3xl p-2">
-            <BackButton className="min-w-28 md:min-w-32" />
-          </div>
-        </div>
-      ) : (
+      {!cancelled && (
         <>
           {!isSpace && (
             <div className="mx-2 sm:mx-0">
@@ -97,28 +91,6 @@ export function RideDetailsClient({ id }: Props) {
             isLeader={isLeader}
             ridersLabel={ridersLabel}
           />
-          <div className="fixed inset-x-0 bottom-0 z-10 border-t border-neutral-200 bg-white pb-[env(safe-area-inset-bottom)]">
-            <div className="mx-auto grid max-w-3xl grid-cols-3 gap-2 p-2">
-              <BackButton className="ps-1 pe-1" />
-
-              {isGoing && (
-                <Button secondary className="ps-1 pe-1" onClick={openNotes}>
-                  <MessageSquare className="h-6 w-6" />
-                  NOTE
-                </Button>
-              )}
-
-              {user && (canJoin || isGoing) && (
-                <JoinButton
-                  className="ps-1 pe-1"
-                  going={isGoing}
-                  ariaLabel={`Join ${name} ride`}
-                  rideId={id}
-                  userId={user.id}
-                />
-              )}
-            </div>
-          </div>
         </>
       )}
 
@@ -129,6 +101,29 @@ export function RideDetailsClient({ id }: Props) {
         showNotesForm={showNotesForm}
         closeHandler={closeNotes}
       />
+
+      <div className="sticky bottom-0 z-10 mt-auto border-t border-neutral-200 bg-white pb-[env(safe-area-inset-bottom)]">
+        <div className="mx-auto grid max-w-3xl grid-cols-3 gap-2 p-2">
+          <BackButton className="ps-1 pe-1" />
+
+          {!cancelled && isGoing && (
+            <Button outline className="ps-1 pe-1" onClick={openNotes}>
+              <MessageSquare className="h-6 w-6" />
+              NOTE
+            </Button>
+          )}
+
+          {!cancelled && user && (canJoin || isGoing) && (
+            <JoinButton
+              className="ps-1 pe-1"
+              going={isGoing}
+              ariaLabel={`Join ${name} ride`}
+              rideId={id}
+              userId={user.id}
+            />
+          )}
+        </div>
+      </div>
     </div>
   );
 }

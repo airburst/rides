@@ -46,6 +46,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       onClick,
       primary: _primary,
       secondary: _secondary,
+      outline: _outline,
       error: _error,
     },
     ref,
@@ -54,15 +55,18 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       primary: _primary,
       secondary: _secondary,
       error: _error,
+      outline: _outline,
       link: _link,
     });
 
     const upperText = text?.toUpperCase();
     const buttonContent = children ?? upperText;
     const buttonClasses = cn(
-      "min-h-16 h-full rounded-sm text-base",
+      "min-h-12 h-full rounded-sm text-base",
       variant === "secondary" ? "text-foreground" : "text-white",
       variant === "link" && "text-primary",
+      variant === "outline" &&
+        "text-foreground hover:text-foreground bg-transparent border-2 border-primary",
       className,
     );
 

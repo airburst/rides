@@ -3,6 +3,7 @@ import { makeClickableUrl } from "@utils/makeClickableUrl";
 import { formatDistance } from "@utils/rides";
 import { Calendar, Clock, Map, Ruler, UserRound } from "lucide-react";
 import { type Ride, type User } from "../../types";
+import { Button } from "../Button";
 import { CancelledBanner } from "./Cancelled";
 import { Messages } from "./Messages";
 
@@ -92,15 +93,10 @@ export const RideInfo = ({ ride, user }: Props) => {
 
         {/* Route CTA */}
         {route && (
-          <a
-            className="lg:max-w-64 flex items-center justify-center gap-2 rounded-lg border border-primary px-4 py-3 font-semibold text-primary transition-colors hover:bg-primary hover:text-white"
-            href={route}
-            target="_blank"
-            rel="noreferrer"
-          >
+          <Button outline className="max-w-48" aria-label="Open link to route">
             <Map className="h-5 w-5" />
             View Route
-          </a>
+          </Button>
         )}
       </div>
 
