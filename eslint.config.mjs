@@ -53,7 +53,7 @@ const eslintConfig = [
   },
   {
     files: ["**/*.ts", "**/*.tsx"],
-    ignores: ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx"],
+    ignores: ["**/*.test.ts", "**/*.test.tsx", "**/*.spec.ts", "**/*.spec.tsx", "vite.config.ts"],
     languageOptions: {
       parser: tsParser,
       parserOptions: {
