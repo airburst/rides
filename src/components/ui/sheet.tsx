@@ -1,6 +1,6 @@
-import * as React from "react"
-import { XIcon } from "lucide-react"
 import { Dialog } from "@base-ui/react/dialog"
+import { XIcon } from "lucide-react"
+import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
@@ -36,7 +36,7 @@ function SheetOverlay({
     <Dialog.Backdrop
       data-slot="sheet-overlay"
       className={cn(
-        "fixed inset-0 z-50 bg-black/50 opacity-0 transition-opacity duration-300 data-[open]:opacity-100 data-[starting-style]:opacity-0",
+        "fixed inset-0 z-50 bg-black/50 backdrop-blur-sm opacity-0 transition-opacity duration-300 data-[open]:opacity-100 data-[starting-style]:opacity-0",
         className
       )}
       {...props}
@@ -132,12 +132,7 @@ function SheetDescription({
 }
 
 export {
-  Sheet,
-  SheetTrigger,
-  SheetClose,
-  SheetContent,
-  SheetHeader,
-  SheetFooter,
-  SheetTitle,
-  SheetDescription,
+    Sheet, SheetClose,
+    SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger
 }
+
