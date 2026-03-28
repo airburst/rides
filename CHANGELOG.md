@@ -1,5 +1,11 @@
 # Change Log
 
+## 4.10.0
+
+### Minor Changes
+
+- Add persistence for instant load and offline access
+
 ## 4.9.3
 
 ### Patch Changes
