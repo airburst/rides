@@ -1,10 +1,7 @@
 import { useUpdateNotes } from "@/hooks/useRides";
 import { Dialog } from "@base-ui/react/dialog";
-import { lazy } from "react";
 import { useForm, type SubmitHandler } from "react-hook-form";
-import { type FormValues } from "../forms/RideMessagesForm";
-
-const RideMessagesForm = lazy(() => import("../forms/RideMessagesForm"));
+import RideMessagesForm, { type FormValues } from "../forms/RideMessagesForm";
 
 type Props = {
   rideId?: string;
