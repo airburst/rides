@@ -93,10 +93,16 @@ export const RideInfo = ({ ride, user }: Props) => {
 
         {/* Route CTA */}
         {route && (
-          <Button outline className="max-w-48" aria-label="Open link to route">
-            <Map className="h-5 w-5" />
-            View Route
-          </Button>
+          <a href={route} target="_blank" rel="noopener noreferrer">
+            <Button
+              outline
+              className="max-w-48"
+              aria-label="Open link to route"
+            >
+              <Map className="h-5 w-5" />
+              View Route
+            </Button>
+          </a>
         )}
       </div>
 
