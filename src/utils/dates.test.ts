@@ -6,6 +6,7 @@ import {
   formatFormDate,
   formatTime,
   getFormRideDateAndTime,
+  getQueryDateRange,
   isWinter,
   normalizeApiDate,
 } from "./dates";
@@ -78,6 +79,34 @@ describe("form date/time helpers", () => {
       startDate: "",
       time: "",
     });
+  });
+});
+
+describe("getQueryDateRange", () => {
+  beforeAll(() => {
+    dayjs.extend(utc);
+  });
+
+  // Regression: in BST (UTC+1), dayjs(date-only).utc() pushed start back a day,
+  // so /rides/2026-06-12 also returned 2026-06-11 rides.
+  it("keeps the date stable across TZ when given a date-only string in summer", () => {
+    const { start, end } = getQueryDateRange({
+      start: "2026-06-12",
+      end: "2026-06-12",
+    });
+
+    expect(start.split("T")[0]).toBe("2026-06-12");
+    expect(end.split("T")[0]).toBe("2026-06-12");
+  });
+
+  it("keeps the date stable across TZ when given a date-only string in winter", () => {
+    const { start, end } = getQueryDateRange({
+      start: "2026-12-12",
+      end: "2026-12-12",
+    });
+
+    expect(start.split("T")[0]).toBe("2026-12-12");
+    expect(end.split("T")[0]).toBe("2026-12-12");
   });
 });
 

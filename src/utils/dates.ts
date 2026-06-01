@@ -25,7 +25,7 @@ export const isJoinable = (date: string, time?: string): boolean => {
 };
 
 export const getDateFromString = (dateString: string, _end?: boolean) => {
-  return dayjs(dateString).utc().toISOString();
+  return dayjs.utc(dateString).toISOString();
 };
 
 // Set ISO time in db; no offset calculation
@@ -79,8 +79,9 @@ export const getQueryDateRange = ({
   const st = start ? getDateFromString(start) : now;
   let en = end ? getDateFromString(end, true) : FOREVER;
 
-  // Set end of day on en
-  en = dayjs(en)
+  // Set end of day on en (UTC to avoid local-TZ date drift)
+  en = dayjs
+    .utc(en)
     .set("hour", 23)
     .set("minute", 59)
     .set("second", 59)

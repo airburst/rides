@@ -1,5 +1,11 @@
 # Change Log
 
+## 4.10.2
+
+### Patch Changes
+
+- Fixes issue where previous day's rides were displayed in a calendar/day view
+
 ## 4.10.1
 
 ### Patch Changes
