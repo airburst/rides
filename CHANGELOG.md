@@ -1,5 +1,11 @@
 # Change Log
 
+## 4.10.3
+
+### Patch Changes
+
+- Fix build wrapper shipping stale assets to production. `vite build` hangs after prerender (the TanStack Start prerender server never closes the event loop), so `build.ts` force-exits. The old wrapper killed vite after a fixed 10s and always exited 0, which on a slow/cold Vercel build could fire before `dist/client` finished emitting, reporting success while deploying stale/partial assets. It now waits for genuine completion (prerender done + non-empty `dist/client/_shell.html`) before exiting 0, and fails non-zero on error or a 240s safety timeout so deploys fail loudly instead of silently shipping old code.
+
 ## 4.10.2
 
 ### Patch Changes
