@@ -1,5 +1,11 @@
 # Change Log
 
+## 4.10.4
+
+### Patch Changes
+
+- Fix new repeating rides not generating their upcoming rides. When a template was created late in a month (e.g. a weekly Thursday added after the last Thursday), the "add these rides?" modal never appeared and nothing was generated, because the preview window only covered the remainder of the current month. The window now extends through the end of next month, so a freshly created template always offers its upcoming rides. Also adds feedback when there are genuinely no rides to add and surfaces errors instead of silently doing nothing.
+
 ## 4.10.3
 
 ### Patch Changes
