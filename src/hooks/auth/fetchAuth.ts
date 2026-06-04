@@ -22,6 +22,7 @@ export async function fetchAuthJson<T>(
   options: RequestInit = {},
 ): Promise<T> {
   const headers = extractHeaders(options.headers);
+  const hasBody = options.body !== undefined && options.body !== null;
 
   if (AUTH_CALLBACK_ORIGIN) {
     headers.set("X-Auth-Origin", AUTH_CALLBACK_ORIGIN);
@@ -32,7 +33,11 @@ export async function fetchAuthJson<T>(
     }
   }
 
-  if (!headers.has("Content-Type") && !(options.body instanceof FormData)) {
+  if (
+    hasBody &&
+    !headers.has("Content-Type") &&
+    !(options.body instanceof FormData)
+  ) {
     headers.set("Content-Type", "application/json");
   }
 

@@ -142,7 +142,7 @@ function LoginPage() {
         </button>
 
         <button type="button" className={authButtonSecondaryClassName} onClick={() => void loginWithRedirect()}>
-          Existing member? Log in with Auth0
+          Existing BathCC member? Log in with Auth0
         </button>
       </form>
     </AuthPage>

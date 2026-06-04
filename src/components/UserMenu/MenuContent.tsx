@@ -13,7 +13,6 @@ import {
   Repeat,
   Trash2,
   User,
-  UserPlus,
   Users,
   X,
 } from "lucide-react";
@@ -83,9 +82,6 @@ export const MenuContent = ({
             <MenuEntry label="Log in" onClick={handleSignin}>
               <LogIn className="h-6 w-6" />
             </MenuEntry>
-            <MenuEntry label="Sign up" href="/auth/signup/bcc" onClick={closeMenu}>
-              <UserPlus className="h-6 w-6" />
-            </MenuEntry>
           </>
         )}
 
@@ -153,11 +149,10 @@ export const MenuContent = ({
 
         {isAuthenticated && (
           <MenuEntry
-            className="text-destructive"
             label="Log out"
             onClick={handleSignout}
           >
-            <LogOut className="fill-destructive" />
+            <LogOut className="h-6 w-6" />
           </MenuEntry>
         )}
       </ul>

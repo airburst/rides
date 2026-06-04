@@ -13,10 +13,10 @@ export const authInputClassName =
   "w-full rounded-lg border border-neutral-300 bg-white px-3 py-2 text-neutral-700 outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/20";
 
 export const authButtonClassName =
-  "inline-flex w-full items-center justify-center rounded-lg bg-primary px-4 py-2 font-semibold text-white transition hover:bg-primary/90";
+  "inline-flex w-full items-center justify-center rounded-lg bg-primary px-4 py-2 font-semibold text-white transition hover:bg-primary/90 cursor-pointer disabled:cursor-not-allowed disabled:bg-primary/50 disabled:text-white/70";
 
 export const authButtonSecondaryClassName =
-  "inline-flex w-full items-center justify-center rounded-lg border border-neutral-300 bg-white px-4 py-2 font-semibold text-neutral-700 transition hover:bg-neutral-50";
+  "inline-flex w-full items-center justify-center rounded-lg border border-neutral-300 px-4 py-2 font-semibold text-neutral-700 transition bg-neutral-50 hover:bg-neutral-100 cursor-pointer disabled:cursor-not-allowed disabled:bg-neutral-200 disabled:text-neutral-500";
 
 export function AuthPage({ title, description, children, footer }: AuthPageProps) {
   return (
