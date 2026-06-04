@@ -4,6 +4,7 @@ export class ApiError extends Error {
   constructor(
     public status: number,
     message: string,
+    public details?: unknown,
   ) {
     super(message);
     this.name = "ApiError";
@@ -39,7 +40,13 @@ export async function apiClient<T>(
     const error = await response
       .json()
       .catch(() => ({ error: "Request failed" }));
-    throw new ApiError(response.status, error.error ?? "Request failed");
+
+    const message =
+      (error as { error?: string; message?: string }).error ??
+      (error as { error?: string; message?: string }).message ??
+      "Request failed";
+
+    throw new ApiError(response.status, message, error);
   }
 
   return response.json() as Promise<T>;

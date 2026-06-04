@@ -1,4 +1,5 @@
 import { type Role } from "@/types";
+import { flattenQuery } from "@utils/general";
 import copyToClipboard from "copy-to-clipboard";
 import {
   Calendar,
@@ -12,10 +13,10 @@ import {
   Repeat,
   Trash2,
   User,
+  UserPlus,
   Users,
   X,
 } from "lucide-react";
-import { flattenQuery } from "@utils/general";
 import { toast } from "sonner";
 import pkg from "../../../package.json";
 import { MenuEntry } from "./MenuEntry";
@@ -78,9 +79,14 @@ export const MenuContent = ({
 
       <ul className="flex flex-col gap-1 p-0 text-xl text-neutral-300">
         {!isAuthenticated && (
-          <MenuEntry label="Log in" onClick={handleSignin}>
-            <LogIn className="h-6 w-6" />
-          </MenuEntry>
+          <>
+            <MenuEntry label="Log in" onClick={handleSignin}>
+              <LogIn className="h-6 w-6" />
+            </MenuEntry>
+            <MenuEntry label="Sign up" href="/auth/signup/bcc" onClick={closeMenu}>
+              <UserPlus className="h-6 w-6" />
+            </MenuEntry>
+          </>
         )}
 
         {isAuthenticated && (

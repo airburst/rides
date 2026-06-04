@@ -1,4 +1,4 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import { useSession } from "@/hooks/useSession";
 import { type User } from "../../types";
 import { RiderDetails } from "./RiderDetails";
 
@@ -17,13 +17,13 @@ export const RidersGoing = ({
   isLeader,
   rideNotes,
 }: Props) => {
-  const { loginWithRedirect } = useAuth0();
+  const { login } = useSession();
 
   if (!hasRiders) {
     return null;
   }
 
-  const handleSignIn = () => void loginWithRedirect();
+  const handleSignIn = () => void login();
 
   return (
     <div className="flex w-full px-2 sm:px-0">
