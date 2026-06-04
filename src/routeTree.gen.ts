@@ -22,11 +22,17 @@ import { Route as RIdRouteImport } from './routes/r/$id'
 import { Route as ProfileIdRouteImport } from './routes/profile/$id'
 import { Route as CalendarDateRouteImport } from './routes/calendar/$date'
 import { Route as RideNewIndexRouteImport } from './routes/ride/new/index'
+import { Route as AuthVerifyPendingIndexRouteImport } from './routes/auth/verify-pending/index'
+import { Route as AuthVerifiedIndexRouteImport } from './routes/auth/verified/index'
+import { Route as AuthResetPasswordIndexRouteImport } from './routes/auth/reset-password/index'
+import { Route as AuthLoginIndexRouteImport } from './routes/auth/login/index'
+import { Route as AuthForgotPasswordIndexRouteImport } from './routes/auth/forgot-password/index'
 import { Route as RideNewDateRouteImport } from './routes/ride/new/$date'
 import { Route as RideEditIdRouteImport } from './routes/ride/edit/$id'
 import { Route as RideCopyIdRouteImport } from './routes/ride/copy/$id'
 import { Route as RepeatingRidesEditIdRouteImport } from './routes/repeating-rides/edit/$id'
 import { Route as RepeatingRidesCopyIdRouteImport } from './routes/repeating-rides/copy/$id'
+import { Route as AuthSignupSlugIndexRouteImport } from './routes/auth/signup/$slug/index'
 
 const UsersRoute = UsersRouteImport.update({
   id: '/users',
@@ -93,6 +99,31 @@ const RideNewIndexRoute = RideNewIndexRouteImport.update({
   path: '/ride/new/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthVerifyPendingIndexRoute = AuthVerifyPendingIndexRouteImport.update({
+  id: '/auth/verify-pending/',
+  path: '/auth/verify-pending/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthVerifiedIndexRoute = AuthVerifiedIndexRouteImport.update({
+  id: '/auth/verified/',
+  path: '/auth/verified/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthResetPasswordIndexRoute = AuthResetPasswordIndexRouteImport.update({
+  id: '/auth/reset-password/',
+  path: '/auth/reset-password/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthLoginIndexRoute = AuthLoginIndexRouteImport.update({
+  id: '/auth/login/',
+  path: '/auth/login/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthForgotPasswordIndexRoute = AuthForgotPasswordIndexRouteImport.update({
+  id: '/auth/forgot-password/',
+  path: '/auth/forgot-password/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RideNewDateRoute = RideNewDateRouteImport.update({
   id: '/ride/new/$date',
   path: '/ride/new/$date',
@@ -118,6 +149,11 @@ const RepeatingRidesCopyIdRoute = RepeatingRidesCopyIdRouteImport.update({
   path: '/repeating-rides/copy/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthSignupSlugIndexRoute = AuthSignupSlugIndexRouteImport.update({
+  id: '/auth/signup/$slug/',
+  path: '/auth/signup/$slug/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -137,7 +173,13 @@ export interface FileRoutesByFullPath {
   '/ride/copy/$id': typeof RideCopyIdRoute
   '/ride/edit/$id': typeof RideEditIdRoute
   '/ride/new/$date': typeof RideNewDateRoute
+  '/auth/forgot-password/': typeof AuthForgotPasswordIndexRoute
+  '/auth/login/': typeof AuthLoginIndexRoute
+  '/auth/reset-password/': typeof AuthResetPasswordIndexRoute
+  '/auth/verified/': typeof AuthVerifiedIndexRoute
+  '/auth/verify-pending/': typeof AuthVerifyPendingIndexRoute
   '/ride/new/': typeof RideNewIndexRoute
+  '/auth/signup/$slug/': typeof AuthSignupSlugIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -156,7 +198,13 @@ export interface FileRoutesByTo {
   '/ride/copy/$id': typeof RideCopyIdRoute
   '/ride/edit/$id': typeof RideEditIdRoute
   '/ride/new/$date': typeof RideNewDateRoute
+  '/auth/forgot-password': typeof AuthForgotPasswordIndexRoute
+  '/auth/login': typeof AuthLoginIndexRoute
+  '/auth/reset-password': typeof AuthResetPasswordIndexRoute
+  '/auth/verified': typeof AuthVerifiedIndexRoute
+  '/auth/verify-pending': typeof AuthVerifyPendingIndexRoute
   '/ride/new': typeof RideNewIndexRoute
+  '/auth/signup/$slug': typeof AuthSignupSlugIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -177,7 +225,13 @@ export interface FileRoutesById {
   '/ride/copy/$id': typeof RideCopyIdRoute
   '/ride/edit/$id': typeof RideEditIdRoute
   '/ride/new/$date': typeof RideNewDateRoute
+  '/auth/forgot-password/': typeof AuthForgotPasswordIndexRoute
+  '/auth/login/': typeof AuthLoginIndexRoute
+  '/auth/reset-password/': typeof AuthResetPasswordIndexRoute
+  '/auth/verified/': typeof AuthVerifiedIndexRoute
+  '/auth/verify-pending/': typeof AuthVerifyPendingIndexRoute
   '/ride/new/': typeof RideNewIndexRoute
+  '/auth/signup/$slug/': typeof AuthSignupSlugIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -199,7 +253,13 @@ export interface FileRouteTypes {
     | '/ride/copy/$id'
     | '/ride/edit/$id'
     | '/ride/new/$date'
+    | '/auth/forgot-password/'
+    | '/auth/login/'
+    | '/auth/reset-password/'
+    | '/auth/verified/'
+    | '/auth/verify-pending/'
     | '/ride/new/'
+    | '/auth/signup/$slug/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -218,7 +278,13 @@ export interface FileRouteTypes {
     | '/ride/copy/$id'
     | '/ride/edit/$id'
     | '/ride/new/$date'
+    | '/auth/forgot-password'
+    | '/auth/login'
+    | '/auth/reset-password'
+    | '/auth/verified'
+    | '/auth/verify-pending'
     | '/ride/new'
+    | '/auth/signup/$slug'
   id:
     | '__root__'
     | '/'
@@ -238,7 +304,13 @@ export interface FileRouteTypes {
     | '/ride/copy/$id'
     | '/ride/edit/$id'
     | '/ride/new/$date'
+    | '/auth/forgot-password/'
+    | '/auth/login/'
+    | '/auth/reset-password/'
+    | '/auth/verified/'
+    | '/auth/verify-pending/'
     | '/ride/new/'
+    | '/auth/signup/$slug/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -257,7 +329,13 @@ export interface RootRouteChildren {
   RideCopyIdRoute: typeof RideCopyIdRoute
   RideEditIdRoute: typeof RideEditIdRoute
   RideNewDateRoute: typeof RideNewDateRoute
+  AuthForgotPasswordIndexRoute: typeof AuthForgotPasswordIndexRoute
+  AuthLoginIndexRoute: typeof AuthLoginIndexRoute
+  AuthResetPasswordIndexRoute: typeof AuthResetPasswordIndexRoute
+  AuthVerifiedIndexRoute: typeof AuthVerifiedIndexRoute
+  AuthVerifyPendingIndexRoute: typeof AuthVerifyPendingIndexRoute
   RideNewIndexRoute: typeof RideNewIndexRoute
+  AuthSignupSlugIndexRoute: typeof AuthSignupSlugIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -353,6 +431,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RideNewIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth/verify-pending/': {
+      id: '/auth/verify-pending/'
+      path: '/auth/verify-pending'
+      fullPath: '/auth/verify-pending/'
+      preLoaderRoute: typeof AuthVerifyPendingIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/verified/': {
+      id: '/auth/verified/'
+      path: '/auth/verified'
+      fullPath: '/auth/verified/'
+      preLoaderRoute: typeof AuthVerifiedIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/reset-password/': {
+      id: '/auth/reset-password/'
+      path: '/auth/reset-password'
+      fullPath: '/auth/reset-password/'
+      preLoaderRoute: typeof AuthResetPasswordIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/login/': {
+      id: '/auth/login/'
+      path: '/auth/login'
+      fullPath: '/auth/login/'
+      preLoaderRoute: typeof AuthLoginIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/forgot-password/': {
+      id: '/auth/forgot-password/'
+      path: '/auth/forgot-password'
+      fullPath: '/auth/forgot-password/'
+      preLoaderRoute: typeof AuthForgotPasswordIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ride/new/$date': {
       id: '/ride/new/$date'
       path: '/ride/new/$date'
@@ -388,6 +501,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RepeatingRidesCopyIdRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth/signup/$slug/': {
+      id: '/auth/signup/$slug/'
+      path: '/auth/signup/$slug'
+      fullPath: '/auth/signup/$slug/'
+      preLoaderRoute: typeof AuthSignupSlugIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -421,7 +541,13 @@ const rootRouteChildren: RootRouteChildren = {
   RideCopyIdRoute: RideCopyIdRoute,
   RideEditIdRoute: RideEditIdRoute,
   RideNewDateRoute: RideNewDateRoute,
+  AuthForgotPasswordIndexRoute: AuthForgotPasswordIndexRoute,
+  AuthLoginIndexRoute: AuthLoginIndexRoute,
+  AuthResetPasswordIndexRoute: AuthResetPasswordIndexRoute,
+  AuthVerifiedIndexRoute: AuthVerifiedIndexRoute,
+  AuthVerifyPendingIndexRoute: AuthVerifyPendingIndexRoute,
   RideNewIndexRoute: RideNewIndexRoute,
+  AuthSignupSlugIndexRoute: AuthSignupSlugIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

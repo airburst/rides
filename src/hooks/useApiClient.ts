@@ -1,26 +1,81 @@
+import { useBetterAuthSession } from "@/hooks/auth";
+import { apiClient } from "@/lib/api";
 import { useAuth0 } from "@auth0/auth0-react";
 import { useCallback } from "react";
-import { apiClient } from "@/lib/api";
 
 export function useApiClient() {
-  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const {
+    getAccessTokenSilently,
+    isAuthenticated: isAuth0Authenticated,
+    isLoading: isAuth0Loading,
+  } = useAuth0();
+
+  const shouldCheckBetterAuth = !isAuth0Authenticated && !isAuth0Loading;
+  const {
+    data: betterAuthSession,
+    isLoading: isBetterAuthSessionLoading,
+  } = useBetterAuthSession(shouldCheckBetterAuth);
+
+  const hasBetterAuthSession = Boolean(
+    betterAuthSession?.session && betterAuthSession?.user,
+  );
+
+  const isAuthenticated = isAuth0Authenticated || hasBetterAuthSession;
+  const isAuthResolved =
+    !isAuth0Loading &&
+    (!shouldCheckBetterAuth || !isBetterAuthSessionLoading);
 
   const fetchWithAuth = useCallback(
     async <T>(endpoint: string, options: RequestInit = {}): Promise<T> => {
-      let token: string | undefined;
+      if (isAuth0Authenticated) {
+        const token = await getAccessTokenSilently();
+        return apiClient<T>(endpoint, { ...options, token });
+      }
 
-      if (isAuthenticated) {
+      if (hasBetterAuthSession) {
+        return apiClient<T>(endpoint, {
+          ...options,
+          credentials: "include",
+        });
+      }
+
+      throw new Error("Not authenticated");
+    },
+    [getAccessTokenSilently, hasBetterAuthSession, isAuth0Authenticated],
+  );
+
+  const fetchWithOptionalAuth = useCallback(
+    async <T>(endpoint: string, options: RequestInit = {}): Promise<T> => {
+      if (isAuth0Authenticated) {
         try {
-          token = await getAccessTokenSilently();
+          const token = await getAccessTokenSilently();
+          return apiClient<T>(endpoint, { ...options, token });
         } catch {
-          // Token fetch failed, continue without auth
+          // Continue without auth if token acquisition fails
         }
       }
 
-      return apiClient<T>(endpoint, { ...options, token });
+      if (hasBetterAuthSession) {
+        return apiClient<T>(endpoint, {
+          ...options,
+          credentials: "include",
+        });
+      }
+
+      return apiClient<T>(endpoint, options);
     },
-    [getAccessTokenSilently, isAuthenticated],
+    [getAccessTokenSilently, hasBetterAuthSession, isAuth0Authenticated],
   );
 
-  return fetchWithAuth;
+  return {
+    fetchWithAuth,
+    fetchWithOptionalAuth,
+    isAuthenticated,
+    isAuthResolved,
+    authType: isAuth0Authenticated
+      ? "auth0"
+      : hasBetterAuthSession
+        ? "better-auth"
+        : null,
+  };
 }

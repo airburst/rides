@@ -1,5 +1,13 @@
 # Change Log
 
+## 4.10.5
+
+### Patch Changes
+
+- d7cfe75: Add support for better-auth login, signup, logout, forgotten password
+- NOTE: All of the above is for test purposes and relies on a non-production email service
+- Add avatar fallback icon
+
 ## 4.10.4
 
 ### Patch Changes
