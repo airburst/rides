@@ -1,5 +1,43 @@
 # Change Log
 
+## 4.10.5
+
+### Patch Changes
+
+- d7cfe75: Add support for better-auth login, signup, logout, forgotten password
+- NOTE: All of the above is for test purposes and relies on a non-production email service
+- Add avatar fallback icon
+
+## 4.10.4
+
+### Patch Changes
+
+- Fix new repeating rides not generating their upcoming rides. When a template was created late in a month (e.g. a weekly Thursday added after the last Thursday), the "add these rides?" modal never appeared and nothing was generated, because the preview window only covered the remainder of the current month. The window now extends through the end of next month, so a freshly created template always offers its upcoming rides. Also adds feedback when there are genuinely no rides to add and surfaces errors instead of silently doing nothing.
+
+## 4.10.3
+
+### Patch Changes
+
+- Fix build wrapper shipping stale assets to production. `vite build` hangs after prerender (the TanStack Start prerender server never closes the event loop), so `build.ts` force-exits. The old wrapper killed vite after a fixed 10s and always exited 0, which on a slow/cold Vercel build could fire before `dist/client` finished emitting, reporting success while deploying stale/partial assets. It now waits for genuine completion (prerender done + non-empty `dist/client/_shell.html`) before exiting 0, and fails non-zero on error or a 240s safety timeout so deploys fail loudly instead of silently shipping old code.
+
+## 4.10.2
+
+### Patch Changes
+
+- Fixes issue where previous day's rides were displayed in a calendar/day view
+
+## 4.10.1
+
+### Patch Changes
+
+- Update dependencies
+
+## 4.10.0
+
+### Minor Changes
+
+- Add persistence for instant load and offline access
+
 ## 4.9.3
 
 ### Patch Changes

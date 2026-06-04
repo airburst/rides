@@ -3,11 +3,12 @@ import { Providers } from "@/components/Providers";
 import { Button } from "@/components/ui/button";
 import outfitLatinUrl from "@fontsource-variable/outfit/files/outfit-latin-wght-normal.woff2?url";
 import {
-  HeadContent,
-  Outlet,
-  Scripts,
-  createRootRoute,
+    HeadContent,
+    Outlet,
+    Scripts,
+    createRootRoute,
 } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { Toaster } from "sonner";
 import appCss from "../styles/globals.css?url";
 
@@ -42,7 +43,7 @@ export const Route = createRootRoute({
         crossOrigin: "anonymous",
       },
       { rel: "stylesheet", href: appCss },
-      { rel: "icon", href: "/static/favicon.ico" },
+{ rel: "icon", href: "/static/favicon.ico" },
       {
         rel: "icon",
         type: "image/png",
@@ -64,13 +65,14 @@ export const Route = createRootRoute({
 });
 
 function RootComponent() {
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   return (
     <Providers>
-      <div className="h-svh overflow-y-scroll snap-y snap-mandatory lg:snap-none">
-        <Header />
-        <Outlet />
-      </div>
-      <Toaster position="bottom-center" richColors />
+      <Header />
+      <Outlet />
+      {mounted && <Toaster position="bottom-center" richColors />}
     </Providers>
   );
 }
@@ -112,7 +114,10 @@ function NotFound() {
         Sorry - we can&apos;t find this page.
       </div>
       <div className="flex items-center justify-center p-4 text-neutral-700">
-        <Button onClick={() => window.history.back()} type="button">
+        <Button
+          onClick={() => window.history.back()}
+          type="button"
+        >
           BACK
         </Button>
       </div>

@@ -36,6 +36,7 @@
     "build",
     ".output",
     ".vinxi",
+    "vite.config.ts",
     "**/*.test.ts",
     "**/*.test.tsx",
     "vite.config.ts"

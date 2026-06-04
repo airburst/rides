@@ -1,10 +1,9 @@
-import { apiClient } from "@/lib/api";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useApiClient } from "@/hooks/useApiClient";
 import { useQuery } from "@tanstack/react-query";
 import type { RidesResponse } from "./types";
 
 export function useRides(start?: string, end?: string) {
-  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const { fetchWithOptionalAuth } = useApiClient();
 
   // Use date-only keys for stable caching (ignore time component)
   const startDate = start?.split("T")[0];
@@ -13,15 +12,6 @@ export function useRides(start?: string, end?: string) {
   return useQuery({
     queryKey: ["rides", startDate, endDate],
     queryFn: async () => {
-      let token: string | undefined;
-      if (isAuthenticated) {
-        try {
-          token = await getAccessTokenSilently();
-        } catch {
-          // Continue without auth
-        }
-      }
-
       const params = new URLSearchParams();
       if (startDate) params.set("start", startDate);
       if (endDate) params.set("end", endDate);
@@ -29,7 +19,7 @@ export function useRides(start?: string, end?: string) {
       const query = params.toString();
       const endpoint = query ? `/rides?${query}` : "/rides";
 
-      const data = await apiClient<RidesResponse>(endpoint, { token });
+      const data = await fetchWithOptionalAuth<RidesResponse>(endpoint);
       return data.rides;
     },
   });

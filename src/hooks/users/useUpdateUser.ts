@@ -1,18 +1,15 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import { useApiClient } from "@/hooks/useApiClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiClient } from "@/lib/api";
 import type { UpdateUserInput } from "./types";
 
 export function useUpdateUser() {
   const queryClient = useQueryClient();
-  const { getAccessTokenSilently } = useAuth0();
+  const { fetchWithAuth } = useApiClient();
 
   return useMutation({
     mutationFn: async ({ id, data }: { id: string; data: UpdateUserInput }) => {
-      const token = await getAccessTokenSilently();
-      return apiClient<{ success: boolean; id: string }>(`/users/${id}`, {
+      return fetchWithAuth<{ success: boolean; id: string }>(`/users/${id}`, {
         method: "PATCH",
-        token,
         body: JSON.stringify(data),
       });
     },

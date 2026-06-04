@@ -206,7 +206,8 @@ describe("repeatingRides", () => {
   });
 
   describe("makeRidesInPeriod", () => {
-    it("should generate rides for the next month period", async () => {
+    it("should generate rides through the end of next month", async () => {
+      mockIsWinter.mockReturnValue(false);
       const template: RepeatingRideDb = {
         id: "1",
         name: "Weekly Ride",
@@ -218,24 +219,38 @@ describe("repeatingRides", () => {
 
       expect(result).toHaveProperty("id", "1");
       expect(result).toHaveProperty("schedule", template.schedule);
-      expect(result.rides).toHaveLength(3); // 3 Thursdays in May 2025
-      expect(result.rides).toEqual([
-        {
-          name: "Weekly Ride",
-          rideDate: "2025-05-15T18:30:00.000Z",
-          scheduleId: "1",
-        },
-        {
-          name: "Weekly Ride",
-          rideDate: "2025-05-22T18:30:00.000Z",
-          scheduleId: "1",
-        },
-        {
-          name: "Weekly Ride",
-          rideDate: "2025-05-29T18:30:00.000Z",
-          scheduleId: "1",
-        },
+      // Window is [start, start of month-after-next): May + June 2025 Thursdays.
+      expect(result.rides).toHaveLength(7);
+      expect(result.rides.map((r) => r.rideDate)).toEqual([
+        "2025-05-15T18:30:00.000Z",
+        "2025-05-22T18:30:00.000Z",
+        "2025-05-29T18:30:00.000Z",
+        "2025-06-05T18:30:00.000Z",
+        "2025-06-12T18:30:00.000Z",
+        "2025-06-19T18:30:00.000Z",
+        "2025-06-26T18:30:00.000Z",
       ]);
+    });
+
+    it("returns upcoming rides when created late in the month (regression)", async () => {
+      // Bug: a weekly Thursday template created Fri 26 Jun 2026 produced an
+      // empty list (no Thursday before 1 Jul), so the confirm modal never
+      // showed and no rides were generated. Window now reaches into next month.
+      mockIsWinter.mockReturnValue(false);
+      const template: RepeatingRideDb = {
+        id: "late",
+        name: "Thirsty Thursdays",
+        schedule:
+          "DTSTART:20260626T183000Z\nRRULE:FREQ=WEEKLY;INTERVAL=1;BYDAY=TH",
+      };
+
+      const result = await makeRidesInPeriod(template, "2026-06-26");
+
+      expect(result.rides.length).toBeGreaterThan(0);
+      // All July Thursdays fall in range.
+      expect(result.rides.map((r) => r.rideDate)).toContain(
+        "2026-07-02T18:30:00.000Z",
+      );
     });
 
     it("should use provided date as start date", async () => {
@@ -266,7 +281,8 @@ describe("repeatingRides", () => {
         template,
         "2023-01-01T00:00:00.000Z",
       );
-      expect(result.rides).toHaveLength(5); //5 Sundays in January 2023
+      // Window reaches through end of next month: 5 Sundays in Jan + 4 in Feb.
+      expect(result.rides).toHaveLength(9);
       expect(result.rides?.[0]?.rideDate).toContain("09:30:00");
     });
 

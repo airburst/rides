@@ -1,6 +1,5 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import { useApiClient } from "@/hooks/useApiClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiClient } from "@/lib/api";
 
 type DeleteResponse = {
   success: boolean;
@@ -10,15 +9,13 @@ type DeleteResponse = {
 type DeleteInput = { id: string; cascade?: boolean };
 
 export function useDeleteRepeatingRide() {
-  const { getAccessTokenSilently } = useAuth0();
+  const { fetchWithAuth } = useApiClient();
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async ({ id, cascade }: DeleteInput) => {
-      const token = await getAccessTokenSilently();
       const query = cascade ? "?cascade=true" : "";
-      return apiClient<DeleteResponse>(`/repeating-rides/${id}${query}`, {
-        token,
+      return fetchWithAuth<DeleteResponse>(`/repeating-rides/${id}${query}`, {
         method: "DELETE",
       });
     },

@@ -7,6 +7,8 @@ const schema = z.object({
   VITE_AUTH0_DOMAIN: z.string().optional(),
   VITE_AUTH0_CLIENT_ID: z.string().optional(),
   VITE_AUTH0_AUDIENCE: z.string().optional(),
+  VITE_AUTH_PROVIDER: z.enum(["auth0", "better-auth"]).default("auth0"),
+  VITE_AUTH_CALLBACK_URL: z.string().url().optional(),
   VITE_API_URL: z.string().url().optional(),
 });
 

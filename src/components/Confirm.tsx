@@ -33,9 +33,9 @@ export const Confirm = ({
   return (
     <Dialog.Root open={open}>
       <Dialog.Portal>
-        <Dialog.Backdrop className="fixed inset-0 z-40 bg-black/30" />
+        <Dialog.Backdrop className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm fill-mode-forwards data-[open]:animate-in data-[open]:fade-in data-[open]:duration-300 data-[closed]:animate-out data-[closed]:fade-out data-[closed]:duration-200" />
         <div className="fixed inset-0 z-40 flex w-screen items-center justify-center p-4">
-          <Dialog.Popup className="motion-preset-slide-up max-w-lg space-y-4 rounded-md bg-white p-4 text-lg">
+          <Dialog.Popup className="fill-mode-forwards max-w-lg space-y-4 rounded-md bg-white p-4 text-lg data-[open]:animate-in data-[open]:slide-in-from-bottom data-[open]:fade-in data-[open]:duration-300 data-[closed]:animate-out data-[closed]:slide-out-to-bottom data-[closed]:fade-out data-[closed]:duration-200">
             <Dialog.Title>{heading}</Dialog.Title>
             <Dialog.Description>{children}</Dialog.Description>
             <div className="mt-4 flex flex-row gap-4">

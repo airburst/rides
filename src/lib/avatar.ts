@@ -1,4 +1,6 @@
-const API_URL = import.meta.env.VITE_API_URL!;
+import { env } from "@/env";
+
+const API_URL = env.VITE_API_URL!;
 
 /**
  * Resolves an avatar URL to a full URL.
@@ -9,7 +11,7 @@ const API_URL = import.meta.env.VITE_API_URL!;
  */
 export function resolveAvatarUrl(url: string | null | undefined): string {
   if (!url) {
-    return "https://via.placeholder.com/40"; // Default avatar
+    return "";
   }
 
   // If it's already an absolute URL (gravatar, Auth0 CDN, etc.), return as-is

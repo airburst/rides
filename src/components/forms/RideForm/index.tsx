@@ -158,18 +158,31 @@ const RideForm = ({
           onSuccess: (results) => {
             // Store schedule id to use in handleYes function
             setScheduleId(results.id);
-            // Calculate rides list and ask to create them
-            void repeatingRideToDb(payload).then(async (dbRide) => {
-              const rideList = await makeRidesInPeriod(dbRide, data.startDate);
-              const rideDates = rideList.rides.map(({ rideDate }) =>
-                formatDate(rideDate),
-              );
-              if (rideDates.length > 0) {
-                setRideDateList(rideDates);
-                show();
-              }
-            });
             toast.success("Repeating ride created successfully");
+            // Calculate rides list and ask to create them
+            void repeatingRideToDb(payload)
+              .then(async (dbRide) => {
+                const rideList = await makeRidesInPeriod(dbRide, data.startDate);
+                const rideDates = rideList.rides.map(({ rideDate }) =>
+                  formatDate(rideDate),
+                );
+                if (rideDates.length > 0) {
+                  setRideDateList(rideDates);
+                  show();
+                } else {
+                  // Nothing to add in range (e.g. created late in the month);
+                  // tell the admin instead of silently doing nothing.
+                  toast.info(
+                    "No upcoming rides to add yet — the monthly job will create them.",
+                  );
+                  void router.navigate({ to: "/" });
+                }
+              })
+              .catch(() => {
+                toast.error(
+                  "Schedule created, but its rides couldn't be prepared to add.",
+                );
+              });
           },
           onError: (error) => {
             toast.error(error.message || "Failed to create repeating ride");

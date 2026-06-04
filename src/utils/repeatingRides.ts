@@ -239,8 +239,11 @@ export const makeRidesInPeriod = async (
 ): Promise<RideSet> => {
   const { id, schedule } = template;
   const start = date ? new Date(date) : new Date();
-  const nextMonth = dayjs(date).add(1, "month").startOf("month").toISOString();
-  const end = new Date(nextMonth);
+  // Generate through the end of next month (start of the month after next), so a
+  // template created late in a month still produces its upcoming rides rather
+  // than an empty set. Overlap on re-runs is harmless: generation is idempotent.
+  const through = dayjs(date).add(2, "month").startOf("month").toISOString();
+  const end = new Date(through);
   const RRule = await loadRRule();
   const rideDates = RRule.fromString(schedule).between(start, end);
 
