@@ -1,18 +1,15 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import { useApiClient } from "@/hooks/useApiClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiClient } from "@/lib/api";
 import type { RideList } from "./types";
 
 export function useDeleteRide() {
   const queryClient = useQueryClient();
-  const { getAccessTokenSilently } = useAuth0();
+  const { fetchWithAuth } = useApiClient();
 
   return useMutation({
     mutationFn: async (id: string) => {
-      const token = await getAccessTokenSilently();
-      return apiClient<{ success: boolean }>(`/rides/${id}`, {
+      return fetchWithAuth<{ success: boolean }>(`/rides/${id}`, {
         method: "DELETE",
-        token,
       });
     },
     onMutate: async (id) => {

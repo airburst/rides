@@ -1,22 +1,16 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import { useApiClient } from "@/hooks/useApiClient";
 import { useQuery } from "@tanstack/react-query";
-import { apiClient } from "@/lib/api";
 import type { UserResponse } from "./types";
 
 export function useUser(id: string) {
-  const { getAccessTokenSilently, isAuthenticated } = useAuth0();
+  const { fetchWithAuth, isAuthenticated, isAuthResolved } = useApiClient();
 
   return useQuery({
     queryKey: ["user", id],
     queryFn: async () => {
-      if (!isAuthenticated) {
-        throw new Error("Not authenticated");
-      }
-
-      const token = await getAccessTokenSilently();
-      const data = await apiClient<UserResponse>(`/users/${id}`, { token });
+      const data = await fetchWithAuth<UserResponse>(`/users/${id}`);
       return data.user;
     },
-    enabled: !!id && isAuthenticated,
+    enabled: !!id && isAuthResolved && isAuthenticated,
   });
 }

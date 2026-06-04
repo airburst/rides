@@ -1,18 +1,15 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import { useApiClient } from "@/hooks/useApiClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiClient } from "@/lib/api";
 import type { CreateRideInput } from "./types";
 
 export function useCreateRide() {
   const queryClient = useQueryClient();
-  const { getAccessTokenSilently } = useAuth0();
+  const { fetchWithAuth } = useApiClient();
 
   return useMutation({
     mutationFn: async (data: CreateRideInput) => {
-      const token = await getAccessTokenSilently();
-      return apiClient<{ success: boolean; id: string }>("/rides", {
+      return fetchWithAuth<{ success: boolean; id: string }>("/rides", {
         method: "POST",
-        token,
         body: JSON.stringify(data),
       });
     },

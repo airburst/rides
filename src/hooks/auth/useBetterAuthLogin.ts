@@ -3,7 +3,7 @@ import {
   useQueryClient,
   type UseMutationResult,
 } from "@tanstack/react-query";
-import { ApiError } from "@/lib/api";
+import { type ApiError } from "@/lib/api";
 import { fetchAuthJson } from "./fetchAuth";
 
 export type LoginInput = {

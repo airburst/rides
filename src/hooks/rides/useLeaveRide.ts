@@ -1,11 +1,10 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import { useApiClient } from "@/hooks/useApiClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiClient } from "@/lib/api";
 import type { Ride, RideList } from "./types";
 
 export function useLeaveRide() {
   const queryClient = useQueryClient();
-  const { getAccessTokenSilently, user } = useAuth0();
+  const { fetchWithAuth } = useApiClient();
 
   return useMutation({
     mutationFn: async ({
@@ -15,10 +14,8 @@ export function useLeaveRide() {
       rideId: string;
       userId?: string;
     }) => {
-      const token = await getAccessTokenSilently();
-      return apiClient<{ success: boolean }>(`/rides/${rideId}/leave`, {
+      return fetchWithAuth<{ success: boolean }>(`/rides/${rideId}/leave`, {
         method: "POST",
-        token,
         body: userId ? JSON.stringify({ userId }) : undefined,
       });
     },
@@ -31,7 +28,7 @@ export function useLeaveRide() {
         queryKey: ["rides"],
       });
 
-      const targetUserId = userId ?? user?.sub;
+      const targetUserId = userId;
 
       // Optimistically update ride detail
       if (previousRide && targetUserId) {

@@ -1,7 +1,6 @@
-import { useAuth0 } from "@auth0/auth0-react";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiClient } from "@/lib/api";
+import { useApiClient } from "@/hooks/useApiClient";
 import type { User } from "@/types";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 type CurrentUser = {
   id: string;
@@ -14,22 +13,19 @@ type CurrentUser = {
 
 export function useUploadAvatar() {
   const queryClient = useQueryClient();
-  const { getAccessTokenSilently } = useAuth0();
+  const { fetchWithAuth } = useApiClient();
 
   return useMutation({
     mutationFn: async ({ userId, file }: { userId: string; file: File }) => {
-      const token = await getAccessTokenSilently();
-      
       const formData = new FormData();
       formData.append("avatar", file);
 
-      return apiClient<{
+      return fetchWithAuth<{
         success: boolean;
         image: string;
         imageLarge: string;
       }>(`/users/${userId}/avatar`, {
         method: "POST",
-        token,
         body: formData,
       });
     },

@@ -1,10 +1,9 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import { useApiClient } from "@/hooks/useApiClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiClient } from "@/lib/api";
 
 export function useUpdateNotes() {
   const queryClient = useQueryClient();
-  const { getAccessTokenSilently } = useAuth0();
+  const { fetchWithAuth } = useApiClient();
 
   return useMutation({
     mutationFn: async ({
@@ -16,10 +15,8 @@ export function useUpdateNotes() {
       userId: string;
       notes: string;
     }) => {
-      const token = await getAccessTokenSilently();
-      return apiClient<{ success: boolean }>(`/rides/${rideId}/notes`, {
+      return fetchWithAuth<{ success: boolean }>(`/rides/${rideId}/notes`, {
         method: "PATCH",
-        token,
         body: JSON.stringify({ userId, notes }),
       });
     },

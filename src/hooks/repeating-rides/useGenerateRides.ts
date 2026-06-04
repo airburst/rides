@@ -1,6 +1,5 @@
-import { useAuth0 } from "@auth0/auth0-react";
+import { useApiClient } from "@/hooks/useApiClient";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiClient } from "@/lib/api";
 
 type GenerateResponse = {
   success: boolean;
@@ -14,14 +13,12 @@ type GenerateInput = {
 };
 
 export function useGenerateRides() {
-  const { getAccessTokenSilently } = useAuth0();
+  const { fetchWithAuth } = useApiClient();
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: async ({ scheduleId, date }: GenerateInput) => {
-      const token = await getAccessTokenSilently();
-      return apiClient<GenerateResponse>("/generate", {
-        token,
+      return fetchWithAuth<GenerateResponse>("/generate", {
         method: "POST",
         body: JSON.stringify({ scheduleId, date }),
       });
