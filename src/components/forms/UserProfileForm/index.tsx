@@ -98,13 +98,13 @@ const UserProfileForm = ({ user, isAdmin }: UserFormProps) => {
 
         {/* Profile Section with Avatar */}
         <div className="p-2 lg:p-4">
-          <div 
+          <div
             className="grid gap-6 [grid-template-areas:'avatar'_'fields'] lg:[grid-template-areas:'fields_avatar'] lg:grid-cols-2"
           >
             {/* Avatar - appears first on mobile, right on desktop */}
             <div className="flex justify-center lg:justify-end [grid-area:avatar]">
               <AvatarSection
-                imageUrl={user.imageLarge || user.image!}
+                imageUrl={user.imageLarge ?? user.image}
                 onChangeClick={showAvatarModal}
               />
             </div>
