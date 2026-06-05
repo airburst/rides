@@ -6,11 +6,11 @@ A modern SPA for cycling clubs to plan, discover, and manage group rides and eve
 
 - **Framework**: TanStack Start (SPA mode, hybrid SSR for root layout) + Vite
 - **Runtime**: Bun
-- **UI**: React 19, DaisyUI 5, Tailwind CSS 4
+- **UI**: React 19, ShadCN, Tailwind CSS 4
 - **State**: TanStack Query (server), React Context (UI)
 - **Routing**: TanStack Router (file-based)
 - **Forms**: react-hook-form + Zod
-- **Auth**: Auth0 (legacy) / better-auth (new clubs)
+- **Auth**: Auth0 (legacy) / better-auth (new clubs - future)
 - **Backend API**: Hono (external service)
 
 ## Quick Start
