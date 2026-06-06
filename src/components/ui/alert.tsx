@@ -1,5 +1,5 @@
-import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
+import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
@@ -63,4 +63,15 @@ function AlertDescription({
   )
 }
 
-export { Alert, AlertTitle, AlertDescription }
+function AlertAction({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="alert-action"
+      className={cn("col-start-2 flex items-center gap-2", className)}
+      {...props}
+    />
+  )
+}
+
+export { Alert, AlertAction, AlertDescription, AlertTitle }
+
