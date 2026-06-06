@@ -1,8 +1,9 @@
-import { createFileRoute } from "@tanstack/react-router";
 import { BackButton } from "@/components/Button";
 import { MainContent } from "@/components/Layout/MainContent";
+import { PWARedirectBanner } from "@/components/PWARedirectBanner";
 import { RideDetailsClient } from "@/components/RideDetails/RideDetailsClient";
 import { RideDetailsSkeleton } from "@/components/RideDetails/RideDetailsSkeleton";
+import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/ride/$id")({
   component: RideDetailsPage,
@@ -33,7 +34,13 @@ function RideDetailsPage() {
 
   return (
     <MainContent>
-      <RideDetailsClient id={id} />
+      <>
+        <PWARedirectBanner
+          targetPath={`/ride/${id}`}
+          dismissKey={`pwa-banner-ride-${id}`}
+        />
+        <RideDetailsClient id={id} />
+      </>
     </MainContent>
   );
 }
