@@ -1,5 +1,11 @@
 # Change Log
 
+## 4.11.1
+
+### Patch Changes
+
+- Add indentation to notes and update dependencies
+
 ## 4.11.0
 
 ### Minor Changes

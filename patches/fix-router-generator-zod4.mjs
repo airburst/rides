@@ -4,7 +4,7 @@
  * and `require("zod")` to `require("zod/v3")` in TanStack build-time files.
  * Remove this patch when TanStack ships zod v4 support.
  */
-import { readFileSync, writeFileSync, existsSync, readdirSync, statSync } from "node:fs";
+import { existsSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
 const packages = [
@@ -31,7 +31,8 @@ for (const pkg of packages) {
     const original = readFileSync(file, "utf-8");
     const patched = original
       .replace(/from ["']zod["']/g, 'from "zod/v3"')
-      .replace(/require\(["']zod["']\)/g, 'require("zod/v3")');
+      .replace(/require\(["']zod["']\)/g, 'require("zod/v3")')
+      .replace(/\.prefault\(/g, ".default(");
     if (patched !== original) {
       writeFileSync(file, patched);
       count++;
