@@ -1,5 +1,11 @@
 # Change Log
 
+## 4.12.0
+
+### Minor Changes
+
+- 460810e: Replace markdown rendering with tanstack-markdown library
+
 ## 4.11.1
 
 ### Patch Changes
