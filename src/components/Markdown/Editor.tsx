@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import { renderHtml } from "@tanstack/markdown/html";
 import Link from "@tiptap/extension-link";
 import Placeholder from "@tiptap/extension-placeholder";
 import { EditorContent, useEditor } from "@tiptap/react";
@@ -13,17 +14,9 @@ import {
   Quote,
   X,
 } from "lucide-react";
-import markdownIt from "markdown-it";
 import { useCallback, useEffect, useState } from "react";
 import TurndownService from "turndown";
 import "./markdown.css";
-
-const md = new markdownIt({
-  html: true,
-  linkify: true,
-  typographer: true,
-  breaks: true,
-});
 
 const turndown = new TurndownService({
   headingStyle: "atx",
@@ -31,7 +24,13 @@ const turndown = new TurndownService({
   codeBlockStyle: "fenced",
 });
 
-const mdToHtml = (markdown: string) => md.render(markdown);
+// Backslash hard break, as trailing-whitespace breaks are not in the TanStack syntax profile
+turndown.addRule("hardBreak", {
+  filter: "br",
+  replacement: () => "\\\n",
+});
+
+const mdToHtml = (markdown: string) => renderHtml(markdown);
 const htmlToMd = (html: string) => turndown.turndown(html);
 
 export type MarkdownEditorProps = {

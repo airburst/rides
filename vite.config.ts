@@ -35,7 +35,10 @@ const config = defineConfig({
             if (id.includes("@tanstack/react-router")) {
               return "router-vendor";
             }
-            if (id.includes("markdown-it") || id.includes("turndown")) {
+            if (
+              id.includes("@tanstack/markdown") ||
+              id.includes("turndown")
+            ) {
               return "markdown";
             }
             if (id.includes("lucide-react")) {

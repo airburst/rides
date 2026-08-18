@@ -1,9 +1,8 @@
 import { NOTES_SHOW_MORE_LENGTH } from "@/constants";
 import { cn } from "@/lib/utils";
-import DOMPurify from "isomorphic-dompurify";
+import { renderHtml } from "@tanstack/markdown/html";
 import { ChevronDown } from "lucide-react";
-import markdownIt from "markdown-it";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import { Button } from "../Button";
 import "./markdown.css";
 
@@ -18,14 +17,9 @@ const Viewer = ({ markdown, title }: ViewerProps) => {
 
   const toggleShowAll = useCallback(() => setShowAll((prev) => !prev), []);
 
-  const md = new markdownIt({
-    html: true,
-    linkify: true,
-    typographer: true,
-  });
-  const html = md.render(markdown ?? "");
-  const sanitizedHtml = DOMPurify.sanitize(html);
-  const isLong = sanitizedHtml.length > NOTES_SHOW_MORE_LENGTH;
+  // Raw HTML is escaped and executable URL schemes stripped by default
+  const html = useMemo(() => renderHtml(markdown ?? ""), [markdown]);
+  const isLong = html.length > NOTES_SHOW_MORE_LENGTH;
 
   return (
     <div className="flex w-full flex-col gap-2 rounded bg-white py-2 lg:py-4 shadow-md">
@@ -48,10 +42,7 @@ const Viewer = ({ markdown, title }: ViewerProps) => {
               : undefined
           }
         >
-          <div
-            id="ride-notes"
-            dangerouslySetInnerHTML={{ __html: sanitizedHtml }}
-          />
+          <div id="ride-notes" dangerouslySetInnerHTML={{ __html: html }} />
           {isLong && (
             <div
               className={cn(
