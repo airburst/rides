@@ -1,5 +1,14 @@
 # Change Log
 
+## 4.12.1
+
+### Patch Changes
+
+- 1f935e2: Use club-scoped repeating ride generation and keep failed generation retryable without creating duplicate templates. Preserve the saved schedule and surface unsuccessful generation responses.
+- 837161e: Upgrade TanStack Start to the patched release for GHSA-qx66-fv34-fjm8, resolving the Vercel security deployment block without bypassing security checks.
+
+  Update Zod to satisfy the patched Start plugin and remove the obsolete Zod v3 compatibility rewrite now that TanStack supports Zod v4.
+
 ## 4.12.0
 
 ### Minor Changes
