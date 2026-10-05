@@ -1,3 +1,5 @@
+import { Input } from "@/components/ui/input";
+import { NativeSelect } from "@/components/ui/native-select";
 import {
   useCreateRepeatingRide,
   useGenerateRides,
@@ -6,22 +8,20 @@ import {
 import { useCreateRide, useUpdateRide } from "@/hooks/useRides";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "@tanstack/react-router";
-import { lazy, Suspense, useCallback, useState } from "react";
-import { useForm, type Resolver } from "react-hook-form";
-import { toast } from "sonner";
 import { formatDate, getNow, makeUtcDate } from "@utils/dates";
 import { makeRepeatingRide } from "@utils/forms";
 import { makeRidesInPeriod, repeatingRideToDb } from "@utils/repeatingRides";
+import { lazy, Suspense, useCallback, useRef, useState } from "react";
+import { useForm, type Resolver } from "react-hook-form";
+import { toast } from "sonner";
 import { RIDER_LIMIT_OPTIONS } from "../../../constants";
 import { type Preferences } from "../../../types";
-import { Input } from "@/components/ui/input";
-import { NativeSelect } from "@/components/ui/native-select";
 import { Button } from "../../Button";
 import { CancelButton } from "../../Button/CancelButton";
-const Editor = lazy(() => import("../../Markdown/Editor"));
 import { rideFormSchema, type RideFormSchema } from "../formSchemas";
 import { RepeatingSection } from "./RepeatingSection";
 import { RideConfirmationDialog } from "./RideConfirmationDialog";
+const Editor = lazy(() => import("../../Markdown/Editor"));
 
 const today = getNow().split("T")[0] ?? "";
 
@@ -71,6 +71,8 @@ const RideForm = ({
 
   const [rideDateList, setRideDateList] = useState<string[]>([]);
   const [scheduleId, setScheduleId] = useState<string | null>(null);
+  const savedScheduleId = useRef<string | null>(null);
+  const savingTemplate = useRef(false);
   const showRepeatingSwitch = Boolean(isAdmin && (isNewRide || isRepeating));
   const [showCreate, setShowCreate] = useState<boolean>(false);
 
@@ -136,6 +138,11 @@ const RideForm = ({
 
   const createRepeating = useCallback(
     (data: RideFormSchema) => {
+      if (savedScheduleId.current) {
+        show();
+        return;
+      }
+      if (savingTemplate.current) return;
       const payload = makeRepeatingRide(data);
 
       if (data.id) {
@@ -154,15 +161,21 @@ const RideForm = ({
         );
       } else {
         // Create new repeating ride
+        savingTemplate.current = true;
         createRepeatingMutation.mutate(payload, {
           onSuccess: (results) => {
             // Store schedule id to use in handleYes function
+            savedScheduleId.current = results.id;
+            savingTemplate.current = false;
             setScheduleId(results.id);
             toast.success("Repeating ride created successfully");
             // Calculate rides list and ask to create them
             void repeatingRideToDb(payload)
               .then(async (dbRide) => {
-                const rideList = await makeRidesInPeriod(dbRide, data.startDate);
+                const rideList = await makeRidesInPeriod(
+                  dbRide,
+                  data.startDate,
+                );
                 const rideDates = rideList.rides.map(({ rideDate }) =>
                   formatDate(rideDate),
                 );
@@ -185,6 +198,7 @@ const RideForm = ({
               });
           },
           onError: (error) => {
+            savingTemplate.current = false;
             toast.error(error.message || "Failed to create repeating ride");
           },
         });
@@ -200,21 +214,22 @@ const RideForm = ({
 
   const handleYes = useCallback(
     (cb: (flag: boolean) => void) => {
-      hide();
-
       if (scheduleId) {
         const date = getValues("rideDate");
         generateMutation.mutate(
           { scheduleId, date },
           {
             onSuccess: (results) => {
+              hide();
               const count = results.results?.[0]?.count ?? 0;
               toast.success(`Generated ${count} rides`);
               void router.navigate({ to: "/" });
               cb(true);
             },
-            onError: () => {
-              toast.error("Failed to generate rides");
+            onError: (error) => {
+              toast.error(
+                `Schedule saved, but rides were not added: ${error.message}`,
+              );
               cb(false);
             },
           },
@@ -232,175 +247,146 @@ const RideForm = ({
           repeats ? handleSubmit(createRepeating) : handleSubmit(createRide)
         }
       >
-        <div className="flex flex-col gap-4 md:gap-8">
-          <label htmlFor="name" className="flex flex-col gap-1">
-            Ride name *
-            <Input
-              id="name"
-              type="text"
-              {...register("name")}
-            />
-            {errors.name && (
-              <span className="font-normal text-red-500">
-                {errors.name?.message}
-              </span>
-            )}
-          </label>
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
+        <fieldset disabled={Boolean(scheduleId)} className="contents">
           <div className="flex flex-col gap-4 md:gap-8">
-            <label htmlFor="rideGroup" className="flex flex-col gap-1">
-              Group name
+            <label htmlFor="name" className="flex flex-col gap-1">
+              Ride name *
+              <Input id="name" type="text" {...register("name")} />
+              {errors.name && (
+                <span className="font-normal text-red-500">
+                  {errors.name?.message}
+                </span>
+              )}
+            </label>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col gap-4 md:gap-8">
+              <label htmlFor="rideGroup" className="flex flex-col gap-1">
+                Group name
+                <Input id="rideGroup" type="text" {...register("rideGroup")} />
+              </label>
+            </div>
+            <div className="flex flex-col gap-4 md:gap-8">
+              <label htmlFor="rideLimit" className="flex flex-col gap-1">
+                Rider limit
+                <NativeSelect id="rideLimit" {...register("rideLimit")}>
+                  <option value="-1">No limit</option>
+                  {RIDER_LIMIT_OPTIONS.map((val: number) => (
+                    <option key={`limit-${val}`} value={val}>
+                      {val}
+                    </option>
+                  ))}
+                </NativeSelect>
+              </label>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div className="flex flex-col gap-4 md:gap-8">
+              <label htmlFor="rideDate" className="flex flex-col gap-1">
+                Date *
+                <Input
+                  id="rideDate"
+                  type="date"
+                  min={today}
+                  {...register("rideDate")}
+                />
+                {errors.rideDate && (
+                  <span className="font-normal text-red-500">
+                    {errors.rideDate?.message}
+                  </span>
+                )}
+              </label>
+            </div>
+
+            <div className="flex flex-col gap-4 md:gap-8">
+              <label htmlFor="time" className="flex flex-col gap-1">
+                Start time *
+                <Input id="time" type="time" {...register("time")} />
+                {errors.time && (
+                  <span className="font-normal text-red-500">
+                    {errors.time?.message}
+                  </span>
+                )}
+              </label>
+            </div>
+          </div>
+
+          <div className="flex flex-col gap-4 md:gap-8">
+            <label htmlFor="meetPoint" className="flex flex-col gap-1">
+              Meeting point
+              <Input id="meetPoint" type="text" {...register("meetPoint")} />
+            </label>
+          </div>
+
+          <div className="flex flex-col gap-4 md:gap-8">
+            <label htmlFor="distance" className="flex flex-col">
+              Distance ({preferences?.units ?? "km"}) *
+              <Input id="distance" type="number" {...register("distance")} />
+              {errors.distance && (
+                <span className="font-normal text-red-500">
+                  {errors.distance.message}
+                </span>
+              )}
+            </label>
+          </div>
+
+          <div className="flex flex-col gap-4 md:gap-8">
+            <label htmlFor="destination" className="flex flex-col">
+              Destination
               <Input
-                id="rideGroup"
+                id="destination"
                 type="text"
-                {...register("rideGroup")}
+                {...register("destination")}
               />
-            </label>
-          </div>
-          <div className="flex flex-col gap-4 md:gap-8">
-            <label htmlFor="rideLimit" className="flex flex-col gap-1">
-              Rider limit
-              <NativeSelect
-                id="rideLimit"
-                {...register("rideLimit")}
-              >
-                <option value="-1">No limit</option>
-                {RIDER_LIMIT_OPTIONS.map((val: number) => (
-                  <option key={`limit-${val}`} value={val}>
-                    {val}
-                  </option>
-                ))}
-              </NativeSelect>
-            </label>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <div className="flex flex-col gap-4 md:gap-8">
-            <label htmlFor="rideDate" className="flex flex-col gap-1">
-              Date *
-              <Input
-                id="rideDate"
-                type="date"
-                min={today}
-                {...register("rideDate")}
-              />
-              {errors.rideDate && (
-                <span className="font-normal text-red-500">
-                  {errors.rideDate?.message}
-                </span>
-              )}
             </label>
           </div>
 
           <div className="flex flex-col gap-4 md:gap-8">
-            <label htmlFor="time" className="flex flex-col gap-1">
-              Start time *
-              <Input
-                id="time"
-                type="time"
-                {...register("time")}
-              />
-              {errors.time && (
-                <span className="font-normal text-red-500">
-                  {errors.time?.message}
-                </span>
-              )}
+            <label htmlFor="route" className="flex flex-col">
+              Route Link
+              <Input id="route" type="text" {...register("route")} />
             </label>
           </div>
-        </div>
 
-        <div className="flex flex-col gap-4 md:gap-8">
-          <label htmlFor="meetPoint" className="flex flex-col gap-1">
-            Meeting point
-            <Input
-              id="meetPoint"
-              type="text"
-              {...register("meetPoint")}
-            />
-          </label>
-        </div>
+          <div className="flex flex-col gap-4 md:gap-8">
+            <label htmlFor="leader" className="flex flex-col">
+              Leader
+              <Input id="leader" type="text" {...register("leader")} />
+            </label>
+          </div>
 
-        <div className="flex flex-col gap-4 md:gap-8">
-          <label htmlFor="distance" className="flex flex-col">
-            Distance ({preferences?.units ?? "km"}) *
-            <Input
-              id="distance"
-              type="number"
-              {...register("distance")}
-            />
-            {errors.distance && (
-              <span className="font-normal text-red-500">
-                {errors.distance.message}
-              </span>
-            )}
-          </label>
-        </div>
+          <div className="flex flex-col">
+            <label className="flex flex-col">Notes</label>
+            <Suspense
+              fallback={
+                <div className="h-48 animate-pulse rounded-lg bg-gray-100" />
+              }
+            >
+              <Editor
+                initialValue={defaultValues?.notes}
+                onChange={handleNotesChange}
+              />
+            </Suspense>
+          </div>
 
-        <div className="flex flex-col gap-4 md:gap-8">
-          <label htmlFor="destination" className="flex flex-col">
-            Destination
-            <Input
-              id="destination"
-              type="text"
-              {...register("destination")}
-            />
-          </label>
-        </div>
-
-        <div className="flex flex-col gap-4 md:gap-8">
-          <label htmlFor="route" className="flex flex-col">
-            Route Link
-            <Input
-              id="route"
-              type="text"
-              {...register("route")}
-            />
-          </label>
-        </div>
-
-        <div className="flex flex-col gap-4 md:gap-8">
-          <label htmlFor="leader" className="flex flex-col">
-            Leader
-            <Input
-              id="leader"
-              type="text"
-              {...register("leader")}
-            />
-          </label>
-        </div>
-
-        <div className="flex flex-col">
-          <label className="flex flex-col">Notes</label>
-          <Suspense
-            fallback={
-              <div className="h-48 animate-pulse rounded-lg bg-gray-100" />
-            }
-          >
-            <Editor
-              initialValue={defaultValues?.notes}
-              onChange={handleNotesChange}
-            />
-          </Suspense>
-        </div>
-
-        <RepeatingSection
-          showRepeatingSwitch={showRepeatingSwitch}
-          repeats={repeats}
-          handleRepeatsChange={handleRepeatsChange}
-          defaultValues={defaults}
-          register={register}
-          errors={errors}
-          watch={watch}
-          setValue={setValue}
-          isRepeating={isRepeating ?? false}
-        />
+          <RepeatingSection
+            showRepeatingSwitch={showRepeatingSwitch}
+            repeats={repeats}
+            handleRepeatsChange={handleRepeatsChange}
+            defaultValues={defaults}
+            register={register}
+            errors={errors}
+            watch={watch}
+            setValue={setValue}
+            isRepeating={isRepeating ?? false}
+          />
+        </fieldset>
 
         <div className="grid w-full grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
           <Button primary loading={isPending} type="submit">
-            <div>SAVE</div>
+            <div>{scheduleId ? "ADD RIDES" : "SAVE"}</div>
           </Button>
           <CancelButton />
         </div>
