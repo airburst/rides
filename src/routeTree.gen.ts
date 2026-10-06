@@ -9,34 +9,34 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as UsersRouteImport } from './routes/users'
-import { Route as CalendarRouteImport } from './routes/calendar'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as RepeatingRidesIndexRouteImport } from './routes/repeating-rides/index'
-import { Route as ProfileIndexRouteImport } from './routes/profile/index'
+import { Route as CalendarRouteImport } from './routes/calendar'
+import { Route as UsersRouteImport } from './routes/users'
 import { Route as CalendarIndexRouteImport } from './routes/calendar/index'
-import { Route as RidesDateRouteImport } from './routes/rides/$date'
-import { Route as RideIdRouteImport } from './routes/ride/$id'
-import { Route as RepeatingRidesIdRouteImport } from './routes/repeating-rides/$id'
-import { Route as RIdRouteImport } from './routes/r/$id'
-import { Route as ProfileIdRouteImport } from './routes/profile/$id'
 import { Route as CalendarDateRouteImport } from './routes/calendar/$date'
-import { Route as RideNewIndexRouteImport } from './routes/ride/new/index'
-import { Route as AuthVerifyPendingIndexRouteImport } from './routes/auth/verify-pending/index'
-import { Route as AuthVerifiedIndexRouteImport } from './routes/auth/verified/index'
-import { Route as AuthResetPasswordIndexRouteImport } from './routes/auth/reset-password/index'
-import { Route as AuthLoginIndexRouteImport } from './routes/auth/login/index'
+import { Route as ProfileIndexRouteImport } from './routes/profile/index'
+import { Route as ProfileIdRouteImport } from './routes/profile/$id'
+import { Route as RIdRouteImport } from './routes/r/$id'
+import { Route as RepeatingRidesIndexRouteImport } from './routes/repeating-rides/index'
+import { Route as RepeatingRidesIdRouteImport } from './routes/repeating-rides/$id'
+import { Route as RideIdRouteImport } from './routes/ride/$id'
+import { Route as RidesDateRouteImport } from './routes/rides/$date'
 import { Route as AuthForgotPasswordIndexRouteImport } from './routes/auth/forgot-password/index'
-import { Route as RideNewDateRouteImport } from './routes/ride/new/$date'
-import { Route as RideEditIdRouteImport } from './routes/ride/edit/$id'
-import { Route as RideCopyIdRouteImport } from './routes/ride/copy/$id'
-import { Route as RepeatingRidesEditIdRouteImport } from './routes/repeating-rides/edit/$id'
+import { Route as AuthLoginIndexRouteImport } from './routes/auth/login/index'
+import { Route as AuthResetPasswordIndexRouteImport } from './routes/auth/reset-password/index'
+import { Route as AuthVerifiedIndexRouteImport } from './routes/auth/verified/index'
+import { Route as AuthVerifyPendingIndexRouteImport } from './routes/auth/verify-pending/index'
 import { Route as RepeatingRidesCopyIdRouteImport } from './routes/repeating-rides/copy/$id'
+import { Route as RepeatingRidesEditIdRouteImport } from './routes/repeating-rides/edit/$id'
+import { Route as RideCopyIdRouteImport } from './routes/ride/copy/$id'
+import { Route as RideEditIdRouteImport } from './routes/ride/edit/$id'
+import { Route as RideNewIndexRouteImport } from './routes/ride/new/index'
+import { Route as RideNewDateRouteImport } from './routes/ride/new/$date'
 import { Route as AuthSignupSlugIndexRouteImport } from './routes/auth/signup/$slug/index'
 
-const UsersRoute = UsersRouteImport.update({
-  id: '/users',
-  path: '/users',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CalendarRoute = CalendarRouteImport.update({
@@ -44,19 +44,9 @@ const CalendarRoute = CalendarRouteImport.update({
   path: '/calendar',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RepeatingRidesIndexRoute = RepeatingRidesIndexRouteImport.update({
-  id: '/repeating-rides/',
-  path: '/repeating-rides/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProfileIndexRoute = ProfileIndexRouteImport.update({
-  id: '/profile/',
-  path: '/profile/',
+const UsersRoute = UsersRouteImport.update({
+  id: '/users',
+  path: '/users',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CalendarIndexRoute = CalendarIndexRouteImport.update({
@@ -64,24 +54,14 @@ const CalendarIndexRoute = CalendarIndexRouteImport.update({
   path: '/',
   getParentRoute: () => CalendarRoute,
 } as any)
-const RidesDateRoute = RidesDateRouteImport.update({
-  id: '/rides/$date',
-  path: '/rides/$date',
-  getParentRoute: () => rootRouteImport,
+const CalendarDateRoute = CalendarDateRouteImport.update({
+  id: '/$date',
+  path: '/$date',
+  getParentRoute: () => CalendarRoute,
 } as any)
-const RideIdRoute = RideIdRouteImport.update({
-  id: '/ride/$id',
-  path: '/ride/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RepeatingRidesIdRoute = RepeatingRidesIdRouteImport.update({
-  id: '/repeating-rides/$id',
-  path: '/repeating-rides/$id',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const RIdRoute = RIdRouteImport.update({
-  id: '/r/$id',
-  path: '/r/$id',
+const ProfileIndexRoute = ProfileIndexRouteImport.update({
+  id: '/profile/',
+  path: '/profile/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProfileIdRoute = ProfileIdRouteImport.update({
@@ -89,34 +69,29 @@ const ProfileIdRoute = ProfileIdRouteImport.update({
   path: '/profile/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CalendarDateRoute = CalendarDateRouteImport.update({
-  id: '/$date',
-  path: '/$date',
-  getParentRoute: () => CalendarRoute,
-} as any)
-const RideNewIndexRoute = RideNewIndexRouteImport.update({
-  id: '/ride/new/',
-  path: '/ride/new/',
+const RIdRoute = RIdRouteImport.update({
+  id: '/r/$id',
+  path: '/r/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthVerifyPendingIndexRoute = AuthVerifyPendingIndexRouteImport.update({
-  id: '/auth/verify-pending/',
-  path: '/auth/verify-pending/',
+const RepeatingRidesIndexRoute = RepeatingRidesIndexRouteImport.update({
+  id: '/repeating-rides/',
+  path: '/repeating-rides/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthVerifiedIndexRoute = AuthVerifiedIndexRouteImport.update({
-  id: '/auth/verified/',
-  path: '/auth/verified/',
+const RepeatingRidesIdRoute = RepeatingRidesIdRouteImport.update({
+  id: '/repeating-rides/$id',
+  path: '/repeating-rides/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthResetPasswordIndexRoute = AuthResetPasswordIndexRouteImport.update({
-  id: '/auth/reset-password/',
-  path: '/auth/reset-password/',
+const RideIdRoute = RideIdRouteImport.update({
+  id: '/ride/$id',
+  path: '/ride/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
-const AuthLoginIndexRoute = AuthLoginIndexRouteImport.update({
-  id: '/auth/login/',
-  path: '/auth/login/',
+const RidesDateRoute = RidesDateRouteImport.update({
+  id: '/rides/$date',
+  path: '/rides/$date',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthForgotPasswordIndexRoute = AuthForgotPasswordIndexRouteImport.update({
@@ -124,19 +99,29 @@ const AuthForgotPasswordIndexRoute = AuthForgotPasswordIndexRouteImport.update({
   path: '/auth/forgot-password/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RideNewDateRoute = RideNewDateRouteImport.update({
-  id: '/ride/new/$date',
-  path: '/ride/new/$date',
+const AuthLoginIndexRoute = AuthLoginIndexRouteImport.update({
+  id: '/auth/login/',
+  path: '/auth/login/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RideEditIdRoute = RideEditIdRouteImport.update({
-  id: '/ride/edit/$id',
-  path: '/ride/edit/$id',
+const AuthResetPasswordIndexRoute = AuthResetPasswordIndexRouteImport.update({
+  id: '/auth/reset-password/',
+  path: '/auth/reset-password/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RideCopyIdRoute = RideCopyIdRouteImport.update({
-  id: '/ride/copy/$id',
-  path: '/ride/copy/$id',
+const AuthVerifiedIndexRoute = AuthVerifiedIndexRouteImport.update({
+  id: '/auth/verified/',
+  path: '/auth/verified/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthVerifyPendingIndexRoute = AuthVerifyPendingIndexRouteImport.update({
+  id: '/auth/verify-pending/',
+  path: '/auth/verify-pending/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RepeatingRidesCopyIdRoute = RepeatingRidesCopyIdRouteImport.update({
+  id: '/repeating-rides/copy/$id',
+  path: '/repeating-rides/copy/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RepeatingRidesEditIdRoute = RepeatingRidesEditIdRouteImport.update({
@@ -144,9 +129,24 @@ const RepeatingRidesEditIdRoute = RepeatingRidesEditIdRouteImport.update({
   path: '/repeating-rides/edit/$id',
   getParentRoute: () => rootRouteImport,
 } as any)
-const RepeatingRidesCopyIdRoute = RepeatingRidesCopyIdRouteImport.update({
-  id: '/repeating-rides/copy/$id',
-  path: '/repeating-rides/copy/$id',
+const RideCopyIdRoute = RideCopyIdRouteImport.update({
+  id: '/ride/copy/$id',
+  path: '/ride/copy/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RideEditIdRoute = RideEditIdRouteImport.update({
+  id: '/ride/edit/$id',
+  path: '/ride/edit/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RideNewIndexRoute = RideNewIndexRouteImport.update({
+  id: '/ride/new/',
+  path: '/ride/new/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RideNewDateRoute = RideNewDateRouteImport.update({
+  id: '/ride/new/$date',
+  path: '/ride/new/$date',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthSignupSlugIndexRoute = AuthSignupSlugIndexRouteImport.update({
@@ -340,11 +340,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/users': {
-      id: '/users'
-      path: '/users'
-      fullPath: '/users'
-      preLoaderRoute: typeof UsersRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/calendar': {
@@ -354,25 +354,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CalendarRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/repeating-rides/': {
-      id: '/repeating-rides/'
-      path: '/repeating-rides'
-      fullPath: '/repeating-rides/'
-      preLoaderRoute: typeof RepeatingRidesIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/profile/': {
-      id: '/profile/'
-      path: '/profile'
-      fullPath: '/profile/'
-      preLoaderRoute: typeof ProfileIndexRouteImport
+    '/users': {
+      id: '/users'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof UsersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/calendar/': {
@@ -382,32 +368,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CalendarIndexRouteImport
       parentRoute: typeof CalendarRoute
     }
-    '/rides/$date': {
-      id: '/rides/$date'
-      path: '/rides/$date'
-      fullPath: '/rides/$date'
-      preLoaderRoute: typeof RidesDateRouteImport
-      parentRoute: typeof rootRouteImport
+    '/calendar/$date': {
+      id: '/calendar/$date'
+      path: '/$date'
+      fullPath: '/calendar/$date'
+      preLoaderRoute: typeof CalendarDateRouteImport
+      parentRoute: typeof CalendarRoute
     }
-    '/ride/$id': {
-      id: '/ride/$id'
-      path: '/ride/$id'
-      fullPath: '/ride/$id'
-      preLoaderRoute: typeof RideIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/repeating-rides/$id': {
-      id: '/repeating-rides/$id'
-      path: '/repeating-rides/$id'
-      fullPath: '/repeating-rides/$id'
-      preLoaderRoute: typeof RepeatingRidesIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/r/$id': {
-      id: '/r/$id'
-      path: '/r/$id'
-      fullPath: '/r/$id'
-      preLoaderRoute: typeof RIdRouteImport
+    '/profile/': {
+      id: '/profile/'
+      path: '/profile'
+      fullPath: '/profile/'
+      preLoaderRoute: typeof ProfileIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/profile/$id': {
@@ -417,46 +389,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProfileIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/calendar/$date': {
-      id: '/calendar/$date'
-      path: '/$date'
-      fullPath: '/calendar/$date'
-      preLoaderRoute: typeof CalendarDateRouteImport
-      parentRoute: typeof CalendarRoute
-    }
-    '/ride/new/': {
-      id: '/ride/new/'
-      path: '/ride/new'
-      fullPath: '/ride/new/'
-      preLoaderRoute: typeof RideNewIndexRouteImport
+    '/r/$id': {
+      id: '/r/$id'
+      path: '/r/$id'
+      fullPath: '/r/$id'
+      preLoaderRoute: typeof RIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/auth/verify-pending/': {
-      id: '/auth/verify-pending/'
-      path: '/auth/verify-pending'
-      fullPath: '/auth/verify-pending/'
-      preLoaderRoute: typeof AuthVerifyPendingIndexRouteImport
+    '/repeating-rides/': {
+      id: '/repeating-rides/'
+      path: '/repeating-rides'
+      fullPath: '/repeating-rides/'
+      preLoaderRoute: typeof RepeatingRidesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/auth/verified/': {
-      id: '/auth/verified/'
-      path: '/auth/verified'
-      fullPath: '/auth/verified/'
-      preLoaderRoute: typeof AuthVerifiedIndexRouteImport
+    '/repeating-rides/$id': {
+      id: '/repeating-rides/$id'
+      path: '/repeating-rides/$id'
+      fullPath: '/repeating-rides/$id'
+      preLoaderRoute: typeof RepeatingRidesIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/auth/reset-password/': {
-      id: '/auth/reset-password/'
-      path: '/auth/reset-password'
-      fullPath: '/auth/reset-password/'
-      preLoaderRoute: typeof AuthResetPasswordIndexRouteImport
+    '/ride/$id': {
+      id: '/ride/$id'
+      path: '/ride/$id'
+      fullPath: '/ride/$id'
+      preLoaderRoute: typeof RideIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/auth/login/': {
-      id: '/auth/login/'
-      path: '/auth/login'
-      fullPath: '/auth/login/'
-      preLoaderRoute: typeof AuthLoginIndexRouteImport
+    '/rides/$date': {
+      id: '/rides/$date'
+      path: '/rides/$date'
+      fullPath: '/rides/$date'
+      preLoaderRoute: typeof RidesDateRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/forgot-password/': {
@@ -466,25 +431,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthForgotPasswordIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/ride/new/$date': {
-      id: '/ride/new/$date'
-      path: '/ride/new/$date'
-      fullPath: '/ride/new/$date'
-      preLoaderRoute: typeof RideNewDateRouteImport
+    '/auth/login/': {
+      id: '/auth/login/'
+      path: '/auth/login'
+      fullPath: '/auth/login/'
+      preLoaderRoute: typeof AuthLoginIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/ride/edit/$id': {
-      id: '/ride/edit/$id'
-      path: '/ride/edit/$id'
-      fullPath: '/ride/edit/$id'
-      preLoaderRoute: typeof RideEditIdRouteImport
+    '/auth/reset-password/': {
+      id: '/auth/reset-password/'
+      path: '/auth/reset-password'
+      fullPath: '/auth/reset-password/'
+      preLoaderRoute: typeof AuthResetPasswordIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/ride/copy/$id': {
-      id: '/ride/copy/$id'
-      path: '/ride/copy/$id'
-      fullPath: '/ride/copy/$id'
-      preLoaderRoute: typeof RideCopyIdRouteImport
+    '/auth/verified/': {
+      id: '/auth/verified/'
+      path: '/auth/verified'
+      fullPath: '/auth/verified/'
+      preLoaderRoute: typeof AuthVerifiedIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/verify-pending/': {
+      id: '/auth/verify-pending/'
+      path: '/auth/verify-pending'
+      fullPath: '/auth/verify-pending/'
+      preLoaderRoute: typeof AuthVerifyPendingIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/repeating-rides/copy/$id': {
+      id: '/repeating-rides/copy/$id'
+      path: '/repeating-rides/copy/$id'
+      fullPath: '/repeating-rides/copy/$id'
+      preLoaderRoute: typeof RepeatingRidesCopyIdRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/repeating-rides/edit/$id': {
@@ -494,11 +473,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RepeatingRidesEditIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/repeating-rides/copy/$id': {
-      id: '/repeating-rides/copy/$id'
-      path: '/repeating-rides/copy/$id'
-      fullPath: '/repeating-rides/copy/$id'
-      preLoaderRoute: typeof RepeatingRidesCopyIdRouteImport
+    '/ride/copy/$id': {
+      id: '/ride/copy/$id'
+      path: '/ride/copy/$id'
+      fullPath: '/ride/copy/$id'
+      preLoaderRoute: typeof RideCopyIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ride/edit/$id': {
+      id: '/ride/edit/$id'
+      path: '/ride/edit/$id'
+      fullPath: '/ride/edit/$id'
+      preLoaderRoute: typeof RideEditIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ride/new/': {
+      id: '/ride/new/'
+      path: '/ride/new'
+      fullPath: '/ride/new/'
+      preLoaderRoute: typeof RideNewIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ride/new/$date': {
+      id: '/ride/new/$date'
+      path: '/ride/new/$date'
+      fullPath: '/ride/new/$date'
+      preLoaderRoute: typeof RideNewDateRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/auth/signup/$slug/': {
